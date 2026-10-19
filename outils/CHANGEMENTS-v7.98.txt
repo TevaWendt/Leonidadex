@@ -1,0 +1,56 @@
+LEONIDAKIT v7.98 : les quatre pages Ce qui est confirmé, Préchargement, GTA VI sur PC, GTA VI et GTA V
+19 octobre 2026
+
+Base : v7.97 (commit b6680852a). Rien n’est publié ni poussé. CSP inchangée. Aucun fichier à supprimer. Aucune donnée inventée.
+Le texte des pages ne change pas : seulement l’agencement, les repères, le défilement et des liens.
+Téva, 18 octobre, 20 h 17, après avoir poussé la v7.95 : ces quatre sections « font très brouillon », « ça manque
+d’animation », « des lignes qui superposent d’autres textes », « au niveau des listes, c’est juste des points mal alignés » ;
+« mettre des visuels à la place de certains points », « des cartes », « faire en sorte que ça défile mieux » ; « rajouter des
+liens cliquables » ; « faire gaffe aux liens morts […] un lien qui me mène dans les médias et qui me mène tout en bas sans me
+montrer de quoi ça parle » ; « s’il y a des nouveaux trucs dans les médias, compléter cette section ». 20 h 34 : les exemples
+ne sont pas des consignes à la lettre, il faut que ça reste « un visuel magnifique, comme l’intégralité du site ».
+
+1. LES QUATRE PAGES (outils/sources/informations.css, bloc « v7.98 » ; les quatre pages et leurs versions dans les cinq
+   langues sont réécrites par la chaîne, même texte)
+- Tableau de bord de verification.html : les tuiles des points confirmés et des questions ouvertes étaient des pastilles de
+  largeurs inégales, sur des lignes qui ne tombaient pas juste ; elles forment une grille régulière (215 px au moins par tuile),
+  l’état (coche ou point d’interrogation) toujours au bout de la tuile, 44 px de haut au moins. Au téléphone, deux tuiles par
+  ligne, et chaque tuile devient une petite carte : pictogramme en haut, état en pastille dans le coin, intitulé sur toute la
+  largeur (« précommande » glissait sous la coche ; « Vorbestellerbonus », le mot le plus long des six langues, tient).
+- Échelle des statuts : la pastille de couleur devant chaque marche n’avait pas de taille sur cette page (rien ne
+  s’affichait, le titre semblait décalé) : pastille de 12 px, alignée sur le titre.
+- Coûts d’usage : les deux notes en petits cercles creux deviennent des cartes numérotées (01, 02), au bord encré et à
+  l’ombre portée de la charte, comme les autres cartes du site.
+- Listes à cocher (« ce qu’il faut vérifier », « à suivre ») : la case est à gauche du titre et la carte suit la hauteur de
+  son texte (il restait un vide en bas) ; le texte courant n’est plus en gras.
+- Sources : en deux colonnes en grand écran, plus serrées ; au téléphone, l’indication de la source passe à 11,2 px.
+- Tableau comparatif de gta-6-vs-gta-5.html : la valeur en poids normal, le gras reste aux intitulés.
+- Au téléphone (640 px et moins), les suites de cartes défilent de côté au lieu de s’empiler en colonne : points confirmés,
+  questions sans réponse officielle, coûts d’usage (dix cartes), cartes de gta-6-pc.html et de gta-6-vs-gta-5.html, cartes
+  « à suivre », étapes du préchargement (illustration au-dessus du texte). Chaque carte prend 84 % de la largeur, la suivante dépasse pour montrer qu’il y en a d’autres, et le geste s’arrête
+  au bord d’une carte (scroll-snap). Mêmes animations d’entrée (lk-reveal, cascade de vitrine.css), rien de nouveau à
+  charger.
+- Un lien vers une section (sommaire, renvois internes, sources) ne cache plus le titre de la section sous l’en-tête collant
+  (scroll-margin-top de 132 px).
+
+2. LIENS
+- L’image d’un point confirmé (verification.html) ouvre la page du visuel (visuels/<id>.html : ce qu’il montre, sa source, les
+  pages qui le reprennent), comme les autres visuels du site (outils/gen-informations.cjs).
+- Liens qui menaient à la ligne de crédits d’un visuel, tout en bas de medias.html : quand le visuel a sa page (lot B), le lien
+  ouvre cette page. outils/lot-c-visuals.cjs (piles de visuels des Actualités, des dossiers, des sections) et
+  outils/catalogues.cjs (« visuel officiel » des lignes des catalogues). Le nom de ces liens pour les lecteurs d’écran reste
+  « … : voir le visuel et ses crédits » (déjà traduit) ; les crédits restent à un clic depuis la page du visuel. Le lien de
+  l’image d’un point confirmé prend pour nom le texte alternatif de l’image. Les liens « crédits » explicites vers medias.html sont gardés tels quels.
+- Actualités : la dernière annonce Rockstar (la bande-annonce de lancement du 15 octobre) et les annonces du 8 octobre (radios,
+  collection de la boutique) y sont déjà ; aucun média nouveau à ajouter.
+
+3. VÉRIFICATIONS DE CETTE LIVRAISON (le contrôle complet et l’audit viennent à la fin des livraisons)
+- Chaîne de génération complète : 0 texte sans traduction en en, es, it, de, pt (extraction à 0 ×5).
+- gen-pages-elements --verifier : 0 page différente ; gen-leo --check : à jour.
+- Écrans des quatre pages à 390 et 1 280 px de large (tuiles, cartes qui défilent, cartes numérotées, pastilles, listes).
+
+4. FICHIERS
+- Modifiés : outils/sources/informations.css (et sa copie servie informations.css), outils/gen-informations.cjs, outils/lot-c-visuals.cjs, outils/catalogues.cjs, les pages qui changent de lien
+  (verification.html, pages à visuels liés, catalogues) dans les six langues, LISEZ-MOI-v7.98.txt, outils/CHANGEMENTS-v7.98.txt,
+  outils/MATRICE-v7.98.md, README.md.
+- Rien à supprimer.

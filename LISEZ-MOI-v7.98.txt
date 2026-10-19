@@ -1,0 +1,38 @@
+LEONIDAKIT v7.98 : les quatre pages Ce qui est confirmé, Préchargement, GTA VI sur PC, GTA VI et GTA V remises au propre, et
+les liens vers les visuels qui mènent à leur page
+À appliquer sur la v7.97 (commit b6680852a, l’archive livrée le 19 octobre) : décompresse les parties de l’archive v7.98 à la
+racine du dépôt, dans n’importe quel ordre, puis pousse depuis GitHub Desktop. Rien n’a été publié ni poussé : c’est toi qui
+pousses. CSP inchangée. Aucun fichier à supprimer. Rien à faire dans Vercel.
+
+CE QUE CONTIENT CETTE VERSION (détail : outils/CHANGEMENTS-v7.98.txt ; grille de qualité : outils/MATRICE-v7.98.md)
+  1. Les quatre pages (verification.html, prechargement.html, gta-6-pc.html, gta-6-vs-gta-5.html), dans les six langues :
+     - le tableau de bord de « Ce qui est confirmé » devient une grille de tuiles alignées, l’état (coche ou point
+       d’interrogation) toujours au bout de la ligne ; au téléphone, deux petites cartes par ligne (pictogramme, état
+       dans le coin, intitulé lisible en entier) ;
+     - l’échelle des statuts retrouve ses pastilles de couleur, les coûts d’usage deviennent des cartes numérotées (01, 02…) au
+       lieu de petits cercles creux, les listes à cocher alignent la case sur le titre, sans vide en bas de carte ;
+     - au téléphone, les suites de cartes (points confirmés, questions sans réponse, coûts d’usage, étapes du préchargement,
+       cartes du PC, « à suivre ») défilent de côté, carte par carte, la suivante dépasse un peu pour le montrer, au lieu
+       d’une colonne sans fin ;
+     - les sources passent sur deux colonnes en grand écran ; le tableau comparatif garde le gras pour les intitulés ;
+     - un lien vers une section ne cache plus son titre sous l’en-tête du site.
+     Le texte ne change pas ; les animations d’entrée restent celles du site (même moteur, même cascade).
+  2. Liens cliquables : l’image d’un point confirmé ouvre la page de ce visuel (ce qu’il montre, sa source, où il est repris).
+  3. Liens qui menaient tout en bas de medias.html (la ligne de crédits du visuel, sans montrer de quoi il parle) : partout où un
+     visuel a sa page (visuels/…), le lien ouvre cette page, y compris depuis les Actualités, les catalogues et les dossiers.
+  Actualités : déjà à jour (dernière annonce Rockstar : la bande-annonce de lancement du 15 octobre), rien à ajouter.
+
+CE QUI VIENT ENSUITE (sans attendre ton « ok »)
+  v7.99 : la carte complétée depuis la base gtadb mise à jour (749 repères de plus, noms en jeu devenus connus, équivalents et
+  positions réels, positions corrigées par la base, photos), chaque repère avec sa page dans les six langues. Puis, en une
+  fois : contrôle complet, audit (latence, téléphone), corrections, et les archives des pages en noindex.
+
+MARCHE À SUIVRE
+  1. Décompresse les parties de l’archive à la racine du dépôt (après la v7.97), puis pousse. Aucun fichier à supprimer.
+  2. Essai au téléphone : verification.html (tableau de bord, cartes qui défilent de côté, image d’un point confirmé qui ouvre
+     sa page), prechargement.html, gta-6-pc.html, gta-6-vs-gta-5.html ; un lien « visuel officiel » d’un catalogue.
+  3. Rien à me dire : je continue.
+
+VÉRIFICATIONS (détail : outils/CHANGEMENTS-v7.98.txt § 3)
+  Chaîne complète, 0 texte sans traduction dans les cinq langues, pages par élément et Léo à jour, tests passés, écrans des
+  quatre pages au téléphone et en grand écran. Le contrôle complet (navigateur, latence, téléphone) se fera une fois, à la fin.

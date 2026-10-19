@@ -58,7 +58,10 @@ function targets(){
  try{const vm=require('node:vm');const d={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'vehicules-data.js'),'utf8'),d);for(const v of d.window.LK_VEHICULES||[]){const mm=/\/img\/officiel\/([a-z0-9-]+)-480\.webp$/.exec(v.thumb||'');if(mm)put(mm[1],'vehicules/'+v.id+'.html');}}catch(e){}
  targetMap=map;return map;
 }
-function targetFor(mediaId){return targets()[mediaId]||('medias.html#media-'+mediaId);}
+/* v7.98 (Téva : « un lien qui me mène dans les médias et tout en bas sans montrer de quoi ça parle ») : sans page qui reprend le
+   visuel, le lien ouvre la page du visuel (visuels/<id>.html, lot B : ce qu’il montre, sa source, ses reprises) au lieu de sa
+   ligne de crédits en bas de medias.html */
+function targetFor(mediaId){return targets()[mediaId]||(mediaId&&fs.existsSync(path.join(root,'visuels',mediaId+'.html'))?'visuels/'+mediaId+'.html':'medias.html#media-'+mediaId);}
 const unesc=x=>String(x).replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 /* Réécrit toutes les piles d'un document : <figure><img…><figcaption>…</figcaption></figure> devient un lien couvrant la figure.
    Idempotent : une pile déjà liée est reconstruite à partir de son image et de sa légende. prefix = chemin vers la racine ('' ou '../'). */
@@ -70,7 +73,7 @@ function linkify(html,prefix){
   const cap=/<figcaption>([\s\S]*?)<\/figcaption>/.exec(inner)||/<span class="lk-stack-cap">([\s\S]*?)<\/span>/.exec(inner);
   const caption=cap?cap[1]:'';
   const href=prefix+targetFor(id?id[1].toLowerCase():'');
-  const label=(caption?unesc(caption)+' : ':'')+(href.includes('medias.html')?'voir le visuel et ses crédits':'ouvrir la fiche');
+  const label=(caption?unesc(caption)+' : ':'')+(href.includes('medias.html')||/(^|\/)visuels\//.test(href)?'voir le visuel et ses crédits':'ouvrir la fiche');
   return `<figure><a class="lk-stack-link" href="${href}" aria-label="${esc(label)}">${img[0]}${caption?`<span class="lk-stack-cap">${caption}</span>`:''}</a></figure>`;
  }));
 }

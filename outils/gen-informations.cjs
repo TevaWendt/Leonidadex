@@ -128,7 +128,9 @@ function faq(items){return '<p>Cinq questions courtes, avec des réponses vérif
  /* v7.92.1 : un point sans photo (le prix du jeu) montre ses prix en étiquettes (vitrine.css, .vt-tag) ; les prix sont aussi
     écrits dans le texte de la carte, l'étiquette est donc décorative */
  for(const x of C.items)if(!x.media===!x.tags)throw Error('Point confirmé « '+x.t+' » : un visuel officiel ou des étiquettes de prix, pas les deux');
- const vfVisual=x=>x.media?VT.media(x.media,x.alt,{sizes:'(max-width:719px) 92vw, 340px'})
+ /* v7.98 : le visuel d’une carte mène à sa page (visuels/<id>.html), comme les autres visuels du site ; le nom du lien est le
+    texte alternatif de l’image (déjà traduit) */
+ const vfVisual=x=>x.media?(fs.existsSync(path.join(root,'visuels',x.media+'.html'))?'<a class="vf-card-media" href="visuels/'+esc(x.media)+'.html">'+VT.media(x.media,x.alt,{sizes:'(max-width:719px) 92vw, 340px'})+'</a>':VT.media(x.media,x.alt,{sizes:'(max-width:719px) 92vw, 340px'}))
   :'<span class="vt-media vf-card-prices" aria-hidden="true">'+x.tags.map((t,k)=>'<span class="vt-tag" style="--k:'+k+'"><span class="vt-tag-l">'+esc(t.l)+'</span><b class="vt-price">'+esc(t.p)+'</b></span>').join('')+'</span>';
  /* v7.92 : moment de la page — le tableau de bord : chaque point confirmé reçoit son tampon, chaque question ouverte son
     point d’interrogation (vitrine.css), dans l’ordre de lecture ; un clic mène au détail */

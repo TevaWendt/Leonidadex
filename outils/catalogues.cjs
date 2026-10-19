@@ -297,7 +297,7 @@ function row(fam, it, cat, sources) {
     + compat.html
     + (it.notes ? '<p class="cat-note">' + esc(it.notes) + '</p>' : '')
     + '</div>'
-    + '<p class="cat-meta">' + srcLinks + (media ? ' <a class="cat-media" href="medias.html#media-' + esc(it.media) + '">visuel officiel</a>' : '') + (it.lien ? ' <a class="cat-link" href="' + esc(it.lien.href) + '">' + esc(it.lien.label) + '</a>' : '') + (pageOf(fam, it) ? ' <a class="cat-page" href="' + esc(pageOf(fam, it)) + '">sa page</a>' : '') + '</p>'
+    + '<p class="cat-meta">' + srcLinks + (media ? ' <a class="cat-media" href="' + (fs.existsSync(path.join(root, 'visuels', it.media + '.html')) ? 'visuels/' + esc(it.media) + '.html' : 'medias.html#media-' + esc(it.media)) + '">visuel officiel</a>' : '') /* v7.98 : la page du visuel plutôt que sa ligne de crédits */ + (it.lien ? ' <a class="cat-link" href="' + esc(it.lien.href) + '">' + esc(it.lien.label) + '</a>' : '') + (pageOf(fam, it) ? ' <a class="cat-page" href="' + esc(pageOf(fam, it)) + '">sa page</a>' : '') + '</p>'
     + '<div class="cat-acts">' + (folded ? '<button type="button" class="cat-more-bt" data-cat-more aria-expanded="false" aria-controls="' + esc(rowId(fam, it)) + '-more"><span class="cat-more-l">Description</span></button>' : '') + ficheBox(fam, it) + '</div></td>'
     + '<td class="cat-c-eff" data-l="Effet">' + esc(it.effet.texte) + (it.effet.valeur !== null ? '<b class="cat-eff-n">' + esc(String(it.effet.valeur)) + (UNITS[it.effet.unite] || ' min') + ' <i>(' + esc(it.effet.jeu) + ')</i></b>' : '') + '</td>'
     + '<td class="cat-c-p6" data-l="GTA VI">' + accessHtml(it) + '</td>'

@@ -698,3 +698,57 @@
 .vf-note--cost dt::before{content:'';flex:none;width:10px;height:10px;border-radius:50%;border:2px solid var(--ink);background:var(--paper);}
 .vf-couts-lede{max-width:var(--measure);margin:6px 0 0;color:var(--ink-soft);}
 .info-page--verif :is(.vf-group,.vf-sheet,.vf-note).lk-reveal:not(.is-in):not(.lk-settled){transform:translate3d(0,var(--c-rise,10px),0);}
+
+/* ============================================================
+   v7.98 : les quatre pages Ce qui est confirmé, Préchargement, GTA VI sur PC, GTA VI et GTA V (Téva : « très brouillon »,
+   « des points mal alignés », « ça manque d’animation », « faire en sorte que ça défile mieux »). Contenu inchangé : seulement
+   l’agencement, les repères et le défilement au téléphone. Même moteur d’entrée (lk-reveal, cascade de vitrine.css).
+   ============================================================ */
+:is(.info-page--verif,.info-page--recherche) :is(section[id],.vf-card,.vf-q,[id^="src-"]){scroll-margin-top:132px;}
+/* tableau de bord : tuiles alignées sur une grille, l’état (coche ou point d’interrogation) toujours au bout de la ligne */
+.info-page--verif .vf-pills{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,215px),1fr));gap:8px;}
+.info-page--verif .vf-pills>li{display:flex;min-width:0;}
+.info-page--verif .vf-pill{width:100%;min-height:44px;border-radius:12px;padding:6px 10px 6px 7px;}
+.info-page--verif .vf-pill-t{flex:1;min-width:0;}
+.info-page--verif .vf-pill-s{margin-left:auto;flex:none;}
+/* repères de l’échelle des statuts : un point de la couleur du statut devant chaque marche (il n’avait pas de taille ici) */
+.info-page--verif .vf-step h3{display:flex;align-items:center;gap:9px;}
+.info-page--verif .vf-step h3 .pip{display:inline-block;flex:none;width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink);}
+/* coûts d’usage : des cartes numérotées alignées au lieu de petits cercles creux */
+.info-page--verif .vf-notes--2{counter-reset:vf-cout;gap:12px;}
+.info-page--verif .vf-note--cost{padding:14px 16px;border:2px solid var(--ink);border-radius:12px;background:var(--ed-card,#fff);box-shadow:3px 3px 0 var(--ink);}
+.info-page--verif .vf-notes>.vf-note--cost:last-child{padding-bottom:14px;}
+.info-page--verif .vf-note--cost dt::before{counter-increment:vf-cout;content:counter(vf-cout,decimal-leading-zero);display:grid;place-items:center;width:28px;height:28px;border:0;border-radius:8px;background:var(--amber);color:var(--ink);font:900 .74rem/1 'Archivo',sans-serif;}
+/* sources : plus serrées, sur deux colonnes en grand écran */
+:is(.info-page--verif,.info-page--recherche) .ed-srcs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr));gap:10px;}
+/* liste à cocher : la case à gauche du titre, la hauteur suit le texte (plus de vide en bas de carte), texte courant non gras */
+:is(.info-page--verif,.info-page--recherche) .vt-check>li{display:flex;min-width:0;}
+:is(.info-page--verif,.info-page--recherche) .vt-check-l{flex:1;flex-wrap:nowrap;height:auto;align-items:flex-start;}
+:is(.info-page--verif,.info-page--recherche) .vt-check-b{flex:1;min-width:0;}
+:is(.info-page--verif,.info-page--recherche) .vt-check-b span{font-weight:400;}
+/* tableau comparatif : la valeur en poids normal, le gras reste aux intitulés */
+.info-page--recherche .rc-cmp-v{font-weight:500;}
+@media (max-width:640px){
+  /* au téléphone, les suites de cartes défilent de côté (la suivante dépasse un peu pour le montrer) au lieu d’une colonne
+     de douze cartes ; chaque carte s’aligne au bord en fin de geste */
+  :is(.info-page--verif .vf-cards,.info-page--verif .vf-qs,.info-page--verif .vf-notes--2,.info-page--recherche .rc-cards,.info-page--recherche .rc-follow,.info-page--recherche .rc-steps.vt-steps){display:grid;grid-auto-flow:column;grid-auto-columns:84%;grid-template-columns:none;gap:12px;margin-inline:calc(var(--gutter,16px) * -1);padding:4px var(--gutter,16px) 14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gutter,16px);scrollbar-width:thin;}
+  :is(.info-page--verif .vf-cards,.info-page--verif .vf-qs,.info-page--recherche .rc-cards,.info-page--recherche .rc-follow,.info-page--recherche .rc-steps.vt-steps)>li,.info-page--verif .vf-notes--2>.vf-note{scroll-snap-align:start;min-width:0;width:auto;flex:none;}
+  .info-page--recherche .rc-steps .vt-step{flex-direction:column;align-items:stretch;height:100%;}
+  .info-page--recherche .rc-steps .vt-step-ill{flex:none;width:100%;height:96px;}
+  /* tableau de bord : deux tuiles par ligne */
+  .info-page--verif .vf-pills{grid-template-columns:repeat(2,minmax(0,1fr));}
+  /* chaque tuile devient une petite carte : pictogramme en haut, état en pastille dans le coin, l’intitulé sur toute la largeur
+     (les mots longs, « précommande », « Vorbestellerbonus », tiennent sans glisser sous l’état) */
+  .info-page--verif .vf-pill{position:relative;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:6px;min-height:66px;padding:8px 9px 9px;font-size:.8rem;}
+  .info-page--verif .vf-pill-ico{width:24px;height:24px;}
+  .info-page--verif .vf-pill-s{position:absolute;top:8px;right:8px;margin:0;width:22px;height:22px;}
+  .info-page--verif .vf-pill-t{width:100%;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word;}
+  /* tableau comparatif et sources : un peu plus compacts */
+  .info-page--recherche .rc-cmp th,.info-page--recherche .rc-cmp td{padding:12px;}
+  :is(.info-page--verif,.info-page--recherche) .ed-src-meta{font-size:.7rem;}
+}
+/* v7.98 : le visuel d’une carte de « Ce que Rockstar a confirmé » mène à la page du visuel */
+.info-page--verif .vf-card-media{display:block;color:inherit;text-decoration:none;}
+.info-page--verif .vf-card-media:focus-visible{outline:3px solid var(--coral);outline-offset:-3px;}
+.info-page--verif .vf-card-media img{transition:filter var(--c-fast,190ms);}
+@media (hover:hover){.info-page--verif .vf-card-media:hover img{filter:saturate(1.12) brightness(1.04);}}
