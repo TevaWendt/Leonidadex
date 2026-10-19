@@ -389,13 +389,14 @@ function ldItemList(fam) {
 }
 function searchEntries(fam) {
   const d = load(), data = d.families[fam], cats = new Map(data.categories.map(x => [x.id, x]));
-  return data.items.map(it => ({ l: it.nom, k: KIND[fam] || data.label, u: data.page + '#' + rowId(fam, it), s: fold([it.nom, it.description, cats.get(it.categorie).label, data.label, ...(it.variantes || []), ...it.ou_le_trouver.map(o => o.lieu ? place(o.lieu).name : o.type), ...compatWords(it)].join(' ')), w: 0, t: 'element' }));
+  /* v7.97 (lot C) : le résultat ouvre la page de l’élément quand elle existe (outils/pages-elements-index.json), sinon sa ligne */
+  return data.items.map(it => ({ l: it.nom, k: KIND[fam] || data.label, u: pageOf(fam, it) ? '/' + pageOf(fam, it) : data.page + '#' + rowId(fam, it), s: fold([it.nom, it.description, cats.get(it.categorie).label, data.label, ...(it.variantes || []), ...it.ou_le_trouver.map(o => o.lieu ? place(o.lieu).name : o.type), ...compatWords(it)].join(' ')), w: 0, t: 'element' }));
 }
 const PROOF = { officiel: 'Nommé ou décrit par Rockstar pour GTA VI ; prix et effet chiffré non publiés.', vu: 'Vu dans une capture ou une vidéo officielle de GTA VI ; prix et effet chiffré non publiés.', comm: 'Identification communautaire, non confirmée par Rockstar.', serie: 'Repère de la série (GTA V, GTA Online, GTA IV ou San Andreas), présenté comme tel : rien n’est confirmé pour GTA VI.', conf: 'Rien de publié par Rockstar pour GTA VI : à confirmer.' };
 function leoRows(fam) {
   const d = load(), data = d.families[fam], cats = new Map(data.categories.map(x => [x.id, x]));
   return data.items.map(it => { const m = it.media ? d.ctx.medias[it.media] : null; const src = d.sources[it.sources[0]];
-    return { key: 'catalogue:' + it.id, id: it.id, kind: 'catalogue-' + fam, name: it.nom, aliases: [...(it.variantes || [])], category: data.label + ', ' + cats.get(it.categorie).label, url: data.page + '#' + rowId(fam, it), image: m ? m.variants[0].src : null, calcId: null, price: null, proof: PROOF[it.statut], source: src.url, verifiedAt: src.consultedAt }; });
+    return { key: 'catalogue:' + it.id, id: it.id, kind: 'catalogue-' + fam, name: it.nom, aliases: [...(it.variantes || [])], category: data.label + ', ' + cats.get(it.categorie).label, url: pageOf(fam, it) ? '/' + pageOf(fam, it) : data.page + '#' + rowId(fam, it), listUrl: data.page + '#' + rowId(fam, it), image: m ? m.variants[0].src : null, calcId: null, price: null, proof: PROOF[it.statut], source: src.url, verifiedAt: src.consultedAt }; });
 }
 function progressIds(fam) { return load().families[fam].items.filter(trackable).map(it => it.id); }
 function progressNames(fam) {

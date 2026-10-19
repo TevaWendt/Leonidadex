@@ -58,7 +58,9 @@ function config(root = ROOT) {
   const f = path.join(root, 'outils/langues.json'), key = root + '|' + fs.statSync(f).mtimeMs;
   if (!CFG.has(key)) {
     const c = readJSON(root, 'outils/langues.json');
-    for (const l of c.langues) if (l.pages === '*') { const ex = new Set(l.exclure || []); l.pages = frPages(root, c).filter(p => !ex.has(p)); l.toutes = true; }
+    /* v7.97 (lot C) : « exclure » propre à une langue accepte aussi un dossier (« lieux-carte/ ») : une famille de pages peut être
+       traduite dans une langue avant les autres (l'anglais des lieux d'abord, Téva, 18 octobre) */
+    for (const l of c.langues) if (l.pages === '*') { const ex = l.exclure || [], exclu = p => ex.some(x => x.endsWith('/') ? p.startsWith(x) : x === p); l.pages = frPages(root, c).filter(p => !exclu(p)); l.toutes = true; }
     CFG.clear(); CFG.set(key, c);
   }
   return CFG.get(key);
@@ -841,6 +843,9 @@ function translateScript(code0, file, ctx) {
    search-index.js et search-lieux.js : { l: libellé affiché, k: type, u: adresse, s: texte cherché }. Le libellé et le type
    passent par la mémoire (un nom propre absent reste tel quel) ; l'adresse va vers la page traduite ; le texte cherché
    reçoit le libellé et la description traduits, et garde le texte français (on trouve une page dans les deux langues). */
+/* v7.97 (lot C) : page d'un lieu ou d'un groupe → son identifiant sur la carte (outils/pages-elements-index.json, « elements ») */
+const PAGE_ID = new Map();
+function pageVersId(root) { if (!PAGE_ID.has(root)) { const f = path.join(root, 'outils/pages-elements-index.json'), m = new Map(); if (fs.existsSync(f)) for (const [k, v] of Object.entries(JSON.parse(fs.readFileSync(f, 'utf8')).elements || {})) if (!k.includes(':') && typeof v === 'string') m.set(v, k); PAGE_ID.set(root, m); } return PAGE_ID.get(root); }
 function translateSearch(code0, file, ctx) {
   const m = code0.match(/^([\s\S]*?window\.LK_INDEX(?:_LIEUX)?\s*=\s*)(\[[\s\S]*\])(\s*;?\s*)$/); if (!m) return null;
   const { mem, link, code } = ctx; let list; try { list = JSON.parse(m[2]); } catch { return null; }
@@ -851,6 +856,9 @@ function translateSearch(code0, file, ctx) {
     const l = typeof e.l === 'string' ? T(e.l, ' (l)', /LIEUX/.test(m[1])) : null; if (l !== null) r.l = l;
     const k = typeof e.k === 'string' ? T(e.k, ' (k)') : null; if (k !== null) r.k = k;
     if (typeof e.u === 'string') r.u = link.abs('https://www.leonidakit.com' + e.u).replace(/^https:\/\/www\.leonidakit\.com/, '');
+    /* v7.97 (lot C) : un lieu dont la page n'est pas encore traduite dans cette langue ouvre la carte de la langue centrée sur lui
+       (comme avant le lot A) plutôt que la page française */
+    if (typeof e.u === 'string' && /^\/(?:lieux-carte|quartiers)\//.test(e.u) && r.u === e.u && ctx.lang && ctx.lang.dossier) { const id = pageVersId(ctx.root || ROOT).get(e.u.slice(1)); if (id) r.u = link.abs('https://www.leonidakit.com/carte.html#lieu=' + encodeURIComponent(id)).replace(/^https:\/\/www\.leonidakit\.com/, ''); }
     if (typeof e.s === 'string') {
       let desc = null;
       if (typeof e.l === 'string' && e.s.startsWith(e.l + ' ')) desc = T(e.s.slice(e.l.length + 1).trim(), ' (s)', true);
@@ -895,10 +903,19 @@ function generer(code, root = ROOT, opts = {}) {
   }
   /* 2. pages */
   const keepPages = new Set();
+  /* v7.97 (lot C) : les pages par élément (outils/pages-elements-index.json) sont traduites par outils/langues-elements.cjs, avec sa
+     propre mémoire (outils/langues/<code>/elements/) ; toutes les autres pages gardent ce moteur et leurs traductions */
+  const elFile = path.join(root, 'outils/pages-elements-index.json'), EL = fs.existsSync(elFile) ? new Set(Object.keys(JSON.parse(fs.readFileSync(elFile, 'utf8')).pages || {})) : new Set();
+  let EM = null, ectx = null;
+  const traduirePage = (src, p) => {
+    if (!EL.has(p)) return translatePage(src, p, code, ctx);
+    if (!EM) { EM = require('./langues-elements.cjs'); ectx = { ...ctx, mem: EM.memoire(root, code) }; ectx.mem.used = mem.used; /* une entrée commune servie par ces pages compte comme utilisée */ if ((ectx.mem.conflicts || []).length) report.conflicts = [...report.conflicts, ...ectx.mem.conflicts.map(c => c + ' [pages par élément]')]; }
+    return EM.translatePage(src, p, code, ectx);
+  };
   for (const p of lang.pages) {
     /* v7.88 : l'image de partage de la page française est retirée avant la traduction, celle de la langue posée après
        (outils/gen-partage.cjs) */
-    let html = partage.applyMeta(translatePage(partage.strip(fs.readFileSync(path.join(root, p), 'utf8')), p, code, ctx), p, code, root);
+    let html = partage.applyMeta(traduirePage(partage.strip(fs.readFileSync(path.join(root, p), 'utf8')), p), p, code, root);
     /* v7.89 (lot 5) : le manifeste de l'appli de cette langue (outils/appli.cjs) */
     html = require('./appli.cjs').manifesteDe(html, lang.dossier);
     /* assemblage v7.91 : « GTA 6 » insécable dans les titres et les questions (outils/insecables.cjs) */
@@ -1019,7 +1036,9 @@ function sitemap(root = ROOT) {
 /* Appelé par sync-site.cjs : toutes les langues publiées ; écrit outils/langues/_rapport.json (manques). */
 function toutGenerer(root = ROOT) {
   const cfg = config(root), reports = [];
-  for (const l of publiees(cfg)) reports.push(generer(l.code, root));
+  /* v7.97 (lot C) : 3 700 pages par langue ; les fichiers d’une langue sont écrits, leur contenu n’est pas gardé pour les suivantes
+     (sans cela, cinq langues dépassaient le tas de 4 Go) */
+  for (const l of publiees(cfg)) { const r = generer(l.code, root); delete r.outputs; reports.push(r); }
   sitemap(root);
   const summary = reports.map(r => ({ code: r.code, pages: r.pages.length, scripts: r.scripts.length, manques: r.missing.length, casses: r.broken.length, conflits: r.conflicts.length }));
   return { reports, summary };

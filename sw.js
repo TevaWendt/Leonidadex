@@ -21,7 +21,7 @@
    réseau (sauf en mode « économie de données ») : seuls les pages et les fichiers qui ont changé sont téléchargés, puis
    l'ancienne préparation est supprimée. */
 'use strict';
-const VERSION = 'ebeea8703b82'; /* outils/appli.cjs */
+const VERSION = '6bdd9e6aa87d'; /* outils/appli.cjs */
 const LANGUES = ["en", "es", "it", "de", "pt"]; /* outils/appli.cjs */
 const PACK = ["", "compagnon.html", "hors-ligne.html", "carte.html", "calculateurs.html", "progression.html", "carnets/arsenal.html", "carnets/calculs.html", "carnets/collectibles.html", "carnets/consommables.html", "carnets/garage.html", "carnets/garde-robe.html", "carnets/lieux.html", "carnets/personnalisations.html", "carnets/proprietes.html"]; /* outils/appli.cjs */
 

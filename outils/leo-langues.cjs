@@ -75,7 +75,7 @@ function build(code, root, L, ctx) {
     if (Array.isArray(sh.proofs)) o.proofs = sh.proofs.map(p => T(p, 'preuve'));
     if (Array.isArray(sh.labels)) o.labels = sh.labels.map(p => T(p, 'libellé'));
     if (Array.isArray(sh.items)) {
-      if (sh.packed) { const ni = sh.packed.indexOf('name'); o.items = sh.items.map(a => { const b = a.slice(); if (ni >= 0) { b[ni] = T(a[ni], 'lieu'); names.push({ shard: name, name: b[ni], changed: b[ni] !== a[ni] }); } return b; }); }
+      if (sh.packed) { const ni = sh.packed.indexOf('name'), pi = sh.packed.indexOf('pg'); o.items = sh.items.map(a => { const b = a.slice(); if (ni >= 0) { b[ni] = T(a[ni], 'lieu'); names.push({ shard: name, name: b[ni], changed: b[ni] !== a[ni] }); } if (pi >= 0 && typeof b[pi] === 'string') { const u = U(b[pi]); b[pi] = u.startsWith('/' + dir + '/') ? u : 0; } /* v7.97 : la page du lieu dans la langue quand elle y est traduite, sinon la carte de la langue (comme avant) */ return b; }); }
       else o.items = sh.items.map(x => {
         const r = { ...x }, na = nameWithAliases(x.name, x.aliases, 'fiche ' + x.key, name);
         r.name = na.name; if (na.aliases.length) r.aliases = na.aliases; if (na.nameFr) r.nameFr = na.nameFr;

@@ -1,0 +1,88 @@
+LEONIDAKIT v7.97 : « une page par élément », lot C : les 3 224 pages par élément dans les cinq langues
+19 octobre 2026
+
+Base : v7.96 (commit 354fd17cf, l’archive « modifs » livrée le 18 octobre vers 23 h). Rien n’est publié ni poussé. CSP
+inchangée. Aucun fichier à supprimer. Aucune donnée inventée sur GTA VI. Aucun contenu existant n’est modifié : les pages en
+place reçoivent seulement des liens vers les pages traduites nouvelles, et leurs traductions restent celles d’avant (voir § 2).
+Téva, 18 octobre : « fais l’anglais des lieux en premier » (19 h 26), « il faudrait qu’il y ait toutes les langues qu’il y a
+sur mon site » (20 h 17), puis 23 h 58 : « chaque page associée à chaque élément aura évidemment chaque page en chaque
+langue » et « les pages n’étant pas assez appropriées de par le manque d’informations qu’elles possèdent […] doivent être
+placées sous la balise noindex ». Les contrôles complets et l’audit se font une seule fois, à la fin des livraisons (même
+message) ; cette livraison est vérifiée par la chaîne de génération, l’extraction des traductions et les tests des pages.
+
+1. CE QUI EST GÉNÉRÉ
+- Les 3 224 pages par élément (lieux-carte/, quartiers/, consommables/, coiffures/, tatouages/, tenues/, perso-vehicules/,
+  perso-armes/, options-vehicules/, options-armes/, marques/, munitions/, editions/, achats/, visuels/, moments/) existent en
+  anglais, espagnol, italien, allemand et portugais (en/…, es/…, it/…, de/…, pt/… : 16 120 pages traduites), écrites depuis la
+  page française finale : titre avec « GTA 6 », description, fil d’Ariane, texte construit, tableau Identité, aperçu de carte,
+  visuel crédité, cartes liées, précédent et suivant, barre de langue, canonical de la langue, og:locale, JSON-LD traduit.
+- hreflang : une page indexable porte fr, en, es, it, de, pt et x-default (anglais) ; une page en noindex n’en porte aucun. Les
+  pages françaises reçoivent les mêmes, et leur barre de langue mène à la page traduite. sitemap.xml et sitemap-fiches.xml portent
+  chaque version indexable avec xhtml:link et lastmod (13 590 adresses dans sitemap.xml, 14 Mo, sous les plafonds de 50 000 adresses et 50 Mo).
+- Indexation (Téva, 23 h 58) : une page sans assez d’informations réelles est en noindex,follow dans toutes les langues ; les
+  autres sont indexées. En noindex : 1 148 pages françaises sur 3 224 (et leurs traductions) : bâtiments numérotés, noms incertains et
+  existence douteuse (828 lieux), valeurs d’options (145) et types de munitions (6) sans donnée de GTA VI, visuels sans
+  description (165), quartiers sans lieu (3), marque sans véhicule (1). Indexées : 1 672 lieux (quartier, comté, position, lieu
+  réel ou capture), les catalogues, éditions, achats, moments, marques, les visuels décrits, les sommaires. La v7.96 les avait
+  toutes indexées (message de 20 h 09) : remplacé par la consigne de 23 h 58. Les pages en noindex seront livrées à part, avec ce
+  qui manque à chacune, à la fin des livraisons. comparateur.html devient indexable (accord de 21 h 19) ; logements.html reste en
+  noindex (rien de publié).
+- Recherche du site : un résultat de lieu ouvre la page du lieu dans la langue du visiteur (la carte est à un clic depuis la
+  page) ; les lignes des catalogues et les achats sans fiche ouvrent leur page ; les marques, les types de munitions, les
+  éditions et les grands moments deviennent des résultats (outils/elements-index.json, écrit par gen-pages-elements-b.cjs).
+- Léo : « Ouvrir la fiche » d’un lieu ouvre sa page dans la langue, la carte reste l’action « où est » ; les marques et les
+  grands moments sont des fiches de Léo dans les six langues (noyau 352 → 368 Kio). Les types de munitions et les éditions
+  restent des résultats de recherche seulement : le lexique de Léo ramène « cartouches » à « munitions », et une fiche
+  « Édition Ultimate » détournait cinq questions de l’évaluation (contenu de l’Ultimate, véhicules de l’Ultimate) que les sujets
+  Éditions traitent déjà.
+- IndexNow (api/indexnow.js) : au-delà de 10 000 adresses fraîches (le plafond d’un envoi), les suivantes partent dans des envois
+  à la suite au lieu d’être perdues. Test ajouté. Aucune variable à poser.
+
+2. DEUX MOTEURS DE TRADUCTION : LE RESTE DU SITE NE BOUGE PAS
+- Les pages par élément sont construites depuis des données : leurs phrases ont besoin de motifs à trous numériques, de listes à
+  deux niveaux, de parenthèses traduites à part, de dates écrites par Intl, d’une coupe de phrases qui respecte « St. » ou une
+  parenthèse. Appliquées au site entier, ces règles changeaient une cinquantaine de traductions existantes (vérifié en générant
+  l’anglais avec et sans elles). Elles vivent donc dans un moteur à part, outils/langues-elements.cjs, avec sa mémoire à part
+  (outils/langues/<code>/elements/v797.json) ; outils/langues.cjs ne lui confie que les pages de outils/pages-elements-index.json.
+  Vérifié par une génération à blanc de l’anglais : sur les pages existantes, seuls changent les liens vers les pages par élément
+  devenues traduites et comparateur.html (indexable) ; aucune phrase traduite ne change.
+- outils/langues/<code>/v797.json (petit, lu par le moteur du site) : libellés et motifs très précis pour Léo et la recherche.
+- « exclure » propre à une langue accepte un dossier (pour une famille livrée dans une langue avant les autres).
+
+3. CORRECTIONS DES GÉNÉRATEURS (pages par élément seulement)
+- Textes construits depuis des libellés connus : catégorie en capitale en tête de phrase (« Boissons », comme dans la liste),
+  pluriels des intertitres, singulier des catégories d’armes, lede des types de munitions, « cette planque », titre du coffret
+  collector, « GTA VI » dans le nom JSON-LD (le titre garde « GTA 6 »), titre de borne sans parenthèse finale, « Ce qu’elle
+  montre » terminé par un point, descriptions coupées sur une fin de phrase ; la description d’un lieu au nom long raccourcit
+  par phrases entières (« … position sur la carte. ») au lieu d’être coupée au milieu d’un mot.
+- Repris en chemin : un motif ne coupe plus un repère de balise en deux (cellule « Reprise sur » des visuels), un titre de page
+  cité sans « | Leonidakit » se traduit comme le titre complet, une description de catalogue, d’option, d’édition ou de
+  consommable trop longue prend une phrase de repli entière (« … : ce qu’on en sait, statut, sources et éléments liés. »), la
+  phrase de repli d’une option nomme son poste (deux « Street » avaient la même description), « Images tirées de vidéos
+  officielles, en copie miroir (4) » au lieu de deux parenthèses de suite.
+- Noms de marques et constructeurs réels gardés tels quels dans Léo (« Cheval », « De Havilland ») ; « X ou Y » traduit.
+- Mémoire : 70 textes et 9 motifs ajoutés après la chaîne (outils/langues/<code>/elements/v797.json), extraction à 0 dans les
+  cinq langues.
+
+4. VÉRIFICATIONS DE CETTE LIVRAISON (le contrôle complet et l’audit viennent à la fin des livraisons)
+- Chaîne de génération complète puis synchronisation : 3 696 pages par langue, 0 texte sans traduction en en, es, it, de, pt
+  (extraction à 0 ×5), aucun conflit de mémoire dans les deux moteurs.
+- Génération à blanc de l’anglais, comparée aux fichiers en place : sur les pages existantes, seuls changent les liens vers les
+  pages par élément devenues traduites et comparateur.html ; aucune phrase traduite ne change.
+- verifier.js : 0 erreur, 3 312 702 références vérifiées dans 22 177 pages (HTML, srcset, CSS, galeries, données, sitemaps).
+- gen-pages-elements --verifier : 0 page différente sur 3 224 ; gen-leo --check : à jour.
+- Tests : pages-elements, pages-elements-b, v797, couverture-pages, audit-finition, leo-v745, v786 (IndexNow) : tous passés
+  après corrections ; évaluation de Léo : 99 % (seuils tenus), 0 réponse détournée par les fiches nouvelles.
+- Seconde passe de synchronisation : aucun fichier changé (empreintes de tout le dépôt comparées).
+
+5. FICHIERS
+- Nouveaux : en/, es/, it/, de/, pt/ : les seize dossiers des pages par élément ; outils/langues-elements.cjs ;
+  outils/langues/<code>/elements/v797.json et v797.json (5 de chaque) ; outils/elements-index.json ; outils/tests/v797.test.cjs ;
+  LISEZ-MOI-v7.97.txt, outils/CHANGEMENTS-v7.97.txt, outils/MATRICE-v7.97.md.
+- Modifiés : outils/langues.cjs (délégation, exclusions par langue, repli de la recherche), langues.json, couverture-pages.cjs
+  (seuil d’indexation), sync-site.cjs, catalogues.cjs, gen-leo.cjs, leo-langues.cjs, outils/sources/leo-core.js (et sa copie
+  servie), gen-pages-elements.cjs, gen-pages-elements-b.cjs, comparateur.html, api/indexnow.js, tests (pages-elements,
+  pages-elements-b, langues), les pages françaises des lots (robots, hreflang, barre de langue, textes du § 3), search-index.js,
+  search-lieux.js, leo-index.json, leo/*.json et leurs versions dans chaque langue, sitemaps, outils/sitemap-dates.json,
+  outils/COUVERTURE-PAGES.md, README.md.
+- Rien à supprimer.

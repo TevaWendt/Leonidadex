@@ -176,6 +176,8 @@ if(fs.existsSync('outils/codes-index.json'))index=index.concat(JSON.parse(fs.rea
 if(fs.existsSync('outils/trophees-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/trophees-index.json','utf8')));
 /* section online : l’espace GTA Online et ses pages (outils/online-index.json, écrit par outils/gen-online.cjs) */
 if(fs.existsSync('outils/online-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/online-index.json','utf8')));
+/* v7.97 (lot C) : marques, types de munitions, grands moments, éditions (outils/elements-index.json, écrit par outils/gen-pages-elements-b.cjs) */
+if(fs.existsSync('outils/elements-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/elements-index.json','utf8')).recherche||[]);
 /* Revue de conformité (v7.53) : chaque calcul et le business plan sont trouvables avec les mots du joueur, vers le bon outil. */
 {const CALC=[['goal','Mon objectif : combien de temps pour mon but','objectif premier million combien de temps atteindre somme argent vise'],
  ['purchase','Mes achats : est-ce que je peux l’acheter','acheter achat payer peux je acheter tresorerie frais obligatoires reserve deja possede'],
@@ -190,9 +192,9 @@ if(fs.existsSync('outils/online-index.json'))index=index.concat(JSON.parse(fs.re
 { /* recherche des lieux : fichier séparé, chargé à la première saisie */
   const CATL={ville:'Villes',quartier:'Quartiers',comte:'Comtés',region:'Régions',transport:'Transports',nature:'Nature',notable:'Lieux notables',batiment:'Bâtiments',planque:'Planques'};
   const gnom=Object.fromEntries(mapData.groupes.map(g=>[g.id,g.n]));
-  /* v7.95 (lot A) : les résultats ouvrent toujours la carte centrée sur le lieu, dont la fenêtre mène à sa page (« Ouvrir sa page ») ;
-     le lot C, quand les pages existeront dans les six langues, fera pointer le résultat sur la page de la langue du visiteur */
-  const lieux=[...mapData.groupes,...mapData.lieux].filter(p=>p.id&&p.n).map(p=>({l:p.n,k:CATL[p.c]||'Lieu',u:'/carte.html#lieu='+encodeURIComponent(p.id),s:(p.n+' '+(p.r||'')+' '+(gnom[p.p]||'')+' '+(CATL[p.c]||'')+' lieu carte').toLowerCase(),w:2}));
+  /* v7.95 (lot A) : les résultats ouvraient la carte centrée sur le lieu ; v7.97 (lot C) : ils ouvrent la page du lieu quand elle
+     existe (pg, posée par outils/gen-pages-elements.cjs ; la page mène à la carte), dans la langue du visiteur (langues.cjs → abs) */
+  const lieux=[...mapData.groupes,...mapData.lieux].filter(p=>p.id&&p.n).map(p=>({l:p.n,k:CATL[p.c]||'Lieu',u:p.pg||'/carte.html#lieu='+encodeURIComponent(p.id),s:(p.n+' '+(p.r||'')+' '+(gnom[p.p]||'')+' '+(CATL[p.c]||'')+' lieu carte').toLowerCase(),w:2}));
   fs.writeFileSync('search-lieux.js','/* Généré automatiquement : lieux de la carte pour la recherche globale. */\nwindow.LK_INDEX_LIEUX = '+JSON.stringify(lieux)+';\n');
 }
 index=[...new Map(index.map(e=>[e.u,e])).values()];fs.writeFileSync('search-index.js','/* Generated from current data. */\nwindow.LK_INDEX = '+JSON.stringify(index)+';\n');
@@ -274,9 +276,11 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
    const label=html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1]?.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();if(!label)continue;const desc=html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'';
    extra.push({l:label,k:'Carnet de progression',u:'/carnets/'+f,s:(label+' '+desc+' '+(CS[id]||'')+' carnet progression suivi').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\s\u00a0\u202f]+/g,' ').toLowerCase(),w:-1});}}
  const acqContext={window:{}};vm.runInNewContext(readFile('acquisitions-data.js'),acqContext);
+ /* v7.97 (lot C) : un achat sans fiche qui a sa page (achats/…, lot B) l'ouvre ; sinon sa carte sur le hub */
+ const pageAchat=(()=>{const f='outils/pages-elements-index.json',el=fs.existsSync(f)?JSON.parse(fs.readFileSync(f,'utf8')).elements||{}:{};return id=>el['achats:'+id]&&/^achats\//.test(el['achats:'+id])?'/'+el['achats:'+id]:null;})();
  for(const item of acqContext.window.LK_ACQUISITIONS.items){
   if(item.ref)continue; // L'entité canonique véhicule/arme est déjà indexée.
-  extra.push({l:item.name,k:acqContext.window.LK_ACQUISITIONS.categories.find(c=>c.id===item.category)?.label||'Acquisition',u:item.hubUrl,s:item.name+' '+item.description+' '+item.condition,w:0});
+  extra.push({l:item.name,k:acqContext.window.LK_ACQUISITIONS.categories.find(c=>c.id===item.category)?.label||'Acquisition',u:pageAchat(item.id)||item.hubUrl,s:item.name+' '+item.description+' '+item.condition,w:0});
  }
  for(const c of acqContext.window.LK_ACQUISITIONS.categories.filter(c=>!c.alias&&Array.isArray(c.sections)))for(const x of c.sections)extra.push({l:x.title,k:c.label,u:c.route+'#'+x.id,s:(x.title+' '+x.text+' '+c.label).toLowerCase(),w:0});
  /* v7.42 (lot 5) : les catalogues (outils/catalogues.cjs) : une entrée par famille (ancre de sa liste), une par élément (type « élément », lien vers l'ancre de sa ligne), plus l'ancre Accessoires. */

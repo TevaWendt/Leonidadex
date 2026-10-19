@@ -1,13 +1,15 @@
 'use strict';
 /* v7.95 (lot A, « une page par élément ») : les pages écrites par outils/gen-pages-elements.cjs (lieux de la carte, quartiers,
    villes et comtés, consommables). Bloquant : couverture à 100 % des familles du lot, pages à jour, titre et description
-   uniques et bornés, une seule balise h1, canonical, balise robots selon le seuil d’indexation, aucun hreflang tant que la
-   famille n’est pas traduite (lot C), fil d’Ariane en JSON-LD valide, poids borné, aucun signe d’écriture automatique dans
+   uniques et bornés, une seule balise h1, canonical, balise robots selon le seuil d’indexation, hreflang de chaque langue sur
+   une page indexable et aucun sur une page noindex (v7.97, lot C), fil d’Ariane en JSON-LD valide, poids borné, aucun signe d’écriture automatique dans
    le texte visible, et les liens qui relient la carte, le carnet, la liste des consommables et les hubs à ces pages. */
 const test = require('node:test'), assert = require('node:assert'), fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), { execFileSync, spawnSync } = require('node:child_process');
 const ROOT = path.resolve(__dirname, '../..'), read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const INDEX = JSON.parse(read('outils/pages-elements-index.json'));
 const PAGES = Object.keys(INDEX.pages);
+/* v7.97 (lot C) : les langues publiées et les pages que chacune traduit (une famille peut être traduite dans une langue avant les autres) */
+const LCFG = require(path.join(ROOT, 'outils/langues.cjs')).config(ROOT), LANGS = LCFG.langues.filter(l => l.etat === 'publiee' && l.code !== 'fr');
 const INV = JSON.parse(execFileSync(process.execPath, [path.join(ROOT, 'outils/couverture-pages.cjs'), '--json'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }));
 const fam = id => INV.familles.find(f => f.id === id);
 const texte = html => html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/&[a-z#0-9]+;/g, ' ');
@@ -21,7 +23,7 @@ test('lot A : les pages sont à jour (gen-pages-elements --verifier ne trouve ri
   const r = spawnSync(process.execPath, [path.join(ROOT, 'outils/gen-pages-elements.cjs'), '--verifier'], { cwd: ROOT, encoding: 'utf8' });
   assert.equal(r.status, 0, r.stdout + r.stderr);
 });
-test('lot A : titre et description uniques et bornés, un seul h1, canonical, robots selon le seuil, pas de hreflang, JSON-LD valide, poids borné', () => {
+test('lot A : titre et description uniques et bornés, un seul h1, canonical, robots selon le seuil, hreflang selon robots, JSON-LD valide, poids borné', () => {
   const titres = new Map(), descs = new Map(); const strict = new Map(); for (const f of INV.familles) for (const it of f.items) if (it.page) strict.set(it.page, !!it.indexable); /* v7.96 : seuil du prompt pour les lieux aussi (deux informations réelles) */
   for (const file of PAGES) {
     const dec = x => x.replace(/&quot;/g, '"').replace(/&#39;/g, '’').replace(/&amp;/g, '&');
@@ -34,7 +36,11 @@ test('lot A : titre et description uniques et bornés, un seul h1, canonical, ro
     const canon = 'https://www.leonidakit.com/' + file.replace(/(^|\/)index\.html$/, '$1'); assert.ok(html.includes('<link rel="canonical" href="' + canon + '">'), file + ' : canonical');
     const robots = html.match(/<meta name="robots" content="([^"]*)"/)[1]; const idx = strict.has(file) ? strict.get(file) : true;
     assert.equal(/noindex/.test(robots), !idx, file + ' : robots « ' + robots + ' » pour une page ' + (idx ? 'indexable' : 'non indexable'));
-    assert.ok(!/<link rel="alternate" hreflang=/.test(html), file + ' : hreflang avant la traduction (lot C)');
+    /* v7.97 (lot C) : une page indexable porte un hreflang par langue qui la traduit (outils/langues.json, « exclure » global ou propre à la langue) et x-default ; une page noindex ou sans traduction n’en porte aucun */
+    const hl = [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="/g)].map(m => m[1]).sort().join(',');
+    const tr = LANGS.filter(l => l.pages.includes(file)).map(l => l.code); const attendu = idx && tr.length ? ['fr', ...tr, 'x-default'].sort().join(',') : '';
+    assert.equal(hl, attendu, file + ' : hreflang « ' + hl + ' » (attendu « ' + attendu + ' »)');
+    for (const c of tr) assert.ok(fs.existsSync(path.join(ROOT, LANGS.find(l => l.code === c).dossier, file)), file + ' : version ' + c);
     for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) JSON.parse(m[1]);
     assert.ok(/"@type":"BreadcrumbList"/.test(html), file + ' : BreadcrumbList');
     /* une page de groupe ou un sommaire est une CollectionPage avec sa liste ; une fiche est une WebPage sur son élément */

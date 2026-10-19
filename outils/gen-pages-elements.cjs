@@ -35,7 +35,11 @@ const sha = s => crypto.createHash('sha256').update(s).digest('hex').slice(0, 16
 const pick = (id, variants, salt = 0) => variants[(parseInt(crypto.createHash('sha1').update(id + '#' + salt).digest('hex').slice(0, 8), 16)) % variants.length];
 const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 const minuscule = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : s; /* « GTA VI » reste en capitales */
-const court = (s, max = 155) => s.length <= max ? s : s.slice(0, max - 1).replace(/\s+\S*$/, '') + '…';
+/* v7.97 : quand la description dépasse, elle s’arrête sur une fin de phrase (une phrase entière se traduit ; une phrase
+   coupée par « … » jamais) ; sans fin de phrase assez loin, coupe sur un mot comme avant */
+/* v7.97 : sans fin de phrase assez loin, la phrase de repli de la page (une phrase entière, traduite par la mémoire) remplace
+   la coupe au milieu d’un mot ; la coupe ne reste qu’en tout dernier recours */
+const court = (s, max = 155, repli = null) => { if (s.length <= max) return s; const head = s.slice(0, max), i = Math.max(head.lastIndexOf('. '), head.lastIndexOf(' ; ')); if (i >= 40) return head.slice(0, i + 1).replace(/ ;$/, '.'); if (repli && repli.length <= max) return repli; return head.slice(0, max - 1).replace(/\s+\S*$/, '') + '…'; };
 
 /* ---------- index des pages (empreintes, adresses) ---------- */
 const INDEX_FILE = path.join(ROOT, 'outils/pages-elements-index.json');
@@ -65,7 +69,7 @@ function page(o) {
      o.liste = [[nom, adresse relative à la racine], …], au plus 120 entrées écrites, le total dans numberOfItems) */
   const thing = o.liste
     ? { '@context': 'https://schema.org', '@type': 'CollectionPage', name: o.nom, description: o.description, url: canonical, mainEntity: { '@type': 'ItemList', numberOfItems: o.liste.length, itemListElement: o.liste.slice(0, 120).map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, url: SITE + url })) } }
-    : { '@context': 'https://schema.org', '@type': 'WebPage', name: o.titre, description: o.description, url: canonical, about: { '@type': 'Thing', name: o.nom }, ...(o.image ? { primaryImageOfPage: { '@type': 'ImageObject', contentUrl: o.image } } : {}) };
+    : { '@context': 'https://schema.org', '@type': 'WebPage', name: o.titre.replace(/\bGTA 6\b/g, 'GTA VI'), description: o.description, url: canonical, about: { '@type': 'Thing', name: o.nom }, ...(o.image ? { primaryImageOfPage: { '@type': 'ImageObject', contentUrl: o.image } } : {}) };
   const head = ['<!DOCTYPE html>', '<html lang="fr">', '<head>', '<meta charset="UTF-8">', '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
     '<title>' + esc(o.titre) + '</title>', '<meta name="description" content="' + esc(o.description) + '">',
     /* v7.96 (Téva, 18 octobre, 20 h 09) : toute page par élément est proposée aux moteurs (INDEXER_TOUT de couverture-pages.cjs) */
@@ -129,7 +133,7 @@ const dans = (c, link) => { if (c === 'comte') return /(^|>)Comté de /.test(lin
 /* « du comté de Kelly », « de la ville de Vice City », « de Lummox County » */
 const de = x => /^le /.test(x) ? 'du ' + x.slice(3) : /^la /.test(x) ? 'de la ' + x.slice(3) : 'de ' + x;
 /* « ce bâtiment », « cet espace naturel » */
-const ce = mot => (/^[aeiouyhéèêâîô]/i.test(mot) ? 'cet ' : 'ce ') + mot;
+const ce = mot => (mot === 'planque' ? 'cette ' : /^[aeiouyhéèêâîô]/i.test(mot) ? 'cet ' : 'ce ') + mot;
 /* un comté dans un titre ou une description : « , comté de Kelly » ; les autres groupes : « à Vice City » */
 const comteLabel = nom => nom.replace(/^Comté de /, 'comté de ');
 const enTitre = nom => /^Comté de /.test(nom) ? ', ' + comteLabel(nom) : ' à ' + nom;
@@ -236,7 +240,13 @@ function descriptionLieu(it, d, plus = '') {
     nom + ' dans GTA VI (' + catL + (where ? ', ' + where : '') + ') : ce que la communauté a repéré, ' + (d.reel ? 'son équivalent réel, ' : '') + 'ses voisins et sa place sur la carte.',
     'Où est ' + nom + ' sur la carte de GTA VI' + (where ? ' (' + where + ')' : '') + ' : statut du repère, ' + (d.img ? 'capture officielle, ' : '') + 'lieux les plus proches, lien vers la carte interactive.'
   ];
-  let s = pick(it.id, v, 6); if (s.length > 155) s = v[0]; return court(s);
+  let s = pick(it.id, v, 6); if (s.length > 155) s = v[0];
+  /* v7.97 : un nom long ne fait plus couper la description au milieu d’un mot (« …sur la carte de… », intraduisible) : la phrase
+     raccourcit par étapes, chaque forme étant une phrase entière connue de la mémoire de traduction */
+  if (s.length > 155) s = s.replace(/ de Leonida\.$/, '.');
+  if (s.length > 155) s = s.replace('lieu réel qui l’inspire, ', '');
+  if (s.length > 155) s = nom + ', ' + catL + ' de GTA VI : statut, lieux voisins et position sur la carte.';
+  return court(s);
 }
 function titreLieu(it, d, plus = '') {
   const where = d.groupe ? enTitre(d.groupe.n) : d.comteNom ? enTitre(d.comteNomAff) : '';
@@ -395,8 +405,9 @@ function pageConsommable(it, i, ordre) {
     + fin(file, '<a class="fiche-meth-a" href="../nourriture.html#consommables-' + esc(c.id) + '">Sa ligne dans la liste des consommables</a>', { q: 'Quel budget pour manger et récupérer ?', d: 'Écris ce que tu dépenses par partie : tu vois ce que ça pèse sur ton objectif.', params: 'tool=budget&amp;type=consumable&amp;from=consommables', cta: 'Faire mon budget' })
     + prevNext(ordre, i, x => path.basename(x.cible), x => x.nom);
   const liens = '<span class="lc-track" data-track="consommables" data-track-id="' + esc(c.id) + '" data-track-name="' + esc(c.nom) + '"></span><a href="../nourriture.html#consommables-' + esc(c.id) + '">Dans la liste des consommables</a>';
-  const lede = esc(c.nom) + ' dans GTA VI : ' + esc(cat.label.toLowerCase()) + ', ' + minuscule(st[0]).split(' :')[0] + '. ' + esc(c.description);
-  return page({ file, nom: c.nom, titre: titre('GTA 6 : ' + c.nom + ', ' + cat.label.toLowerCase()), description: court(c.nom + ' dans GTA VI (' + cat.label.toLowerCase() + '). ' + c.description), indexable: !!it.indexable, image: v1280 ? SITE + v1280.src.replace(/^\//, '') : null, kicker: 'Consommable, ' + cat.label, lede, tags: [[st[0].split(' :')[0], st[1]], [cat.label, false], ...(qui ? [[qui[0], false]] : [])], liens, art, body, crumbs: [['Tout ce qui s’achète', 'achats.html'], ['Consommables', 'nourriture.html#liste-consommables']], scripts: ['suivi.js'], heroClass: 'fhero--conso' });
+  /* v7.97 : la catégorie s’écrit comme dans la liste (« Boissons ») : un libellé connu de la mémoire de traduction, jamais une minuscule forcée */
+  const lede = esc(c.nom) + ' dans GTA VI : ' + esc(cat.label) + ', ' + minuscule(st[0]).split(' :')[0] + '. ' + esc(c.description);
+  return page({ file, nom: c.nom, titre: titre('GTA 6 : ' + c.nom + ', ' + cat.label), description: court(c.nom + ' dans GTA VI (' + cat.label + '). ' + c.description, 155, c.nom + ' dans GTA VI (' + cat.label + ') : effet, prix, où le trouver et statut.'), indexable: !!it.indexable, image: v1280 ? SITE + v1280.src.replace(/^\//, '') : null, kicker: 'Consommable, ' + cat.label, lede, tags: [[st[0].split(' :')[0], st[1]], [cat.label, false], ...(qui ? [[qui[0], false]] : [])], liens, art, body, crumbs: [['Tout ce qui s’achète', 'achats.html'], ['Consommables', 'nourriture.html#liste-consommables']], scripts: ['suivi.js'], heroClass: 'fhero--conso' });
 }
 
 /* ======================================================================================================================

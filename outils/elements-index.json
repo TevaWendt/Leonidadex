@@ -1,0 +1,1448 @@
+{
+ "_note": "v7.97 (lot C) : lignes de recherche (search-index.js) et de Léo (leo-index.json) pour les pages du lot B sans ligne jusque-là : marques, types de munitions, éditions, grands moments. Écrit par outils/gen-pages-elements-b.cjs.",
+ "recherche": [
+  {
+   "l": "Airgator",
+   "k": "Marque de véhicules",
+   "u": "/marques/airgator.html",
+   "s": "airgator diamondback marque constructeur vehicules airboat 09",
+   "w": 0
+  },
+  {
+   "l": "Albany",
+   "k": "Marque de véhicules",
+   "u": "/marques/albany.html",
+   "s": "albany cadillac marque constructeur vehicules emperor primo primo custom manana v-str buccaneer buccaneer custom virgo classic cavalcade xl",
+   "w": 0
+  },
+  {
+   "l": "Annis",
+   "k": "Marque de véhicules",
+   "u": "/marques/annis.html",
+   "s": "annis nissan marque constructeur vehicules elegy retro custom hellion",
+   "w": 0
+  },
+  {
+   "l": "Benefactor",
+   "k": "Marque de véhicules",
+   "u": "/marques/benefactor.html",
+   "s": "benefactor mercedes-benz marque constructeur vehicules schafter v12 schafter lwb dubsta xls",
+   "w": 0
+  },
+  {
+   "l": "Bravado",
+   "k": "Marque de véhicules",
+   "u": "/marques/bravado.html",
+   "s": "bravado dodge marque constructeur vehicules banshee buffalo buffalo s buffalo stx gauntlet classic gauntlet classic custom gauntlet hellfire dorado bison 900 ’95 monster truck bison bison 1800 bison 900 ’95 rumpo youga classic bison 1800 (police) buffalo stx pursuit gauntlet interceptor police cruiser (buffalo)",
+   "w": 0
+  },
+  {
+   "l": "Brute",
+   "k": "Marque de véhicules",
+   "u": "/marques/brute.html",
+   "s": "brute gmc ou chevrolet marque constructeur vehicules boxville ambulance bus police riot rental shuttle bus stockade tipper (6 roues) utility truck",
+   "w": 0
+  },
+  {
+   "l": "Buckingham",
+   "k": "Marque de véhicules",
+   "u": "/marques/buckingham.html",
+   "s": "buckingham bell ou learjet marque constructeur vehicules jubilee maverick police maverick supervolito swift valkyrie luxor nimbus shamal",
+   "w": 0
+  },
+  {
+   "l": "Canis",
+   "k": "Marque de véhicules",
+   "u": "/marques/canis.html",
+   "s": "canis jeep marque constructeur vehicules mesa seminole frontier terminus kamacho",
+   "w": 0
+  },
+  {
+   "l": "Cheval",
+   "k": "Marque de véhicules",
+   "u": "/marques/cheval.html",
+   "s": "cheval chrysler marque constructeur vehicules",
+   "w": 0
+  },
+  {
+   "l": "Coil",
+   "k": "Marque de véhicules",
+   "u": "/marques/coil.html",
+   "s": "coil tesla marque constructeur vehicules raiden",
+   "w": 0
+  },
+  {
+   "l": "Crest",
+   "k": "Marque de véhicules",
+   "u": "/marques/crest.html",
+   "s": "crest crescent marque constructeur vehicules kayak",
+   "w": 0
+  },
+  {
+   "l": "Declasse",
+   "k": "Marque de véhicules",
+   "u": "/marques/declasse.html",
+   "s": "declasse chevrolet marque constructeur vehicules mamba gt impaler ’80 impaler sz sabre turbo tulip tulip m100 vigero zx convertible voodoo granger granger 3600lx rancher walton l35 yosemite yosemite 1500 bobcat xl burrito granger taxi sheriff suv",
+   "w": 0
+  },
+  {
+   "l": "Dinka",
+   "k": "Marque de véhicules",
+   "u": "/marques/dinka.html",
+   "s": "dinka honda marque constructeur vehicules blista compact sugoi verus double t enduro jetmax marquis",
+   "w": 0
+  },
+  {
+   "l": "Dundreary",
+   "k": "Marque de véhicules",
+   "u": "/marques/dundreary.html",
+   "s": "dundreary lincoln marque constructeur vehicules landstalker xl police landstalker xl",
+   "w": 0
+  },
+  {
+   "l": "Emperor",
+   "k": "Marque de véhicules",
+   "u": "/marques/emperor.html",
+   "s": "emperor lexus marque constructeur vehicules vectre",
+   "w": 0
+  },
+  {
+   "l": "Endurex",
+   "k": "Marque de véhicules",
+   "u": "/marques/endurex.html",
+   "s": "endurex pinarello marque constructeur vehicules race bike",
+   "w": 0
+  },
+  {
+   "l": "Enus",
+   "k": "Marque de véhicules",
+   "u": "/marques/enus.html",
+   "s": "enus rolls-royce marque constructeur vehicules paragon r windsor",
+   "w": 0
+  },
+  {
+   "l": "Fathom",
+   "k": "Marque de véhicules",
+   "u": "/marques/fathom.html",
+   "s": "fathom infiniti marque constructeur vehicules fr36",
+   "w": 0
+  },
+  {
+   "l": "Gallivanter",
+   "k": "Marque de véhicules",
+   "u": "/marques/gallivanter.html",
+   "s": "gallivanter land rover marque constructeur vehicules baller ii baller st-d",
+   "w": 0
+  },
+  {
+   "l": "Grotti",
+   "k": "Marque de véhicules",
+   "u": "/marques/grotti.html",
+   "s": "grotti ferrari marque constructeur vehicules carbonizzare cheetah ’95 itali gto itali rsx furia",
+   "w": 0
+  },
+  {
+   "l": "Imponte",
+   "k": "Marque de véhicules",
+   "u": "/marques/imponte.html",
+   "s": "imponte pontiac marque constructeur vehicules phoenix ruiner",
+   "w": 0
+  },
+  {
+   "l": "Invetero",
+   "k": "Marque de véhicules",
+   "u": "/marques/invetero.html",
+   "s": "invetero chevrolet corvette marque constructeur vehicules coquette coquette d10",
+   "w": 0
+  },
+  {
+   "l": "Jacksheepe",
+   "k": "Marque de véhicules",
+   "u": "/marques/jacksheepe.html",
+   "s": "jacksheepe liebherr marque constructeur vehicules excavator",
+   "w": 0
+  },
+  {
+   "l": "JoBuilt",
+   "k": "Marque de véhicules",
+   "u": "/marques/jobuilt.html",
+   "s": "jobuilt peterbilt marque constructeur vehicules mammatus flatbed hauler phantom phantom custom rubble",
+   "w": 0
+  },
+  {
+   "l": "Karin",
+   "k": "Marque de véhicules",
+   "u": "/marques/karin.html",
+   "s": "karin toyota marque constructeur vehicules asterope asterope gz feroci intruder futo sultan sultan rs contender vivanite rebel",
+   "w": 0
+  },
+  {
+   "l": "Lampadati",
+   "k": "Marque de véhicules",
+   "u": "/marques/lampadati.html",
+   "s": "lampadati maserati marque constructeur vehicules novak",
+   "w": 0
+  },
+  {
+   "l": "Lure",
+   "k": "Marque de véhicules",
+   "u": "/marques/lure.html",
+   "s": "lure contender marque constructeur vehicules predator l35p predator l35p de police predator s23",
+   "w": 0
+  },
+  {
+   "l": "Maibatsu",
+   "k": "Marque de véhicules",
+   "u": "/marques/maibatsu.html",
+   "s": "maibatsu mitsubishi marque constructeur vehicules penumbra penumbra ff manchez sanchez mule",
+   "w": 0
+  },
+  {
+   "l": "Mammoth",
+   "k": "Marque de véhicules",
+   "u": "/marques/mammoth.html",
+   "s": "mammoth de havilland marque constructeur vehicules patriot mil-spec dodo streamer216",
+   "w": 0
+  },
+  {
+   "l": "MTL",
+   "k": "Marque de véhicules",
+   "u": "/marques/mtl.html",
+   "s": "mtl international marque constructeur vehicules packer",
+   "w": 0
+  },
+  {
+   "l": "Nagasaki",
+   "k": "Marque de véhicules",
+   "u": "/marques/nagasaki.html",
+   "s": "nagasaki kawasaki ou yamaha marque constructeur vehicules blazer outlaw blazer lifeguard carbon rs buzzard police buzzard dinghy caddy",
+   "w": 0
+  },
+  {
+   "l": "Obey",
+   "k": "Marque de véhicules",
+   "u": "/marques/obey.html",
+   "s": "obey audi marque constructeur vehicules tailgater tailgater s 8f drafter omnis e-gt",
+   "w": 0
+  },
+  {
+   "l": "Ocelot",
+   "k": "Marque de véhicules",
+   "u": "/marques/ocelot.html",
+   "s": "ocelot jaguar ou lotus marque constructeur vehicules jugular",
+   "w": 0
+  },
+  {
+   "l": "Pegassi",
+   "k": "Marque de véhicules",
+   "u": "/marques/pegassi.html",
+   "s": "pegassi lamborghini ou ducati marque constructeur vehicules infernus classic tempesta zentorno zorrusso toros bati 801 faggio faggio sport speeder",
+   "w": 0
+  },
+  {
+   "l": "Pfister",
+   "k": "Marque de véhicules",
+   "u": "/marques/pfister.html",
+   "s": "pfister porsche marque constructeur vehicules comet retro custom comet s2 comet s2 cabrio growler neon astron",
+   "w": 0
+  },
+  {
+   "l": "Principe",
+   "k": "Marque de véhicules",
+   "u": "/marques/principe.html",
+   "s": "principe ducati marque constructeur vehicules alvino v1 lectro",
+   "w": 0
+  },
+  {
+   "l": "Progen",
+   "k": "Marque de véhicules",
+   "u": "/marques/progen.html",
+   "s": "progen mclaren marque constructeur vehicules emerus",
+   "w": 0
+  },
+  {
+   "l": "Schyster",
+   "k": "Marque de véhicules",
+   "u": "/marques/schyster.html",
+   "s": "schyster amc ou chrysler marque constructeur vehicules pmp 700 deviant",
+   "w": 0
+  },
+  {
+   "l": "Shitzu",
+   "k": "Marque de véhicules",
+   "u": "/marques/shitzu.html",
+   "s": "shitzu chris-craft marque constructeur vehicules pcj-600 longfin squalo tropic",
+   "w": 0
+  },
+  {
+   "l": "Speedophile",
+   "k": "Marque de véhicules",
+   "u": "/marques/speedophile.html",
+   "s": "speedophile sea-doo marque constructeur vehicules seashark",
+   "w": 0
+  },
+  {
+   "l": "Vapid",
+   "k": "Marque de véhicules",
+   "u": "/marques/vapid.html",
+   "s": "vapid ford marque constructeur vehicules stanier stanier ’55 chino chino custom dominator dominator ’67 dominator asp dominator buggy ’67 dominator gt dominator gtx slamvan aleutian montagne riata classic caracara caracara 4x4 ganado ’70 liberator reclaimer sandking xl speedo benson police cruiser (interceptor) police cruiser (stanier le) police ghost (stanier le) police montagne stanier taxi tow truck",
+   "w": 0
+  },
+  {
+   "l": "Vortex",
+   "k": "Marque de véhicules",
+   "u": "/marques/vortex.html",
+   "s": "vortex panther airboat marque constructeur vehicules airboat",
+   "w": 0
+  },
+  {
+   "l": "Western",
+   "k": "Marque de véhicules",
+   "u": "/marques/western.html",
+   "s": "western harley-davidson marque constructeur vehicules nightblade sovereign zombie chopper sea sparrow",
+   "w": 0
+  },
+  {
+   "l": "Western Company",
+   "k": "Marque de véhicules",
+   "u": "/marques/western-company.html",
+   "s": "western company stearman marque constructeur vehicules duster",
+   "w": 0
+  },
+  {
+   "l": "Willard",
+   "k": "Marque de véhicules",
+   "u": "/marques/willard.html",
+   "s": "willard buick marque constructeur vehicules faction faction custom donk",
+   "w": 0
+  },
+  {
+   "l": "Xero",
+   "k": "Marque de véhicules",
+   "u": "/marques/xero.html",
+   "s": "xero goodyear marque constructeur vehicules blimp",
+   "w": 0
+  },
+  {
+   "l": "Zirconium",
+   "k": "Marque de véhicules",
+   "u": "/marques/zirconium.html",
+   "s": "zirconium honda marque constructeur vehicules stratum journey journey ii",
+   "w": 0
+  },
+  {
+   "l": "Übermacht",
+   "k": "Marque de véhicules",
+   "u": "/marques/ubermacht.html",
+   "s": "ubermacht bmw marque constructeur vehicules cypher sentinel classic sentinel xs zion zion cabrio rebla gts",
+   "w": 0
+  },
+  {
+   "l": "LCC",
+   "k": "Marque de véhicules",
+   "u": "/marques/lcc.html",
+   "s": "lcc marque constructeur vehicules avarus",
+   "w": 0
+  },
+  {
+   "l": "BTN",
+   "k": "Marque de véhicules",
+   "u": "/marques/btn.html",
+   "s": "btn marque constructeur vehicules delmar",
+   "w": 0
+  },
+  {
+   "l": "HVY",
+   "k": "Marque de véhicules",
+   "u": "/marques/hvy.html",
+   "s": "hvy marque constructeur vehicules airtug biff forklift",
+   "w": 0
+  },
+  {
+   "l": "Munitions de pistolet",
+   "k": "Type de munitions",
+   "u": "/munitions/munitions-de-pistolet.html",
+   "s": "munitions de pistolet pistolets, revolvers et pistolets-mitrailleurs munitions balles cartouches armurerie girardi es9 klose k17 nipper .38 hawk & little morgan pistolet personnalise pistolet a selecteur mustang .357 pm a motif tropical pm compact pistolet-mitrailleur pm a crosse rabattable",
+   "w": 0
+  },
+  {
+   "l": "Cartouches",
+   "k": "Type de munitions",
+   "u": "/munitions/cartouches.html",
+   "s": "cartouches fusils a pompe et canons doubles munitions balles cartouches armurerie fusil a canon double fusil a pompe",
+   "w": 0
+  },
+  {
+   "l": "Munitions de fusil",
+   "k": "Type de munitions",
+   "u": "/munitions/munitions-de-fusil.html",
+   "s": "munitions de fusil fusils d’assaut et de precision munitions balles cartouches armurerie carabine fusil d’assaut fusil a verrou fusil semi-automatique",
+   "w": 0
+  },
+  {
+   "l": "Munitions lourdes",
+   "k": "Type de munitions",
+   "u": "/munitions/munitions-lourdes.html",
+   "s": "munitions lourdes mitrailleuses et armes d’appui munitions balles cartouches armurerie mitrailleuse de combat",
+   "w": 0
+  },
+  {
+   "l": "Harpons",
+   "k": "Type de munitions",
+   "u": "/munitions/harpons.html",
+   "s": "harpons fusil-harpon, sous l’eau munitions balles cartouches armurerie fusil-harpon",
+   "w": 0
+  },
+  {
+   "l": "Grenades",
+   "k": "Type de munitions",
+   "u": "/munitions/grenades.html",
+   "s": "grenades munitions balles cartouches armurerie lance-grenades",
+   "w": 0
+  },
+  {
+   "l": "Édition Standard",
+   "k": "Édition du jeu",
+   "u": "/editions/standard.html",
+   "s": "edition standard edition standard ultimate collector precommande prix",
+   "w": 0
+  },
+  {
+   "l": "Édition Ultimate",
+   "k": "Édition du jeu",
+   "u": "/editions/ultimate.html",
+   "s": "edition ultimate edition standard ultimate collector precommande prix",
+   "w": 0
+  },
+  {
+   "l": "Amélioration vers l’Édition Ultimate",
+   "k": "Édition du jeu",
+   "u": "/editions/amelioration.html",
+   "s": "amelioration vers l’edition ultimate edition standard ultimate collector precommande prix",
+   "w": 0
+  },
+  {
+   "l": "Coffret collector The Goodtime State – Vice City Collection",
+   "k": "Édition du jeu",
+   "u": "/editions/collector.html",
+   "s": "coffret collector the goodtime state – vice city collection edition standard ultimate collector precommande prix",
+   "w": 0
+  },
+  {
+   "l": "La bande-annonce de lancement",
+   "k": "Grand moment",
+   "u": "/moments/bande-annonce-lancement.html",
+   "s": "la bande-annonce de lancement une bande-annonce sur « flower in a hurricane », nouveau single de justice avec tame impala, sza et king gizzard & the lizard wizard. rockstar presente justice comme le compositeur de la musique originale du jeu. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "La collection de la boutique Rockstar",
+   "k": "Grand moment",
+   "u": "/moments/collection-boutique.html",
+   "s": "la collection de la boutique rockstar rockstar ouvre la collection grand theft auto vi, en exclusivite sur sa boutique : tee-shirts, casquettes, porte-cles, pince a billets, briquet zippo, tote bags et autocollants. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Les six stations de radio",
+   "k": "Grand moment",
+   "u": "/moments/stations-radio.html",
+   "s": "les six stations de radio rockstar presente flash fm, cocoteo fm, back country radio, afrobank fm, the chamber 106.6 et dirty south classics, leurs animateurs, des podcasts a la demande, et une radio qu’on ecoute aussi a pied. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Le dossier de Game Informer",
+   "k": "Grand moment",
+   "u": "/moments/game-informer.html",
+   "s": "le dossier de game informer game informer revele sa couverture consacree a gta vi, puis, le 29 septembre, plus de 170 especes animales, selon michael kane, de rockstar. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Le coffret collector « The Goodtime State »",
+   "k": "Grand moment",
+   "u": "/moments/coffret-collector.html",
+   "s": "le coffret collector « the goodtime state » un coffret en edition limitee, sans le jeu : onze objets inspires de l’emission macca the gator, de la figurine aux lunettes oakley, a precommander jusqu’a epuisement des stocks pour une arrivee le 19 novembre. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "L’album officiel",
+   "k": "Grand moment",
+   "u": "/moments/album.html",
+   "s": "l’album officiel grand theft auto vi: the album : 34 titres originaux avec atlantic records, qui sortent avec le jeu ; six sont disponibles le jour de l’annonce. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Deux manettes aux couleurs de GTA VI",
+   "k": "Grand moment",
+   "u": "/moments/manettes-dualsense.html",
+   "s": "deux manettes aux couleurs de gta vi playstation presente deux manettes dualsense en edition limitee, une noire et une blanche, a partir du 19 novembre au prix conseille de 84,99 € ; precommandes le 10 septembre a 10 h, heure locale. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "L’entretien de Rob Nelson à Famitsu",
+   "k": "Grand moment",
+   "u": "/moments/entretien-famitsu.html",
+   "s": "l’entretien de rob nelson a famitsu rob nelson, de rockstar north, repond a famitsu apres la demonstration : boutiques et salons, tenues, repaires de gangs, temoins et alarmes. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "An Extended Look",
+   "k": "Grand moment",
+   "u": "/moments/extended-look.html",
+   "s": "an extended look une presentation d’environ 26 minutes, d’abord sur netflix puis sur youtube, capturee sur ps5 : missions, vol de voitures, braquages, police et vie quotidienne de jason et lucia. rockstar ajoute ensuite de nouvelles captures a son site. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Les aperçus de la presse",
+   "k": "Grand moment",
+   "u": "/moments/apercus-presse.html",
+   "s": "les apercus de la presse des journalistes racontent la demonstration presentee par rob nelson : l’histoire qui commence dans les keys, la taille de vice city, les planques habitees. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "La version en boîte détaillée",
+   "k": "Grand moment",
+   "u": "/moments/boite.html",
+   "s": "la version en boite detaillee l’assistance de rockstar met a jour sa page sur les editions : la boite contient un code de telechargement, sans disque, disponible des le 12 novembre pour le prechargement, et il n’y a pas d’edition ultimate en boite. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "La date d’An Extended Look",
+   "k": "Grand moment",
+   "u": "/moments/date-extended-look.html",
+   "s": "la date d’an extended look rockstar annonce an extended look : en avant-premiere sur netflix le jeudi 27 aout a 15 h, heure de new york (21 h en france), puis sur youtube et sur le site du jeu a 21 h, heure de new york. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Précommandes, Édition Ultimate et Pack Vintage Vice City",
+   "k": "Grand moment",
+   "u": "/moments/precommandes.html",
+   "s": "precommandes, edition ultimate et pack vintage vice city rockstar annonce l’ouverture des precommandes le 25 juin, a minuit, heure locale, et presente l’edition ultimate et le pack vintage vice city. le meme jour, playstation presente la ps5 comme la console ou le jeu se joue le mieux. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "La date des précommandes et la jaquette",
+   "k": "Grand moment",
+   "u": "/moments/precommandes-date.html",
+   "s": "la date des precommandes et la jaquette rockstar annonce l’ouverture des precommandes le 25 juin, sur les boutiques numeriques et chez certains revendeurs, et devoile en video l’illustration officielle de la jaquette. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "La date du 19 novembre 2026",
+   "k": "Grand moment",
+   "u": "/moments/date-sortie.html",
+   "s": "la date du 19 novembre 2026 rockstar annonce la sortie pour le jeudi 19 novembre 2026, pour finir le jeu avec le niveau de finition voulu. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Le Trailer 2, les personnages et les régions",
+   "k": "Grand moment",
+   "u": "/moments/trailer-2.html",
+   "s": "le trailer 2, les personnages et les regions le meme jour, rockstar publie le trailer 2, les pages des huit personnages, les six regions de leonida et les premieres captures officielles. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Le Trailer 1",
+   "k": "Grand moment",
+   "u": "/moments/trailer-1.html",
+   "s": "le trailer 1 la premiere video presente lucia, l’etat de leonida et vice city, sur « love is a long road » de tom petty. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Pages « Only in Leonida »",
+   "k": "Grand moment",
+   "u": "/moments/pages-only-in-leonida.html",
+   "s": "pages « only in leonida »  annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Captures officielles",
+   "k": "Grand moment",
+   "u": "/moments/captures-officielles.html",
+   "s": "captures officielles  annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Jaquette officielle",
+   "k": "Grand moment",
+   "u": "/moments/jaquette-officielle.html",
+   "s": "jaquette officielle  annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Édition Ultimate",
+   "k": "Grand moment",
+   "u": "/moments/edition-ultimate.html",
+   "s": "edition ultimate  annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Captures de l’Édition Ultimate",
+   "k": "Grand moment",
+   "u": "/moments/captures-de-l-edition-ultimate.html",
+   "s": "captures de l’edition ultimate  annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Pack Vintage Vice City",
+   "k": "Grand moment",
+   "u": "/moments/pack-vintage-vice-city.html",
+   "s": "pack vintage vice city  annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "29 nouvelles captures",
+   "k": "Grand moment",
+   "u": "/moments/29-nouvelles-captures.html",
+   "s": "29 nouvelles captures  annonce trailer actualite moment",
+   "w": 0
+  }
+ ],
+ "leo": [
+  {
+   "key": "marque:airgator",
+   "id": "airgator",
+   "kind": "marque",
+   "name": "Airgator",
+   "aliases": [
+    "Diamondback"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Diamondback (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/airgator.html"
+  },
+  {
+   "key": "marque:albany",
+   "id": "albany",
+   "kind": "marque",
+   "name": "Albany",
+   "aliases": [
+    "Cadillac"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Cadillac (observation, jamais une licence). 9 véhicules repérés sur le site.",
+   "url": "/marques/albany.html"
+  },
+  {
+   "key": "marque:annis",
+   "id": "annis",
+   "kind": "marque",
+   "name": "Annis",
+   "aliases": [
+    "Nissan"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Nissan (observation, jamais une licence). 2 véhicules repérés sur le site.",
+   "url": "/marques/annis.html"
+  },
+  {
+   "key": "marque:benefactor",
+   "id": "benefactor",
+   "kind": "marque",
+   "name": "Benefactor",
+   "aliases": [
+    "Mercedes-Benz"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Mercedes-Benz (observation, jamais une licence). 4 véhicules repérés sur le site.",
+   "url": "/marques/benefactor.html"
+  },
+  {
+   "key": "marque:bravado",
+   "id": "bravado",
+   "kind": "marque",
+   "name": "Bravado",
+   "aliases": [
+    "Dodge"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Dodge (observation, jamais une licence). 18 véhicules repérés sur le site.",
+   "url": "/marques/bravado.html"
+  },
+  {
+   "key": "marque:brute",
+   "id": "brute",
+   "kind": "marque",
+   "name": "Brute",
+   "aliases": [
+    "GMC ou Chevrolet"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit GMC ou Chevrolet (observation, jamais une licence). 8 véhicules repérés sur le site.",
+   "url": "/marques/brute.html"
+  },
+  {
+   "key": "marque:buckingham",
+   "id": "buckingham",
+   "kind": "marque",
+   "name": "Buckingham",
+   "aliases": [
+    "Bell ou Learjet"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Bell ou Learjet (observation, jamais une licence). 9 véhicules repérés sur le site.",
+   "url": "/marques/buckingham.html"
+  },
+  {
+   "key": "marque:canis",
+   "id": "canis",
+   "kind": "marque",
+   "name": "Canis",
+   "aliases": [
+    "Jeep"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Jeep (observation, jamais une licence). 4 véhicules repérés sur le site.",
+   "url": "/marques/canis.html"
+  },
+  {
+   "key": "marque:cheval",
+   "id": "cheval",
+   "kind": "marque",
+   "name": "Cheval",
+   "aliases": [
+    "Chrysler"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Chrysler (observation, jamais une licence). 0 véhicule repéré sur le site.",
+   "url": "/marques/cheval.html"
+  },
+  {
+   "key": "marque:coil",
+   "id": "coil",
+   "kind": "marque",
+   "name": "Coil",
+   "aliases": [
+    "Tesla"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Tesla (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/coil.html"
+  },
+  {
+   "key": "marque:crest",
+   "id": "crest",
+   "kind": "marque",
+   "name": "Crest",
+   "aliases": [
+    "Crescent"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Crescent (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/crest.html"
+  },
+  {
+   "key": "marque:declasse",
+   "id": "declasse",
+   "kind": "marque",
+   "name": "Declasse",
+   "aliases": [
+    "Chevrolet"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Chevrolet (observation, jamais une licence). 18 véhicules repérés sur le site.",
+   "url": "/marques/declasse.html"
+  },
+  {
+   "key": "marque:dinka",
+   "id": "dinka",
+   "kind": "marque",
+   "name": "Dinka",
+   "aliases": [
+    "Honda"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Honda (observation, jamais une licence). 7 véhicules repérés sur le site.",
+   "url": "/marques/dinka.html"
+  },
+  {
+   "key": "marque:dundreary",
+   "id": "dundreary",
+   "kind": "marque",
+   "name": "Dundreary",
+   "aliases": [
+    "Lincoln"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Lincoln (observation, jamais une licence). 2 véhicules repérés sur le site.",
+   "url": "/marques/dundreary.html"
+  },
+  {
+   "key": "marque:emperor",
+   "id": "emperor",
+   "kind": "marque",
+   "name": "Emperor",
+   "aliases": [
+    "Lexus"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Lexus (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/emperor.html"
+  },
+  {
+   "key": "marque:endurex",
+   "id": "endurex",
+   "kind": "marque",
+   "name": "Endurex",
+   "aliases": [
+    "Pinarello"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Pinarello (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/endurex.html"
+  },
+  {
+   "key": "marque:enus",
+   "id": "enus",
+   "kind": "marque",
+   "name": "Enus",
+   "aliases": [
+    "Rolls-Royce"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Rolls-Royce (observation, jamais une licence). 2 véhicules repérés sur le site.",
+   "url": "/marques/enus.html"
+  },
+  {
+   "key": "marque:fathom",
+   "id": "fathom",
+   "kind": "marque",
+   "name": "Fathom",
+   "aliases": [
+    "Infiniti"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Infiniti (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/fathom.html"
+  },
+  {
+   "key": "marque:gallivanter",
+   "id": "gallivanter",
+   "kind": "marque",
+   "name": "Gallivanter",
+   "aliases": [
+    "Land Rover"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Land Rover (observation, jamais une licence). 2 véhicules repérés sur le site.",
+   "url": "/marques/gallivanter.html"
+  },
+  {
+   "key": "marque:grotti",
+   "id": "grotti",
+   "kind": "marque",
+   "name": "Grotti",
+   "aliases": [
+    "Ferrari"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Ferrari (observation, jamais une licence). 5 véhicules repérés sur le site.",
+   "url": "/marques/grotti.html"
+  },
+  {
+   "key": "marque:imponte",
+   "id": "imponte",
+   "kind": "marque",
+   "name": "Imponte",
+   "aliases": [
+    "Pontiac"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Pontiac (observation, jamais une licence). 2 véhicules repérés sur le site.",
+   "url": "/marques/imponte.html"
+  },
+  {
+   "key": "marque:invetero",
+   "id": "invetero",
+   "kind": "marque",
+   "name": "Invetero",
+   "aliases": [
+    "Chevrolet Corvette"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Chevrolet Corvette (observation, jamais une licence). 2 véhicules repérés sur le site.",
+   "url": "/marques/invetero.html"
+  },
+  {
+   "key": "marque:jacksheepe",
+   "id": "jacksheepe",
+   "kind": "marque",
+   "name": "Jacksheepe",
+   "aliases": [
+    "Liebherr"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Liebherr (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/jacksheepe.html"
+  },
+  {
+   "key": "marque:jobuilt",
+   "id": "jobuilt",
+   "kind": "marque",
+   "name": "JoBuilt",
+   "aliases": [
+    "Peterbilt"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Peterbilt (observation, jamais une licence). 6 véhicules repérés sur le site.",
+   "url": "/marques/jobuilt.html"
+  },
+  {
+   "key": "marque:karin",
+   "id": "karin",
+   "kind": "marque",
+   "name": "Karin",
+   "aliases": [
+    "Toyota"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Toyota (observation, jamais une licence). 10 véhicules repérés sur le site.",
+   "url": "/marques/karin.html"
+  },
+  {
+   "key": "marque:lampadati",
+   "id": "lampadati",
+   "kind": "marque",
+   "name": "Lampadati",
+   "aliases": [
+    "Maserati"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Maserati (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/lampadati.html"
+  },
+  {
+   "key": "marque:lure",
+   "id": "lure",
+   "kind": "marque",
+   "name": "Lure",
+   "aliases": [
+    "Contender"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Contender (observation, jamais une licence). 3 véhicules repérés sur le site.",
+   "url": "/marques/lure.html"
+  },
+  {
+   "key": "marque:maibatsu",
+   "id": "maibatsu",
+   "kind": "marque",
+   "name": "Maibatsu",
+   "aliases": [
+    "Mitsubishi"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Mitsubishi (observation, jamais une licence). 5 véhicules repérés sur le site.",
+   "url": "/marques/maibatsu.html"
+  },
+  {
+   "key": "marque:mammoth",
+   "id": "mammoth",
+   "kind": "marque",
+   "name": "Mammoth",
+   "aliases": [
+    "De Havilland"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit De Havilland (observation, jamais une licence). 3 véhicules repérés sur le site.",
+   "url": "/marques/mammoth.html"
+  },
+  {
+   "key": "marque:mtl",
+   "id": "mtl",
+   "kind": "marque",
+   "name": "MTL",
+   "aliases": [
+    "International"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit International (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/mtl.html"
+  },
+  {
+   "key": "marque:nagasaki",
+   "id": "nagasaki",
+   "kind": "marque",
+   "name": "Nagasaki",
+   "aliases": [
+    "Kawasaki ou Yamaha"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Kawasaki ou Yamaha (observation, jamais une licence). 8 véhicules repérés sur le site.",
+   "url": "/marques/nagasaki.html"
+  },
+  {
+   "key": "marque:obey",
+   "id": "obey",
+   "kind": "marque",
+   "name": "Obey",
+   "aliases": [
+    "Audi"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Audi (observation, jamais une licence). 4 véhicules repérés sur le site.",
+   "url": "/marques/obey.html"
+  },
+  {
+   "key": "marque:ocelot",
+   "id": "ocelot",
+   "kind": "marque",
+   "name": "Ocelot",
+   "aliases": [
+    "Jaguar ou Lotus"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Jaguar ou Lotus (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/ocelot.html"
+  },
+  {
+   "key": "marque:pegassi",
+   "id": "pegassi",
+   "kind": "marque",
+   "name": "Pegassi",
+   "aliases": [
+    "Lamborghini ou Ducati"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Lamborghini ou Ducati (observation, jamais une licence). 9 véhicules repérés sur le site.",
+   "url": "/marques/pegassi.html"
+  },
+  {
+   "key": "marque:pfister",
+   "id": "pfister",
+   "kind": "marque",
+   "name": "Pfister",
+   "aliases": [
+    "Porsche"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Porsche (observation, jamais une licence). 6 véhicules repérés sur le site.",
+   "url": "/marques/pfister.html"
+  },
+  {
+   "key": "marque:principe",
+   "id": "principe",
+   "kind": "marque",
+   "name": "Principe",
+   "aliases": [
+    "Ducati"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Ducati (observation, jamais une licence). 2 véhicules repérés sur le site.",
+   "url": "/marques/principe.html"
+  },
+  {
+   "key": "marque:progen",
+   "id": "progen",
+   "kind": "marque",
+   "name": "Progen",
+   "aliases": [
+    "McLaren"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit McLaren (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/progen.html"
+  },
+  {
+   "key": "marque:schyster",
+   "id": "schyster",
+   "kind": "marque",
+   "name": "Schyster",
+   "aliases": [
+    "AMC ou Chrysler"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit AMC ou Chrysler (observation, jamais une licence). 2 véhicules repérés sur le site.",
+   "url": "/marques/schyster.html"
+  },
+  {
+   "key": "marque:shitzu",
+   "id": "shitzu",
+   "kind": "marque",
+   "name": "Shitzu",
+   "aliases": [
+    "Chris-Craft"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Chris-Craft (observation, jamais une licence). 4 véhicules repérés sur le site.",
+   "url": "/marques/shitzu.html"
+  },
+  {
+   "key": "marque:speedophile",
+   "id": "speedophile",
+   "kind": "marque",
+   "name": "Speedophile",
+   "aliases": [
+    "Sea-Doo"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Sea-Doo (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/speedophile.html"
+  },
+  {
+   "key": "marque:vapid",
+   "id": "vapid",
+   "kind": "marque",
+   "name": "Vapid",
+   "aliases": [
+    "Ford"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Ford (observation, jamais une licence). 28 véhicules repérés sur le site.",
+   "url": "/marques/vapid.html"
+  },
+  {
+   "key": "marque:vortex",
+   "id": "vortex",
+   "kind": "marque",
+   "name": "Vortex",
+   "aliases": [
+    "Panther Airboat"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Panther Airboat (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/vortex.html"
+  },
+  {
+   "key": "marque:western",
+   "id": "western",
+   "kind": "marque",
+   "name": "Western",
+   "aliases": [
+    "Harley-Davidson"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Harley-Davidson (observation, jamais une licence). 4 véhicules repérés sur le site.",
+   "url": "/marques/western.html"
+  },
+  {
+   "key": "marque:western-company",
+   "id": "western-company",
+   "kind": "marque",
+   "name": "Western Company",
+   "aliases": [
+    "Stearman"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Stearman (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/western-company.html"
+  },
+  {
+   "key": "marque:willard",
+   "id": "willard",
+   "kind": "marque",
+   "name": "Willard",
+   "aliases": [
+    "Buick"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Buick (observation, jamais une licence). 2 véhicules repérés sur le site.",
+   "url": "/marques/willard.html"
+  },
+  {
+   "key": "marque:xero",
+   "id": "xero",
+   "kind": "marque",
+   "name": "Xero",
+   "aliases": [
+    "Goodyear"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Goodyear (observation, jamais une licence). 1 véhicule repéré sur le site.",
+   "url": "/marques/xero.html"
+  },
+  {
+   "key": "marque:zirconium",
+   "id": "zirconium",
+   "kind": "marque",
+   "name": "Zirconium",
+   "aliases": [
+    "Honda"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit Honda (observation, jamais une licence). 3 véhicules repérés sur le site.",
+   "url": "/marques/zirconium.html"
+  },
+  {
+   "key": "marque:ubermacht",
+   "id": "ubermacht",
+   "kind": "marque",
+   "name": "Übermacht",
+   "aliases": [
+    "BMW"
+   ],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; la communauté y voit BMW (observation, jamais une licence). 6 véhicules repérés sur le site.",
+   "url": "/marques/ubermacht.html"
+  },
+  {
+   "key": "marque:lcc",
+   "id": "lcc",
+   "kind": "marque",
+   "name": "LCC",
+   "aliases": [],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; aucun constructeur réel rapproché. 1 véhicule repéré sur le site.",
+   "url": "/marques/lcc.html"
+  },
+  {
+   "key": "marque:btn",
+   "id": "btn",
+   "kind": "marque",
+   "name": "BTN",
+   "aliases": [],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; aucun constructeur réel rapproché. 1 véhicule repéré sur le site.",
+   "url": "/marques/btn.html"
+  },
+  {
+   "key": "marque:hvy",
+   "id": "hvy",
+   "kind": "marque",
+   "name": "HVY",
+   "aliases": [],
+   "category": "Marque de véhicules",
+   "proof": "Marque fictive de GTA VI ; aucun constructeur réel rapproché. 3 véhicules repérés sur le site.",
+   "url": "/marques/hvy.html"
+  },
+  {
+   "key": "moment:bande-annonce-lancement",
+   "id": "bande-annonce-lancement",
+   "kind": "moment",
+   "name": "La bande-annonce de lancement",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/bande-annonce-lancement.html"
+  },
+  {
+   "key": "moment:collection-boutique",
+   "id": "collection-boutique",
+   "kind": "moment",
+   "name": "La collection de la boutique Rockstar",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/collection-boutique.html"
+  },
+  {
+   "key": "moment:stations-radio",
+   "id": "stations-radio",
+   "kind": "moment",
+   "name": "Les six stations de radio",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/stations-radio.html"
+  },
+  {
+   "key": "moment:game-informer",
+   "id": "game-informer",
+   "kind": "moment",
+   "name": "Le dossier de Game Informer",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/game-informer.html"
+  },
+  {
+   "key": "moment:coffret-collector",
+   "id": "coffret-collector",
+   "kind": "moment",
+   "name": "Le coffret collector « The Goodtime State »",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/coffret-collector.html"
+  },
+  {
+   "key": "moment:album",
+   "id": "album",
+   "kind": "moment",
+   "name": "L’album officiel",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/album.html"
+  },
+  {
+   "key": "moment:manettes-dualsense",
+   "id": "manettes-dualsense",
+   "kind": "moment",
+   "name": "Deux manettes aux couleurs de GTA VI",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/manettes-dualsense.html"
+  },
+  {
+   "key": "moment:entretien-famitsu",
+   "id": "entretien-famitsu",
+   "kind": "moment",
+   "name": "L’entretien de Rob Nelson à Famitsu",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/entretien-famitsu.html"
+  },
+  {
+   "key": "moment:extended-look",
+   "id": "extended-look",
+   "kind": "moment",
+   "name": "An Extended Look",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/extended-look.html"
+  },
+  {
+   "key": "moment:apercus-presse",
+   "id": "apercus-presse",
+   "kind": "moment",
+   "name": "Les aperçus de la presse",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/apercus-presse.html"
+  },
+  {
+   "key": "moment:boite",
+   "id": "boite",
+   "kind": "moment",
+   "name": "La version en boîte détaillée",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/boite.html"
+  },
+  {
+   "key": "moment:date-extended-look",
+   "id": "date-extended-look",
+   "kind": "moment",
+   "name": "La date d’An Extended Look",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/date-extended-look.html"
+  },
+  {
+   "key": "moment:precommandes",
+   "id": "precommandes",
+   "kind": "moment",
+   "name": "Précommandes, Édition Ultimate et Pack Vintage Vice City",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/precommandes.html"
+  },
+  {
+   "key": "moment:precommandes-date",
+   "id": "precommandes-date",
+   "kind": "moment",
+   "name": "La date des précommandes et la jaquette",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/precommandes-date.html"
+  },
+  {
+   "key": "moment:date-sortie",
+   "id": "date-sortie",
+   "kind": "moment",
+   "name": "La date du 19 novembre 2026",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/date-sortie.html"
+  },
+  {
+   "key": "moment:trailer-2",
+   "id": "trailer-2",
+   "kind": "moment",
+   "name": "Le Trailer 2, les personnages et les régions",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/trailer-2.html"
+  },
+  {
+   "key": "moment:trailer-1",
+   "id": "trailer-1",
+   "kind": "moment",
+   "name": "Le Trailer 1",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/trailer-1.html"
+  },
+  {
+   "key": "moment:site",
+   "id": "site",
+   "kind": "moment",
+   "name": "Pages « Only in Leonida »",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Moment noté dans les dossiers du monde de Leonidakit.",
+   "url": "/moments/pages-only-in-leonida.html"
+  },
+  {
+   "key": "moment:shots25",
+   "id": "shots25",
+   "kind": "moment",
+   "name": "Captures officielles",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Moment noté dans les dossiers du monde de Leonidakit.",
+   "url": "/moments/captures-officielles.html"
+  },
+  {
+   "key": "moment:cover",
+   "id": "cover",
+   "kind": "moment",
+   "name": "Jaquette officielle",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Moment noté dans les dossiers du monde de Leonidakit.",
+   "url": "/moments/jaquette-officielle.html"
+  },
+  {
+   "key": "moment:ue",
+   "id": "ue",
+   "kind": "moment",
+   "name": "Édition Ultimate",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Moment noté dans les dossiers du monde de Leonidakit.",
+   "url": "/moments/edition-ultimate.html"
+  },
+  {
+   "key": "moment:ueshots",
+   "id": "ueshots",
+   "kind": "moment",
+   "name": "Captures de l’Édition Ultimate",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Moment noté dans les dossiers du monde de Leonidakit.",
+   "url": "/moments/captures-de-l-edition-ultimate.html"
+  },
+  {
+   "key": "moment:vv",
+   "id": "vv",
+   "kind": "moment",
+   "name": "Pack Vintage Vice City",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Moment noté dans les dossiers du monde de Leonidakit.",
+   "url": "/moments/pack-vintage-vice-city.html"
+  },
+  {
+   "key": "moment:shots",
+   "id": "shots",
+   "kind": "moment",
+   "name": "29 nouvelles captures",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Moment noté dans les dossiers du monde de Leonidakit.",
+   "url": "/moments/29-nouvelles-captures.html"
+  }
+ ]
+}
