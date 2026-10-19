@@ -1,0 +1,66 @@
+LEONIDAKIT v7.96 : « une page par élément », lot B (651 pages : coiffures, tatouages, tenues, personnalisations, options, marques,
+munitions, éditions, achats, visuels officiels, grands moments)
+À appliquer sur la v7.95 (commit 5cc9a3061, l’archive livrée le 18 octobre à 11 h) : décompresse d’abord les archives v7.94 puis
+v7.95 si ce n’est pas fait, puis les parties de l’archive v7.96 à la racine du dépôt, dans n’importe quel ordre, puis pousse
+depuis GitHub Desktop. Rien n’a été publié ni poussé : c’est toi qui pousses. CSP inchangée. Aucun fichier à supprimer. Rien à
+faire dans Vercel.
+
+CE QUE CONTIENT CETTE VERSION (détail : outils/CHANGEMENTS-v7.96.txt ; grille de qualité : outils/MATRICE-v7.96.md)
+  1. Toutes les familles restantes de l’inventaire ont leur page, écrite par outils/gen-pages-elements-b.cjs dans la chaîne de
+     régénération, avec le gabarit allégé du lot A : coiffures/ (55), tatouages/ (24), tenues/ (30), perso-vehicules/ (58),
+     perso-armes/ (40), options-vehicules/ (104) et options-armes/ (41), marques/ (51), munitions/ (6), editions/ (4),
+     achats/ (7), visuels/ (196), moments/ (24), plus un sommaire par famille (11). Il ne reste sans page que les familles
+     sans donnée avant la sortie (missions, trophées, codes, collectibles, GTA Online), déjà prévues en modèle.
+  2. Chaque page a son texte propre construit depuis les données, un tableau Identité, le visuel officiel crédité quand il
+     existe (avec un lien vers la page du visuel), les éléments liés en cartes (véhicules d’une marque, armes d’un type de
+     munitions, fiches qu’une annonce a fait avancer, seize contenus de l’Ultimate…), précédent et suivant, le bouton de
+     suivi quand la liste en a un. Titre ≤ 65 signes avec « GTA 6 », description ≤ 155, un h1, canonical, og, twitter,
+     WebPage ou CollectionPage avec ItemList, sitemaps avec lastmod.
+  3. Rien du contenu existant n’est modifié : les listes, hubs, fiches et dossiers reçoivent seulement des liens vers les pages
+     nouvelles (« sa page » sur chaque ligne des listes et des crédits, « La page de l’annonce » dans la frise, « La page de
+     cette édition », « La page de ce moment » dans les dossiers du monde, constructeur et type de munitions cliquables sur
+     les fiches, sommaire des marques et des munitions). Ces liens sont traduits dans les cinq langues.
+  4. Décisions, écrites dans outils/COUVERTURE-PAGES.md (« tranche toi-même, n’oublie rien ») : les visuels ne sont proposés
+     aux moteurs que lorsqu’une description a été rédigée (31 sur 196), les autres existent en noindex,follow ; une page par
+     annonce de la frise, les moments des dossiers identiques à une annonce renvoient vers elle ; les valeurs d’options et les
+     types de munitions existent en noindex,follow (un repère de la série chacun) avec un sommaire indexable ; LCC, BTN et HVY
+     ont leur page de marque sans rapprochement inventé.
+  5. Lot B en français : dossiers exclus de la traduction, barre de langue vers l’accueil de chaque langue ; les textes
+     nouveaux des hubs sont traduits (outils/langues/<code>/v796.json), extraction à {} dans les cinq langues.
+  6. Plus aucune page par élément en noindex (tes messages du 18 octobre, 19 h 26 et 20 h 09) : les 3 224 pages des lots A
+     et B sont proposées aux moteurs, bâtiments numérotés, valeurs d’options, types de munitions et visuels sans
+     description compris (la v7.95 n’indexait que 588 lieux au nom confirmé). Restent en noindex : les trois pages
+     modèles aux exemples fictifs (missions, trophées, codes), les redirections, la 404, hors-ligne.html, et deux pages
+     d’avant les lots (comparateur.html, logements.html), que je n’ai pas touchées. Sitemaps à jour (4 349 adresses).
+
+CE QUI VIENT ENSUITE (lot C, sans attendre ton « ok », comme demandé ; ta consigne du 18 octobre, 19 h 26 : « fais l’anglais
+des lieux en premier »)
+  v7.97 : les 2 541 pages de lieux et de quartiers en anglais (/en/lieux-carte/…, /en/quartiers/…), hreflang, versions
+  anglaises dans les sitemaps (avec lastmod), recherche et Léo qui ouvrent la page du lieu dans la langue du visiteur.
+  Puis les autres langues et les familles du lot B. IndexNow est déjà en place depuis la v7.86 (il lit sitemap.xml chaque
+  jour).
+
+MARCHE À SUIVRE
+  1. Décompresse les parties de l’archive à la racine du dépôt (après la v7.95), puis pousse depuis GitHub Desktop. Aucun
+     fichier à supprimer.
+  2. Essai : marques/index.html puis marques/albany.html (depuis une fiche véhicule, le constructeur est cliquable),
+     editions/ultimate.html (seize contenus en cartes), moments/index.html puis moments/trailer-1.html (depuis la frise de
+     actus.html, « La page de l’annonce »), visuels/stock-305-clothing-store-02.html (depuis medias.html, « sa page »),
+     tenues/milliers-de-tenues.html (depuis style.html, « sa page » sur la ligne), options-vehicules/index.html,
+     munitions/cartouches.html (depuis une fiche d’arme), achats/style-vice-city.html (depuis la carte de style.html).
+  3. Rien à me dire : je continue avec le lot C.
+
+CE QUE LES CONTRÔLES ONT FAIT CORRIGER (détail : outils/CHANGEMENTS-v7.96.txt § 4)
+  Titres coupés sur un mot entier, descriptions en phrase, accords et élisions, une seule parenthèse sur les lieux de vente,
+  « Avant et après » d’un moment sans boucle, crédit du visuel qui mène à sa page. Le contrôle de clôture a trouvé une carte
+  sans lien sur editions/ultimate.html et amelioration.html (« Goodtime Gear », un contenu sans fiche d’actualité) : elle mène
+  maintenant à sa page d’achat ; une page des animaux laissée vide par une chaîne partielle : la chaîne complète a été
+  relancée, toutes les pages sont régénérées dans l’ordre ; et la ligne « Reprise sur » des pages de visuels, qui changeait
+  d’une chaîne à l’autre (titres lus avant ou après leur réécriture pour les moteurs) : lecture stabilisée, 0 différence.
+
+CONTRÔLES (détail : outils/CHANGEMENTS-v7.96.txt § 6 et 7)
+  Contrôle complet sur l’état livré (18 octobre, 20 h 37 à 22 h 53) : suite 1 171 sur 1 171, langues 51 sur 51, 0 erreur
+  de liens (935 126 références), pages traduites 35 sur 35 et 2 791 sur 2 791 dans le navigateur, écrans 1 584 chargements
+  sans débordement ni rien sous 24 px, audit de clôture à 0 (console, requêtes, contrastes, textes coupés), aucun cookie,
+  0 texte sans traduction ×5, pages et Léo à jour. Latence au téléphone : premier rendu 708 à 892 ms à froid (fiche
+  véhicule 808 à 828 ms), 5 Ko par page compressée.
