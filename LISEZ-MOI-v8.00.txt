@@ -1,0 +1,45 @@
+LEONIDAKIT v8.00 : contrôle complet, audit (latence, téléphone), corrections, et les archives des pages en noindex
+À appliquer sur la v7.99 (commit 4502f8e8f, les 9 parties livrées le 19 octobre) : décompresse les parties de l’archive v8.00 à
+la racine du dépôt, dans n’importe quel ordre, puis pousse depuis GitHub Desktop. Rien n’a été publié ni poussé : c’est toi qui
+pousses. CSP inchangée. Aucun fichier à supprimer. Rien à faire dans Vercel. Presque toutes les pages changent : la feuille
+commune (style.css) a changé, son empreinte est dans chaque page.
+
+CE QUE CONTIENT CETTE VERSION (détail : outils/CHANGEMENTS-v8.00.txt ; grille de qualité : outils/MATRICE-v8.00.md)
+  1. Le contrôle complet que tu avais demandé pour la fin : tous les tests, les liens des 26 641 pages, les pages traduites
+     dans un vrai navigateur, les écrans de 320 à 2 560 px, l’audit (latence, téléphone, contrastes, cibles tactiles), les
+     cookies. Ce qu’il a trouvé est corrigé :
+     - du français restait dans les pages par élément traduites (environ 480 textes par langue : prix repères de GTA V,
+       « prix non relevé », titres de lieux homonymes, types de lieux) sans que l’outil de traduction le signale : corrigé à
+       la source, et un relevé de toutes les pages traduites ne trouve plus un seul texte français ;
+     - Léo : les grands moments « Édition Ultimate » et « Trailer 1 et 2 », une marque comme « Ferrari » et le bâtiment
+       « Flash FM » de la carte détournaient des questions : 512 questions de test sur 512 justes (100 %).
+  2. Latence : les pages s’affichent vite au téléphone (premier affichage en 1,2 à 1,8 s en 4G lente, processeur ralenti) ;
+     ce qui se sentait, c’étaient les blocs qui apparaissent au défilement, lisibles seulement après près d’une seconde :
+     durée ramenée à 0,34 s et cascade resserrée, même mouvement (temps médian d’apparition : 396 puis 309 ms). Seul le
+     calculateur reste plus lent à s’ouvrir (27 scripts) : le regrouper changerait l’outil, je ne l’ai pas fait.
+  3. Téléphone : plus rien ne sort de l’écran à 320 et 390 px sur les pages vérifiées (tableaux des fiches, titres faits
+     d’un très long mot, encart des Éditions et compte à rebours en allemand, frise « GTA VI sur PC », vignette des
+     Activités) ; texte du pied de page aligné dans sa zone de toucher.
+  4. La dernière photo de gtadb qui manquait (le lieu réel du bâtiment L1094).
+
+LES ARCHIVES DES PAGES EN NOINDEX (fichiers à part : Leonidakit-noindex-a-completer-2026-10-19-…)
+  Ta consigne du 18 octobre à 23 h 58 : chaque page en noindex faute d’informations officielles, dans les six langues,
+  rangée dans des archives, avec ce qui manque à chacune (A-COMPLETER.md à lire, a-completer.tsv pour un tableur).
+  - 1 596 pages françaises, 9 576 fichiers avec leurs traductions : 1 005 lieux de la carte (bâtiments encore sans nom en
+    jeu), 258 fiches de véhicules et 9 d’armes (ni visuel officiel, ni nom Rockstar, ni prix), 165 visuels (sans
+    description), 145 valeurs d’options de personnalisation (seul un repère de GTA V), 6 types de munitions, 3 quartiers
+    sans lieu, 1 marque sans véhicule, 3 pages modèles (exemples fictifs), logements.html.
+  - Ces archives ne sont pas à décompresser dans le dépôt : elles sont pour plus tard. Quand Rockstar publie, renvoie-les
+    moi : je compléterai les données indiquées, et chaque page qui a assez d’informations repassera en indexable d’elle-même
+    à la régénération.
+
+MARCHE À SUIVRE
+  1. Décompresse les parties de l’archive v8.00 à la racine du dépôt (après la v7.99), puis pousse. Aucun fichier à supprimer.
+  2. Essai au téléphone : gta-6-pc.html (frise « Les précédents »), de/editions.html (encart du coffret), une page de visuel
+     (visuels/stock-305-clothing-store-02.html, tableau « Identité »), en/coiffures/couleur-des-cheveux.html (tout en anglais),
+     Léo : « will there be a gta 6 trailer 3 », « qui anime Flash FM ».
+  3. Garde les archives noindex de côté pour le jour où Rockstar publie.
+
+VÉRIFICATIONS (détail : outils/CHANGEMENTS-v8.00.txt § 6)
+  Tous les tests passent (1 176 et 51 des langues), 0 lien cassé sur 26 641 pages, 0 texte français dans les pages
+  traduites, Léo à 100 %, écrans et audit sans défaut. Rien ne reste à contrôler.

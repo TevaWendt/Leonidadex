@@ -1,0 +1,21 @@
+{
+ "_note": "v8.00 (contrôle final) : textes des pages par élément qu’une règle laissait en français sans le signaler (groupe {tN} absent de la mémoire), relevés après la correction de outils/langues-elements.cjs.",
+ "_motifs": {
+  "{1}, {2} : {3} de GTA VI, {4}": "{1}, {2}: GTA VI {3}, {4}"
+ },
+ "Lieux de transport": "Transport places",
+ "W6P6+J5H Le Mans": "=",
+ "W6Q5+4JM Le Mans": "=",
+ "Chef Créole": "=",
+ "3620 NE 2nd Ave": "=",
+ "3600 NE 2nd Ave": "=",
+ "151 SE 14th Terrace": "=",
+ "L’entretien de Rob Nelson à Famitsu, 28 août 2026 : presse de GTA VI, nommé ou décrit par Rockstar": "Rob Nelson’s interview with Famitsu, August 28, 2026: GTA VI press, named or described by Rockstar",
+ "Précommandes, Édition Ultimate et Pack Vintage Vice City, 24 juin 2026 : annonce de GTA VI, nommé ou décrit par Rockstar": "Pre-orders, Ultimate Edition and Vintage Vice City Pack, June 24, 2026: GTA VI announcement, named or described by Rockstar",
+ "Les six stations de radio, 8 octobre 2026 : musique de GTA VI, nommé ou décrit par Rockstar": "The six radio stations, October 8, 2026: GTA VI music, named or described by Rockstar",
+ "Le Trailer 2, les personnages et les régions, 6 mai 2025 : vidéo de GTA VI, nommé ou décrit par Rockstar": "Trailer 2, the characters and the regions, May 6, 2025: GTA VI video, named or described by Rockstar",
+ "GTA 6 : Carabine, option silencieux | Leonidakit": "GTA 6: Carbine, suppressor option | Leonidakit",
+ "GTA VI : Carabine, option silencieux | Leonidakit": "GTA VI: Carbine, suppressor option | Leonidakit",
+ "GTA 6 : Pistolet, option silencieux | Leonidakit": "GTA 6: Pistol, suppressor option | Leonidakit",
+ "GTA VI : Pistolet, option silencieux | Leonidakit": "GTA VI: Pistol, suppressor option | Leonidakit"
+}

@@ -203,8 +203,21 @@ function lookup(mem, key, file, before, noSplit) {
   if (v === undefined && mem.rules && mem.rules.length) {
     for (const r of mem.rules) {
       const m = k.match(r.re); if (!m) continue;
+      /* v8.00 : un groupe {tN} absent de la mémoire passait tel quel, en français (« GTA Online : prix non relevé (prix non
+         relevés) » restait en français dans les pages traduites, sans être signalé) : il passe par toute la mémoire (motifs,
+         morceaux) ; un nom propre reste tel quel ; un groupe français inconnu fait passer à la règle suivante, puis le texte
+         est signalé à traduire */
+      let rate = false;
+      const out = String(r.v).replace(/\{(t?)(\d+)\}/g, (x, t, n) => {
+        const g = m[n] || ''; if (!t) return g;
+        const tv = lookup(mem, g, file, before, true); if (tv === KEEP) return g; if (typeof tv === 'string') return tv;
+        if (!LETTERS.test(g) || neutral(g, mem)) return g;
+        const dv = deep(mem, g, file, before, () => {}, true); if (dv === KEEP) return g; if (typeof dv === 'string') return dv;
+        rate = true; return g;
+      });
+      if (rate) continue;
       mem.used.add(r.key);
-      return String(r.v).replace(/\{(t?)(\d+)\}/g, (x, t, n) => { const g = m[n] || ''; if (!t) return g; const tv = lookup(mem, g, file, before, true); return typeof tv === 'string' ? tv : g; });
+      return out;
     }
   }
   /* v7.61 : un texte sans balise fait de plusieurs phrases, toutes connues de la mémoire une à une (descriptions

@@ -43,7 +43,7 @@ test('lot B : chaque valeur d’option relie son poste et réciproquement ; chaq
 });
 test('lot C : la recherche du site et Léo connaissent les marques, les types de munitions, les éditions et les grands moments (outils/elements-index.json)', () => {
   const EI = JSON.parse(read('outils/elements-index.json'));
-  assert.ok(EI.recherche.length >= 51 + 6 + 4 + 20 && EI.leo.length === EI.recherche.length - 6 - 4, EI.recherche.length + ' lignes'); /* types de munitions et éditions : recherche seulement */
+  assert.ok(EI.recherche.length >= 51 + 6 + 4 + 20 && EI.leo.length === EI.recherche.length - 6 - 4 - EI.recherche.filter(r => r.k === 'Grand moment' && /[EÉ]dition (?:Ultimate|Standard)|^(?:Le )?Trailer \d/i.test(r.l)).length, EI.recherche.length + ' lignes'); /* types de munitions, éditions et moments au nom d’une édition (v8.00) : recherche seulement */
   const kinds = new Set(EI.leo.map(r => r.kind)); for (const k of ['marque', 'moment']) assert.ok(kinds.has(k), 'Léo : ' + k);
   for (const r of EI.recherche) { assert.ok(/^\/(marques|munitions|editions|moments)\/[a-z0-9-]+\.html$/.test(r.u) && exists(r.u.slice(1)), r.l + ' : ' + r.u); assert.ok(r.l && r.k && r.s, r.l); }
   for (const r of EI.leo) { assert.ok(/^(marque|moment):[a-z0-9-]+$/.test(r.key) && exists(r.url.slice(1)) && r.proof && r.category, r.key); assert.ok(!/[—·→↑↓]/.test(r.proof + r.category), r.key + ' : signe d’écriture automatique'); }

@@ -167,16 +167,17 @@ test('progression-core : les quatre familles entrent dans le total, l’export e
   mem.clear();const plan=store.prepareImport(JSON.stringify(out));assert.deepEqual(plan.issues,[]);store.applyImport(plan,'merge');assert.equal(store.summary().done,4);
 });
 
+const PEI=(()=>{try{return JSON.parse(read('outils/pages-elements-index.json')).elements||{};}catch(e){return {};}})(),cible=(fam,it,d)=>PEI[fam+':'+it.id]?'/'+PEI[fam+':'+it.id]:d.page+'#'+C.rowId(fam,it);/* v8.00 : depuis la v7.97, la recherche et Léo ouvrent la page de l’élément quand elle existe */
 test('recherche interne, Léo et sitemap : chaque ligne indexée (type élément) vers son ancre, familles et Accessoires indexés, FAQ dans Léo, réponses',()=>{
   const c={window:{}};vm.runInNewContext(read('search-index.js'),c);const idx=c.window.LK_INDEX;
   for(const fam of LOT5){const d=D.families[fam];assert.ok(idx.some(e=>e.u===d.page+'#'+d.section&&e.l===d.label),fam+' section');
-    for(const it of d.items){const e=idx.find(x=>x.u===d.page+'#'+C.rowId(fam,it));assert.ok(e,it.id+' indexé');assert.equal(e.t,'element');assert.equal(e.k,C.KIND[fam]);assert.ok(e.s.includes(it.nom.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/’/g,"'").toLowerCase().split(' ')[0]));}}
+    for(const it of d.items){const e=idx.find(x=>x.u===cible(fam,it,d));assert.ok(e,it.id+' indexé');assert.equal(e.t,'element');assert.equal(e.k,C.KIND[fam]);assert.ok(e.s.includes(it.nom.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/’/g,"'").toLowerCase().split(' ')[0]));}}
   assert.ok(idx.some(e=>e.u==='/style.html#accessoires'));assert.ok(idx.some(e=>e.u==='/style.html#tatouages'&&e.l==='Tatouages'));assert.ok(idx.some(e=>e.u==='/nourriture.html'));
   const leo=JSON.parse(read('leo-index.json')),core=require(path.join(root,'outils/tests/leo-complet.cjs')).fullCore(root)/* v7.45 : noyau + morceaux */;
-  for(const fam of LOT5){const rows=core.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){assert.ok(r.url.startsWith(D.families[fam].page+'#'),r.name);assert.equal(r.price,undefined);}}
+  for(const fam of LOT5){const rows=core.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){const it=D.families[fam].items.find(x=>'catalogue:'+x.id===r.key);assert.ok(r.url===(it?cible(fam,it,D.families[fam]):'')||r.url.startsWith(D.families[fam].page+'#'),r.name);assert.equal(r.price,undefined);}}
   const faq=leo.knowledge.filter(x=>/^acq-(nourriture|style)-/.test(x.id));assert.equal(faq.length,10);for(const t of faq)assert.match(t.links[0].url,/^\/(nourriture|style)\.html#faq$/);
   for(const [q,re,url] of [['peut-on manger dans gta 6 ?',/Rob Nelson/,'/nourriture.html#faq'],['est-ce qu’on grossit dans gta 6 ?',/grossir/,'/nourriture.html#faq'],['peut-on changer de coiffure dans gta 6 ?',/salon/,'/style.html#faq'],['peut-on se faire tatouer ?',/FAILE/,'/style.html#faq'],['y a-t-il des gilets pare-balles dans gta 6 ?',/Ammu-Nation/,'/nourriture.html#faq'],['combien de tenues dans gta 6 ?',/milliers/,'/style.html#faq']]){const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);/* v7.45 : la réponse rédigée peut viser une ancre plus précise de la même page */assert.ok(a.links[0].url.startsWith(url.split('#')[0]),q+' → '+a.links[0].url);}
-  const r=core.answer('trouve sprunk');assert.equal(r.kind,'results');assert.ok(r.results.some(x=>x.url==='/nourriture.html#consommables-sprunk'));
+  const r=core.answer('trouve sprunk');assert.equal(r.kind,'results');assert.ok(r.results.some(x=>x.url==='/nourriture.html#consommables-sprunk'||x.url===cible('consommables',{id:'sprunk'},D.families.consommables)));
   const sm=read('sitemap.xml');for(const f of ['nourriture.html','style.html'])assert.ok(sm.includes('https://www.leonidakit.com/'+f));
   for(const f of ['vetements.html','accessoires.html','tatouages.html'])assert.ok(!sm.includes('/'+f)&&/http-equiv="refresh"/.test(read(f)),f+' reste un renvoi');
 });

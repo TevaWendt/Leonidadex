@@ -191,16 +191,17 @@ test('fiches : chaque fiche véhicule a « Personnaliser ce véhicule » vers sa
   const g=doc('vehicules/vapid-ganado.html');assert.equal(g.querySelectorAll('.fhero .fiche-liens a[href="#personnaliser"]').length,1);
 });
 
+const PEI=(()=>{try{return JSON.parse(read('outils/pages-elements-index.json')).elements||{};}catch(e){return {};}})(),cible=(fam,it,d)=>PEI[fam+':'+it.id]?'/'+PEI[fam+':'+it.id]:d.page+'#'+C.rowId(fam,it);/* v8.00 : depuis la v7.97, la recherche et Léo ouvrent la page de l’élément quand elle existe */
 test('recherche interne, Léo et sitemap : chaque poste indexé vers son ancre (type élément, mots de compatibilité), les deux familles indexées, cinq FAQ dans Léo avec réponses, « trouve silencieux »',()=>{
   const c={window:{}};vm.runInNewContext(read('search-index.js'),c);const idx=c.window.LK_INDEX;
   for(const fam of LOT6){const d=D.families[fam];const sec=idx.find(e=>e.u===d.page+'#'+d.section);assert.ok(sec&&sec.l===d.label&&sec.k==='Personnalisations',fam+' section');
-    for(const it of d.items){const e=idx.find(x=>x.u===d.page+'#'+C.rowId(fam,it));assert.ok(e,it.id+' indexé');assert.equal(e.t,'element');assert.equal(e.k,C.KIND[fam]);}}
+    for(const it of d.items){const e=idx.find(x=>x.u===cible(fam,it,d));assert.ok(e,it.id+' indexé');assert.equal(e.t,'element');assert.equal(e.k,C.KIND[fam]);}}
   assert.ok(idx.find(e=>e.u==='/personnalisations.html#perso-armes-silencieux').s.includes('pistolets'),'mots de compatibilité dans la recherche');
   const leo=JSON.parse(read('leo-index.json')),core=require(path.join(root,'outils/tests/leo-complet.cjs')).fullCore(root)/* v7.45 : noyau + morceaux */;
-  for(const fam of LOT6){const rows=core.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){assert.ok(r.url.startsWith('/personnalisations.html#'),r.name);assert.equal(r.price,undefined);}}
+  for(const fam of LOT6){const rows=core.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){const it=D.families[fam].items.find(x=>'catalogue:'+x.id===r.key);assert.ok(r.url.startsWith('/personnalisations.html#')||(it&&r.url===cible(fam,it,D.families[fam])),r.name);assert.equal(r.price,undefined);}}
   const faq=leo.knowledge.filter(x=>/^acq-customizations-/.test(x.id));assert.equal(faq.length,5);for(const t of faq)assert.equal(t.links[0].url,'/personnalisations.html#faq');
   for(const [q,re] of [['peut-on personnaliser sa voiture dans gta 6 ?',/Rideout Customs/],['peut-on repeindre sa voiture dans gta 6 ?',/Pay ’n’ Spray/],['peut-on personnaliser ses armes dans gta 6 ?',/Rob Nelson/],['c est quoi le kit retro du ganado ?',/Édition Ultimate/],['ou est ammu nation dans gta 6 ?',/Ammu-Nation/]]){const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);/* v7.45 : la réponse rédigée peut viser une ancre plus précise de la même page */assert.ok(a.links[0].url.startsWith('/personnalisations.html'),q+' → '+a.links[0].url);}
-  const r=core.answer('trouve silencieux');assert.equal(r.kind,'results');assert.ok(r.results.some(x=>x.url==='/personnalisations.html#perso-armes-silencieux'));
+  const r=core.answer('trouve silencieux');assert.equal(r.kind,'results');assert.ok(r.results.some(x=>x.url==='/personnalisations.html#perso-armes-silencieux'||x.url===cible('perso-armes',{id:'silencieux'},D.families['perso-armes'])),JSON.stringify(r.results.slice(0,3).map(x=>x.url)));
   assert.ok(read('sitemap.xml').includes('https://www.leonidakit.com/personnalisations.html'));
 });
 

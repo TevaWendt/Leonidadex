@@ -360,7 +360,10 @@ main button.vt-copy{font:800 .84rem/1.2 'Archivo',sans-serif;}
 a.vt-cta:hover .vt-cta-go,a.vt-cta:focus-visible .vt-cta-go{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
 a.vt-cta:hover>.vt-pic>img,a.vt-cta:hover>img{transform:scale(1.05);opacity:.7;}
 a.vt-cta:focus-visible{outline:3px solid var(--amber);outline-offset:3px;}
-@media (max-width:699px){.vt-cta{grid-template-columns:1fr;}.vt-cta-go{justify-self:start;}}
+@media (max-width:699px){.vt-cta{grid-template-columns:minmax(0,1fr);}.vt-cta-go{justify-self:start;}}
+/* v8.00 (téléphone) : le bouton d’un encart peut passer sur deux lignes ; il élargissait la carte au-delà de l’écran (allemand,
+   « Die Sammlerbox und die Preise » à 320 px : texte et bouton coupés à droite) */
+@media (max-width:420px){.vt-cta-go{white-space:normal;max-width:100%;}}
 
 @media (prefers-reduced-motion:reduce){
   .vt-tilt,.vt-tilt.is-tilting{transform:none!important;transition:none!important;}
@@ -432,6 +435,9 @@ a.vt-cta:focus-visible{outline:3px solid var(--amber);outline-offset:3px;}
 .vt-dated-t{position:relative;height:60px;}
 .vt-dated-bar{position:absolute;left:var(--x0);width:calc(var(--x1) - var(--x0));top:22px;height:14px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);box-sizing:border-box;transform-origin:left center;}
 .vt-dated-r--open .vt-dated-bar{background:transparent;border-style:dashed;border-right:0;border-radius:999px 0 0 999px;}
+/* v8.00 : la ligne encore ouverte (GTA VI) finit au bord de la frise : son libellé (« PC : pas annoncé ») s’aligne sur la fin de la
+   ligne au lieu d’être centré dessus (il sortait de la carte entre 760 et 1 100 px) */
+.vt-dated-r--open .vt-dated-bar b{left:auto;right:0;transform:none;}
 .vt-dated-bar b{position:absolute;left:50%;top:-20px;transform:translateX(-50%);font:800 .8rem/1 'Archivo',sans-serif;white-space:nowrap;color:var(--ed-fg,var(--ink));}
 .vt-dated-a,.vt-dated-b{position:absolute;top:40px;font-size:.76rem;line-height:1.2;white-space:nowrap;color:var(--ed-soft,var(--ink-soft));}
 .vt-dated-a{left:var(--x0);transform:translateX(calc(-100% + 8px));text-align:right;}
@@ -453,6 +459,13 @@ a.vt-cta:focus-visible{outline:3px solid var(--amber);outline-offset:3px;}
   .vt-dated-bar b{font-size:.74rem;}
   .vt-dated-a{order:1;}.vt-dated-b{order:3;}
   .vt-dated-a::before,.vt-dated-b::before{left:0;right:auto;top:2px;}
+}
+/* v8.00 (téléphone, 420 px et moins) : l’écart (« 19 mois après ») passe au-dessus des deux dates, qui ont chacune la moitié de
+   la ligne (« 5 novembre 2019 » sortait de la carte à 320 px) */
+@media (max-width:420px){
+  .vt-dated-t{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+  .vt-dated-bar{order:0;grid-column:1 / -1;justify-self:start;}
+  .vt-dated-a,.vt-dated-b{position:relative;left:auto;top:auto;}
 }
 @media (prefers-reduced-motion:no-preference){.vt-dated.vt-in .vt-dated-bar{transform:scaleX(0);transition:transform var(--c-narrative,620ms) var(--c-ease-result,ease) calc(var(--i,0)*120ms + 100ms);}.vt-dated.vt-in.is-in .vt-dated-bar{transform:scaleX(1);}}
 

@@ -158,7 +158,7 @@
       const el = en.target; io.unobserve(el); pending = Math.max(0, pending - 1);
       if (shown(el)) return;
       const own = parseInt(el.dataset.delay || '-1', 10);
-      const d = own >= 0 ? Math.min(own, 300) : Math.min(k * 60, 300); k++;
+      const d = own >= 0 ? Math.min(own, 300) : Math.min(k * 40, 300); k++;
       show(el, d, false);
     });
   }, { threshold: 0.01, rootMargin: '0px 0px 12% 0px' }) : null;

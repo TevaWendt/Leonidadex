@@ -37,6 +37,9 @@
     --ease-out:cubic-bezier(.2,.7,.2,1);
     --ease-spring:cubic-bezier(.34,1.56,.64,1);
     --dur:.22s;
+    /* v8.00 (latence) : durée d’une apparition au défilement ; 0,45 à 0,6 s auparavant : le contenu mettait jusqu’à 1 s à
+       être lisible après être entré dans l’écran */
+    --lk-enter:.34s;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{background:var(--paper); -webkit-text-size-adjust:100%; scroll-behavior:smooth;}
@@ -285,7 +288,7 @@
   .faq .ans{padding:0 20px 18px; color:var(--ink-soft); font-size:.94rem; max-width:62ch;}
 
   /* ===== apparitions ===== */
-  .reveal{opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease;}
+  .reveal{opacity:0; transform:translateY(12px); transition:opacity var(--lk-enter) var(--ease-out), transform var(--lk-enter) var(--ease-out);}
   .reveal.in{opacity:1; transform:none;}
 
   /* ===== pied de page ===== */
@@ -690,6 +693,20 @@ table.spec th, table.spec td{padding:13px 16px; text-align:left; font-size:.94re
 table.spec tr:last-child th, table.spec tr:last-child td{border-bottom:none;}
 table.spec tr:nth-child(even){background:var(--paper);}
 table.spec th{font-weight:600; color:var(--ink-soft); width:44%;}
+/* v8.00 (téléphone) : une adresse de source ou un mot plus long que la case passe à la ligne au lieu d’élargir le tableau
+   au-delà de l’écran (pages des visuels à 320 px : la case « Quelle » et le texte suivant étaient coupés) */
+table.spec th,table.spec td{overflow-wrap:anywhere;}
+/* v8.00 (téléphone) : un titre allemand fait d’un seul long mot (« Fahrzeuganpassung ») se coupe avec un trait d’union au
+   lieu de sortir de l’écran ; ailleurs, un mot trop long passe à la ligne (rien ne change quand tout tient) */
+main h1,main h2,.lk-words .lk-w{overflow-wrap:break-word;}
+.lk-words .lk-w{max-width:100%;}
+:lang(de) main h1,:lang(de) main h2,:lang(de) .lk-words .lk-w{hyphens:auto;-webkit-hyphens:auto;}
+/* v8.00 (téléphone) : sur un petit écran, un titre fait d’un mot plus long que la ligne (« Personnalisations » à 320 px) se
+   coupe avec un trait d’union plutôt qu’au hasard ; seuls les mots de 12 lettres et plus sont concernés */
+@media(max-width:480px){main h1,.lk-words .lk-w{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:12 5 5;overflow-wrap:anywhere;}}
+/* v8.00 (téléphone, 360 px et moins) : le compte à rebours tient sur sa ligne (en allemand, « 30 Tg. 05 Std. 53 Min. 13 Sek. »
+   dépassait de 9 px) */
+@media(max-width:360px){.fcount-nums{gap:5px;}.fcd-box{padding:6px 8px;}}
 table.spec td{font-weight:600;}
 table.spec td a{color:var(--coral-text,#B93220); text-decoration:underline; text-underline-offset:3px;}
 table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;}
@@ -804,13 +821,13 @@ table.spec td.unknown{font-weight:400; color:var(--ink-soft); font-style:italic;
    APPARITIONS AU DÉFILEMENT — généralisées
    ============================================================ */
 .rise{
-  opacity:0; transform:translateY(26px);
-  transition:opacity .6s ease, transform .6s cubic-bezier(.22,.68,.3,1);
+  opacity:0; transform:translateY(12px);
+  transition:opacity var(--lk-enter) var(--ease-out), transform var(--lk-enter) var(--ease-out);
 }
 .rise.in{opacity:1; transform:none;}
 
 /* les cartes véhicules gardent leur transformation au survol une fois révélées */
-.veh-card.rise{transition:opacity .6s ease, transform .6s cubic-bezier(.22,.68,.3,1);}
+.veh-card.rise{transition:opacity var(--lk-enter) var(--ease-out), transform var(--lk-enter) var(--ease-out);}
 .veh-card.rise.in{transition:transform .18s cubic-bezier(.3,.85,.4,1), box-shadow .18s;}
 
 /* le filtrage ne doit pas rejouer l'animation */
@@ -1150,6 +1167,9 @@ body>header .head-search{flex:0 1 200px;max-width:200px;margin-left:auto;margin-
  body>header .head-search{order:0;flex:1 1 120px;max-width:300px}
 }
 @media(max-width:600px){.nav-more-panel{grid-template-columns:1fr;gap:18px;padding:16px}.foot-top{grid-template-columns:1fr}.foot-cols{grid-template-columns:repeat(2,minmax(0,1fr))}.foot-cols a{min-height:44px}}
+/* v7.98 : au téléphone, le texte d’un lien du pied de page est centré dans sa cible de 44 px, comme la flèche « nouvel onglet » (elle
+   paraissait plus basse que le texte) */
+@media(max-width:600px){.foot-cols a{display:inline-flex;align-items:center}}
 
 /* Bandeaux défilants : deux moitiés identiques, chacune au moins aussi large que l'écran */
 .mq-half{display:inline-flex; align-items:center; white-space:nowrap; flex-shrink:0;}
@@ -1572,13 +1592,13 @@ main .d-section>p,main .info-section p,main .lore-texte p,main .d-intro-note,.in
 /* v7.55 (lot 2) : le déplacement d'entrée et sa transition ne valent que jusqu'à la fin de l'apparition (classe lk-settled
    posée par LKMotion) : ensuite la carte reprend ses propres règles de survol (déplacement, ombre), que ces règles
    plus faibles perdaient contre « transform:none » (cartes du monde, carnets de Progression, cartes « Combat »). */
-.js .lk-reveal:not(.lk-settled){transform:translate3d(0,18px,0);}
+.js .lk-reveal:not(.lk-settled){transform:translate3d(0,12px,0);}
 /* v7.54 : un bloc déjà à l'écran à l'ouverture est montré sans transition (classe posée puis retirée par LKMotion) */
 .js .lk-instant,.js .lk-instant *,.js .lk-instant::after{transition:none!important;}
 /* v7.54 : la promotion en couche ne vaut que pendant l'entrée (is-in → lk-settled), jamais pour les blocs encore hors écran */
 .js .lk-reveal.is-in:not(.lk-settled){will-change:opacity,transform;}
 .js .lk-reveal.is-in{opacity:1;}
-.js .lk-reveal.is-in:not(.lk-settled){transform:none;transition:opacity .45s var(--ease-out),transform .45s var(--ease-out);transition-delay:var(--lk-delay,0ms);}
+.js .lk-reveal.is-in:not(.lk-settled){transform:none;transition:opacity var(--lk-enter) var(--ease-out),transform var(--lk-enter) var(--ease-out);transition-delay:var(--lk-delay,0ms);}
 .js .lk-reveal--left:not(.lk-settled){transform:translate3d(-22px,0,0);} .js .lk-reveal--right:not(.lk-settled){transform:translate3d(22px,0,0);} .js .lk-reveal--zoom:not(.lk-settled){transform:translate3d(0,16px,0);}
 .js .lk-reveal.is-in.lk-reveal--left:not(.lk-settled),.js .lk-reveal.is-in.lk-reveal--right:not(.lk-settled),.js .lk-reveal.is-in.lk-reveal--zoom:not(.lk-settled){transform:none;}
 /* cartes : la famille entière lève d'un cran, l'ombre dure devient ambre */

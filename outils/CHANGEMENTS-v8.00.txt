@@ -1,0 +1,100 @@
+LEONIDAKIT v8.00 : contrôle complet, audit (latence, téléphone), corrections, archives des pages en noindex
+19 octobre 2026
+
+Base : v7.99 (commit 4502f8e8f). Rien n’est publié ni poussé. CSP inchangée. Aucun fichier à supprimer. Aucune donnée inventée.
+Téva, 18 octobre, 23 h 58 : « Pour ce qui est des audits que tu fais et tes propres corrections, je souhaite que tu les fasses à la
+toute fin, comme une relecture après un contrôle » ; 20 h 17 : « un audit […] la latence. Il faudrait qu’il y ait très peu de
+latence […] sans rien modifier d’autre » et « parfaitement l’adapter à un téléphone. Donc garder le même niveau d’esthétisme,
+mais calibré pour un téléphone » ; puis « tu récupères chaque page noindex que tu mettras dans plusieurs dossiers zip ».
+
+1. LE CONTRÔLE COMPLET (sur tout le site, six langues)
+- Tests : 1 176 tests de la suite et 51 tests des langues ; liens : verifier.js sur 26 641 pages (≈ 4 millions de références) ;
+  Mentions (preuve-confidentialite) ; navigateur : pages traduites (504 pages types par langue, 1 280 et 390 px) et parcours
+  du calculateur dans les cinq langues (2 791 contrôles) ; écrans aux seize largeurs (99 pages) et en allemand (96 pages) ;
+  audit de clôture (35 pages types aux sept largeurs : débordements, grilles, textes coupés, images, titres, cibles tactiles,
+  contrastes, mouvement réduit, survol, fonctions) ; cookies. Relevé statique de tout texte français resté dans les pages
+  traduites (outil nouveau, sur les 22 200 pages traduites).
+- Ce que le contrôle a trouvé est corrigé ci-dessous (§ 2 à 5) ; le second passage est au § 6.
+
+2. TRADUCTIONS : DU FRANÇAIS RESTAIT DANS LES PAGES PAR ÉLÉMENT TRADUITES
+- Défaut : une règle de la mémoire dont un morceau n’était pas connu (« GTA V : {t2} », « Aperçu dans un support officiel,
+  {t2} », « {t1} (repère L…) ») laissait ce morceau en français sans le signaler ; l’extraction affichait 0 texte à
+  traduire. Environ 480 textes dans 250 pages par langue : prix repères (« GTA V : de 20 $ à 450 $ », « prix non relevé »),
+  titres de lieux homonymes (« Turn à Gellhorn International Raceway (repère L…) »), types (« Lieux de transport »),
+  descriptions des grands moments.
+- Correction (outils/langues-elements.cjs) : un morceau inconnu passe par toute la mémoire (motifs, morceaux) ; un nom propre
+  reste tel quel ; un morceau français inconnu est désormais signalé. Mémoire outils/langues/<code>/elements/v800.json
+  (5 langues) : « Lieux de transport », descriptions de quatre grands moments, titres « option silencieux », adresses et
+  codes de lieux réels gardés tels quels. Relevé final : 0 texte français dans les 22 200 pages traduites.
+- Sommaires des options de personnalisation : le nom du poste (« Suspension ») au lieu de son identifiant
+  (« suspension-niveaux ») dans la liste des pages (données structurées).
+
+3. LÉO
+- Les grands moments qui portent le nom d’une édition (« Édition Ultimate », « Captures de l’Édition Ultimate ») ou d’un
+  trailer (« Le Trailer 1 », « Le Trailer 2 ») restent des résultats de recherche, sans fiche Léo : ils répondaient à « le
+  Kamacho est-il dans l’Ultimate » ou à « will there be a trailer 3 », que les sujets Éditions et Vidéos traitent.
+- Une marque n’a plus pour autre nom le constructeur réel qu’elle évoque : « trouve-moi la Ferrari » mène aux véhicules
+  qu’elle inspire, pas à la page de Grotti.
+- Un lieu de la carte qui porte le nom d’une autre fiche (« Flash FM » : la station et le bâtiment à son enseigne, ajouté
+  par l’import gtadb) laisse la réponse à cette fiche (7 lieux) ; il reste dans la recherche et sur la carte.
+- Évaluation de Léo : 512 questions sur 512 (100 %, contre 99 % avant), 39 hors sujet refusés, aucune réponse sans source.
+
+4. LATENCE
+- Mesure (téléphone 390 × 844, réseau 4G lente émulé : 150 ms, 1,6 Mbit/s ; processeur ralenti 4 fois) sur douze pages
+  types : premier affichage entre 1,2 et 1,8 s, plus grand élément affiché à 2,7 s au plus (calculateur à part, voir
+  plus bas), 13 à 38 requêtes ; rien à alléger sans changer le site.
+- Ce qui se voyait : les blocs qui apparaissent au défilement mettaient jusqu’à 1 s à être lisibles (transitions de 0,45 à
+  0,6 s, décalage de 18 à 26 px). Durée commune ramenée à 0,34 s (jeton --lk-enter, style.css) avec la courbe du site, et
+  décalage de 12 px, comme le demande la grille de qualité (10 à 12 px) ; cascade de 40 ms par élément au lieu de 60
+  (la grille admet 35 à 60), toujours 300 ms au plus ; même moteur (common.js, LKMotion). Lignes des catalogues : même
+  durée. Audit (temps entre l’entrée d’un bloc dans l’écran et sa
+  lecture complète, environ 100 mesures sur 35 pages) : médiane 396 puis 309 ms, moyenne 459 puis 350 ms, blocs au-delà de
+  0,5 s : 48 puis 37. La page du calculateur reste la plus lente à s’afficher (premier affichage 2 à 2,3 s, plus grand
+  élément 3 à 3,8 s dans ces conditions) : elle charge les 27 scripts du calculateur ; les regrouper changerait l’outil,
+  ce n’est pas fait.
+
+5. TÉLÉPHONE
+- Pied de page : le texte des liens est centré dans sa cible de 44 px (la flèche « nouvel onglet » paraissait plus haute).
+- Tableaux « Identité » des fiches : une adresse de source ou un long mot passe à la ligne au lieu d’élargir le tableau
+  au-delà de l’écran (pages des visuels à 320 px : la case Source et le texte suivant étaient coupés).
+- Titres : un mot plus long que la ligne se coupe avec un trait d’union (« Personnalisa-tions », « Fahrzeug-anpassung ») au
+  lieu d’être coupé au hasard ou de sortir de l’écran ; seuls les mots de 12 lettres et plus, sur un petit écran.
+- Compte à rebours des fiches à 360 px et moins (allemand : il dépassait de 9 px) ; frise « GTA VI sur PC » à 420 px et
+  moins (l’écart passe au-dessus des deux dates, « 5 novembre 2019 » sortait de la carte) et, en grand écran, le libellé
+  « PC : pas annoncé » de la ligne encore ouverte aligné sur sa fin (il sortait de la carte entre 760 et 1 100 px) ;
+  encarts à bouton (Éditions, en allemand à 320 px : texte et bouton coupés à droite, le bouton passe maintenant sur deux
+  lignes) ; vignette ronde des cartes Activités (elle sortait de l’écran de 7 px à 320 px).
+- Relevé des débordements à 320 et 390 px (1 000 pages en français et en allemand, outil nouveau qui voit aussi ce qu’une
+  page coupe sans le laisser défiler) : 96 cas avant, 55 après ; ceux qui restent sont voulus (bandeaux qui défilent, carte
+  qu’on déplace, aperçus de carte recadrés, lignes de listes repliées, donc invisibles).
+
+6. SECOND PASSAGE APRÈS CORRECTIONS
+- Suite de tests : 1 176 sur 1 176 ; tests des langues : 51 sur 51 ; verifier.js : 0 erreur (3 981 362 références, 26 641
+  pages) ; Mentions tenues ; extraction des traductions : 0 texte à traduire dans les cinq langues ; relevé du français dans
+  les pages traduites : 0 ; pages par élément et Léo à jour ; Léo : 512 sur 512.
+- Navigateur : pages traduites (35 contrôles) et calculateur (2 791 contrôles) dans les cinq langues, 0 échec ; écrans aux
+  seize largeurs et en allemand : 0 débordement, 0 texte ni cible trop petits ; audit de clôture : 0 sur chaque critère,
+  0 erreur de console, 0 requête en échec, fonctions 12 sur 12 ; cookies : aucun.
+
+7. ARCHIVES DES PAGES EN NOINDEX (livrées à part : Leonidakit-noindex-a-completer-…)
+- Toutes les pages en noindex,follow faute d’informations officielles, dans les six langues, avec A-COMPLETER.md (une ligne
+  par page : ce qui manque, d’où viennent ses données) et a-completer.tsv (une ligne par fichier). Pages techniques laissées
+  de côté (redirections, page introuvable, page hors ligne). Outil : outils/livraison/archive-noindex.cjs.
+- Pour les compléter plus tard : compléter la donnée indiquée, régénérer (node outils/regenerer.cjs) ; la page passe d’elle-
+  même en indexable (le seuil est dans le générateur). Aucune page n’est à modifier à la main.
+
+8. TESTS MIS À JOUR (comportements voulus des v7.97 à v7.99)
+- La recherche et Léo ouvrent la page de l’élément (catalogues-v742, catalogues-v743) ; position d’un lieu lue dans les
+  données, corrigée par gtadb (hubs-v740) ; « Ambrosia Hill » (nom gtadb) et lien vers la page du lieu (validation-v752) ;
+  nombre de lieux (pages-elements, couverture-pages, carnets-browser) et adresses publiées gardées (couverture-pages) ;
+  canonical d’un sommaire en adresse de dossier (langues) ; le repère du français connaît les noms des lieux de la carte, la
+  licence « CC BY 4.0 », la position « x …, y … », l’italien « rétro » et le portugais « d’água » (langues-helper) ; lignes
+  de Léo (pages-elements-b).
+
+9. FICHIERS
+- Nouveaux : outils/langues/<code>/elements/v800.json (5), outils/livraison/archive-noindex.cjs, LISEZ-MOI-v8.00.txt,
+  outils/CHANGEMENTS-v8.00.txt, outils/MATRICE-v8.00.md, photos/L1094,rl.webp.
+- Modifiés : outils/langues-elements.cjs, outils/gen-pages-elements-b.cjs, outils/gen-leo.cjs, outils/import-gtadb.cjs,
+  outils/sources/style.css, vitrine.css, activites.css, acquisitions.css (et leurs copies servies), les tests du § 8,
+  outils/data/carte-gtadb-source.json, toutes les pages (feuille commune style.css), leo/ et leurs versions, README.md.
+- Rien à supprimer.

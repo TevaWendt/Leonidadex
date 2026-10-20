@@ -851,7 +851,8 @@
 .cat-fiche-bt{box-shadow:3px 3px 0 var(--ink);transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out),background .25s var(--ease-out);}
 .cat-acts{gap:10px;}
 /* entrée en cascade : glissement de la gauche, légère réduction ; le délai vient de catalogue.js (--lk-delay) */
-.js tr.cat-row.lk-reveal:not(.lk-settled){transform:translate3d(-28px,0,0) scale(.985);transition:opacity .55s ease var(--lk-delay,0ms),transform .65s var(--ease-out) var(--lk-delay,0ms),box-shadow .25s var(--ease-out);}
+/* v8.00 (latence) : durée commune des apparitions (--lk-enter, style.css) au lieu de 0,55 et 0,65 s */
+.js tr.cat-row.lk-reveal:not(.lk-settled){transform:translate3d(-28px,0,0) scale(.985);transition:opacity var(--lk-enter,.34s) var(--ease-out) var(--lk-delay,0ms),transform var(--lk-enter,.34s) var(--ease-out) var(--lk-delay,0ms),box-shadow .25s var(--ease-out);}
 .js tr.cat-row.lk-reveal.is-in:not(.lk-settled){transform:none;}
 @media(hover:hover){
   .cat-row{transition:transform .25s var(--ease-out),box-shadow .25s var(--ease-out);}

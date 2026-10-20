@@ -114,13 +114,13 @@ test('noms de lieux en texte simple : la carte, la recherche et « Mes lieux rep
   // Défaut trouvé à la relecture des captures du lot 5 : « &quot;Ambrosia Hills&quot; » affiché tel quel (27 noms entre
   // guillemets, 84 « &amp; »). La source GTADB garde sa forme ; les données publiées sont décodées, chaque page échappe.
   const src = read('outils/data/carte-gtadb-source.json');
-  assert.match(src, /&quot;Ambrosia Hills&quot;/, 'la source brute reste intacte');
+  assert.match(src, /&quot;Ambrosia Hill&quot;/, 'la source brute reste intacte'); /* v8.00 : « Ambrosia Hills » s’appelle « Ambrosia Hill » dans la base gtadb mise à jour (v7.99) */
   for (const f of ['carte-gtadb.js', 'search-lieux.js', 'carnets/lieux-data.js']) assert.doesNotMatch(read(f), /&(quot|amp|apos|#39|#x27|lt|gt);/, f);
   const c = { window: {} }; vm.runInNewContext(read('carte-gtadb.js'), c);
   const g = [...c.window.LK_GTADB.groupes, ...c.window.LK_GTADB.lieux].find(x => x.id === 'g-L1848');
-  assert.equal(g.n, '"Ambrosia Hills"');
+  assert.equal(g.n, '"Ambrosia Hill"');
   const L = { window: {} }; vm.runInNewContext(read('carnets/lieux-data.js'), L);
-  assert.equal(L.window.LK_CARNET_LIEUX.rows.find(r => r[0] === 'g-L1848')[1], '"Ambrosia Hills"', 'nom décodé dans le carnet');
+  assert.equal(L.window.LK_CARNET_LIEUX.rows.find(r => r[0] === 'g-L1848')[1], '"Ambrosia Hill"', 'nom décodé dans le carnet');
   const S = { window: {} }; vm.runInNewContext(read('search-lieux.js'), S);
-  assert.equal(S.window.LK_INDEX_LIEUX.find(e => e.u.endsWith('lieu=g-L1848')).l, '"Ambrosia Hills"', 'nom décodé dans la recherche');
+  assert.equal(S.window.LK_INDEX_LIEUX.find(e => e.u.endsWith('lieu=g-L1848') || e.l === '"Ambrosia Hill"' /* v7.97 : un résultat de lieu ouvre sa page */).l, '"Ambrosia Hill"', 'nom décodé dans la recherche');
 });

@@ -25,10 +25,12 @@ test('sections.cjs : icônes connues, section complète (numéro, kicker, titre,
 test('carte-vignette.cjs : silhouette simplifiée déterministe, repère aux coordonnées de la carte, lieu inconnu refusé',()=>{
   const C=require(path.join(root,'outils/carte-vignette.cjs'));
   const land=C.land();assert.ok(land.length>4000&&land.length<12000,'silhouette : '+land.length);assert.equal(land,C.land());
-  const v=C.vignette('g-L1074');assert.match(v,/<use href="#lk-leonida" width="5200" height="6000"\/>/);assert.match(v,/cx="3121" cy="3990"/);
+  /* v8.00 : la position du repère est lue dans les données (la base gtadb l’a corrigée en v7.99 : 3121, 3990 devenu 3128, 4004) */
+  const P=JSON.parse(fs.readFileSync(path.join(root,'outils/data/carte-gtadb-source.json'),'utf8')).lieux.find(p=>p.id==='g-L1074'),X=P.x,Y=P.y;
+  const v=C.vignette('g-L1074');assert.match(v,/<use href="#lk-leonida" width="5200" height="6000"\/>/);assert.match(v,new RegExp('cx="'+X+'" cy="'+Y+'"'));
   /* v7.69 : vignette cadrée sur le lieu (fenêtre carrée gardée dans la carte, repère dedans) */
   const vb=v.match(/viewBox="(\d+) (\d+) (\d+) (\d+)"/).slice(1).map(Number);assert.equal(vb[2],C.ZOOM);assert.equal(vb[3],C.ZOOM);
-  assert.ok(vb[0]>=0&&vb[1]>=0&&vb[0]+vb[2]<=C.W&&vb[1]+vb[3]<=C.H&&3121>vb[0]&&3121<vb[0]+vb[2]&&3990>vb[1]&&3990<vb[1]+vb[3],'fenêtre '+vb);
+  assert.ok(vb[0]>=0&&vb[1]>=0&&vb[0]+vb[2]<=C.W&&vb[1]+vb[3]<=C.H&&X>vb[0]&&X<vb[0]+vb[2]&&Y>vb[1]&&Y<vb[1]+vb[3],'fenêtre '+vb);
   assert.throws(()=>C.vignette('nulle-part'),/Lieu inconnu/);
   assert.equal(C.defs().match(/<symbol id="lk-leonida"/g).length,1);
 });

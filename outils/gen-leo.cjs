@@ -127,6 +127,10 @@ function generate(options={}){
  /* Les noms de fiches ne sont jamais réécrits par le lexique : une entrée d'un seul mot qui réécrit un nom d'un seul mot (Sprunk → boisson) est refusée ;
     un nom de plusieurs mots que le lexique changerait (« Ocean Beach » → « ocean plage ») reçoit une entrée identité, ajoutée au lexique du noyau. */
  const baseAnalyzer=N.createAnalyzer(lex),protectedNames=new Map();
+ /* v8.00 : un lieu de la carte qui porte le nom d’une autre fiche (« Flash FM » : la station et le bâtiment à son enseigne,
+    repère gtadb ajouté en v7.99) cède sa place à cette fiche dans Léo (« qui anime Flash FM » ouvrait le bâtiment) ; il reste
+    dans la recherche du site et sur la carte */
+ {const nn=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(),autres=new Set([...rows.values()].filter(x=>x.kind!=='place').map(x=>nn(x.name)));for(const [k,x] of [...rows])if(k.startsWith('map:')&&autres.has(nn(x.name)))rows.delete(k);}
  for(const it of rows.values())for(const n of [it.name,...(it.aliases||[])]){const r=N.raw(n);if(!r.length)continue;const e=baseAnalyzer.expand(r).tokens;if(e.join(' ')===r.join(' '))continue;if(r.length===1)throw Error('Le lexique réécrit le nom de fiche « '+n+' » ('+it.key+') en « '+e.join(' ')+'» : retire cette entrée de outils/leo-lexique.json.');protectedNames.set(r.join(' '),r.join(' '));}
  const lexFinal={...lex,abbreviations:[...lex.abbreviations,...[...protectedNames.keys()].sort().map(f=>({f,to:f,c:'nom'}))]};
  const analyzer=N.createAnalyzer(lexFinal),vocabOf=list=>{const v=new Set();for(const s of list)for(const t of analyzer.analyze(s).terms)if(t.length>=3&&!/^\d+$/.test(t))v.add(t.slice(0,6));return [...v].sort();};

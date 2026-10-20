@@ -147,7 +147,7 @@
    - Un seul IntersectionObserver pour .reveal / .rise (classe « in »), .lk-reveal et [data-lk-reveal] (classe « is-in »).
    - Ce qui est déjà à l'écran quand la page s'ouvre est montré tout de suite, dans la même tâche que la pose de la classe
      « js » : aucun clignotement, aucune attente pour le contenu principal (LCP). Le reste apparaît en entrant dans l'écran,
-     par vagues (60 ms par élément, 300 ms au plus), sans lecture de géométrie pendant le défilement.
+     par vagues (40 ms par élément depuis la v8.00, 300 ms au plus), sans lecture de géométrie pendant le défilement.
    - « Réduire les animations » : tout est visible, rien ne bouge (style.css). Sans JavaScript : tout est visible.
    - Filet de sécurité : après 2,5 s, ce qui est dans l'écran et toujours caché est montré ; le reste garde son apparition
      au défilement (l'ancien filet montrait toute la page d'un coup et supprimait les apparitions suivantes).
@@ -193,7 +193,8 @@
       const el = en.target; io.unobserve(el); pending = Math.max(0, pending - 1);
       if (shown(el)) return;
       const own = parseInt(el.dataset.delay || '-1', 10);
-      const d = own >= 0 ? Math.min(own, 300) : Math.min(k * 60, 300); k++;
+      /* v8.00 (latence) : 40 ms par élément (60 auparavant ; la grille de qualité admet 35 à 60), 300 ms au plus */
+      const d = own >= 0 ? Math.min(own, 300) : Math.min(k * 40, 300); k++;
       show(el, d, false);
     });
   }, { threshold: 0.01, rootMargin: '0px 0px 12% 0px' }) : null;

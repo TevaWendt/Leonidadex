@@ -46,26 +46,48 @@ const ALLOW = new Set(['léo', 'pokémon', 'café', 'résumé', 'décor', 'naïv
   'lürssen', 'crème', 'brûlée', 'piñata', 'señor', 'jalapeño', 'josé', 'andré', 'cliché', 'entrée', 'expo', 'vu',
   'française', 'français', 'françois', 'québec', 'élysée', 'mêlée', 'übermacht', 'mulét', 'légifrance',
   /* v7.63 : mots français entrés tels quels en italien (« una coupé », « vetri fumé », « art déco ») */
-  'coupé', 'fumé', 'déco', 'berlina-coupé',
+  'coupé', 'fumé', 'déco', 'berlina-coupé', 'rétro' /* v8.00 : « acconciatura rétro » */,
   /* v7.85 : libellé officiel italien de GTA V (« Proiettili a fléchette », munitions spéciales, pré-liste de l'Atelier) */
   'fléchette',
+  /* v8.00 : portugais « debaixo d’água » (élision portugaise) */
+  'd’água',
   /* noms propres du jeu et du monde réel cités sur tout le site */
   'lârss', 'elbö', 'pérez', 'trésor', 'škorpion', 'pißwasser', 'huracán', 'hellión']);
 /* noms propres français cités tels quels (adresses, nom officiel d'une loi ou d'une autorité) et citations anglaises
    gardées dans leur langue (propos de Rob Nelson) */
 const PROPER = ['You’ll obtain outfits by completing missions or purchasing them from stores', 'Le Mans', 'De Hoop', 'De Havilland', 'Sedan de Ville', 'La Perle', 'La Mesa', 'Ctrl+Y', 'UH-1Y', 'Safari Y6', 'Commission Nationale de l’Informatique et des Libertés', 'Commission nationale de l’informatique et des libertés', 'loi Informatique et Libertés', 'Informatique et Libertés', 'rue de Salneuve', 'place de Fontenoy',
-  'Stanier LE', 'La Quinta', 'Herzog and de Meuron', 'Y Vice City', 'SE280LC', 'mud parties', 'Strg+Y', 'Eau de Cologne', 'eau de cologne', 'Michael De Santa' /* section online */, 'D’Agostino' /* v7.83 : Alexa D’Agostino (Rockstar), source du dossier de Lucia */, 'La Gata' /* v7.86 : nom d’antenne de RaiNao sur Cocoteo FM (annonce Rockstar du 8 octobre 2026) */];
+  'Stanier LE', 'La Quinta', 'Herzog and de Meuron', 'Y Vice City', 'La Côte', 'Sal Y Fuego' /* v8.00 : noms de lieux réels de la carte (gtadb) */, 'SE280LC', 'mud parties', 'Strg+Y', 'Eau de Cologne', 'eau de cologne', 'Michael De Santa' /* section online */, 'D’Agostino' /* v7.83 : Alexa D’Agostino (Rockstar), source du dossier de Lucia */, 'La Gata' /* v7.86 : nom d’antenne de RaiNao sur Cocoteo FM (annonce Rockstar du 8 octobre 2026) */];
 /* v7.62 (allemand) : mots outils français qui sont aussi des mots allemands (« du » = tu, « des » = génitif, « je » = chaque,
    « Partie » = partie de jeu) et lettres accentuées qui appartiennent à l'allemand (trémas) */
 const SAME_AS_FR = { de: new Set(['du', 'des', 'je', 'partie', 'quelle', 'arme']) };
 const ACCENTS_DE = /[àâçéèêëîïôûùœ]/;
 /* mots allemands d'origine française qui gardent leur accent, seuls ou dans un mot composé (« Sportcoupé », « Art-déco-Hotel ») */
 const ACCENT_OK_DE = /coupé|déco/;
+/* v8.00 : noms des lieux de la carte (carte-gtadb.js : noms en jeu, noms réels ; outils/landmarks-leonidakit.json : adresses
+   réelles des repères gtadb) : des noms propres gardés tels quels dans toutes les langues (« Chef Créole », « 3401 NW Le Jeune
+   Rd », « Vice Museum of Art »). Retirés du texte seulement quand un mot y est signalé, avant de compter à nouveau. */
+let LIEUX = null;
+function nomsLieux() {
+  if (LIEUX) return LIEUX;
+  LIEUX = [];
+  try {
+    const fs = require('fs'), path = require('path'), root = path.resolve(process.env.SITE_ROOT || path.join(__dirname, '../..'));
+    const s = fs.readFileSync(path.join(root, 'carte-gtadb.js'), 'utf8'), d = JSON.parse(s.slice(s.indexOf('{'), s.lastIndexOf('}') + 1)), set = new Set();
+    for (const p of [...d.groupes, ...d.lieux]) for (const v of [p.n, p.r]) if (v) { const n = String(v).replace(/\s*\((?:nom réel|nom supposé)\)$/, ''); set.add(n); set.add(n.replace(/^"([^"]+)"/, '$1')); }
+    for (const r of JSON.parse(fs.readFileSync(path.join(root, 'outils/landmarks-leonidakit.json'), 'utf8')).reperes) if (r.reel) { set.add(r.reel); for (const part of r.reel.split(', ')) set.add(part); }
+    LIEUX = [...set].filter(x => x.length >= 4 && /[A-Za-z]/.test(x)).sort((a, b) => b.length - a.length);
+  } catch (e) { LIEUX = []; }
+  return LIEUX;
+}
+const sansLieux = (text, lower) => { let t = String(text || ''); for (const n of nomsLieux()) { const k = lower ? n.toLowerCase().replace(/'/g, '’') : n; if (t.includes(k)) t = t.split(k).join(' '); } return t; };
 function words(text) { return String(text || '').toLowerCase().replace(/[  ]/g, ' ').split(/[^a-zß-öø-ÿœæ’'-]+/).map(w => w.replace(/^[’'-]+|[’'-]+$/g, '')).filter(Boolean); }
 /* Renvoie la liste des mots qui trahissent du français (vide = rien trouvé). */
-function frenchHits(text, lang = 'en') {
+function frenchHits(text, lang = 'en', sansNoms = false) {
+  if (!sansNoms) { const h = frenchHits(text, lang, true); return h.length ? frenchHits(sansLieux(text), lang, true) : h; }
   const hits = [], es = lang === 'es', it = lang === 'it', de = lang === 'de', pt = lang === 'pt', list = es ? FR_WORDS_ES : it ? FR_WORDS_IT : pt ? FR_WORDS_PT : FR_WORDS, accents = es ? /[àâçèêëîïôûùœ]/ : de ? ACCENTS_DE : /[àâçéèêëîïôûùüœ]/, same = SAME_AS_FR[lang];
   let t = String(text || ''); for (const p of PROPER) t = t.split(p).join(' ');
+  /* v8.00 : position sur la carte (« x 4022, y 2977 ») : « y » y est l’axe, pas le « y » français */
+  t = t.replace(/\bx \d+, y \d+\b/g, ' ');
   /* v7.88 : une adresse citée dans le texte (« leonidakit.com/de/carte.html ») n'est pas du français : « de » y est le dossier */
   t = t.replace(/(?:https?:\/\/)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|net|org|fr|de|es|it|io|gg|tv|co|uk)(?:\/[^\s)»”"’]*)?/gi, ' ');
   t = t.replace(/(^|[^A-Za-zÀ-ÿ])[A-ZÀ-Ý]{2,3}(?![A-Za-zÀ-ÿ’'])/g, '$1 ');   // sigles et monogrammes (« DU » pour Dundreary, « LE », « RS »)
@@ -211,9 +233,12 @@ const EN_KEEP = {
 /* comparées sans la casse (chaînes de recherche en minuscules : « hawk & little morgan his and hers »), les plus longues d'abord */
 const EN_KEEP_LIST = [...new Set(Object.values(EN_KEEP).flat().map(x => x.toLowerCase().replace(/'/g, '’')))].sort((a, b) => b.length - a.length);
 /* Renvoie les mots outils anglais d'un texte (vide = moins de EN_MIN mots, rien à signaler). */
-function englishHits(text) {
+function englishHits(text, sansNoms = false) {
+  if (!sansNoms) { const h = englishHits(text, true); return h.length ? englishHits(sansLieux(text), true) : h; }
   let t = String(text || '').toLowerCase().replace(/'/g, '’').replace(/[\u00a0\u202f]/g, ' ');
   for (const p of EN_KEEP_LIST) t = t.split(p).join(' ');
+  /* v8.00 : nom de la licence des données de la carte (« CC BY 4.0 », creativecommons.org/licenses/by/4.0) */
+  t = t.replace(/\bcc by(?:-sa)? \d\.\d\b|licenses\/by(?:-sa)?\/\d\.\d/g, ' ');
   const hits = words(t).filter(w => EN_WORDS.has(w));
   return hits.length >= EN_MIN ? hits : [];
 }

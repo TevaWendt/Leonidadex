@@ -92,7 +92,8 @@ for (const LG of LANGS) {
       const html = read(dir + '/' + p), u = url(LG, p), frUrl = url({ dossier: '' }, p);
       assert.match(html, new RegExp('<html lang="' + code + '"'), p);
       /* canonical et og:url : ceux de la page française, portés dans la langue (une fiche fusionnée renvoie à sa liste) */
-      const port = fu => { if (!fu.startsWith(SITE)) return fu; const rest = fu.slice(SITE.length), cp = rest.split(/[?#]/)[0] || 'index.html'; return LG.pages.includes(cp) ? url(LG, cp) + rest.slice(rest.split(/[?#]/)[0].length) : fu; };
+      /* v8.00 : une adresse de dossier (« /coiffures/ », sommaire d’une famille de pages par élément) est sa page index.html */
+      const port = fu => { if (!fu.startsWith(SITE)) return fu; const rest = fu.slice(SITE.length), c0 = rest.split(/[?#]/)[0], cp = !c0 ? 'index.html' : c0.endsWith('/') ? c0 + 'index.html' : c0; return LG.pages.includes(cp) ? url(LG, cp) + rest.slice(c0.length) : fu; };
       const frHtml = read(p), frCanon = (frHtml.match(/<link rel="canonical" href="([^"]+)">/) || [])[1], frOg = (frHtml.match(/property="og:url" content="([^"]+)"/) || [])[1];
       if (frCanon) assert.ok(html.includes('<link rel="canonical" href="' + port(frCanon) + '">'), p + ' : canonical ' + port(frCanon));
       if (frOg) assert.ok(html.includes('property="og:url" content="' + port(frOg) + '"'), p + ' : og:url ' + port(frOg));
