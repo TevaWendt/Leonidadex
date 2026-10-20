@@ -235,40 +235,40 @@
   },
   "lieux.html": {
    "fr": {
-    "title": "Les régions de Leonida",
+    "title": "GTA 6 régions : Vice City, Leonida Keys et toute la carte",
     "img": "/img/partage/fr/lieux.jpg",
     "media": "vice-city-01",
-    "key": "613ff3d93bb9"
+    "key": "3883cadf32a8"
    },
    "en": {
-    "title": "The regions of Leonida",
+    "title": "GTA 6 regions: Vice City, Leonida Keys and the whole map",
     "img": "/img/partage/en/lieux.jpg",
     "media": "vice-city-01",
-    "key": "8404678a12e1"
+    "key": "f80a04b0d348"
    },
    "es": {
-    "title": "Las regiones de Leonida",
+    "title": "GTA 6 regiones: Vice City, Leonida Keys y todo el mapa",
     "img": "/img/partage/es/lieux.jpg",
     "media": "vice-city-01",
-    "key": "2f5e553ff3f0"
+    "key": "994c40a0d733"
    },
    "it": {
-    "title": "Le regioni di Leonida",
+    "title": "GTA 6 regioni: Vice City, Leonida Keys e tutta la mappa",
     "img": "/img/partage/it/lieux.jpg",
     "media": "vice-city-01",
-    "key": "6e816aa03cb0"
+    "key": "b3ee506fa2a5"
    },
    "de": {
-    "title": "Die Regionen von Leonida",
+    "title": "GTA 6 Regionen: Vice City, Leonida Keys und die ganze Karte",
     "img": "/img/partage/de/lieux.jpg",
     "media": "vice-city-01",
-    "key": "5a202d8cc921"
+    "key": "8871b39be552"
    },
    "pt": {
-    "title": "As regiões de Leonida",
+    "title": "GTA 6 regiões: Vice City, Leonida Keys e todo o mapa",
     "img": "/img/partage/pt/lieux.jpg",
     "media": "vice-city-01",
-    "key": "ee7be942726c"
+    "key": "4d3fb56f35d2"
    }
   },
   "personnages.html": {
@@ -311,116 +311,116 @@
   },
   "entreprises.html": {
    "fr": {
-    "title": "Les entreprises de Leonida",
+    "title": "GTA 6 entreprises : ateliers, boutiques et salons de Leonida",
     "img": "/img/partage/fr/entreprises.jpg",
     "media": "electric-fang-tattoo-01",
-    "key": "a03fe03d7d52"
+    "key": "1e0bbddf427a"
    },
    "en": {
-    "title": "The businesses of Leonida",
+    "title": "GTA 6 businesses: Leonida’s garages, shops and salons",
     "img": "/img/partage/en/entreprises.jpg",
     "media": "electric-fang-tattoo-01",
-    "key": "7083dd463603"
+    "key": "32fab44144a7"
    },
    "es": {
-    "title": "Los negocios de Leonida",
+    "title": "GTA 6 empresas: talleres, tiendas y salones de Leonida",
     "img": "/img/partage/es/entreprises.jpg",
     "media": "electric-fang-tattoo-01",
-    "key": "b7b2b6f606c1"
+    "key": "c1fe3c1af9f4"
    },
    "it": {
-    "title": "Le attività commerciali di Leonida",
+    "title": "GTA 6 attività: officine, negozi e saloni di Leonida",
     "img": "/img/partage/it/entreprises.jpg",
     "media": "electric-fang-tattoo-01",
-    "key": "57d8c13739c9"
+    "key": "f34f15820c0c"
    },
    "de": {
-    "title": "Die Unternehmen von Leonida",
+    "title": "GTA 6 Unternehmen: Werkstätten, Läden und Salons in Leonida",
     "img": "/img/partage/de/entreprises.jpg",
     "media": "electric-fang-tattoo-01",
-    "key": "bba74a3d545b"
+    "key": "1546659ba02d"
    },
    "pt": {
-    "title": "As empresas de Leonida",
+    "title": "GTA 6 empresas: oficinas, lojas e salões de Leonida",
     "img": "/img/partage/pt/entreprises.jpg",
     "media": "electric-fang-tattoo-01",
-    "key": "fc1edd880d43"
+    "key": "28c198700580"
    }
   },
   "demeures.html": {
    "fr": {
-    "title": "Les demeures de Leonida",
+    "title": "GTA 6 demeures : les habitations des personnages de Leonida",
     "img": "/img/partage/fr/demeures.jpg",
     "media": "leonida-keys-02",
-    "key": "6832feea6e39"
+    "key": "9625cd8b657f"
    },
    "en": {
-    "title": "The residences of Leonida",
+    "title": "GTA 6 residences: where Leonida’s characters live",
     "img": "/img/partage/en/demeures.jpg",
     "media": "leonida-keys-02",
-    "key": "cf596f0d56b9"
+    "key": "53d081aae8da"
    },
    "es": {
-    "title": "Las residencias de Leonida",
+    "title": "GTA 6 residencias: las viviendas de los personajes de Leonida",
     "img": "/img/partage/es/demeures.jpg",
     "media": "leonida-keys-02",
-    "key": "17845af6cdd0"
+    "key": "a630a065c10c"
    },
    "it": {
-    "title": "Le residenze di Leonida",
+    "title": "GTA 6 dimore: le abitazioni dei personaggi di Leonida",
     "img": "/img/partage/it/demeures.jpg",
     "media": "leonida-keys-02",
-    "key": "5f71bdf36fa3"
+    "key": "a24fed5126d8"
    },
    "de": {
-    "title": "Die Wohnsitze von Leonida",
+    "title": "GTA 6 Wohnsitze: die Unterkünfte der Charaktere in Leonida",
     "img": "/img/partage/de/demeures.jpg",
     "media": "leonida-keys-02",
-    "key": "19f390221396"
+    "key": "ea78be14c767"
    },
    "pt": {
-    "title": "As residências de Leonida",
+    "title": "GTA 6 residências: as moradias dos personagens de Leonida",
     "img": "/img/partage/pt/demeures.jpg",
     "media": "leonida-keys-02",
-    "key": "50bc571e354d"
+    "key": "3980d8bf87b8"
    }
   },
   "planques.html": {
    "fr": {
-    "title": "Les planques de Leonida",
+    "title": "GTA 6 planques : la planque de Jason et les repaires de Leonida",
     "img": "/img/partage/fr/planques.jpg",
     "media": "jason-s-safehouse-vehicles",
-    "key": "83c9a0ccfbd9"
+    "key": "73c803ed7cd3"
    },
    "en": {
-    "title": "The safehouses of Leonida",
+    "title": "GTA 6 safehouses: Jason’s safehouse and Leonida’s hideouts",
     "img": "/img/partage/en/planques.jpg",
     "media": "jason-s-safehouse-vehicles",
-    "key": "d97a31f55099"
+    "key": "2dbdd8a9532a"
    },
    "es": {
-    "title": "Los escondites de Leonida",
+    "title": "GTA 6 escondites: el escondite de Jason y las guaridas de Leonida",
     "img": "/img/partage/es/planques.jpg",
     "media": "jason-s-safehouse-vehicles",
-    "key": "e832fd0e8e39"
+    "key": "67369872a324"
    },
    "it": {
-    "title": "I rifugi di Leonida",
+    "title": "GTA 6 rifugi: il rifugio di Jason e i covi di Leonida",
     "img": "/img/partage/it/planques.jpg",
     "media": "jason-s-safehouse-vehicles",
-    "key": "96822a85f488"
+    "key": "939de8517241"
    },
    "de": {
-    "title": "Die Unterschlüpfe von Leonida",
+    "title": "GTA 6 Unterschlüpfe: Jasons Unterschlupf und die Verstecke in Leonida",
     "img": "/img/partage/de/planques.jpg",
     "media": "jason-s-safehouse-vehicles",
-    "key": "7dbe03e14a0d"
+    "key": "d998388a9754"
    },
    "pt": {
-    "title": "Os esconderijos de Leonida",
+    "title": "GTA 6 esconderijos: o esconderijo de Jason e os refúgios de Leonida",
     "img": "/img/partage/pt/planques.jpg",
     "media": "jason-s-safehouse-vehicles",
-    "key": "6ada6c821d9b"
+    "key": "b03985559010"
    }
   },
   "gangs.html": {

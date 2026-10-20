@@ -622,54 +622,70 @@
           "d": "Aucune annonce, aucune date. Pour GTA V, la version PC était arrivée un an et demi après les consoles.",
           "ico": "navigateur",
           "href": "gta-6-pc.html",
-          "label": "GTA VI sur PC : ce qu’on sait"
+          "label": "GTA VI sur PC : ce qu’on sait",
+          "media": "raul-bautista-01",
+          "mediaAlt": "Raul au téléphone devant ses écrans, visuel officiel Rockstar Games"
         },
         {
           "t": "L’heure de déblocage",
           "d": "Rockstar ne l’a pas annoncée. Le PlayStation Store indique minuit, heure locale, dans la nuit du 18 au 19 novembre : vérifie l’heure sur ta boutique juste avant la sortie.",
           "ico": "horloge",
           "href": "prechargement.html#pas-confirme",
-          "label": "Préchargement : l’heure et la taille"
+          "label": "Préchargement : l’heure et la taille",
+          "media": "vice-city-08",
+          "mediaAlt": "Vice City de nuit, grande roue illuminée et immeubles au bord de l’eau, visuel officiel Rockstar Games"
         },
         {
           "t": "Le poids du jeu",
           "d": "Non communiqué. Il sera connu au plus tard à l’ouverture du préchargement, le 12 novembre 2026.",
           "ico": "serveur",
           "href": "prechargement.html#q-taille",
-          "label": "Préchargement : la taille du jeu"
+          "label": "Préchargement : la taille du jeu",
+          "media": "vice-city-03",
+          "mediaAlt": "Vue aérienne de Vice City, visuel officiel Rockstar Games"
         },
         {
           "t": "GTA Online sur GTA VI",
           "d": "Rien d’annoncé, pas même une date : le jeu est présenté comme une expérience solo.",
           "ico": "passants",
           "href": "online.html",
-          "label": "GTA Online et GTA VI"
+          "label": "GTA Online et GTA VI",
+          "media": "real-dimez-02",
+          "mediaAlt": "Les Real Dimez dansent sur une voiture devant une foule qui filme au téléphone, visuel officiel Rockstar Games"
         },
         {
           "t": "Les prix en jeu",
           "d": "Aucun prix de véhicule, d’arme, de logement ou de vêtement n’est publié pour GTA VI. Ceux du site sont des repères de GTA V et de GTA Online, toujours signalés comme tels.",
           "ico": "argent",
           "href": "achats.html",
-          "label": "Tout ce qui s’achète"
+          "label": "Tout ce qui s’achète",
+          "media": "stock-305-clothing-store-03",
+          "mediaAlt": "Vitrine de Stock 305, visuel officiel Rockstar Games"
         },
         {
           "t": "La surface de la carte",
           "d": "Aucun chiffre. Fin août 2026, Rockstar a dit à la presse que la carte fait environ deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2.",
           "ico": "carte",
           "href": "gta-6-vs-gta-5.html#carte",
-          "label": "GTA VI et GTA V : la carte, mot pour mot"
+          "label": "GTA VI et GTA V : la carte, mot pour mot",
+          "media": "leonida-keys-01",
+          "mediaAlt": "Route au-dessus de la mer dans les Keys, visuel officiel Rockstar Games"
         },
         {
           "t": "La durée de vie",
           "d": "Aucune durée officielle. Rob Nelson, de Rockstar North, dit avoir fini sa partie en 80 heures environ, histoire et une partie des objectifs facultatifs compris.",
-          "ico": "sablier"
+          "ico": "sablier",
+          "media": "mount-kalaga-national-park-04",
+          "mediaAlt": "Route en corniche dans Mount Kalaga, visuel officiel Rockstar Games"
         },
         {
           "t": "Les codes de triche",
           "d": "Rien d’annoncé : les listes « GTA 6 » qui circulent ne sont pas officielles.",
           "ico": "loupe",
           "href": "codes-de-triche.html",
-          "label": "Les codes de triche"
+          "label": "Les codes de triche",
+          "media": "trailer-2-police-riot-119",
+          "mediaAlt": "Véhicule blindé de la police dans une rue, Trailer 2 de GTA VI, visuel officiel Rockstar Games"
         }
       ]
     },
@@ -720,7 +736,47 @@
           "t": "Un nom provisoire en attendant",
           "d": "Un modèle vu dans un média officiel, véhicule ou arme, garde un nom provisoire, celui de la série ou de son modèle réel, jusqu’à ce que Rockstar le nomme."
         }
-      ]
+      ],
+      "exemples": {
+        "titre": "Quatre fiches, quatre façons de le dire",
+        "lede": "Ouvre une fiche : son statut est écrit en haut, et chaque case qui attend le jeu le dit.",
+        "go": "Ouvrir la fiche",
+        "items": [
+          {
+            "href": "vehicules/grotti-cheetah-classic.html",
+            "media": "95-grotti-cheetah-01",
+            "alt": "Grotti Cheetah blanche devant un hôtel Art déco, visuel officiel Rockstar Games",
+            "kicker": "Véhicule nommé par Rockstar",
+            "title": "Grotti Cheetah ’95",
+            "text": "Nommée dans le texte de l’Édition Ultimate : son nom est sûr, son prix attend le jeu.",
+            "big": true
+          },
+          {
+            "href": "armes/hawk-little-morgan.html",
+            "media": "hawk-little-morgan-revolvers-01",
+            "alt": "Revolver à lunette tenu à la main, visuel officiel Rockstar Games",
+            "kicker": "Arme nommée par Rockstar",
+            "title": "Revolvers Hawk & Little Morgan",
+            "text": "Nommés par Rockstar ; portée et cadence restent des cases vides."
+          },
+          {
+            "href": "lieux/vice-city.html",
+            "media": "vice-city-06",
+            "alt": "Buffalo STX de Vice Beach Police entourée de policiers et de passantes devant l’Ocean View Hotel, visuel officiel Rockstar Games",
+            "kicker": "Lieu décrit par Rockstar",
+            "title": "Vice City",
+            "text": "Décrite sur le site officiel ; les lieux de la carte, eux, viennent des captures."
+          },
+          {
+            "href": "vraies-voitures.html",
+            "media": "extended-look-sentinel-classic-front",
+            "alt": "Voiture rouge rapprochée d’une Sentinel Classic devant une station-service, visuel officiel Rockstar Games",
+            "kicker": "Modèle réel, observation du site",
+            "title": "Les vraies voitures derrière les véhicules",
+            "text": "Chaque rapprochement avec un modèle réel est une observation, jamais une annonce."
+          }
+        ]
+      }
     },
     "jamais": {
       "kicker": "Ce qu’on refuse",
@@ -1290,7 +1346,15 @@
       "title": "Quand commence le préchargement de GTA VI ?",
       "lede": "Le 12 novembre 2026, d’après l’assistance de Rockstar. Trois dates à retenir, chacune avec sa source.",
       "etatLabel": "Aujourd’hui",
-      "etatTexte": "Le préchargement n’est pas encore ouvert : il commence le 12 novembre 2026 à minuit, heure locale. Cette page changera d’état ce jour-là, avec la taille du jeu dès qu’elle est publiée."
+      "etatTexte": "Le préchargement n’est pas encore ouvert : il commence le 12 novembre 2026 à minuit, heure locale. Cette page changera d’état ce jour-là, avec la taille du jeu dès qu’elle est publiée.",
+      "anim": {
+        "kicker": "Ce que verra ta console",
+        "label": "Préchargement de GTA VI",
+        "sub": "À partir du 12 novembre 2026, minuit, heure locale",
+        "bar": "Téléchargement en attente",
+        "size": "Taille : pas encore annoncée",
+        "play": "Jouable le 19 novembre"
+      }
     },
     "ouvert": {
       "kicker": "Le préchargement est ouvert",
@@ -1397,7 +1461,9 @@
           "ou": [
             "ps-store",
             "xbox-store"
-          ]
+          ],
+          "media": "vice-city-03",
+          "mediaAlt": "Vue aérienne de Vice City, visuel officiel Rockstar Games"
         },
         {
           "id": "q-heure-sortie",
@@ -1407,7 +1473,9 @@
           "ou": [
             "ps-store",
             "xbox-support"
-          ]
+          ],
+          "media": "vice-city-08",
+          "mediaAlt": "Vice City de nuit, grande roue illuminée et immeubles au bord de l’eau, visuel officiel Rockstar Games"
         },
         {
           "id": "q-heure-preload",
@@ -1416,7 +1484,9 @@
           "d": "Celle-là est officielle : minuit, heure locale, le 12 novembre 2026, d’après l’assistance de Rockstar. La console s’en charge pendant la nuit si elle est en veille.",
           "ou": [
             "rs-support"
-          ]
+          ],
+          "media": "port-gellhorn-01",
+          "mediaAlt": "Enseigne d’un motel de Port Gellhorn au crépuscule, visuel officiel Rockstar Games"
         }
       ],
       "maj": "Cette page est mise à jour dès qu’un de ces chiffres est publié, avec sa source et sa date. Si tu le vois avant nous, signale-le."
@@ -1447,7 +1517,55 @@
           "d": "Une mise à jour système en attente retarde parfois un téléchargement. Fais-la avant le 12."
         }
       ],
-      "done": "Tout est prêt : il ne reste qu’à attendre le 12 novembre."
+      "done": "Tout est prêt : il ne reste qu’à attendre le 12 novembre.",
+      "mosaique": {
+        "titre": "En attendant le 12 novembre",
+        "lede": "Le site a de quoi occuper la file d’attente : prépare ta partie avec ce que Rockstar a déjà montré.",
+        "go": "Ouvrir",
+        "items": [
+          {
+            "href": "carte.html",
+            "media": "vice-city-03",
+            "alt": "Vue aérienne de Vice City, visuel officiel Rockstar Games",
+            "kicker": "La carte",
+            "title": "Repère Leonida avant d’y poser le pied",
+            "text": "Plus de 3 000 lieux repérés sur les captures officielles, chacun avec sa page.",
+            "big": true
+          },
+          {
+            "href": "calculateurs.html",
+            "media": "classic-car-collection-01",
+            "alt": "Homme devant des voitures classiques dans une casse, visuel officiel Rockstar Games",
+            "kicker": "Le calculateur",
+            "title": "Combien de parties pour ta première voiture ?",
+            "text": "Prix repères, temps de jeu, plan d’achat : le calculateur te dit quoi acheter d’abord."
+          },
+          {
+            "href": "vehicules.html",
+            "media": "95-grotti-cheetah-01",
+            "alt": "Grotti Cheetah blanche devant un hôtel Art déco, visuel officiel Rockstar Games",
+            "kicker": "Les véhicules",
+            "title": "302 véhicules vus dans les médias officiels",
+            "text": "Chaque modèle a sa fiche, son statut et ses visuels."
+          },
+          {
+            "href": "personnages.html",
+            "media": "jason-and-lucia-01",
+            "alt": "Jason et Lucia côte à côte devant la mer, un pistolet à la ceinture de Jason, visuel officiel Rockstar Games",
+            "kicker": "Les personnages",
+            "title": "Jason, Lucia et ceux qui croisent leur route",
+            "text": "Huit portraits reliés aux régions et aux scènes officielles."
+          },
+          {
+            "href": "tuto.html",
+            "media": "jason-and-lucia-02",
+            "alt": "Jason et Lucia prêts pour un braquage, visuel officiel Rockstar Games",
+            "kicker": "Le Tuto",
+            "title": "Le site expliqué en quatorze chapitres",
+            "text": "Comment lire une fiche, un statut, un prix repère."
+          }
+        ]
+      }
     },
     "faqKicker": "Questions",
     "faqTitle": "Les questions qu’on se pose sur le préchargement de GTA 6",
@@ -1755,7 +1873,47 @@
           "quand": "17 septembre 2026",
           "ou": "assemblée des actionnaires"
         }
-      ]
+      ],
+      "mosaique": {
+        "titre": "Ce qui sort sur consoles le 19 novembre",
+        "lede": "Le jeu annoncé par Rockstar, en images officielles : les mêmes pour les deux consoles, et rien d’autre.",
+        "go": "Voir la page",
+        "items": [
+          {
+            "href": "lieux.html",
+            "media": "vice-city-10",
+            "alt": "Tours au bord de l’eau et bateaux dans la baie de Vice City, visuel officiel Rockstar Games",
+            "kicker": "L’État de Leonida",
+            "title": "Vice City, les Keys, Grassrivers et les autres",
+            "text": "Six régions décrites par Rockstar, avec leurs captures.",
+            "big": true
+          },
+          {
+            "href": "personnages.html",
+            "media": "jason-and-lucia-03",
+            "alt": "Jason et Lucia devant une voiture, les tours de Vice City derrière eux, visuel officiel Rockstar Games",
+            "kicker": "Les personnages",
+            "title": "Jason et Lucia",
+            "text": "Deux héros qui jouent ensemble, et huit fiches."
+          },
+          {
+            "href": "vehicules.html",
+            "media": "trailer-1-vehicles-033",
+            "alt": "Voitures sous les néons d’Ocean Drive, Trailer 1 de GTA VI, visuel officiel Rockstar Games",
+            "kicker": "Les véhicules",
+            "title": "302 véhicules repérés",
+            "text": "Sportives, motos, bateaux, hélicoptères : une fiche chacun."
+          },
+          {
+            "href": "editions.html",
+            "media": "cover-art-officielle",
+            "alt": "La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, Raul, un alligator et des scènes de Leonida, visuel officiel Rockstar Games",
+            "kicker": "Les éditions",
+            "title": "Standard ou Ultimate, en numérique ou en boîte",
+            "text": "Ce que contient chaque édition, et ce que coûte le jeu."
+          }
+        ]
+      }
     },
     "serie": {
       "kicker": "Repère de la série",
@@ -1847,7 +2005,32 @@
         "rs-compte",
         "rs-keep-safe",
         "malwarebytes"
-      ]
+      ],
+      "vraiFaux": {
+        "titre": "Vrai ou faux : comment reconnaître une fausse version PC",
+        "faux": {
+          "stamp": "Faux",
+          "k": "Ce qu’on te propose",
+          "t": "Télécharger GTA 6 sur PC",
+          "lines": [
+            "Clé bêta à gagner",
+            "Accès anticipé avant les consoles",
+            "Fichier à installer maintenant"
+          ],
+          "foot": "Aucune de ces trois choses n’existe."
+        },
+        "vrai": {
+          "stamp": "Officiel",
+          "k": "Ce qui existe",
+          "t": "GTA VI sort sur PlayStation 5 et Xbox Series X|S",
+          "lines": [
+            "Annonce : Rockstar Newswire",
+            "Date : 19 novembre 2026",
+            "PC : pas annoncé"
+          ],
+          "foot": "Tout le reste viendra de Rockstar, et ici le jour même."
+        }
+      }
     },
     "suivre": {
       "kicker": "Si ça arrive",
@@ -1859,28 +2042,36 @@
           "t": "Rockstar Newswire",
           "d": "Toutes les annonces de Rockstar, dont celles des versions PC des jeux d’avant.",
           "href": "https://www.rockstargames.com/newswire",
-          "go": "Ouvrir"
+          "go": "Ouvrir",
+          "media": "annonce-extended-look",
+          "alt": "Annonce officielle de l’Extended Look de GTA VI : Jason et Lucia devant les tours de Vice City, visuel officiel Rockstar Games"
         },
         {
           "k": "Officiel",
           "t": "Le site de GTA VI",
           "d": "La page officielle du jeu, avec les plateformes annoncées.",
           "href": "https://www.rockstargames.com/VI",
-          "go": "Ouvrir"
+          "go": "Ouvrir",
+          "media": "cover-art-officielle",
+          "alt": "La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, Raul, un alligator et des scènes de Leonida, visuel officiel Rockstar Games"
         },
         {
           "k": "Sur Leonidakit",
           "t": "Les actualités",
           "d": "Chaque annonce officielle, date par date, avec sa source.",
           "href": "actus.html",
-          "go": "Voir les actualités"
+          "go": "Voir les actualités",
+          "media": "affiche-bande-annonce-lancement",
+          "alt": "Affiche officielle de la bande-annonce de lancement de GTA VI, visuel officiel Rockstar Games"
         },
         {
           "k": "Sur Leonidakit",
           "t": "Ce qui est confirmé",
           "d": "Le point sur ce que Rockstar a dit, et ce qu’il n’a pas encore dit.",
           "href": "verification.html",
-          "go": "Voir la page"
+          "go": "Voir la page",
+          "media": "jason-and-lucia-12",
+          "alt": "Jason porte une carabine avec lunette tandis que Lucia tient un revolver, visuel officiel Rockstar Games"
         }
       ]
     },
@@ -2334,6 +2525,62 @@
         },
         "caption": "Deux fois la carte de GTA V : c’est ce que rapporte TGG des propos de Rob Nelson, de Rockstar North. Les carrés montrent ce rapport, pas une mesure : Rockstar n’a publié aucune surface, pour aucun des deux jeux.",
         "statut": "vu"
+      },
+      "regions": {
+        "titre": "Les six régions de Leonida, en images",
+        "lede": "Ce que Rockstar a montré de chaque région : une page par région, avec ses lieux repérés sur la carte.",
+        "go": "Ouvrir la région",
+        "items": [
+          {
+            "href": "lieux/vice-city.html",
+            "media": "vice-city-01",
+            "alt": "Lettres géantes de Vice City au coucher du soleil, visuel officiel Rockstar Games",
+            "kicker": "La ville",
+            "title": "Vice City",
+            "text": "Les plages, les tours de la baie, les néons d’Ocean Beach.",
+            "big": true
+          },
+          {
+            "href": "lieux/leonida-keys.html",
+            "media": "leonida-keys-01",
+            "alt": "Route au-dessus de la mer dans les Leonida Keys, visuel officiel Rockstar Games",
+            "kicker": "Les îles",
+            "title": "Leonida Keys",
+            "text": "Une route au-dessus de la mer, des bars de plage et des bateaux."
+          },
+          {
+            "href": "lieux/grassrivers.html",
+            "media": "grassrivers-01",
+            "alt": "Hydroglisseur dans les marais de Grassrivers, visuel officiel Rockstar Games",
+            "kicker": "Les marais",
+            "title": "Grassrivers",
+            "text": "Hydroglisseurs, alligators et cabanes sur pilotis."
+          },
+          {
+            "href": "lieux/port-gellhorn.html",
+            "media": "port-gellhorn-01",
+            "alt": "Enseigne d’un motel de Port Gellhorn au crépuscule, visuel officiel Rockstar Games",
+            "kicker": "La côte",
+            "title": "Port Gellhorn",
+            "text": "Motels, casse automobile et petits trafics au bord de l’eau."
+          },
+          {
+            "href": "lieux/ambrosia.html",
+            "media": "ambrosia-01",
+            "alt": "Motards sur une route d’Ambrosia, visuel officiel Rockstar Games",
+            "kicker": "Les champs",
+            "title": "Ambrosia",
+            "text": "Champs de canne, motards et usines au milieu des terres."
+          },
+          {
+            "href": "lieux/mount-kalaga.html",
+            "media": "mount-kalaga-national-park-01",
+            "alt": "Motos tout-terrain dans le parc de Mount Kalaga, visuel officiel Rockstar Games",
+            "kicker": "Le parc",
+            "title": "Mount Kalaga National Park",
+            "text": "Pistes, rivières et falaises du parc national."
+          }
+        ]
       }
     },
     "nouveau": {
@@ -2400,37 +2647,49 @@
           "id": "q-vehicules",
           "ico": "conduite",
           "t": "Le nombre de véhicules",
-          "d": "Rockstar n’a publié aucun total pour GTA VI : le site recense 302 véhicules vus dans les médias officiels. GTA V en comptait plus de deux cents au lancement, et des centaines de plus avec GTA Online."
+          "d": "Rockstar n’a publié aucun total pour GTA VI : le site recense 302 véhicules vus dans les médias officiels. GTA V en comptait plus de deux cents au lancement, et des centaines de plus avec GTA Online.",
+          "media": "trailer-1-vehicles-028",
+          "mediaAlt": "Lowrider bleu clair au premier plan à droite, premier trailer de GTA VI à 00:28"
         },
         {
           "id": "q-prix-jeu",
           "ico": "argent",
           "t": "Les prix en jeu",
-          "d": "Aucun prix de véhicule, d’arme ou de logement n’est publié pour GTA VI. Ceux du site sont des repères de GTA V et de GTA Online, signalés comme tels."
+          "d": "Aucun prix de véhicule, d’arme ou de logement n’est publié pour GTA VI. Ceux du site sont des repères de GTA V et de GTA Online, signalés comme tels.",
+          "media": "stock-305-clothing-store-03",
+          "mediaAlt": "Vitrine de Stock 305, visuel officiel Rockstar Games"
         },
         {
           "id": "q-duree",
           "ico": "sablier",
           "t": "La durée de l’histoire",
-          "d": "Aucune durée officielle pour GTA VI. Rob Nelson dit avoir fini sa partie en 80 heures environ, objectifs facultatifs compris : un témoignage, pas une donnée."
+          "d": "Aucune durée officielle pour GTA VI. Rob Nelson dit avoir fini sa partie en 80 heures environ, objectifs facultatifs compris : un témoignage, pas une donnée.",
+          "media": "mount-kalaga-national-park-04",
+          "mediaAlt": "Route en corniche dans Mount Kalaga, visuel officiel Rockstar Games"
         },
         {
           "id": "q-poids",
           "ico": "serveur",
           "t": "Le poids du jeu",
-          "d": "Non communiqué pour GTA VI. Il sera connu au plus tard à l’ouverture du préchargement, le 12 novembre 2026."
+          "d": "Non communiqué pour GTA VI. Il sera connu au plus tard à l’ouverture du préchargement, le 12 novembre 2026.",
+          "media": "vice-city-03",
+          "mediaAlt": "Vue aérienne de Vice City, visuel officiel Rockstar Games"
         },
         {
           "id": "q-triche",
           "ico": "liste",
           "t": "Les codes de triche",
-          "d": "Rien d’annoncé pour GTA VI. GTA V en avait dès le lancement ; les listes « GTA 6 » qui circulent ne sont pas officielles."
+          "d": "Rien d’annoncé pour GTA VI. GTA V en avait dès le lancement ; les listes « GTA 6 » qui circulent ne sont pas officielles.",
+          "media": "trailer-2-police-riot-119",
+          "mediaAlt": "Véhicule blindé de la police dans une rue, Trailer 2 de GTA VI, visuel officiel Rockstar Games"
         },
         {
           "id": "q-online",
           "ico": "combat",
           "t": "Le mode en ligne",
-          "d": "Rien d’annoncé pour GTA VI, pas même une date. GTA Online est arrivé deux semaines après GTA V."
+          "d": "Rien d’annoncé pour GTA VI, pas même une date. GTA Online est arrivé deux semaines après GTA V.",
+          "media": "real-dimez-02",
+          "mediaAlt": "Les Real Dimez dansent sur une voiture devant une foule qui filme au téléphone, visuel officiel Rockstar Games"
         }
       ]
     },

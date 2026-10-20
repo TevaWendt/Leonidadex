@@ -198,4 +198,28 @@ function dlCalc(L, o = {}) {
     + '<div class="vt-dl-out" aria-live="polite"><span class="vt-dl-k">' + esc(L.result) + '</span><output data-vt-dl-out>' + esc(L.empty) + '</output><small>' + esc(L.resultHint) + '</small></div></fieldset></form>';
 }
 
-module.exports = { esc, SVG, MED, imgSet, img, bigSrc, media, figs, card, cards, strip, band, aside, faqGrid, compare, steps, cd, copyBox, filters, rail, clip, areas, dated, checklist, dlCalc };
+/* ---------- 15. v8.01 : mosaïque d’images (tuiles-liens vers une page du site) ---------- */
+/* list : [{href, media, alt, kicker, title, text, go, big (tuile double sur grand écran), titleNo}] ; o : {cls, sizes, prefix, label}.
+   Chaque tuile est un lien : le visuel officiel couvre la tuile, le titre est posé dessus ; au survol l’image s’avance dans son
+   cadre et le texte se dévoile (vitrine.css, 30). La première tuile peut être double (big) : la mosaïque prend alors la forme
+   d’une une de journal. Le nombre de tuiles (4, 5 ou 6) choisit la grille : aucune tuile orpheline en fin de grille, à aucune
+   largeur (vt-mosaic--n4, --n5, --n6). Sans script, tout est visible. */
+function mosaic(list, o = {}) {
+  return '<ul class="vt-mosaic vt-mosaic--n' + list.length + ' vt-in vt-in--scan' + (o.cls ? ' ' + o.cls : '') + '" data-lk-reveal' + (o.label ? ' aria-label="' + esc(o.label) + '"' : '') + '>'
+    + list.map((t, i) => { /* sizes : la grande tuile ; une petite tuile (une colonne sur deux sous 820 px, pleine rangée sous 480 px) ; la
+         dernière des grilles de 4 et de 6 prend toute la rangée sous 820 px (vitrine.css, 30) : l’image choisie suit la largeur réelle */
+      const wide = (list.length === 4 || list.length === 6) && i === list.length - 1;
+      const sizes = o.sizes || (t.big ? '(max-width:819px) 92vw, (max-width:1099px) 64vw, 640px' : wide ? '(max-width:819px) 92vw, 320px' : '(max-width:479px) 92vw, (max-width:819px) 46vw, 320px');
+      return '<li' + (t.big ? ' class="vt-mosaic--big"' : '') + ' style="--i:' + i + '">'
+      + '<a class="vt-tile" href="' + esc(t.href) + '"' + (/^https?:/.test(t.href) ? ' target="_blank" rel="noopener nofollow"' : '') + '>'
+      + '<span class="vt-media vt-tile-m">' + img(t.media, t.alt, { sizes, prefix: o.prefix }) + '</span>'
+      + '<span class="vt-tile-b">' + (t.kicker ? '<span class="vt-tile-k">' + esc(t.kicker) + '</span>' : '') + '<span class="vt-tile-t"' + (t.titleNo ? ' translate="no"' : '') + '>' + esc(t.title) + '</span>' + (t.text ? '<span class="vt-tile-d">' + esc(t.text) + '</span>' : '') + (t.go ? '<span class="vt-go">' + esc(t.go) + '</span>' : '') + '</span>'
+      + '</a></li>'; }).join('') + '</ul>';
+}
+/* ---------- 16. v8.01 : fond d’image d’une carte sombre (question ouverte, point à venir) ---------- */
+/* Le visuel officiel est posé derrière le texte, assombri ; au survol il s’éclaire et s’avance (vitrine.css, 31). Le cadre est
+   aria-hidden (le texte de la carte dit déjà de quoi il s’agit) mais l’image garde son texte alternatif, comme tout visuel
+   officiel du site (règle des tests : jamais un alt vide sur img/officiel). */
+const bg = (id, alt, o = {}) => id ? '<span class="vt-bg" aria-hidden="true">' + img(id, alt || '', { sizes: o.sizes || '(max-width:719px) 92vw, 360px', prefix: o.prefix }) + '</span>' : '';
+
+module.exports = { esc, SVG, MED, imgSet, img, bigSrc, media, figs, card, cards, strip, band, aside, faqGrid, compare, steps, cd, copyBox, filters, rail, clip, areas, dated, checklist, dlCalc, mosaic, bg };

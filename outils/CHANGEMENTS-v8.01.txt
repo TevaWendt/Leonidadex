@@ -1,0 +1,200 @@
+LEONIDAKIT v8.01 : audit du dépôt poussé, puis « L’actualité » refaite : les quatre pages en brouillon reprises en entier,
+les quatre premières corrigées, les fiches intérieures illustrées
+20 octobre 2026
+
+Base : v8.00 (commit 8dc4b968, poussé par Téva : main, « Leonidakit-v8.00-modifs-1-à-7 »). Rien n’est publié ni poussé : GitHub
+n’est pas relié à cette session (le dépôt se lit, pas de push), c’est donc une archive « modifs », comme d’habitude. CSP
+inchangée. Aucun fichier à supprimer. Aucune donnée inventée : chaque image est un visuel officiel déjà crédité
+(outils/medias-officiels.json), chaque texte nouveau dit ce qu’une page du site contient déjà.
+Téva, 20 octobre, 2 h 09 : « regarde si tous les fichiers que tu m’as envoyés ont bien été poussés […] un audit […] la version
+mobile, les langues » ; « la correction de toutes ces sections-là […] les 4 premières […] textes coupés, mauvais alignements,
+manque de visuel […] les 4 dernières sections […] à revoir en intégralité […] animation quand on passe la souris, visuel et
+image […] toutes les fiches qu’il y a à l’intérieur » ; 2 h 12 : « regarde si tout a bien une page par élément ».
+
+1. AUDIT DE CE QUI EST POUSSÉ (v8.00, main)
+- Dépôt cloné tel quel depuis GitHub (commit 8dc4b968) et contrôlé :
+  - liens : outils/verifier.js, 0 erreur (3 981 362 références, 26 641 pages) ;
+  - une page par élément : outils/couverture-pages.cjs, 4 367 éléments, 4 367 pages, 0 manquant (toutes les familles, dont
+    les 3 244 lieux de la carte, les 31 grands moments, les 4 éditions, les 4 vidéos) ;
+  - langues : extraction dans les cinq langues, 0 texte sans traduction ;
+  - sources et pages d’accord : une régénération complète (node outils/regenerer.cjs) depuis le dépôt poussé redonne les mêmes
+    fichiers (seules les dates du plan du site bougent, et les passages de Léo, voir ci-dessous) : rien de ce qui a été livré
+    ne manque dans ce qui a été poussé.
+- Site en ligne (www.leonidakit.com) : la feuille commune servie est celle de la v8.00 (jeton --lk-enter à 0,34 s, même
+  en-tête « Généré depuis outils/sources/style.css »), informations.css aussi ; une page de lieu anglaise nouvelle de la v7.99
+  (en/lieux-carte/3400-rickenbacker-cswy.html, Vice City Oceanarium) répond, en anglais. Rien à corriger.
+- Un défaut de chaîne trouvé par les tests, corrigé : depuis la v7.94 (copie des sources par outils/minifier.cjs), la version
+  des fichiers de Léo (le « ?v= » de leo-index.json et de leo/*.json dans common.js, leo-ui.js, leo-loader.js et leo.css)
+  restait figée à 96f916edb671 : outils/sync-site.cjs la calculait avant la copie des sources, qui la réécrivait avec la valeur
+  d’origine. Conséquence : un visiteur qui revenait gardait l’ancien index de Léo en cache jusqu’à sept jours après chaque
+  mise à jour (en-tête de cache de leo/ et de leo-index.json). Correction : les sources portent le repère ?v=LEO et la version
+  est posée après la copie. C’est pourquoi presque toutes les pages changent dans cette archive (nouvelle empreinte de
+  common.js), comme en v8.00 ; les prochaines mises à jour de Léo feront de même, c’est voulu.
+- Un point de chaîne, sans effet sur le site : outils/gen-leo.cjs et outils/leo-langues.cjs lisent les pages avec jsdom ; ici,
+  sans jsdom, un substitut (parse5) a servi, vérifié identique à Chromium sur 21 pages types (même découpage, mêmes textes).
+  Les passages de Léo régénérés sont identiques aux passages poussés (1 718, même révision).
+
+2. LES QUATRE PAGES REPRISES EN ENTIER (Ce qui est confirmé, Préchargement, GTA VI sur PC, GTA VI et GTA V)
+- Deux briques communes (outils/vitrine.cjs, vitrine.css § 30 et 31), au niveau des sections « Le monde » et « Jouer » :
+  - mosaïque d’images (VT.mosaic) : des tuiles-liens, le visuel officiel sous le titre, la première tuile double (une de
+    journal) ; au survol la tuile se soulève, l’image s’avance dans son cadre et la phrase se dévoile (toujours visible au
+    doigt) ; entrée par balayage des images (moteur commun). La grille dépend du nombre de tuiles (4, 5 ou 6) pour qu’aucune
+    rangée ne reste incomplète, à aucune largeur (règle « aucune carte orpheline ») : 5 tuiles en 4 colonnes, 6 en 3 colonnes,
+    4 en 3 colonnes (grande sur trois rangées) ; 2 colonnes sous 820 px (la dernière prend la rangée si besoin), 1 sous 480 px ;
+  - fond d’image d’une carte sombre (VT.bg, .vt-has-bg) : le visuel officiel derrière le texte, assombri par un voile de nuit,
+    qui s’éclaire et s’avance au survol ; la carte ne bouge pas, le texte reste lisible (contraste conservé).
+- Ce qui est confirmé (verification.html ; outils/gen-informations.cjs, informations.css, outils/informations-editorial.json) :
+  - les huit questions ouvertes (« Pas encore annoncé ») ont chacune un visuel officiel en fond (version PC : Raul devant ses
+    écrans ; heure de déblocage : Vice City de nuit ; poids du jeu : vue aérienne ; GTA Online : les Real Dimez ; prix en jeu :
+    Stock 305 ; surface de la carte : la route des Keys ; durée de vie : Mount Kalaga ; codes de triche : fourgon de police) ;
+  - « Les modèles réels et les noms provisoires » : quatre fiches en exemple, en mosaïque (Grotti Cheetah ’95, revolvers Hawk &
+    Little Morgan, Vice City, Les vraies voitures), chacune avec son statut en accroche ;
+  - correction : le point « Le prix du jeu » (étiquettes de prix à la place d’une photo) débordait de son cadre 16/9, texte
+    coupé en bas (constat de l’audit : 285 × 195 dans 285 × 158 px) : étiquettes resserrées, une seule rangée à toutes les
+    largeurs ; le visuel d’un point confirmé s’avance au survol (c’est un lien) ; la pastille « ? » d’une question tourne au
+    survol.
+- Préchargement (prechargement.html ; outils/gen-recherches.cjs, recherches.css § 8 à 12) :
+  - à côté de l’état du jour, la console dessinée (.rc-console) : la vignette du jeu avec la jaquette officielle, une barre
+    « Téléchargement en attente » qui respire, « Taille : pas encore annoncée », « Jouable le 19 novembre » ; tout est du
+    texte (traduit comme le reste), rien n’est une capture de console ; quand Rockstar publiera la taille (état « ouvert »),
+    la barre s’allume et la taille remplace « pas encore annoncée », sans rien d’autre à faire ;
+  - les trois questions ouvertes ont leur visuel en fond ;
+  - la liste à cocher : rangées pleines (3 puis 2 : la cinquième carte restait seule) ;
+  - nouvelle mosaïque « En attendant le 12 novembre » (5 tuiles) : la carte (grande), le calculateur, les véhicules, les
+    personnages, le Tuto ;
+  - survols : les étapes PS5 et Xbox (bordure ambre, pictogramme qui se redresse).
+- GTA VI sur PC (gta-6-pc.html) :
+  - mosaïque « Ce qui sort sur consoles le 19 novembre » (4 tuiles) : Leonida (grande), Jason et Lucia, les véhicules, les
+    éditions ;
+  - encadré « Vrai ou faux : comment reconnaître une fausse version PC » (.rc-vf) : à gauche ce qu’on te propose, barré,
+    tampon « Faux » (clé bêta, accès anticipé, fichier à installer) ; à droite ce qui existe, tampon « Officiel » (annonce,
+    date, « PC : pas annoncé ») ; le tampon se redresse au survol ;
+  - « Où l’annonce arrivera » : les quatre cartes portent un visuel officiel (annonce de l’Extended Look, jaquette, affiche
+    de la bande-annonce, Jason et Lucia) ; au survol la carte se soulève et l’image s’avance ;
+  - survols : les lignes de la frise datée se teintent, les lignes du tableau aussi (GTA VI et GTA V) ; le titre d’un
+    sous-bloc sur fond de nuit est blanc (il restait couleur encre).
+- GTA VI et GTA V (gta-6-vs-gta-5.html) :
+  - mosaïque « Les six régions de Leonida, en images » (6 tuiles, aucune orpheline) sous les deux surfaces comparées : Vice
+    City (grande), Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia, Mount Kalaga, chacune vers sa page ;
+  - les six questions « pas encore comparable » ont leur visuel en fond.
+
+3. LES QUATRE PREMIÈRES PAGES (Actualités, Vidéos officielles, Éditions, Prix et collector) : constats et corrections
+- Relues en entier à 1 280 et 390 px (captures internes, non livrées). Constats réels :
+  - Éditions, les deux cartes d’édition côte à côte : le lien « La page de cette édition » (v7.96) n’avait pas sa rangée dans
+    la sous-grille partagée et se posait sur la ligne de source (lien collé au filet, source décalée) : sixième rangée
+    ajoutée, le lien a sa place sous la source (actus.css) ;
+  - Éditions, les seize contenus : sur la carte sans visuel (« Style de Vice City »), l’étiquette « Pas encore de visuel
+    officiel » était recouverte par la pastille de numéro « 04 » : l’étiquette passe en bas de l’image, centrée, sous le
+    pictogramme (vitrine.css § 13), sur toutes les cartes « teaser » du site ;
+  - Actualités, Vidéos officielles, Prix et collector : aucun texte coupé, aucun décalage trouvé (le bandeau défilant des
+    onze objets du coffret est voulu).
+
+4. LES FICHES INTÉRIEURES (moments/, editions/, videos/)
+- Sommaire des grands moments (moments/index.html) : la liste devient une grille de cartes à image (.lc-cards) :
+  l’affiche de la vidéo ou le visuel officiel du moment, la date et le type, le titre ; rangées pleines, la dernière centrée ;
+  au survol la carte se soulève et l’image s’avance.
+- Les 24 pages de moment et les 4 pages d’édition : les cartes liées (« Les fiches que ce moment a fait avancer », « Les seize
+  contenus ») portent la vignette officielle de leur fiche (.rel-card--img ; pour un moment, le visuel que ce moment a apporté
+  à la fiche, noté dans la chronologie des dossiers du monde). Un moment sans affiche ni visuel propre (29 nouvelles captures,
+  Captures de l’Édition Ultimate, Captures officielles, Pages « Only in Leonida », Précommandes) prend le premier visuel
+  officiel qu’il a apporté à une fiche : plus aucune page ni carte sans image. outils/gen-actus.cjs → revelations() renvoie
+  aussi ce visuel (champ media, ajout sans effet sur l’existant).
+- Les styles de ces cartes sont dans une feuille à part, actualite-fiches.css (outils/sources/), chargée seulement par les 29
+  pages de moments et d’éditions : les 3 968 autres pages par élément (et leurs cinq traductions) ne sont pas réécrites.
+- Les quatre pages de vidéo étaient déjà au niveau (photogrammes minutés, musique, puces) : inchangées.
+
+5. SIX LANGUES
+- 54 textes nouveaux par langue (titres et phrases des mosaïques, console, vrai ou faux, textes alternatifs des visuels) :
+  outils/langues/<code>/v801.json (en, es, it, de, pt), repères <1>…</4> contrôlés. Extraction après régénération : 0 texte
+  sans traduction dans les cinq langues ; les pages des moments et des éditions n’ont aucun texte nouveau (images seulement).
+
+6. TÉLÉPHONE
+- Les mosaïques passent en deux colonnes sous 820 px et en une sous 480 px, sans tuile seule ; la console dessinée se place
+  sous l’état du jour ; le vrai ou faux en une colonne ; les cartes « où suivre » gardent le défilement au doigt de la v8.00 ;
+  la phrase d’une tuile est toujours visible au doigt (média « hover: none »).
+
+7. RÉFÉRENCEMENT : LE NOM DE LA FICHE EN TÊTE DE CHAQUE PAGE (demande du 20 octobre, 7 h 58)
+- Relevé sur les 4 431 pages françaises (2 833 proposées aux moteurs ; les 1 598 autres sont les pages en noindex,follow
+  décidées le 18 octobre : bâtiments numérotés, noms incertains, valeurs d’options, visuels sans description) : titre, h1,
+  description, canonique, hreflang, og:title, og:image, données structurées (BreadcrumbList + WebPage ou CollectionPage,
+  nom et autres noms de l’élément) : 0 titre en double, 0 page sans canonique, hreflang, image de partage ni données
+  structurées ; 0 page dont le nom de l’élément manque au titre ou au h1 ; le nom est aussi dans l’adresse (slug). Le
+  titre s’écrit « GTA 6 : <nom>… » ou « <nom> dans GTA 6 » (le h1 et le corps gardent « GTA VI » : les deux graphies
+  sont sur chaque page), borné à 65 signes.
+- Ce qui n’allait pas, corrigé :
+  · Nom coupé dans le titre quand une précision entre parenthèses le rendait trop long (« GTA 6 : Gellhorn International
+    (Sebring International Raceway) », « GTA 6 : Gellhorn (repère gellhorn-international-raceway) », « GTA 6 : Parking
+    (Miami Parking Authority…) ») : le nom n’est plus jamais coupé, c’est la parenthèse qui raccourcit sur un mot entier
+    (« (Sebring International…) ») ou qui cède la place au quartier (outils/gen-pages-elements.cjs, titreLieu ; lot B,
+    titreBorne : le dernier recours « nom coupé sur un mot » est retiré).
+  · « GTA 6 : Gilet pare-balles dans GTA 6, Protection » (quatre pages dont le nom dit déjà « dans GTA VI ») : plus de
+    préfixe « GTA 6 : » ni de catégorie redite (« Munitions spéciales dans GTA 6 | Leonidakit ») ; leur lede et leur
+    description ne disent plus « dans GTA VI dans GTA VI ».
+  · 45 fiches du monde (personnages, régions, entreprises, gangs, demeures, planques, animaux) dont la description pour
+    les moteurs ne contenait pas le nom (« Ancien militaire élevé parmi les escrocs, Jason… ») : elle commence par le nom
+    (« Jason Duval dans GTA VI. Ancien militaire… », « La maison de Jason, dans les Keys (GTA VI). Une propriété… ») ;
+    outils/lore-gen.js, descNom, phrases entières, 158 signes. Le coffret collector est nommé dans sa description.
+  · Quatre hubs sans « GTA 6 » dans le titre (« Les régions de Leonida », « Les entreprises de Leonida », « Les demeures de
+    Leonida », « Les planques de Leonida ») : titre pour les moteurs comme ceux de Personnages et Gangs depuis la v7.93
+    (« GTA 6 régions : Vice City, Leonida Keys et toute la carte », « GTA 6 entreprises : ateliers, boutiques et salons de
+    Leonida », « GTA 6 demeures : les habitations des personnages de Leonida », « GTA 6 planques : la planque de Jason et
+    les repaires de Leonida ») ; le h1 et le nom dans les menus ne changent pas. « Visuels officiels de GTA 6 et crédits ».
+    Les images de partage de ces cinq pages (le titre y est dessiné) sont rendues de nouveau dans les six langues.
+  · 29 descriptions coupées sur un « ; » finissaient par une espace, sans point (« …nommé ou décrit par Rockstar ») :
+    outils/gen-pages-elements.cjs, court().
+- Six langues : 50 à 102 textes par langue (outils/langues/<code>/v801-seo.json et elements/v801-seo.json), composés
+  depuis la mémoire existante (nom traduit + phrase traduite, même coupe) ; les titres des hubs, de la page des visuels et
+  la description du coffret traduits à la main ; extraction après régénération : 0 texte sans traduction.
+- Nouveau contrôle, sans navigateur : node outils/referencement.cjs (--tout pour les avertissements) : titres en double, nom de
+  l’élément dans le titre et le h1 de chaque page d’élément, canonique, hreflang, og:title, og:image, données structurées,
+  description finissant par une espace (bloquants) ; titres longs, descriptions longues ou courtes, descriptions sans le
+  nom (avertissements). Résultat : 0 défaut bloquant ; avertissements : 2 descriptions sans le nom (Les courses et le
+  tout-terrain, Grand Theft Auto VI: The Album : le titre le porte), 24 descriptions courtes de postes de personnalisation
+  (données courtes), 2 descriptions de carnets à 161 et 164 signes, 1 titre de 67 signes.
+- Laissé tel quel, à dessein : les 1 598 pages en noindex (ta règle du 18 octobre : elles passent en indexable quand
+  Rockstar publie) ; « Véhicules rares et exclusifs de GTA 6 : éditions et modèles uniques » (67 signes, nom en tête) ;
+  deux descriptions de carnets à 161 et 164 signes.
+
+8. CONTRÔLES (détail : outils/MATRICE-v8.01.md)
+- Liens : verifier.js, 0 erreur (3 987 556 références, 26 641 pages), rejoué après le lot référencement. Une page par
+  élément : 4 367 sur 4 367. Référencement : outils/referencement.cjs, 0 défaut bloquant (§ 7). Images de partage :
+  gen-partage --verifier, à jour. Léo : gen-leo --check, index à jour (chaîne : regenerer, puis gen-partage, puis gen-leo,
+  puis sync-site ; gen-partage après la chaîne change quatre pages de hub, donc l’empreinte des entrées de Léo : son
+  manifeste doit être régénéré ensuite, la version de Léo posée dans common.js ne change pas).
+- Langues : régénération avec 0 texte sans traduction (avant et après le lot référencement) ; langues.cjs --verifier dans
+  les cinq langues : 0 manque, 0 repère cassé, 0 conflit ; langues.cjs --extraire × 5 après la chaîne finale : 0 texte ;
+  langues-pages-browser sur les pages touchées (35 contrôles, puis 12 pages du lot référencement) : 0 échec.
+- Écrans : ecrans-browser sur 13 pages × 16 largeurs (320 à 2 560 px) et 13 pages allemandes × 5 largeurs : 0 débordement,
+  0 texte coupé, 0 grille irrégulière, 0 cible ni texte trop petits.
+- Audit de clôture (audit-site-browser --rapide) sur les 9 pages de L’actualité (ajoutées à l’échantillon, outils/tests) et
+  deux fiches types, 7 largeurs : 0 débordement, 0 coupé, 0 h1 manquant, 0 identifiant double, 0 erreur de console,
+  0 requête en échec, fonctions 12 sur 12 ; ce qu’il a relevé est corrigé dans cette même version : trois contrastes sous
+  4,5:1 (« À l’affiche », « Jeu non inclus », corail profond), trois images affichées plus grandes que leur fichier (sizes
+  des tuiles pleine largeur sous 820 px, écran de projection des vidéos), trois grilles finissant par une carte seule (postes
+  de coûts, cartes « où suivre », calcul du téléchargement). Reste signalé et voulu : l’image de la boîte fermée du coffret
+  (Prix) cachée une fois la boîte ouverte.
+- Suite de tests (node --test, 1 176 tests) : jsdom n’est pas installable dans cette session (pas d’accès au registre npm) ;
+  la suite a donc été jouée avec un substitut de lecture seule (parse5) sur la base v8.00 ET sur la v8.01 (rejouée après le
+  lot référencement), et comparée test par test : résultat identique (787 passent, 389 demandent le vrai jsdom dans les
+  deux cas). Les écarts apparus en cours de
+  route (index de Léo à régénérer, moments/trailer-2.html à 42 Ko pour un plafond de 40, texte alternatif manquant sur les
+  visuels en fond) ont été corrigés jusqu’à l’égalité. Léo : index régénéré (8 passages nouveaux) ; l’évaluation
+  (leo-eval.cjs) demande jsdom et n’a pas été rejouée : les réponses de Léo n’ont pas changé, seules les pages des quatre
+  sujets ont des passages en plus.
+- Mentions tenues (preuve-confidentialite), aucun cookie (audit-cookies), CSP inchangée.
+
+9. FICHIERS
+- Modifiés (chaîne) : outils/sync-site.cjs (version de Léo posée après la copie des sources), outils/sources/common.js,
+  leo-ui.js, leo-loader.js, leo.css (repère ?v=LEO) ; référencement : outils/lore-gen.js (descNom, seoTitle des quatre
+  hubs, titre de medias.html), outils/gen-pages-elements.cjs (titreLieu, court, consommables), outils/gen-pages-elements-b.cjs
+  (titreBorne, catalogues, coffret), outils/partage.json et img/partage/<langue>/{lieux,entreprises,demeures,planques,medias}.jpg.
+- Nouveaux : outils/sources/actualite-fiches.css et sa copie servie actualite-fiches.css, outils/langues/<code>/v801.json (5),
+  outils/langues/<code>/v801-seo.json et outils/langues/<code>/elements/v801-seo.json (10), outils/referencement.cjs,
+  LISEZ-MOI-v8.01.txt, outils/CHANGEMENTS-v8.01.txt, outils/MATRICE-v8.01.md.
+- Modifiés : outils/vitrine.cjs, outils/gen-informations.cjs, outils/gen-recherches.cjs, outils/gen-pages-elements-b.cjs,
+  outils/gen-actus.cjs, outils/informations-editorial.json, outils/sources/vitrine.css, informations.css, recherches.css,
+  actus.css (et leurs copies servies), les quatre pages reprises, editions.html, les pages des moments et des
+  éditions, les pages de visuels dont le nombre de reprises change, et toutes les pages qui portent l’empreinte d’une feuille
+  modifiée, dans les six langues ; plan du site ; common.js et les fichiers de Léo avec leur vraie version, donc l’empreinte de
+  common.js dans toutes les pages (voir § 1).
+- Rien à supprimer.

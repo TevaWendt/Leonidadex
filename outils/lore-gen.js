@@ -42,19 +42,19 @@ const withHere=(header,hub)=>header.replace(/ class="here"/g,'').replace(new Reg
 
 const SITE='https://www.leonidakit.com';
 const SECTIONS={
-  regions:{hub:'lieux',label:'Lieux',one:'Région',title:'Les régions de Leonida',
+  regions:{hub:'lieux',label:'Lieux',one:'Région',title:'Les régions de Leonida',seoTitle:'GTA VI régions : Vice City, Leonida Keys et toute la carte'/* v8.01 : « GTA 6 » dans le titre des quatre hubs qui ne l’avaient pas (référencement) */,
     lede:"Des Keys aux quartiers de Vice City, découvre les régions présentées par Rockstar et les liens entre leurs paysages, leurs habitants et l’histoire.",
     desc:'Les six régions officielles de GTA VI : Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et Mount Kalaga, avec visuels officiels et carte.'},
   characters:{hub:'personnages',label:'Personnages',one:'Personnage',title:'Les personnages de GTA VI',seoTitle:'GTA VI personnages : Lucia, Jason et tous les personnages'/* v7.93 */,
     lede:"Qui sont Jason, Lucia et les personnes qui croisent leur route ? Ces portraits relient les personnages présentés par Rockstar à leur entourage et aux régions de Leonida.",
     desc:'Qui sont les personnages de GTA 6 ? Lucia et Jason, les deux héros jouables, puis Cal, Boobie, Dre\u2019Quan, Real Dimez, Raul et Brian, avec visuels officiels.'},
-  businesses:{hub:'entreprises',label:'Entreprises',one:'Entreprise',title:'Les entreprises de Leonida',
+  businesses:{hub:'entreprises',label:'Entreprises',one:'Entreprise',title:'Les entreprises de Leonida',seoTitle:'GTA VI entreprises : ateliers, boutiques et salons de Leonida'/* v8.01 */,
     lede:"Ateliers, boutiques, salons et lieux de musique : découvre les adresses qui donnent vie à Leonida et les services que Rockstar a effectivement décrits.",
     desc:'Les entreprises de GTA VI présentées par Rockstar : ateliers, salons, boutiques et studios, avec visuels officiels et position sur la carte de Leonida.'},
-  residences:{hub:'demeures',label:'Demeures',one:'Demeure',title:'Les demeures de Leonida',
+  residences:{hub:'demeures',label:'Demeures',one:'Demeure',title:'Les demeures de Leonida',seoTitle:'GTA VI demeures : les habitations des personnages de Leonida'/* v8.01 */,
     lede:"Ces fiches rassemblent les lieux associés à la vie des personnages : maisons, hébergements et autres adresses évoquées dans leur parcours.",
     desc:'Les habitations des personnages de GTA VI décrites par Rockstar : la maison de Jason dans les Keys, chez Cal Hampton, chez Brian et Lori, le parcours de Lucia.'},
-  hideouts:{hub:'planques',label:'Planques',one:'Planque',title:'Les planques de Leonida',
+  hideouts:{hub:'planques',label:'Planques',one:'Planque',title:'Les planques de Leonida',seoTitle:'GTA VI planques : la planque de Jason et les repaires de Leonida'/* v8.01 */,
     lede:"Retrouve les repaires montrés dans les médias, la planque nommée par Rockstar et les garages décrits avec les bonus de véhicule.",
     desc:'Les planques de GTA VI repérées dans les médias officiels : la planque de Jason dans les Keys, le chantier naval de Brian, le motel du premier trailer.'},
   /* v7.65 : gangs et factions (outils/editorial.json, clé factions ; zone éditoriale : editorial-hubs.json, clé gangs). Chaque fiche peut
@@ -102,6 +102,12 @@ const EXPLORE=pre=>`<section class="shell reveal lk-explore">
 const recapOf=(x,S)=>{const f=(x&&x.facts||[]).map(t=>String(t).trim().replace(/\s*[.;]$/,''));if(!f.length)return '';
   const intro={regions:'Ce qu’il faut retenir de cette région',characters:'Ce qu’il faut retenir de ce personnage',businesses:'Ce qu’il faut retenir de cette adresse',residences:'Ce qu’il faut retenir de ce lieu',hideouts:'Ce qu’il faut retenir de ce lieu',factions:'Ce qu’il faut retenir de ce groupe',animals:'L’essentiel de cette fiche'/* section animaux */}[S]||'À retenir';
   return `<section class="shell reveal lk-recap"><h2 class="sec-h">${intro}</h2><p class="fiche-txt rise">${esc(f.join('. ')+'.')} ${esc(x.name)} ${({f:'est reliée',mp:'sont reliés',fp:'sont reliées'})[x&&x.accord]||'est relié'} aux fiches voisines ci-dessous : les fiches se complètent avec le jeu, et ce résumé se mettra à jour avec elles.</p></section>`;};
+/* v8.01 (référencement) : la description pour les moteurs commence par le nom de la fiche quand son texte ne le contient pas
+   (« Jason Duval dans GTA VI. Ancien militaire… », « Ambrosia dans GTA VI. Le versant agricole… ») : c’est le nom que tapent
+   les joueurs, et le moteur le met en gras dans l’extrait ; metaDesc garde ensuite des phrases entières (158 signes). Un nom
+   qui est déjà une phrase de lieu (« La maison de Jason, dans les Keys », « Lucia, du pénitencier à Vice City ») prend « (GTA VI) »
+   plutôt qu’un second « dans » */
+const descNom=(nom,d)=>{const n=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’‘]/g,'\'').toLowerCase();if(n(d).includes(n(nom)))return d;return nom+(/,| dans | à /.test(nom)?' (GTA VI). ':' dans GTA VI. ')+d;};
 const metaDesc=t=>{t=String(t||'').replace(/\s+/g,' ').trim();if(t.length<=158)return t;const ph=t.split(/(?<=[.!?])\s+/);let d='';for(const q of ph){if(d&&(d+' '+q).length>158)break;d=d?d+' '+q:q;}return d.length<=158&&d.length>=60?d:t.slice(0,155).replace(/\s+\S*$/,'')+'…';};
 function page({p,title,desc,canonical,ogImg,body,crumbs,hub,RECAP='',ld='',lkx=false,monde=false}){desc=metaDesc(desc);
   const C=p?SUB:ROOT;const header=hub?withHere(C.header,hub):C.header.replace(/ class="here"/g,'');
@@ -317,7 +323,7 @@ ${calcBridge}${factionBridge}
   ${(relBlocks||vehBlock||armBlock||mapBlock)?`<div class="lore-related"><h2>En lien</h2>${relBlocks}${vehBlock}${armBlock}${mapBlock}</div>`:''}
 </section>
 ${dossier}<aside class="shell lk-pub lk-pub--fiche" data-pub="fiche-monde" hidden aria-hidden="true"></aside>${locate}${galleryBlock(x,S).replace('<section class="shell lore-gallery reveal">','<section class="shell lore-gallery reveal" id="galerie">')}`;
-    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,lkx:!!locate||LKX_HUBS.has(S.hub)||!!x.galerie,RECAP:key==='animals'?recapOf(x,key):''/* v7.83 : le dossier remplace le résumé sur les six sections du monde */,title:x.name+' dans GTA VI | Leonidakit',desc:x.description,canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub,ld:ldFiche}));
+    fs.writeFileSync(S.hub+'/'+x.id+'.html',page({p,lkx:!!locate||LKX_HUBS.has(S.hub)||!!x.galerie,RECAP:key==='animals'?recapOf(x,key):''/* v7.83 : le dossier remplace le résumé sur les six sections du monde */,title:x.name+' dans GTA VI | Leonidakit',desc:descNom(x.name,x.description),canonical:'/'+S.hub+'/'+x.id+'.html',ogImg:m?(m.variants[1]||m.variants[0]).src:null,body,crumbs:[['Accueil','/'],[S.label,'/'+S.hub+'.html'],[x.name,'/'+S.hub+'/'+x.id+'.html']],hub:S.hub,ld:ldFiche}));
     index.push({l:x.name,k:S.one,u:'/'+S.hub+'/'+x.id+'.html',s:(x.name+' '+S.one+' '+x.description+' '+(x.tagline||'')+(key==='factions'?' '+(x.kind||'')+' '+(x.aliases||[]).join(' '):'')).toLowerCase(),w:1});
   }
   console.log(S.hub+' : '+items.length+' fiches');
@@ -343,7 +349,7 @@ ${rows}
   </ul>
   <p class="lore-src">Les photos de la carte proviennent de gtadb.org et de ses contributeurs (CC BY 4.0), voir les <a href="mentions-legales.html">mentions légales</a>.</p>
 </section>`;
-  fs.writeFileSync('medias.html',page({p:'',title:'Visuels officiels et crédits | Leonidakit',desc:'Liste des '+Object.keys(MED).length+' visuels officiels de GTA VI utilisés sur Leonidakit, avec leur crédit, leur source et les fiches où ils apparaissent.',canonical:'/medias.html',ogImg:null,body,crumbs:[['Accueil','/'],['Visuels officiels','/medias.html']]}));
+  fs.writeFileSync('medias.html',page({p:'',title:'Visuels officiels de GTA VI et crédits | Leonidakit'/* v8.01 : « GTA 6 » dans le titre (référencement) */,desc:'Liste des '+Object.keys(MED).length+' visuels officiels de GTA VI utilisés sur Leonidakit, avec leur crédit, leur source et les fiches où ils apparaissent.',canonical:'/medias.html',ogImg:null,body,crumbs:[['Accueil','/'],['Visuels officiels','/medias.html']]}));
   console.log('medias.html : '+Object.keys(MED).length+' visuels');
 }
 

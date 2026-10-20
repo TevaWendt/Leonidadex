@@ -1,0 +1,34 @@
+/* LEONIDAKIT — actualite-fiches.css (v8.01) : les pages par élément de « L’actualité » (moments/, editions/) : cartes liées
+   illustrées et sommaire en cartes à image. Chargée seulement par ces pages, après style.css, fiches.css et elements.css
+   (les 3 968 autres pages par élément ne changent pas). Jetons de style.css ; survol : un lien se soulève et son image
+   s’avance, une carte qu’on lit ne bouge pas ; « Réduire les animations » : rien ne bouge. */
+/* ---------- v8.01 : cartes liées illustrées (grands moments, éditions) : la vignette officielle de la fiche à gauche ---------- */
+.rel-card--img{align-items:center;padding:8px 13px 8px 8px;}
+.rel-art--img{width:84px;flex:0 0 84px;aspect-ratio:16/10;border:1.5px solid var(--ink);border-radius:7px;overflow:hidden;background:var(--night);}
+.rel-art--img img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease-out,ease);}
+.rel-card--img .rel-nom{white-space:normal;line-height:1.25;}
+.rel-grid--img{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));}
+.rel-grid--img>*{flex-basis:calc((100% - 22px) / 3);}
+@media(max-width:900px){.rel-grid--img>*{flex-basis:calc((100% - 11px) / 2);}}
+@media(max-width:560px){.rel-grid--img>*{flex-basis:100%;}}
+@media(hover:hover) and (pointer:fine){.rel-card--img:hover .rel-art--img img{transform:scale(1.08);}}
+
+/* ---------- v8.01 : sommaire en cartes à image (grands moments) : visuel 16/9, date, titre ; rangées pleines, la dernière centrée ---------- */
+.lc-cards{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:0 0 30px;padding:0;list-style:none;}
+.lc-cards>li{flex:0 1 calc((100% - 42px) / 4);min-width:0;}
+@media(max-width:1100px){.lc-cards>li{flex-basis:calc((100% - 28px) / 3);}}
+@media(max-width:820px){.lc-cards>li{flex-basis:calc((100% - 14px) / 2);}}
+@media(max-width:480px){.lc-cards>li{flex-basis:100%;}}
+.lc-card{display:flex;flex-direction:column;height:100%;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);text-decoration:none;overflow:hidden;box-shadow:var(--shadow-hard);transition:transform var(--c-fast,190ms),box-shadow var(--c-fast,190ms),border-color var(--c-fast,190ms);}
+.lc-card-m{display:block;aspect-ratio:16/9;background:var(--night);border-bottom:2px solid var(--ink);overflow:hidden;}
+.lc-card-m img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease-out,ease),filter .4s;}
+.lc-card-m--vide{background:linear-gradient(150deg,var(--night-deep,#241740),var(--night-2,#4A2A7A));}
+.lc-card-b{display:flex;flex-direction:column;gap:4px;padding:12px 14px 14px;}
+.lc-card-b small{font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--coral-text,#B93220);}
+.lc-card-b b{font:800 1.02rem/1.25 'Archivo',sans-serif;letter-spacing:-.015em;}
+.lc-card:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}
+@media(hover:hover) and (pointer:fine){
+  .lc-card:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink);border-color:var(--ink);}
+  .lc-card:hover .lc-card-m img{transform:scale(1.07);filter:saturate(1.12);}
+}
+@media(prefers-reduced-motion:reduce){.lc-card,.lc-card-m img,.rel-art--img img{transition:none!important;}}

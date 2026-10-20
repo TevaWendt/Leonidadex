@@ -35,7 +35,8 @@ module.exports = function run(H) {
   const stamp = (SRC, statut, id) => '<p class="rc-stamp">' + S.pip(statut, true) + srcRef(SRC, id) + '</p>';
   const links = (SRC, ids) => ids.map(id => ext(SRC[id].url, SRC[id].short || SRC[id].publisher)).join(', ');
   /* encadré « Ce qui n’est pas confirmé » : tuiles sombres à point d’interrogation (comme Ce qui est confirmé) */
-  const openQs = items => '<ul class="vf-qs rc-qs vt-in" data-lk-reveal>' + items.map((x, i) => '<li class="vf-q" id="' + esc(x.id) + '" style="--i:' + i + '"><span class="vf-q-ico">' + S.icon(x.ico) + '<b class="vt-stamp" aria-hidden="true">?</b></span><h3>' + gta(x.t) + '</h3><p>' + gta(x.d) + '</p>' + (x.ou ? '<p class="rc-q-ou"><span>' + esc(x.ouLabel) + '</span> ' + x.ou + '</p>' : '') + '</li>').join('') + '</ul>';
+  /* v8.01 : un visuel officiel en fond de chaque question, assombri, qui s’éclaire au survol (vitrine.css, 31) */
+  const openQs = items => '<ul class="vf-qs rc-qs vt-in" data-lk-reveal>' + items.map((x, i) => '<li class="vf-q' + (x.media ? ' vt-has-bg' : '') + '" id="' + esc(x.id) + '" style="--i:' + i + '">' + (x.media ? VT.bg(x.media, x.mediaAlt) : '') + '<span class="vf-q-ico">' + S.icon(x.ico) + '<b class="vt-stamp" aria-hidden="true">?</b></span><h3>' + gta(x.t) + '</h3><p>' + gta(x.d) + '</p>' + (x.ou ? '<p class="rc-q-ou"><span>' + esc(x.ouLabel) + '</span> ' + x.ou + '</p>' : '') + '</li>').join('') + '</ul>';
   /* points clés (vitrine.css, 16) : icône de la charte, titre, texte, statut et source */
   const points = (list, SRC, o = {}) => '<ul class="vt-points vt-in vt-in--deal" style="--n:' + (o.n || list.length) + '" data-lk-reveal>' + list.map((p, i) => '<li style="--i:' + i + '"><div class="vt-point' + (p.main ? ' rc-point--main' : '') + '"><span class="vt-point-ico">' + S.icon(p.icon) + '</span><h3>' + gta(p.t) + '</h3><p>' + gta(p.d) + '</p>' + (p.src ? stamp(SRC, p.statut || 'officiel', p.src) : '') + '</div></li>').join('') + '</ul>';
   /* coupures de presse : citations rapportées, en anglais, avec leur auteur, leur date et la source */
@@ -48,6 +49,13 @@ module.exports = function run(H) {
     library: '<svg viewBox="0 0 120 84" fill="none" stroke="#1A1A1E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="22" y="18" width="24" height="24" rx="4" fill="#FDFBF7"/><rect x="52" y="18" width="24" height="24" rx="4" fill="#FDFBF7"/><rect x="22" y="48" width="24" height="24" rx="4" fill="#FDFBF7"/><rect x="52" y="48" width="24" height="24" rx="4" fill="#F5A524"/><path d="M64 54v10M59 60l5 5 5-5"/><rect x="82" y="18" width="18" height="54" rx="4" fill="#F4F0E7"/><path d="M91 28v6M91 40v6M91 52v6" stroke="#E8452C" stroke-width="3"/></svg>',
     code: '<svg viewBox="0 0 120 84" fill="none" stroke="#1A1A1E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="26" width="80" height="36" rx="6" fill="#FDFBF7"/><path d="M30 44h8M44 44h8M58 44h8M72 44h8M86 44h4" stroke-width="3.2" stroke="#F5A524"/><path d="M30 54h40" stroke="#1A1A1E" stroke-dasharray="4 4"/><path d="M92 18l6 6-6 6" stroke="#E8452C"/></svg>'
   };
+  /* v8.01 : une mosaïque d’images titrée (vitrine.cjs → mosaic) : titre, phrase, tuiles-liens vers des pages du site */
+  const mosaique = (M, cls) => '<div class="rc-mosaic' + (cls ? ' ' + cls : '') + '"><h3 class="ed-h3 rc-h3">' + gta(M.titre) + '</h3><p class="rc-lede2">' + gta(M.lede) + '</p>' + VT.mosaic(M.items.map(x => ({ ...x, go: M.go })), { cls: 'rc-mosaic-l' }) + '</div>';
+  /* v8.01 : la console dessinée (recherches.css, 9) : la vignette du jeu avec la jaquette officielle, une barre en attente qui
+     respire, les deux dates ; tout est écrit en texte (traduit comme le reste), rien n’est une capture d’écran de console */
+  const console_ = (A, size) => '<figure class="rc-console lk-reveal"><div class="rc-console-screen"><p class="rc-console-k">' + esc(A.kicker) + '</p><div class="rc-console-tile"><span class="rc-console-cover">' + VT.img('cover-art-officielle', 'La jaquette officielle de GTA VI, visuel officiel Rockstar Games', { sizes: '96px' }) + '</span><span class="rc-console-txt"><b>' + gta(A.label) + '</b><small>' + esc(A.sub) + '</small></span></div><div class="rc-console-bar' + (size ? ' rc-console-bar--on' : '') + '"><i aria-hidden="true"></i><span>' + esc(A.bar) + '</span></div><p class="rc-console-meta"><span>' + esc(size ? size : A.size) + '</span><span>' + esc(A.play) + '</span></p></div><div class="rc-console-base" aria-hidden="true"><i></i></div></figure>';
+  /* v8.01 : vrai ou faux (recherches.css, 10) : ce qu’on propose (tampon « Faux ») face à ce qui existe (tampon « Officiel ») */
+  const vraiFaux = VF => '<div class="rc-vf"><h3 class="ed-h3 rc-h3">' + gta(VF.titre) + '</h3><div class="rc-vf-grid">' + [['faux', VF.faux], ['vrai', VF.vrai]].map(([k, c], i) => '<div class="rc-vf-card rc-vf-card--' + k + ' lk-reveal" style="--i:' + i + '"><span class="rc-vf-stamp vt-stamp" aria-hidden="true">' + esc(c.stamp) + '</span><span class="sr-only">' + esc(c.stamp) + ' : </span><p class="rc-vf-k">' + esc(c.k) + '</p><p class="rc-vf-t">' + gta(c.t) + '</p><ul class="rc-vf-l">' + c.lines.map(l => '<li>' + gta(l) + '</li>').join('') + '</ul><p class="rc-vf-f">' + gta(c.foot) + '</p></div>').join('') + '</div></div>';
   /* la marche à suivre d’une console : titre, étapes illustrées (vitrine.css, 7), statut et source */
   const howto = (c, SRC) => '<div class="rc-howto"><h3 class="rc-howto-t"><span class="ed-col-ico">' + S.icon(c.icon) + '</span>' + esc(c.titre) + '</h3>' + VT.steps(c.steps.map(s => ({ title: s.t, text: s.d, ill: ILL[s.ill] })), { cls: 'rc-steps' }) + '<p class="rc-stamp">' + S.pip('officiel', true) + srcRef(SRC, c.src) + '</p></div>';
 
@@ -67,7 +75,9 @@ module.exports = function run(H) {
     /* 1. l’état du jour, puis les trois dates sur une frise à stations (le trait se trace à l’entrée) */
     const D = X.dates;
     parts.push(sec({ id: 'dates', kicker: E.kicker, title: E.title, icon: 'horloge', tone: 'paper2', lede: gta(E.lede) },
-      '<div class="rc-state rc-state--' + esc(X.etat) + ' lk-reveal" data-lk-preload="' + esc(D[0].iso) + '"><p class="rc-state-k">' + esc(E.etatLabel) + '</p><p class="rc-state-t">' + gta(E.etatTexte) + '</p>' + (X.etat === 'ouvert' ? '<dl class="rc-state-dl"><div><dt>' + esc(X.ouvert.heureLabel) + '</dt><dd>' + esc(X.ouvert.heure) + '</dd></div><div><dt>' + esc(X.ouvert.taillePs5Label) + '</dt><dd>' + esc(X.ouvert.taillePs5) + '</dd></div><div><dt>' + esc(X.ouvert.tailleXboxLabel) + '</dt><dd>' + esc(X.ouvert.tailleXbox) + '</dd></div></dl>' : '') + '</div>'
+      /* v8.01 : l’état du jour à gauche, la console dessinée à droite (la taille annoncée y remplace « pas encore annoncée ») */
+      '<div class="rc-dates-grid"><div class="rc-state rc-state--' + esc(X.etat) + ' lk-reveal" data-lk-preload="' + esc(D[0].iso) + '"><p class="rc-state-k">' + esc(E.etatLabel) + '</p><p class="rc-state-t">' + gta(E.etatTexte) + '</p>' + (X.etat === 'ouvert' ? '<dl class="rc-state-dl"><div><dt>' + esc(X.ouvert.heureLabel) + '</dt><dd>' + esc(X.ouvert.heure) + '</dd></div><div><dt>' + esc(X.ouvert.taillePs5Label) + '</dt><dd>' + esc(X.ouvert.taillePs5) + '</dd></div><div><dt>' + esc(X.ouvert.tailleXboxLabel) + '</dt><dd>' + esc(X.ouvert.tailleXbox) + '</dd></div></dl>' : '') + '</div>'
+      + console_(X.avant.anim, X.etat === 'ouvert' && X.ouvert.taillePs5 ? X.ouvert.taillePs5Label + ' : ' + X.ouvert.taillePs5 : null) + '</div>'
       + VT.rail(D.map(d => ({ iso: d.iso, date: frDate(d.iso), title: gta(d.t), text: gta(d.d), foot: VT.cd(d.iso) + srcRef(SRC, d.src), main: d.main })), { cls: 'rc-rail' })));
     /* 2. comment précharger (PS5, Xbox), d’après les pages d’assistance officielles : étapes dessinées */
     const C = X.comment;
@@ -91,7 +101,8 @@ module.exports = function run(H) {
       + '<div class="ed-callout rc-callout rc-callout--maj"><p>' + gta(P.maj) + '</p></div>'));
     /* 6. avant le 12 novembre : la liste, à cocher, gardée sur l’appareil */
     const L = X.liste;
-    parts.push(sec({ id: 'avant', kicker: L.kicker, title: L.title, icon: 'liste', tone: 'paper2', lede: gta(L.lede) }, VT.checklist(L.items.map(x => ({ title: gta(x.t), text: gta(x.d) })), 'preload', { done: gta(L.done) })));
+    parts.push(sec({ id: 'avant', kicker: L.kicker, title: L.title, icon: 'liste', tone: 'paper2', lede: gta(L.lede) }, VT.checklist(L.items.map(x => ({ title: gta(x.t), text: gta(x.d) })), 'preload', { done: gta(L.done) })
+      + mosaique(L.mosaique)/* v8.01 : en attendant, les pages du site qui préparent la partie */));
     /* 7. FAQ + Léo ; 8. sources */
     parts.push(sec({ id: 'faq', kicker: X.faqKicker, title: X.faqTitle, icon: 'faq', tone: 'paper' }, VT.faqGrid(faqBlock(X.faq), leoAside(X.leo, 'jason-and-lucia-13', 'Jason et Lucia face à face dans la lumière du soir, un hélicoptère et un hydroglisseur derrière eux, visuel officiel Rockstar Games'))));
     parts.push(sec({ id: 'sources', kicker: X.sourcesKicker, title: X.sourcesTitle, icon: 'lire', tone: 'paper2', lede: gta(X.sourcesLede) }, srcList(SRC, Object.keys(SRC))));
@@ -106,7 +117,8 @@ module.exports = function run(H) {
     /* 1. ce que Rockstar a annoncé : trois points ; ce que Take-Two a dit : deux coupures de presse */
     const O = X.officiel;
     parts.push(sec({ id: 'officiel', kicker: O.kicker, title: O.title, icon: 'statuts', tone: 'paper2', lede: gta(O.lede) },
-      points(O.points, SRC) + (O.dits ? '<h3 class="ed-h3 rc-h3">' + esc(O.ditTitre) + '</h3><p class="rc-lede2">' + gta(O.ditLede) + '</p>' + clips(O.dits, SRC) : '')));
+      points(O.points, SRC) + (O.dits ? '<h3 class="ed-h3 rc-h3">' + esc(O.ditTitre) + '</h3><p class="rc-lede2">' + gta(O.ditLede) + '</p>' + clips(O.dits, SRC) : '')
+      + mosaique(O.mosaique)/* v8.01 : le jeu annoncé, en images officielles */));
     /* 2. les précédents de la série : une frise datée, consoles puis PC, avec l’écart ; GTA VI reste une ligne ouverte */
     const R = X.serie;
     const months = (a, b) => { const A = new Date(a + 'T12:00:00Z'), B = new Date(b + 'T12:00:00Z'); return Math.round((B - A) / (30.4375 * 864e5)); };
@@ -118,11 +130,13 @@ module.exports = function run(H) {
     /* 3. l’encadré « arnaque » */
     const A = X.arnaque;
     parts.push(sec({ id: 'arnaques', kicker: A.kicker, title: A.title, icon: 'droits', tone: 'night', accent: 'coral', lede: gta(A.lede) },
-      '<div class="rc-alert lk-reveal"><p class="rc-alert-t">' + gta(A.phrase) + '</p>' + para(A.p) + '<ul class="rc-alert-l">' + A.regles.map(r => '<li>' + gta(r) + '</li>').join('') + '</ul><p class="rc-alert-f">' + esc(A.officielLabel) + ' ' + links(SRC, A.officiel) + '</p>' + (A.srcs ? '<p class="rc-stamp">' + S.pip('officiel', true) + A.srcs.map(id => srcRef(SRC, id)).join(', ') + '</p>' : '') + '</div>'));
+      '<div class="rc-alert lk-reveal"><p class="rc-alert-t">' + gta(A.phrase) + '</p>' + para(A.p) + '<ul class="rc-alert-l">' + A.regles.map(r => '<li>' + gta(r) + '</li>').join('') + '</ul><p class="rc-alert-f">' + esc(A.officielLabel) + ' ' + links(SRC, A.officiel) + '</p>' + (A.srcs ? '<p class="rc-stamp">' + S.pip('officiel', true) + A.srcs.map(id => srcRef(SRC, id)).join(', ') + '</p>' : '') + '</div>'
+      + vraiFaux(A.vraiFaux)/* v8.01 : la fausse page face à l’annonce officielle */));
     /* 4. où suivre l’annonce */
     const W = X.suivre;
     parts.push(sec({ id: 'suivre', kicker: W.kicker, title: W.title, icon: 'boussole', tone: 'paper2', lede: gta(W.lede) },
-      '<ul class="rc-follow vt-in vt-in--deal" data-lk-reveal>' + W.items.map((x, i) => '<li style="--i:' + i + '"><a class="vt-card rc-follow-a" href="' + esc(x.href) + '"' + (/^https?:/.test(x.href) ? ' target="_blank" rel="noopener nofollow"' : '') + '><div class="vt-card-b"><p class="vt-card-k">' + esc(x.k) + '</p><h3 class="vt-card-t">' + esc(x.t) + '</h3><p class="vt-card-d">' + gta(x.d) + '</p><span class="vt-go">' + esc(x.go) + '</span></div></a></li>').join('') + '</ul>'));
+      /* v8.01 : chaque carte porte un visuel officiel (vitrine.cjs → card) */
+      '<ul class="rc-follow vt-in vt-in--deal" data-lk-reveal>' + W.items.map((x, i) => '<li style="--i:' + i + '">' + VT.card({ href: x.href, media: x.media, alt: x.alt, kicker: x.k, title: x.t, text: x.d, go: x.go, cls: 'rc-follow-a', attrs: /^https?:/.test(x.href) ? ' target="_blank" rel="noopener nofollow"' : '' }, { sizes: '(max-width:719px) 84vw, 300px' }) + '</li>').join('') + '</ul>'));
     parts.push(sec({ id: 'faq', kicker: X.faqKicker, title: X.faqTitle, icon: 'faq', tone: 'paper' }, VT.faqGrid(faqBlock(X.faq), leoAside(X.leo, 'vice-city-10', 'Tours au bord de l’eau et bateaux dans la baie de Vice City, visuel officiel Rockstar Games'))));
     parts.push(sec({ id: 'sources', kicker: X.sourcesKicker, title: X.sourcesTitle, icon: 'lire', tone: 'paper2', lede: gta(X.sourcesLede) }, srcList(SRC, Object.keys(SRC))));
     build(X, parts, { ld: [LDPage(X.file, X), faqLD(X.faq)] });
@@ -143,7 +157,8 @@ module.exports = function run(H) {
     const M = X.carte, Eh = M.echelle;
     parts.push(sec({ id: 'carte', kicker: M.kicker, title: M.title, icon: 'carte', tone: 'paper', accent: 'coral', lede: gta(M.lede) },
       clips(M.citations, SRC) + '<div class="vt-split vt-split--top rc-carte"><div>' + para(M.p) + '</div>' + VT.areas(Eh.a, Eh.b, S.pip(Eh.statut, true) + ' ' + gta(Eh.caption)) + '</div>'
-      + '<p class="rc-more"><a href="carte.html">' + esc(M.lien) + '</a><a href="lieux.html">' + esc(M.lien2) + '</a></p>'));
+      + '<p class="rc-more"><a href="carte.html">' + esc(M.lien) + '</a><a href="lieux.html">' + esc(M.lien2) + '</a></p>'
+      + mosaique(M.regions)/* v8.01 : les six régions, une tuile chacune */));
     /* 3. ce qui est nouveau d’après les présentations officielles */
     const N = X.nouveau;
     parts.push(sec({ id: 'nouveau', kicker: N.kicker, title: N.title, icon: 'film', tone: 'night', lede: gta(N.lede) },

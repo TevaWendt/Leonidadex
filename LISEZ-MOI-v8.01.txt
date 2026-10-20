@@ -1,0 +1,66 @@
+LEONIDAKIT v8.01 : audit de ce qui est poussé, « L’actualité » refaite (les quatre pages en brouillon reprises en entier,
+les quatre premières corrigées, les fiches intérieures illustrées), référencement de toutes les pages
+À appliquer sur la v8.00 (commit 8dc4b968, main) : décompresse les parties de l’archive v8.01 à la racine du dépôt, dans
+n’importe quel ordre, puis pousse depuis GitHub Desktop. Rien n’a été poussé : GitHub n’est pas relié à cette session (le dépôt
+se lit, le push est refusé), donc une archive « modifs », comme d’habitude. CSP inchangée. Aucun fichier à supprimer. Rien à
+faire dans Vercel.
+
+L’AUDIT DE CE QUI EST POUSSÉ (ta première demande)
+  Tout y est. Le dépôt main, cloné tel quel, donne : 0 lien cassé sur 26 641 pages ; 4 367 éléments et 4 367 pages (une page
+  par élément, 0 manquant) ; 0 texte français dans les cinq langues ; une régénération complète depuis les sources redonne
+  exactement les fichiers poussés. Le site en ligne sert bien la v8.00 (feuilles de style identiques, pages anglaises de la
+  carte correctes). Rien à corriger de ce côté.
+
+CE QUE CONTIENT CETTE VERSION (détail : outils/CHANGEMENTS-v8.01.txt ; grille de qualité : outils/MATRICE-v8.01.md)
+  1. Les quatre pages qui faisaient brouillon, reprises en entier, au niveau des sections « Le monde » et « Jouer » :
+     - Ce qui est confirmé : un visuel officiel en fond de chacune des huit questions ouvertes (il s’éclaire au survol),
+       quatre fiches en exemple en mosaïque d’images, les étiquettes de prix qui débordaient corrigées.
+     - Préchargement : la console dessinée (jaquette, barre « téléchargement en attente » qui respire, dates), les trois
+       questions avec leur visuel, la liste à cocher sans carte seule, une mosaïque « En attendant le 12 novembre » (carte,
+       calculateur, véhicules, personnages, Tuto), survols sur les étapes PS5 et Xbox.
+     - GTA VI sur PC : une mosaïque du jeu annoncé (Leonida, Jason et Lucia, véhicules, éditions), un encadré « Vrai ou
+       faux » (la fausse page barrée face à l’annonce officielle), les quatre cartes « où suivre » avec image, survols sur la
+       frise des précédents.
+     - GTA VI et GTA V : les six régions de Leonida en mosaïque, les six questions avec leur visuel, survols sur le tableau.
+     Les mosaïques : des tuiles-liens, le visuel sous le titre, la tuile se soulève et l’image s’avance au survol, la phrase se
+     dévoile (toujours visible au doigt) ; jamais de tuile orpheline, à aucune largeur.
+  2. Les quatre premières pages, relues en entier : sur Éditions, le lien « La page de cette édition » était posé sur la ligne
+     de source (il a sa rangée), et l’étiquette « pas encore de visuel » était cachée par le numéro 04 (elle passe en bas) ;
+     Actualités, Vidéos et Prix : rien de coupé ni de décalé.
+  3. Les fiches à l’intérieur : le sommaire des grands moments en cartes à image (affiche ou visuel du moment, date, titre) ;
+     sur les 24 pages de moment et les 4 pages d’édition, les cartes liées portent la vignette officielle de leur fiche ;
+     plus un seul moment sans image.
+  4. Six langues : 54 textes nouveaux traduits (en, es, it, de, pt), 0 texte sans traduction. Téléphone : tout passe en deux
+     puis une colonne, rien ne sort de l’écran.
+  Une page par élément, toujours : 4 367 éléments, 4 367 pages.
+  5. Référencement (ta demande de 7 h 58) : relevé des 4 431 pages françaises (titre, h1, description, canonique, hreflang,
+     image de partage, données structurées) : 0 titre en double, 0 page sans ces balises, le nom de la fiche en tête du titre
+     et du h1 partout, dans l’adresse aussi. Corrigé : trois lieux dont le nom était coupé dans le titre (« GTA 6 : Gellhorn
+     International (Sebring…) » devient « GTA 6 : Gellhorn International Raceway (Sebring International…) » : le nom n’est
+     plus jamais coupé) ; quatre pages qui disaient « GTA 6 : … dans GTA 6 » ; 45 fiches du monde (Jason, Lucia, les régions,
+     les entreprises, les gangs, les animaux…) dont la description ne contenait pas le nom : elle commence par lui ; quatre
+     hubs sans « GTA 6 » dans le titre (Lieux, Entreprises, Demeures, Planques), traités comme Personnages et Gangs ; le
+     coffret collector nommé dans sa description ; 29 descriptions qui finissaient sans point. Les 1 598 pages en noindex
+     restent celles de ta règle du 18 octobre.
+  6. Un défaut de chaîne trouvé par les tests et corrigé : depuis la v7.94, la version des fichiers de Léo restait figée (un
+     visiteur qui revenait gardait l’ancien index de Léo en cache jusqu’à sept jours après une mise à jour). Elle suit de
+     nouveau chaque changement ; c’est pour cela que presque toutes les pages changent dans l’archive (empreinte de common.js),
+     comme en v8.00.
+
+MARCHE À SUIVRE
+  1. Décompresse les parties de l’archive à la racine du dépôt (après la v8.00), puis pousse. Aucun fichier à supprimer.
+  2. Essai : verification.html (passe la souris sur « Ce que Rockstar n’a pas encore dit » et sur les quatre fiches en bas),
+     prechargement.html (la console, la mosaïque du bas), gta-6-pc.html (« Vrai ou faux », les cartes du bas),
+     gta-6-vs-gta-5.html (les six régions), moments/index.html, editions.html (les deux éditions), de/prechargement.html au
+     téléphone ; référencement : tape « Gellhorn International Raceway GTA 6 » ou « Jason Duval GTA 6 » dans Google d’ici
+     quelques jours (le temps que Google repasse) et regarde le titre et l’extrait.
+  3. Rien à me dire : la prochaine fois, je te redemanderai avant toute idée de pousser.
+
+VÉRIFICATIONS (détail : outils/CHANGEMENTS-v8.01.txt § 8 et outils/MATRICE-v8.01.md)
+  0 lien cassé sur 26 641 pages ; une page par élément : 4 367 sur 4 367 ; 0 texte sans traduction, 0 repère cassé dans les
+  cinq langues, 35 puis 12 pages traduites ouvertes dans un navigateur sans un mot de français ; référencement : relevé des
+  4 431 pages (node outils/referencement.cjs, nouveau), 0 défaut, images de partage à jour, index de Léo à jour ; écrans : 13 pages × 16 largeurs et
+  13 pages allemandes × 5 largeurs, 0 débordement, 0 texte coupé ; audit de clôture sur les 9 pages de L’actualité à 7 largeurs
+  (contrastes, cibles, grilles, images, console, fonctions) : ce qu’il a trouvé est corrigé dans la même version ; tests :
+  résultat identique à la v8.00 test par test (jsdom n’est pas installable ici, voir le détail) ; Mentions tenues, aucun cookie.
+  Une chose que je n’ai pas pu rejouer sans jsdom : l’évaluation de Léo (512 questions) ; ses réponses n’ont pas changé.

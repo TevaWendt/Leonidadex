@@ -340,7 +340,7 @@ html[lang="en"] .ac-ue-i>a .ac-ue-en:not([hidden]){text-decoration:underline;tex
 .ac-th-info{flex:1;display:flex;flex-direction:column;gap:10px;padding:18px 20px 20px;border:1.5px solid rgba(255,255,255,.28);border-radius:var(--radius);background:rgba(255,255,255,.06);}
 .ac-th-info[hidden]{display:none;}
 .ac-th-k{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:0;font:800 var(--fs-kicker)/1.2 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--amber-2);}
-.ac-th-k span{padding:3px 8px;border-radius:999px;background:var(--coral);color:#fff;letter-spacing:.04em;}
+.ac-th-k span{padding:3px 8px;border-radius:999px;background:var(--coral-deep);color:#fff;letter-spacing:.04em;}/* v8.01 : corail profond, contraste 4,5:1 et plus (audit : 3,95) */
 .ac-th-t{margin:0;font:900 clamp(1.4rem,1.15rem + 1vw,2rem)/1.1 'Archivo',sans-serif;letter-spacing:-.03em;color:#fff;}
 .ac-th-d{margin:0;color:rgba(253,251,247,.88);max-width:62ch;}
 .ac-th-s{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 0;padding:0;list-style:none;}
@@ -485,13 +485,16 @@ html[lang="en"] .ac-ue-i>a .ac-ue-en:not([hidden]){text-decoration:underline;tex
 }
 .ac-edcard-b{flex:1;}
 .ac-edcard-src{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:auto!important;padding-top:12px;border-top:1px dashed var(--ed-line,var(--rule));font-size:.86rem;font-weight:700;color:var(--ed-fg,var(--ink))!important;}
+.ac-edcard-b .ac-ev-links{margin-top:4px;}
 /* côte à côte, une grille partagée (sous-grille) aligne titre, phrase, liste et source des deux éditions ;
    sans elle (ou en colonne), la source reste calée en bas */
 @supports (grid-template-rows:subgrid){
   @media (min-width:820px){
     .ac-duo{row-gap:0;}
-    .ac-duo>.ac-edcard{display:grid;grid-template-columns:minmax(0,1fr);grid-row:span 5;grid-template-rows:subgrid;row-gap:0;}
-    .ac-duo>.ac-edcard>.ac-edcard-b{display:grid;grid-template-columns:minmax(0,1fr);grid-row:span 4;grid-template-rows:subgrid;row-gap:8px;}
+    /* v8.01 : six rangées (image, titre, phrase, liste, source, lien de la page) : le lien « La page de cette édition » (v7.96)
+       n’avait pas sa rangée et se posait sur la source */
+    .ac-duo>.ac-edcard{display:grid;grid-template-columns:minmax(0,1fr);grid-row:span 6;grid-template-rows:subgrid;row-gap:0;}
+    .ac-duo>.ac-edcard>.ac-edcard-b{display:grid;grid-template-columns:minmax(0,1fr);grid-row:span 5;grid-template-rows:subgrid;row-gap:8px;}
     .ac-duo>.ac-edcard>.ac-edcard-b>.ac-checks{align-self:start;}
   }
 }
@@ -589,7 +592,7 @@ html[lang="en"] .ac-ue-i>a .ac-ue-en:not([hidden]){text-decoration:underline;tex
 .px-hero .px-tag{position:absolute;z-index:3;transform-origin:14px 50%;}
 .px-hero .px-tag--1{left:-4px;top:16%;rotate:-7deg;}
 .px-hero .px-tag--2{right:-4px;bottom:16%;rotate:6deg;background:var(--paper);}
-.px-sticker{position:absolute;right:2px;top:0;z-index:4;display:grid;place-items:center;width:92px;height:92px;padding:10px;border:2px solid var(--ink);border-radius:50%;background:var(--coral);color:#fff;font:900 .84rem/1.1 'Archivo',sans-serif;text-align:center;rotate:12deg;box-shadow:3px 3px 0 var(--ink);}
+.px-sticker{position:absolute;right:2px;top:0;z-index:4;display:grid;place-items:center;width:92px;height:92px;padding:10px;border:2px solid var(--ink);border-radius:50%;background:var(--coral-deep);color:#fff;/* v8.01 : corail profond, contraste 4,5:1 et plus (audit : 3,95) */font:900 .84rem/1.1 'Archivo',sans-serif;text-align:center;rotate:12deg;box-shadow:3px 3px 0 var(--ink);}
 @media (prefers-reduced-motion:no-preference){
   .px-hero .px-tag{animation:vt-swing 1s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)) 1.6s backwards;}
   .px-hero .px-tag--2{animation-delay:1.85s;}

@@ -30,7 +30,7 @@ while True:
     for fl in parts:
         write(os.path.join(OUT, '_essai.zip'), fl); big |= os.path.getsize(os.path.join(OUT, '_essai.zip')) >= LIMIT
     os.remove(os.path.join(OUT, '_essai.zip'))
-    if not big or n >= 6: break
+    if not big or n >= 12: break  # v8.01 : jusqu'à 12 parties (une version qui change l'empreinte de common.js touche les 26 600 pages)
     n += 1
 names = []
 for i, fl in enumerate(parts):

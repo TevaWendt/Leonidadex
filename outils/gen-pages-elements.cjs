@@ -39,7 +39,8 @@ const minuscule = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : s; /* « GTA
    coupée par « … » jamais) ; sans fin de phrase assez loin, coupe sur un mot comme avant */
 /* v7.97 : sans fin de phrase assez loin, la phrase de repli de la page (une phrase entière, traduite par la mémoire) remplace
    la coupe au milieu d’un mot ; la coupe ne reste qu’en tout dernier recours */
-const court = (s, max = 155, repli = null) => { if (s.length <= max) return s; const head = s.slice(0, max), i = Math.max(head.lastIndexOf('. '), head.lastIndexOf(' ; ')); if (i >= 40) return head.slice(0, i + 1).replace(/ ;$/, '.'); if (repli && repli.length <= max) return repli; return head.slice(0, max - 1).replace(/\s+\S*$/, '') + '…'; };
+/* v8.01 : une description coupée sur un « ; » se termine par un point (elle finissait par une espace : « …décrit par Rockstar ») */
+const court = (s, max = 155, repli = null) => { if (s.length <= max) return s; const head = s.slice(0, max), i = Math.max(head.lastIndexOf('. '), head.lastIndexOf(' ; ')); if (i >= 40) return head[i] === '.' ? head.slice(0, i + 1) : head.slice(0, i) + '.'; if (repli && repli.length <= max) return repli; return head.slice(0, max - 1).replace(/\s+\S*$/, '') + '…'; };
 
 /* ---------- index des pages (empreintes, adresses) ---------- */
 const INDEX_FILE = path.join(ROOT, 'outils/pages-elements-index.json');
@@ -61,6 +62,8 @@ const SEP = '<span class="crumbs-sep" aria-hidden="true"></span>';
 const CHEV = '<svg class="lk-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
 /* titre : « GTA 6 » (ce que tapent les joueurs), « | Leonidakit » retiré au-delà de 65 signes */
 function titre(t) { return (t + ' | Leonidakit').length <= 65 ? t + ' | Leonidakit' : t; }
+/* v8.01 (référencement) : un nom qui contient déjà « GTA » (« Gilet pare-balles dans GTA VI ») ne reçoit pas le préfixe « GTA 6 : »
+   (le titre disait « GTA 6 : Gilet pare-balles dans GTA 6 ») : le nom reste en tête du titre */
 function page(o) {
   const prefix = '../', file = o.file;
   const canonical = SITE + file.replace(/(^|\/)index\.html$/, '$1');
@@ -252,7 +255,16 @@ function titreLieu(it, d, plus = '') {
   const where = d.groupe ? enTitre(d.groupe.n) : d.comteNom ? enTitre(d.comteNomAff) : '';
   let t = 'GTA 6 : ' + d.nomAff + where + plus;
   if (t.length > 65) t = 'GTA 6 : ' + d.nomAff + plus;
-  if (t.length > 65) t = t.slice(0, 64 - plus.length).replace(/\s+\S*$/, '') + plus;
+  /* v8.01 (référencement) : le nom du lieu n’est jamais coupé (« GTA 6 : Gellhorn International (Sebring International Raceway) »,
+     « GTA 6 : Parking (Miami Parking Authority…) » cachaient le nom que tapent les joueurs) : au-delà de 65 signes, c’est la
+     précision entre parenthèses qui raccourcit sur un mot entier (« (Sebring International…) ») ; quand elle n’est qu’un
+     identifiant sans espace (« repère gellhorn-international-raceway »), elle cède la place au quartier ou au comté */
+  if (t.length > 65 && plus) {
+    const inner = plus.replace(/^\s*\(/, '').replace(/\)$/, ''), place = 65 - ('GTA 6 : ' + d.nomAff + ' (…)').length;
+    const coupe = inner.slice(0, place).replace(/\s+\S*$/, '').replace(/[\s,;:-]+$/, '');
+    t = /\s/.test(coupe) && coupe.length >= 8 ? 'GTA 6 : ' + d.nomAff + ' (' + coupe + '…)' : 'GTA 6 : ' + d.nomAff + where;
+    if (t.length > 65) t = 'GTA 6 : ' + d.nomAff;
+  }
   return titre(t);
 }
 /* deux lieux du même nom au même endroit (« Train Bridge » × 2 sans quartier) : le titre et la description reçoivent ce qui
@@ -406,8 +418,10 @@ function pageConsommable(it, i, ordre) {
     + prevNext(ordre, i, x => path.basename(x.cible), x => x.nom);
   const liens = '<span class="lc-track" data-track="consommables" data-track-id="' + esc(c.id) + '" data-track-name="' + esc(c.nom) + '"></span><a href="../nourriture.html#consommables-' + esc(c.id) + '">Dans la liste des consommables</a>';
   /* v7.97 : la catégorie s’écrit comme dans la liste (« Boissons ») : un libellé connu de la mémoire de traduction, jamais une minuscule forcée */
-  const lede = esc(c.nom) + ' dans GTA VI : ' + esc(cat.label) + ', ' + minuscule(st[0]).split(' :')[0] + '. ' + esc(c.description);
-  return page({ file, nom: c.nom, titre: titre('GTA 6 : ' + c.nom + ', ' + cat.label), description: court(c.nom + ' dans GTA VI (' + cat.label + '). ' + c.description, 155, c.nom + ' dans GTA VI (' + cat.label + ') : effet, prix, où le trouver et statut.'), indexable: !!it.indexable, image: v1280 ? SITE + v1280.src.replace(/^\//, '') : null, kicker: 'Consommable, ' + cat.label, lede, tags: [[st[0].split(' :')[0], st[1]], [cat.label, false], ...(qui ? [[qui[0], false]] : [])], liens, art, body, crumbs: [['Tout ce qui s’achète', 'achats.html'], ['Consommables', 'nourriture.html#liste-consommables']], scripts: ['suivi.js'], heroClass: 'fhero--conso' });
+  /* v8.01 : un nom qui dit déjà « dans GTA VI » (« Gilet pare-balles dans GTA VI ») ne le redit pas (« …dans GTA VI dans GTA VI ») */
+  const nomGTA = /\bGTA (?:VI|6)\b/.test(c.nom) ? c.nom : c.nom + ' dans GTA VI';
+  const lede = esc(nomGTA) + ' : ' + esc(cat.label) + ', ' + minuscule(st[0]).split(' :')[0] + '. ' + esc(c.description);
+  return page({ file, nom: c.nom, titre: titre((/\bGTA (?:VI|6)\b/.test(c.nom) ? '' : 'GTA 6 : ') + c.nom + ', ' + cat.label), description: court(nomGTA + ' (' + cat.label + '). ' + c.description, 155, nomGTA + ' (' + cat.label + ') : effet, prix, où le trouver et statut.'), indexable: !!it.indexable, image: v1280 ? SITE + v1280.src.replace(/^\//, '') : null, kicker: 'Consommable, ' + cat.label, lede, tags: [[st[0].split(' :')[0], st[1]], [cat.label, false], ...(qui ? [[qui[0], false]] : [])], liens, art, body, crumbs: [['Tout ce qui s’achète', 'achats.html'], ['Consommables', 'nourriture.html#liste-consommables']], scripts: ['suivi.js'], heroClass: 'fhero--conso' });
 }
 
 /* ======================================================================================================================

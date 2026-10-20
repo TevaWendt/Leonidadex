@@ -56,7 +56,8 @@ function ficheOf(ctx, key) {
 /* révélations d’un ou plusieurs événements des dossiers : [{fiche, statut, texte}] dans l’ordre des familles */
 function revelations(ctx, evs) {
   const out = [];
-  for (const [key, f] of Object.entries(ctx.MD.fiches)) for (const x of f.chrono || []) if (evs.includes(x.ev)) { const fi = ficheOf(ctx, key); if (fi) out.push({ fiche: fi, statut: x.statut, texte: x.texte }); }
+  /* v8.01 : media = le visuel officiel que ce moment a apporté à la fiche (chrono), quand il est noté */
+  for (const [key, f] of Object.entries(ctx.MD.fiches)) for (const x of f.chrono || []) if (evs.includes(x.ev)) { const fi = ficheOf(ctx, key); if (fi) out.push({ fiche: fi, statut: x.statut, texte: x.texte, media: x.media || null }); }
   return out;
 }
 const secs = t => { const m = String(t || '').match(/(\d+):(\d{2})/); return m ? +m[1] * 60 + +m[2] : null; };
@@ -288,7 +289,7 @@ function actusPage(ctx) {
     const e = A.evenements[0], vid = e.video ? A.videos.liste.find(v => v.id === e.video) : null;
     const media = vid ? vid.affiche : e.media, alt = vid ? 'Affiche officielle : ' + vid.nom : e.alt;
     const links = [...(vid ? [{ href: 'videos/' + vid.id + '.html', label: X.une.voir, main: true }] : []), ...(e.liens || [])];
-    return '<article class="vt-feature ac-une lk-reveal">' + (media ? '<figure class="vt-feature-fig">' + VT.img(media, alt, { big: true, sizes: '(max-width:819px) 92vw, 720px' }) + '</figure>' : '')
+    return '<article class="vt-feature ac-une lk-reveal">' + (media ? '<figure class="vt-feature-fig">' + VT.img(media, alt, { big: true, sizes: '(max-width:819px) 92vw, 54vw'/* v8.01 : suit la largeur réelle de la colonne (1 004 px à 1 920 px) */ }) + '</figure>' : '')
       + '<div class="vt-feature-b"><p class="vt-feature-k"><span class="ac-une-type">' + esc(X.types[e.type]) + '</span> <time datetime="' + esc(e.iso) + '">' + esc(frLong(e.iso)) + '</time></p>'
       + '<p class="ac-une-st">' + S.pip(e.statut, true) + '</p><h3 class="vt-feature-t">' + esc(e.titre) + '</h3><p class="vt-feature-d">' + esc(e.texte) + ' ' + srcRefs(e.sources) + '</p>'
       + (links.length ? '<p class="ac-une-act">' + links.map(l => '<a class="lkx-btn' + (l.main ? '' : ' lkx-btn--ghost') + '" href="' + esc(l.href) + '">' + esc(l.label) + '</a>').join('') + '</p>' : '') + '</div></article>';
@@ -344,7 +345,7 @@ const ytSrc = (id, t) => 'https://www.youtube-nocookie.com/embed/' + id + '?auto
    s’arrête à 800 px (un écran à densité 3 prenait la 1 280 : deux à trois fois plus lourde, sans différence visible) */
 const midOf = src => { const c = /-1280\.webp$/.test(src) ? src.replace(/-1280\.webp$/, '-800.webp') : null; return c && fs.existsSync(path.join(ROOT, c.replace(/^\//, ''))) ? c : null; };
 function screen(ctx, v, P, pre = '../', lazy = false) {
-  const m = imgOf(ctx.MED, v.affiche), mid = midOf(m.b.src), sizes = '(max-width:900px) 100vw, 760px';
+  const m = imgOf(ctx.MED, v.affiche), mid = midOf(m.b.src), sizes = '(max-width:900px) 100vw, (max-width:1500px) 62vw, 1004px';/* v8.01 : suit la largeur réelle de l’écran de projection (1 004 px à 1 920 px ; l’image de 800 px y était agrandie) */
   const im = '<img class="ac-screen-img" src="' + m.b.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + (mid ? mid + ' 800w, ' : '') + m.b.src + ' ' + m.b.w + 'w" sizes="' + sizes + '" width="' + m.b.w + '" height="' + m.b.h + '" alt="' + esc('Affiche officielle : ' + v.nom) + '" decoding="async"' + (lazy ? ' loading="lazy"' : ' fetchpriority="high"') + '>';
   return '<div class="ac-screen" data-ac-screen data-src="' + esc(ytSrc(v.youtube)) + '" data-title="' + esc(v.nom) + '">'
     + (mid ? '<picture class="vt-pic"><source media="(max-width:599px)" srcset="' + m.a.src + ' ' + m.a.w + 'w, ' + mid + ' 800w" sizes="' + sizes + '">' + im + '</picture>' : im)

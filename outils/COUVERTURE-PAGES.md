@@ -1,6 +1,6 @@
 # Couverture des pages : un élément, une page (v7.96)
 
-Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-18. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.
+Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-20. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.
 
 ## Tableau des familles
 
@@ -20,7 +20,7 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-18. Chaque fami
 | Stations de radio et album | `outils/radios/radios.json (stations, fiches)` | 7 | 7 | 0 | 0 | 100 % | 7 | 0 |
 | Vidéos officielles | `outils/actus/actus.json (videos.liste)` | 4 | 4 | 0 | 0 | 100 % | 4 | 0 |
 | Éditions du jeu (nouvelle) | `outils/actus/actus.json (editions)` | 4 | 4 | 0 | 0 | 100 % | 4 | 0 |
-| Lieux de la carte (nouvelle) | `carnets/lieux-data.js (carte.js + carte-gtadb.js), outils/landmarks-leonidakit.json` | 2 500 | 2 500 | 0 | 0 | 100 % | 1 672 | 828 |
+| Lieux de la carte (nouvelle) | `carnets/lieux-data.js (carte.js + carte-gtadb.js), outils/landmarks-leonidakit.json` | 3 244 | 3 244 | 0 | 0 | 100 % | 2 239 | 1 005 |
 | Régions, villes, quartiers et comtés (nouvelle) | `carnets/lieux-data.js (catégories region, ville, quartier, comte), carte-gtadb.js (groupes)` | 47 | 47 | 0 | 0 | 100 % | 44 | 3 |
 | Marques de véhicules (nouvelle) | `outils/marques.json, vehicules-data.js (champ marque)` | 51 | 51 | 0 | 0 | 100 % | 50 | 1 |
 | Consommables (nouvelle) | `outils/catalogues/consommables.json` | 30 | 30 | 0 | 0 | 100 % | 30 | 0 |
@@ -39,11 +39,11 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-18. Chaque fami
 | Codes de triche (modèle, données au jour J) | `outils/codes/codes.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | Collectibles (modèle, données au jour J) | `outils/collectibles.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | GTA Online (activités, achats, entreprises) (modèle, données au jour J) | `outils/online/donnees.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
-| **Total** |  | **3 623** | **3 623** | **0** | **0** | **100 %** | **2 475** | **1 148** |
+| **Total** |  | **4 367** | **4 367** | **0** | **0** | **100 %** | **3 042** | **1 325** |
 
 ## Volume à créer
 
-- Pages à créer en français : **0** (le site compte aujourd’hui 22 177 pages, toutes langues).
+- Pages à créer en français : **0** (le site compte aujourd’hui 26 641 pages, toutes langues).
 - Dans les 6 langues : **0 pages**.
 - Avec le gabarit actuel des fiches (64 Ko par page en moyenne) : **0 Mo**.
 - Avec un gabarit allégé (21 Ko par page : CSS et JS partagés, aucun bloc répété) : **0 Mo**.
@@ -51,7 +51,7 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-18. Chaque fami
 ## Limites d’hébergement (relevées le 17 octobre 2026)
 
 - Vercel (docs.vercel.com/docs/limits) : aucune limite au nombre de fichiers produits par un déploiement Git ; 15 000 fichiers et 100 Mo (Hobby) ou 1 Go (Pro) seulement pour un envoi par la ligne de commande ; 45 minutes de construction au plus ; 2 048 routes (redirections de vercel.json) par déploiement ; 100 déploiements par jour (Hobby). Le site est publié depuis GitHub sans construction : seul le temps de copie compte.
-- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 834 Mo (fichiers suivis) et son historique compressé 705 Mo.
+- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 998 Mo (fichiers suivis) et son historique compressé 279 Mo.
 
 ## Doublons (une seule page, l’autre source renvoie vers elle)
 
@@ -106,9 +106,9 @@ Aucune source du site ne porte d’élément venu d’une fuite : la liste est v
 Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva a répondu « tranche toi-même mais n’oublie aucun élément du site » (18 octobre 2026) : chacun est tranché dans la section « Décisions ».
 
 - **Types de munitions** : Une seule information réelle par type (les armes qui l’utilisent) : pages prévues en noindex,follow tant que Rockstar ne publie rien de plus. Garder cette famille ou la renvoyer vers armes.html#munitions ?
-- **Lieux de la carte** : 110 repères gtadb ne sont pas sur la carte du site (43 sans nom, 67 nommés dont 3 avec un « ? ») : les ajouter à la carte (donc une page chacun) ou les laisser hors site ? Liste en annexe.
-- **Lieux de la carte** : Seuil d’indexation : 1672 lieux atteignent le seuil du prompt (nom, catégorie, quartier ou comté, position, équivalent réel ou capture) ; 817 bâtiments sans nom (« Bâtiment L924 ») restent en noindex ; 1053 ne sont connus que par leur nom réel (« (nom réel) ») et 1912 n’ont pas de nom en jeu confirmé. Proposition prudente : indexer les 588 lieux au nom en jeu connu (avec capture ou trois informations), créer les autres en noindex,follow et les faire passer en indexable quand leur nom en jeu est confirmé. Les captures gtadb (photos/, CC BY 4.0, déjà sur la carte) sont-elles admises comme visuel sur ces pages, ou seulement l’aperçu de carte et les silhouettes teaser (le prompt ne parle que de img/officiel) ?
-- **Lieux de la carte** : 83 noms portés par plusieurs lieux (« Bridge » × 27, « Airfield »…) : slug complété par le quartier ou le comté, page en noindex,follow quand le lieu n’a ni nom propre ni capture officielle.
+- **Lieux de la carte** : 91 repères gtadb ne sont pas sur la carte du site (34 sans nom, 57 nommés dont 3 avec un « ? ») : les ajouter à la carte (donc une page chacun) ou les laisser hors site ? Liste en annexe.
+- **Lieux de la carte** : Seuil d’indexation : 2239 lieux atteignent le seuil du prompt (nom, catégorie, quartier ou comté, position, équivalent réel ou capture) ; 1001 bâtiments sans nom (« Bâtiment L924 ») restent en noindex ; 1316 ne sont connus que par leur nom réel (« (nom réel) ») et 2365 n’ont pas de nom en jeu confirmé. Proposition prudente : indexer les 879 lieux au nom en jeu connu (avec capture ou trois informations), créer les autres en noindex,follow et les faire passer en indexable quand leur nom en jeu est confirmé. Les captures gtadb (photos/, CC BY 4.0, déjà sur la carte) sont-elles admises comme visuel sur ces pages, ou seulement l’aperçu de carte et les silhouettes teaser (le prompt ne parle que de img/officiel) ?
+- **Lieux de la carte** : 118 noms portés par plusieurs lieux (« Bridge » × 44, « Airfield »…) : slug complété par le quartier ou le comté, page en noindex,follow quand le lieu n’a ni nom propre ni capture officielle.
 - **Régions, villes, quartiers et comtés** : 3 entrées sans lieu rattaché (régions sans groupe gtadb) : page de regroupement quand même (noindex) ou renvoi vers la carte ?
 - **Marques de véhicules** : Marques présentes dans vehicules-data.js mais absentes de outils/marques.json : LCC, BTN, HVY
 - **Options de personnalisation (véhicules)** : 104 valeurs dans 26 familles d’options : une ou deux informations chacune (prix repère de GTA V), aucun visuel : pages prévues en noindex,follow. Les créer quand même (demande du prompt) ou ne faire qu’une page par famille d’options ?
@@ -120,7 +120,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Véhicules : 12 page(s) (redirections (outils/redirections.json) et fiches retirées (outils/retraits.json, pages noindex d’explication)) : airgator-airboat-09, bravado-youga, brute-camper, declasse-moonbeam, declasse-tornado, declasse-vamos, hvy-mixer, vapid-minivan, vapid-sadler, vapid-stanier-le, vehicules, vulcar-ingot
 - Armes : 4 page(s) (anciens identifiants gardés en redirection) : pistolet-compact, pistolet-jason, pistolet-tactique, revolver-357
 
-## Annexe : repères gtadb absents de la carte du site (110)
+## Annexe : repères gtadb absents de la carte du site (91)
 
 | Identifiant | Nom | Quartier | Comté | Catégories | Statuts |
 |---|---|---|---|---|---|
@@ -130,7 +130,6 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 | L1070 | *(sans nom)* |  | Ambrosia | commerce |  |
 | L1071 | *(sans nom)* |  | Ambrosia | industriel |  |
 | L1985 | *(sans nom)* |  | Dalton Island |  |  |
-| L845 | Draper Island |  | Kelly County |  |  |
 | L1008 | Animal Hospital of Key Lento |  | Key Lento | public | non_confirme |
 | L1032 | *(sans nom)* |  | Key Lento | residentiel |  |
 | L1033 | *(sans nom)* |  | Key Lento | residentiel |  |
@@ -149,7 +148,6 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 | L834 | Fountain of Youth |  | Leonida | evenementiel | non_confirme |
 | L835 | Giant Fish Building |  | Leonida | evenementiel |  |
 | L1395 | Island Camp |  | Leonida | evenementiel |  |
-| L1393 | Kington Hotel |  | Leonida | evenementiel, hotel |  |
 | L988 | Kraken Sculpture |  | Leonida | evenementiel, monument |  |
 | L1111 | Kudzu House |  | Leonida | evenementiel |  |
 | L1314 | Leonida Marine Center |  | Leonida |  |  |
@@ -157,19 +155,14 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 | L987 | Monument of Leonida |  | Leonida | evenementiel, monument |  |
 | L890 | Motorcycle Memorial |  | Leonida | evenementiel, monument | non_confirme |
 | L1493 | One-Eyed Willie's |  | Leonida | commerce |  |
-| L1382 | Peewees |  | Leonida | restaurant |  |
 | L986 | Pet Cemetery |  | Leonida | evenementiel |  |
 | L996 | Quarry |  | Leonida | evenementiel |  |
-| L533 | Redhill Forest |  | Leonida | evenementiel |  |
-| L906 | River |  | Leonida | naturel | non_confirme |
 | L1080 | SERA |  | Leonida | evenementiel | non_confirme |
 | L891 | Shooting Death Memorial |  | Leonida | evenementiel, monument |  |
 | L989 | Singing Road |  | Leonida | evenementiel |  |
-| L631 | Spaceship House |  | Leonida | evenementiel | non_confirme |
 | L993 | St. Joseph Marina | St. Joseph | Leonida | evenementiel |  |
 | L994 | Sundown Beach | Sundown | Leonida | evenementiel |  |
 | L997 | Survival Compound |  | Leonida | evenementiel |  |
-| L905 | Train Bridge |  | Leonida | transport | non_confirme |
 | L998 | Trolley Car Reefs |  | Leonida | evenementiel |  |
 | L999 | Underwater Ruins |  | Leonida | evenementiel |  |
 | L1399 | Water Tower |  | Leonida | infrastructure | non_confirme |
@@ -179,8 +172,6 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 | L643 | *(sans nom)* |  | Leonida |  |  |
 | L816 | *(sans nom)* |  | Leonida | residentiel |  |
 | L817 | *(sans nom)* |  | Leonida | residentiel |  |
-| L819 | *(sans nom)* |  | Leonida | residentiel |  |
-| L823 | *(sans nom)* |  | Leonida |  |  |
 | L936 | *(sans nom)* |  | Leonida |  |  |
 | L1073 | *(sans nom)* |  | Leonida | loisir |  |
 | L1411 | *(sans nom)* |  | Leonida | evenementiel |  |
@@ -197,23 +188,18 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 | L822 | USCAS? |  | Mount Kalaga National Park |  | demoli |
 | L1028 | *(sans nom)* |  | Mount Kalaga National Park |  |  |
 | L991 | Clinic |  | Port Gellhorn | evenementiel, public |  |
-| L1383 | Gellhorn Roadhouse |  | Port Gellhorn |  |  |
 | L981 | La Cascara Motel |  | Port Gellhorn | evenementiel, hotel |  |
 | L995 | Construction Site |  | Redhill | evenementiel |  |
 | L2232 | Electrotoke | Ocean Beach | Vice Beach |  |  |
 | L1072 | Lombank |  | Vice Beach | bureau | non_confirme |
 | L1392 | Malibu Club |  | Vice Beach | evenementiel, loisir |  |
 | L1453 | VYB |  | Vice Beach |  |  |
-| L2231 | Void | Ocean Beach | Vice Beach |  |  |
-| L91 | *(sans nom)* |  | Vice Beach | public |  |
-| L673 | *(sans nom)* |  | Vice Beach | residentiel | non_confirme |
 | L799 | *(sans nom)* |  | Vice Beach |  |  |
 | L1837 | *(sans nom)* |  | Vice Beach |  |  |
 | L2164 | *(sans nom)* |  | Vice Beach |  |  |
 | L2170 | *(sans nom)* | Ocean Beach | Vice Beach |  |  |
 | L2182 | *(sans nom)* |  | Vice Beach |  |  |
 | L2184 | *(sans nom)* |  | Vice Beach |  |  |
-| L2185 | *(sans nom)* |  | Vice Beach |  |  |
 | L2186 | *(sans nom)* |  | Vice Beach |  |  |
 | L2192 | *(sans nom)* |  | Vice Beach |  |  |
 | L2580 | *(sans nom)* | Ocean Beach | Vice Beach |  |  |
@@ -224,20 +210,15 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 | L187 | Sahara Arena | Catalan Blvd, Downtown | Vice City | loisir |  |
 | L1468 | The Atoll |  | Vice City | commerce |  |
 | L1006 | Tisha-Wocka Flea Market | Tisha-Wocka | Vice City | commerce | demoli |
-| L246 | *(sans nom)* | Tequesta | Vice City |  | existence_douteuse |
-| L247 | *(sans nom)* | Tequesta | Vice City |  | existence_douteuse |
-| L248 | *(sans nom)* | Tequesta | Vice City |  | existence_douteuse |
-| L249 | *(sans nom)* | Tequesta | Vice City |  | existence_douteuse |
 | L937 | *(sans nom)* |  | Vice City |  |  |
 | L938 | *(sans nom)* |  | Vice City |  |  |
 | L1265 | *(sans nom)* | Tequesta | Vice City |  |  |
 | L1456 | *(sans nom)* |  | Vice City |  | non_confirme |
 | L1113 | Autograph Flight Support Building |  | Vice City International Airport | transport |  |
-| L1495 | Paradise Garage |  | Watson Bay |  |  |
 
-## Annexe : noms portés par plusieurs lieux (83)
+## Annexe : noms portés par plusieurs lieux (118)
 
-« Bridge » × 27, « Parking Lot » × 21, « Lake » × 12, « Bus Stop » × 11, « Water Tower » × 10, « Train Bridge » × 10, « Lifeguard Tower » × 9, « Tank » × 8, « Gas Station » × 8, « Miami Seaquarium (nom réel) » × 8, « Turn (nom supposé) » × 8, « Warehouse » × 7, « Prison Building » × 7, « Airfield » × 6, « Train Tunnel » × 6, « Stiltsville (nom réel) » × 6, « 205 E San Marino Dr (nom réel) » × 6, « Train Station » × 5, « River » × 5, « Radio Tower » × 4, « Xero Gas Station » × 4, « Church » × 4, « 611 NW 14th Ave (nom réel) » × 4, « Cell Tower » × 4, « Park » × 4, « Parking Garage » × 4, « Metro Station » × 4, « The Four Ambassadors (nom réel) » × 4, « Radio Mast » × 3, « Pier » × 3, « Canal » × 3, « Lock » × 3, « Tennis Court » × 3, « 212 W Dilido Dr (nom réel) » × 3, « Lombank » × 3, « 101 Collins Ave (nom réel) » × 3, « Construction Site » × 3, « Park Grove Condominium (nom réel) » × 3, « New World Tower (nom réel) » × 3, « 3015 Grand Ave (nom réel) » × 3, « 84 » × 2, « Gellhorn International Raceway » × 2, « Catalan Bay » × 2, « Boat Ramp » × 2, « Guard Booth » × 2, « Train Station (nom supposé) » × 2, « Frances Langford Promenade (nom réel) » × 2, « Public Restrooms » × 2, « 3301 Rickenbacker Cswy (nom réel) » × 2, « Bite » × 2, « Pool » × 2, « Arrow Gas Station » × 2, « 1670 Lincoln Ct (nom réel) » × 2, « 90170 Overseas Hwy (nom réel) » × 2, « Railyard » × 2, « Repair & Salvage » × 2, « Schlott Construction » × 2, « 1703 E 5th St (nom réel) » × 2, « 10490 Quail Roost Dr (nom réel) » × 2, « 243 N Tyndall Pkwy (nom réel) » × 2, « 610 W Dilido Dr (nom réel) » × 2, « 440 W Dilido Dr (nom réel) » × 2, « 1480 NE 13th Ct (nom réel) » × 2, « The Bentley Bay Condominiums (nom réel) » × 2, « Continuum on South Beach (nom réel) » × 2, « Fleeca » × 2, « Hobbs Milford » × 2, « 1600 Washington Ave (nom réel) » × 2, « Fifth and Alton (nom réel) » × 2, « Latitude on the River (nom réel) » × 2, « Grove at Grand Bay Condominium (nom réel) » × 2, « The Ritz-Carlton Coconut Grove (nom réel) » × 2, « Break Inn » × 2, « Marina » × 2, « ShoreFront » × 2, « Shoreline Market » × 2, « 240 NW 21st St (nom réel) » × 2, « Tuscan Place Apartments (nom réel) » × 2, « 2750 NW 3rd Ave (nom réel) » × 2, « 3444 Main Hwy (nom réel) » × 2, « 1090 SW 1st Ave (nom réel) » × 2, « Electric Substation » × 2, « Runway » × 2
+« Bridge » × 44, « Bus Stop » × 34, « Parking Lot » × 24, « Prison Building » × 23, « Train Bridge » × 21, « Lake » × 18, « Gas Station » × 12, « Vice City Oceanarium » × 12, « Turn (nom supposé) » × 11, « River » × 10, « Train Tunnel » × 10, « Water Tower » × 9, « Park » × 9, « Lifeguard Tower » × 9, « Xero Gas Station » × 8, « Construction Site » × 8, « Tank » × 7, « Warehouse » × 7, « Metro Station » × 7, « Airfield » × 6, « Train Station » × 6, « Cell Tower » × 6, « Stiltsville (nom réel) » × 6, « Tennis Court » × 6, « 205 E San Marino Dr (nom réel) » × 6, « 212 W Dilido Dr (nom réel) » × 6, « 611 NW 14th Ave (nom réel) » × 5, « 600 NW 6th St (nom réel) » × 5, « Radio Tower » × 4, « Church » × 4, « Arrow Gas Station » × 4, « Canal » × 4, « Parking Garage » × 4, « Guard Booth » × 3, « Radio Mast » × 3, « Footbridge » × 3, « Pier » × 3, « Lock » × 3, « 105 Martin Lake Dr (nom réel) » × 3, « Fleeca » × 3, « Lombank » × 3, « 101 Collins Ave (nom réel) » × 3, « Marina » × 3, « Peewees » × 3, « Park Grove Condominium (nom réel) » × 3, « The Four Ambassadors (nom réel) » × 3, « 415 NW 5th St (nom réel) » × 3, « New World Tower (nom réel) » × 3, « 403 NW 5th St (nom réel) » × 3, « 3015 Grand Ave (nom réel) » × 3, « Tunnel » × 3, « 84 » × 2, « Gellhorn International Raceway » × 2, « Catalan Bay » × 2, « Boat Ramp » × 2, « Train Station (nom supposé) » × 2, « Casino » × 2, « Water Tank » × 2, « Frances Langford Promenade (nom réel) » × 2, « Lighthouse » × 2, « Public Restrooms » × 2, « 3301 Rickenbacker Cswy (nom réel) » × 2, « Bite » × 2, « Pool » × 2, « 1670 Lincoln Ct (nom réel) » × 2, « 90170 Overseas Hwy (nom réel) » × 2, « The Floridian (nom réel) » × 2, « Railyard » × 2, « Repair & Salvage » × 2, « Schlott Construction » × 2, « Whiz » × 2, « 1703 E 5th St (nom réel) » × 2, « 243 N Tyndall Pkwy (nom réel) » × 2, « 610 W Dilido Dr (nom réel) » × 2, « 440 W Dilido Dr (nom réel) » × 2, « 1480 NE 13th Ct (nom réel) » × 2, « 918-930 Venetian Causeway (nom réel) » × 2, « The Bentley Bay Condominiums (nom réel) » × 2, « Continuum on South Beach (nom réel) » × 2, « Hobbs Milford » × 2, « Y Vice City » × 2, « Portofino Tower (nom réel) » × 2, « 1600 Washington Ave (nom réel) » × 2, « Fifth and Alton (nom réel) » × 2, « 1616 Bay Rd (nom réel) » × 2, « 600 Lincoln Rd (nom réel) » × 2, « 42 Collins Ave (nom réel) » × 2, « 1434 SW 7th St (nom réel) » × 2, « Bean Machine » × 2, « Grove at Grand Bay Condominium (nom réel) » × 2, « The Ritz-Carlton Coconut Grove (nom réel) » × 2, « Break Inn » × 2, « Hospital » × 2, « ShoreFront » × 2, « Shoreline Market » × 2, « Tuscan Place Apartments (nom réel) » × 2, « Costa Bella Association (nom réel) » × 2, « Conch King » × 2, « 247 NW 25th St #25th, Miami (nom réel) » × 2, « 1348 NW 1st Ave (nom réel) » × 2, « 2140 W Flagler St (nom réel) » × 2, « 3444 Main Hwy (nom réel) » × 2, « QR94+WGR Miami (nom réel) » × 2, « 1090 SW 1st Ave (nom réel) » × 2, « 99 SE 2nd St (nom réel) » × 2, « 901 S Royal Poinciana Blvd (nom réel) » × 2, « 2945 NW 21st Ter (nom réel) » × 2, « Electric Substation » × 2, « Runway » × 2, « 3401 NW 67th Ave (nom réel) » × 2, « 605 NW 6th St (nom réel) » × 2, « Interchange » × 2, « 2294 NW 2nd Ave (nom réel) » × 2, « USA Ornamental Iron (nom réel) » × 2, « 1601 NW 17th St (nom réel) » × 2, « 1735 NW 7th St (nom réel) » × 2, « 3630 NW N River Dr (nom réel) » × 2, « Grandstands » × 2
 
 ## Annexe : éléments par famille
 
@@ -682,7 +663,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Amélioration vers l’Édition Ultimate : `editions/amelioration.html` ; listée sur editions.html et prix.html
 - Coffret collector The Goodtime State – Vice City Collection : `editions/collector.html` ; listée sur editions.html et prix.html
 
-### Lieux de la carte (2 500)
+### Lieux de la carte (3 244)
 
 *Liste longue : voir `node outils/couverture-pages.cjs --json`. Aperçu :*
 
@@ -761,7 +742,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Bâtiment L933 : `lieux-carte/batiment-l933.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1012 : `lieux-carte/batiment-l1012.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1047 : `lieux-carte/batiment-l1047.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1048 : `lieux-carte/batiment-l1048.html` (noindex) ; batiment, position non confirmée, sans nom (bâtiment numéroté), existence douteuse, fictif ou annulé
+- Bâtiment L1048 : `lieux-carte/batiment-l1048.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1055 : `lieux-carte/batiment-l1055.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1056 : `lieux-carte/batiment-l1056.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1057 : `lieux-carte/batiment-l1057.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -794,7 +775,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Bâtiment L2243 : `lieux-carte/batiment-l2243.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2412 : `lieux-carte/batiment-l2412.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Train Station (nom supposé) : `lieux-carte/train-station.html` ; transport, position non confirmée
-- 1010 US-27 (nom réel) : `lieux-carte/1010-us-27.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
+- 1817 W Canal St N (nom réel) : `lieux-carte/1010-us-27.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L2403 : `lieux-carte/batiment-l2403.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2404 : `lieux-carte/batiment-l2404.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2405 : `lieux-carte/batiment-l2405.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -804,14 +785,14 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Bâtiment L2017 : `lieux-carte/batiment-l2017.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2063 : `lieux-carte/batiment-l2063.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2064 : `lieux-carte/batiment-l2064.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2065 : `lieux-carte/batiment-l2065.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- 22840 S Dixie Hwy (nom réel) : `lieux-carte/batiment-l2065.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L2066 : `lieux-carte/batiment-l2066.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2067 : `lieux-carte/batiment-l2067.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2103 : `lieux-carte/batiment-l2103.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2270 : `lieux-carte/batiment-l2270.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2271 : `lieux-carte/batiment-l2271.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2272 : `lieux-carte/batiment-l2272.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L2273 : `lieux-carte/batiment-l2273.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- 21760 SW 264th St (nom réel) : `lieux-carte/batiment-l2273.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L2458 : `lieux-carte/batiment-l2458.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2459 : `lieux-carte/batiment-l2459.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - R : `lieux-carte/r.html` ; batiment, repéré sur un support officiel
@@ -841,7 +822,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Bâtiment L940 : `lieux-carte/batiment-l940.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L941 : `lieux-carte/batiment-l941.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L942 : `lieux-carte/batiment-l942.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Sebring Circle Park (nom réel) : `lieux-carte/sebring-circle-park.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Sebring Circle Park (nom réel) : `lieux-carte/sebring-circle-park.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1613 : `lieux-carte/batiment-l1613.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 10404 U.S. Hwy 27 S (nom réel) : `lieux-carte/10404-u-s-hwy-27-s.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 558 N Ridgewood Dr (nom réel) : `lieux-carte/558-n-ridgewood-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
@@ -865,7 +846,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Bâtiment L1881 : `lieux-carte/batiment-l1881.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - The Peggy Brown Building (nom réel) : `lieux-carte/the-peggy-brown-building.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Horizon House (nom réel) : `lieux-carte/horizon-house.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L1884 : `lieux-carte/batiment-l1884.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- 2131 Lakeview Dr (nom réel) : `lieux-carte/batiment-l1884.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1885 : `lieux-carte/batiment-l1885.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - The Loggia (nom réel) : `lieux-carte/the-loggia.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Frances Langford Promenade (nom réel) : `lieux-carte/frances-langford-promenade-capri.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
@@ -896,23 +877,23 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Lighthouse Keepers Cottage (nom réel) : `lieux-carte/lighthouse-keepers-cottage.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L2024 : `lieux-carte/batiment-l2024.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2025 : `lieux-carte/batiment-l2025.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- 4400 Rickenbacker Cswy (nom réel) : `lieux-carte/4400-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- The Golden Dome (nom réel) : `lieux-carte/the-golden-dome.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Vice City Oceanarium : `lieux-carte/4400-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel
+- Vice City Oceanarium : `lieux-carte/the-golden-dome.html` ; batiment, repéré sur un support officiel
 - 7300 Crandon Blvd (nom réel) : `lieux-carte/7300-crandon-blvd.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L2141 : `lieux-carte/batiment-l2141.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2142 : `lieux-carte/batiment-l2142.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2143 : `lieux-carte/batiment-l2143.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-catalan-key.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- PRJM+JPP Miami (nom réel) : `lieux-carte/prjm-jpp-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 3400 Rickenbacker Cswy (nom réel) : `lieux-carte/3400-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2215.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2216.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2217.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Vice City Oceanarium : `lieux-carte/miami-seaquarium.html` ; batiment, repéré sur un support officiel
+- Vice City Oceanarium : `lieux-carte/miami-seaquarium-catalan-key.html` ; batiment, repéré sur un support officiel
+- Vice City Oceanarium : `lieux-carte/prjm-jpp-miami.html` ; batiment, repéré sur un support officiel
+- Vice City Oceanarium : `lieux-carte/3400-rickenbacker-cswy.html` ; batiment, repéré sur un support officiel
+- Vice City Oceanarium : `lieux-carte/miami-seaquarium-g-l2215.html` ; batiment, repéré sur un support officiel
+- Vice City Oceanarium : `lieux-carte/miami-seaquarium-g-l2216.html` ; batiment, repéré sur un support officiel
+- Vice City Oceanarium : `lieux-carte/miami-seaquarium-g-l2217.html` ; batiment, repéré sur un support officiel
 - Bâtiment L2218 : `lieux-carte/batiment-l2218.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2219.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2220.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Miami Seaquarium (nom réel) : `lieux-carte/miami-seaquarium-g-l2224.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Vice City Oceanarium : `lieux-carte/miami-seaquarium-g-l2219.html` ; batiment, repéré sur un support officiel
+- Vice City Oceanarium : `lieux-carte/miami-seaquarium-g-l2220.html` ; batiment, repéré sur un support officiel
+- Vice City Oceanarium : `lieux-carte/miami-seaquarium-g-l2224.html` ; batiment, repéré sur un support officiel
 - PRPM+2J3 Miami (nom réel) : `lieux-carte/prpm-2j3-miami.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Bâtiment L2526 : `lieux-carte/batiment-l2526.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L2527 : `lieux-carte/batiment-l2527.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
@@ -960,14 +941,14 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Bâtiment L1778 : `lieux-carte/batiment-l1778.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1779 : `lieux-carte/batiment-l1779.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 2034 Fisher Island Dr (nom réel) : `lieux-carte/2034-fisher-island-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- Turn (nom supposé) : `lieux-carte/turn.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-gellhorn-international-raceway.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-g-l1546.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-g-l1547.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-g-l1846.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-g-l1847.html` ; batiment, position non confirmée
-- Turn (nom supposé) : `lieux-carte/turn-g-l1859.html` ; batiment, repéré sur un support officiel
-- Turn (nom supposé) : `lieux-carte/turn-g-l1919.html` ; batiment, repéré sur un support officiel
+- Turn 16 : `lieux-carte/turn.html` ; batiment, repéré sur un support officiel
+- Turn 18 : `lieux-carte/turn-gellhorn-international-raceway.html` ; batiment, repéré sur un support officiel
+- Turn 20 : `lieux-carte/turn-g-l1546.html` ; batiment, repéré sur un support officiel
+- Turn 32 : `lieux-carte/turn-g-l1547.html` ; batiment, repéré sur un support officiel
+- Turn 34 : `lieux-carte/turn-g-l1846.html` ; batiment, repéré sur un support officiel
+- Turn 2 : `lieux-carte/turn-g-l1847.html` ; batiment, position non confirmée
+- Turn 27 : `lieux-carte/turn-g-l1859.html` ; batiment, repéré sur un support officiel
+- Turn 31 : `lieux-carte/turn-g-l1919.html` ; batiment, repéré sur un support officiel
 - Parking Lot : `lieux-carte/parking-lot-gloriana-key.html` ; batiment, repéré sur un support officiel
 - Public Restrooms : `lieux-carte/public-restrooms.html` ; batiment, repéré sur un support officiel
 - QR2W+Q67 Miami (nom réel) : `lieux-carte/qr2w-q67-miami.html` ; transport, repéré sur un support officiel, nom en jeu inconnu (nom réel)
@@ -1012,8 +993,8 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Main Prison Building : `lieux-carte/main-prison-building.html` ; batiment, repéré sur un support officiel
 - Mexican Restaurant : `lieux-carte/mexican-restaurant.html` ; batiment, repéré sur un support officiel
 - Parking Lot : `lieux-carte/parking-lot-hamlet.html` ; batiment, repéré sur un support officiel
-- Prison Building : `lieux-carte/prison-building.html` ; batiment, repéré sur un support officiel
-- Prison Building : `lieux-carte/prison-building-hamlet.html` ; batiment, repéré sur un support officiel
+- Prison Building : `lieux-carte/prison-building.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Prison Building : `lieux-carte/prison-building-hamlet.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Prison Building : `lieux-carte/prison-building-g-l1344.html` ; batiment, repéré sur un support officiel
 - Prison Building : `lieux-carte/prison-building-g-l1345.html` ; batiment, repéré sur un support officiel
 - Prison Building : `lieux-carte/prison-building-g-l1346.html` ; batiment, repéré sur un support officiel
@@ -1040,21 +1021,21 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - 47 N Krome Ave (nom réel) : `lieux-carte/47-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 107 N Krome Ave (nom réel) : `lieux-carte/107-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 112 N Krome Ave (nom réel) : `lieux-carte/112-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 115 N Krome Ave (nom réel) : `lieux-carte/115-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Burger Shot : `lieux-carte/115-n-krome-ave.html` ; batiment, repéré sur un support officiel
 - 131 N Krome Ave (nom réel) : `lieux-carte/131-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 134 N Krome Ave (nom réel) : `lieux-carte/134-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 140 N Krome Ave (nom réel) : `lieux-carte/140-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 144 N Krome Ave (nom réel) : `lieux-carte/144-n-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 28 S Krome Ave (nom réel) : `lieux-carte/28-s-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
-- 33 S Krome Ave (nom réel) : `lieux-carte/33-s-krome-ave.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- Kurt’s Barber Shop : `lieux-carte/33-s-krome-ave.html` ; batiment, repéré sur un support officiel
 - 17 E Mowry Dr (nom réel) : `lieux-carte/17-e-mowry-dr.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Losner Park (nom réel) : `lieux-carte/losner-park.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - 107 SW 7th St (nom réel) : `lieux-carte/107-sw-7th-st.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Ernest F. Coe Visitor Center (nom réel) : `lieux-carte/ernest-f-coe-visitor-center.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Dry Tortugas National Park Headquarters (nom réel) : `lieux-carte/dry-tortugas-national-park-headquarters.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
-- Bâtiment L970 : `lieux-carte/batiment-l970.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L971 : `lieux-carte/batiment-l971.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L972 : `lieux-carte/batiment-l972.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- 3R6F+MFH Raiford (nom réel) : `lieux-carte/batiment-l970.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 3R6F+FHJ Raiford (nom réel) : `lieux-carte/batiment-l971.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
+- 3R6F+VGJ Raiford (nom réel) : `lieux-carte/batiment-l972.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1116 : `lieux-carte/batiment-l1116.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - Bâtiment L1117 : `lieux-carte/batiment-l1117.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 675 N Homestead Blvd (nom réel) : `lieux-carte/675-n-homestead-blvd.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
@@ -1063,7 +1044,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Bâtiment L1388 : `lieux-carte/batiment-l1388.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
 - 550 N Homestead Blvd (nom réel) : `lieux-carte/550-n-homestead-blvd.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Bâtiment L1569 : `lieux-carte/batiment-l1569.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
-- Bâtiment L1572 : `lieux-carte/batiment-l1572.html` (noindex) ; batiment, repéré sur un support officiel, sans nom (bâtiment numéroté)
+- 3104 Cortez Rd W (nom réel) : `lieux-carte/batiment-l1572.html` ; batiment, position non confirmée, nom en jeu inconnu (nom réel)
 - Homestead Customer Services Administration (nom réel) : `lieux-carte/homestead-customer-services-administration.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - Azteca Supermarket (nom réel) : `lieux-carte/azteca-supermarket.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
 - FGCC+6HG Homestead (nom réel) : `lieux-carte/fgcc-6hg-homestead.html` ; batiment, repéré sur un support officiel, nom en jeu inconnu (nom réel)
@@ -1089,53 +1070,53 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 
 ### Régions, villes, quartiers et comtés (47)
 
-- Vice City : `lieux/vice-city.html` ; ville, 135 lieux
+- Vice City : `lieux/vice-city.html` ; ville, 201 lieux
 - Leonida Keys : `lieux/leonida-keys.html` ; region, aucun lieu rattaché dans les données
 - Grassrivers : `lieux/grassrivers.html` ; region, aucun lieu rattaché dans les données
-- Port Gellhorn : `lieux/port-gellhorn.html` ; ville, 179 lieux
-- Ambrosia : `lieux/ambrosia.html` ; region, 41 lieux
+- Port Gellhorn : `lieux/port-gellhorn.html` ; ville, 196 lieux
+- Ambrosia : `lieux/ambrosia.html` ; region, 47 lieux
 - Mount Kalaga National Park : `lieux/mount-kalaga.html` ; region, aucun lieu rattaché dans les données
-- Ocean Beach : `quartiers/ocean-beach.html` ; quartier, 285 lieux
-- Little Cuba : `quartiers/little-cuba.html` ; quartier, 51 lieux
-- Vice Beach : `quartiers/vice-beach.html` ; quartier, 92 lieux
+- Ocean Beach : `quartiers/ocean-beach.html` ; quartier, 353 lieux
+- Little Cuba : `quartiers/little-cuba.html` ; quartier, 76 lieux
+- Vice Beach : `quartiers/vice-beach.html` ; quartier, 97 lieux
 - South Beach : `quartiers/south-beach.html` (noindex) ; quartier, aucun lieu rattaché dans les données
-- Downtown : `quartiers/downtown.html` ; quartier, 121 lieux
-- Stockyard : `quartiers/stockyard.html` ; quartier, 36 lieux
+- Downtown : `quartiers/downtown.html` ; quartier, 147 lieux
+- Stockyard : `quartiers/stockyard.html` ; quartier, 48 lieux
 - Marina : `quartiers/marina.html` (noindex) ; quartier, aucun lieu rattaché dans les données
-- Waning Sands : `quartiers/waning-sands.html` ; ville, 33 lieux
-- Hamlet : `quartiers/hamlet.html` ; ville, 116 lieux
-- Key Lento : `quartiers/key-lento.html` ; quartier, 155 lieux
-- Comté de Vice-Dale : `quartiers/comte-de-vice-dale.html` ; comte, 33 lieux
-- Comté de Leonard : `quartiers/comte-de-leonard.html` ; comte, 27 lieux
-- Comté de Kelly : `quartiers/comte-de-kelly.html` ; comte, 50 lieux
-- Comté de Mariana : `quartiers/comte-de-mariana.html` ; comte, 92 lieux
+- Waning Sands : `quartiers/waning-sands.html` ; ville, 56 lieux
+- Hamlet : `quartiers/hamlet.html` ; ville, 164 lieux
+- Key Lento : `quartiers/key-lento.html` ; quartier, 193 lieux
+- Comté de Vice-Dale : `quartiers/comte-de-vice-dale.html` ; comte, 46 lieux
+- Comté de Leonard : `quartiers/comte-de-leonard.html` ; comte, 41 lieux
+- Comté de Kelly : `quartiers/comte-de-kelly.html` ; comte, 79 lieux
+- Comté de Mariana : `quartiers/comte-de-mariana.html` ; comte, 104 lieux
 - Gloriana : `quartiers/gloriana.html` (noindex) ; region, aucun lieu rattaché dans les données
-- Lummox County : `quartiers/lummox-county.html` ; comte, 37 lieux
-- Capri : `quartiers/capri.html` ; ville, 62 lieux
-- Watson Bay : `quartiers/watson-bay.html` ; ville, 51 lieux
-- Bluegrass : `quartiers/bluegrass.html` ; ville, 16 lieux
-- Peregrine Bay : `quartiers/peregrine-bay.html` ; ville, 11 lieux
-- Rialto Islands : `quartiers/rialto-islands.html` ; quartier, 69 lieux
-- Starfish Island : `quartiers/starfish-island.html` ; quartier, 5 lieux
+- Lummox County : `quartiers/lummox-county.html` ; comte, 64 lieux
+- Capri : `quartiers/capri.html` ; ville, 71 lieux
+- Watson Bay : `quartiers/watson-bay.html` ; ville, 53 lieux
+- Bluegrass : `quartiers/bluegrass.html` ; ville, 18 lieux
+- Peregrine Bay : `quartiers/peregrine-bay.html` ; ville, 14 lieux
+- Rialto Islands : `quartiers/rialto-islands.html` ; quartier, 76 lieux
+- Starfish Island : `quartiers/starfish-island.html` ; quartier, 10 lieux
 - Fisher Island : `quartiers/fisher-island.html` ; quartier, 1 lieux
-- Buckskin : `quartiers/buckskin.html` ; ville, 5 lieux
+- Buckskin : `quartiers/buckskin.html` ; ville, 8 lieux
 - Redhill : `quartiers/redhill.html` ; ville, 2 lieux
-- Emerald Springs : `quartiers/emerald-springs.html` ; ville, 3 lieux
-- Bohemia : `quartiers/bohemia.html` ; ville, 3 lieux
+- Emerald Springs : `quartiers/emerald-springs.html` ; ville, 5 lieux
+- Bohemia : `quartiers/bohemia.html` ; ville, 6 lieux
 - Yorktown : `quartiers/yorktown.html` ; ville, 1 lieux
-- Belville : `quartiers/belville.html` ; quartier, 9 lieux
+- Belville : `quartiers/belville.html` ; quartier, 15 lieux
 - Goliath : `quartiers/goliath.html` ; quartier, 3 lieux
-- Washington Beach : `quartiers/washington-beach.html` ; quartier, 35 lieux
+- Washington Beach : `quartiers/washington-beach.html` ; quartier, 42 lieux
 - Leaf Links : `quartiers/leaf-links.html` ; quartier, 15 lieux
-- Crosstown : `quartiers/crosstown.html` ; quartier, 82 lieux
-- Rockridge : `quartiers/rockridge.html` ; quartier, 42 lieux
-- Tequesta : `quartiers/tequesta.html` ; quartier, 50 lieux
-- Peacock Bay : `quartiers/peacock-bay.html` ; quartier, 77 lieux
-- Bayside : `quartiers/bayside.html` ; quartier, 31 lieux
-- Southside : `quartiers/southside.html` ; quartier, 84 lieux
-- Tequesta Retreat : `quartiers/tequesta-retreat.html` ; quartier, 16 lieux
-- Salton : `quartiers/salton.html` ; quartier, 39 lieux
-- La Perle : `quartiers/la-perle.html` ; quartier, 46 lieux
+- Crosstown : `quartiers/crosstown.html` ; quartier, 99 lieux
+- Rockridge : `quartiers/rockridge.html` ; quartier, 90 lieux
+- Tequesta : `quartiers/tequesta.html` ; quartier, 74 lieux
+- Peacock Bay : `quartiers/peacock-bay.html` ; quartier, 82 lieux
+- Bayside : `quartiers/bayside.html` ; quartier, 37 lieux
+- Southside : `quartiers/southside.html` ; quartier, 99 lieux
+- Tequesta Retreat : `quartiers/tequesta-retreat.html` ; quartier, 18 lieux
+- Salton : `quartiers/salton.html` ; quartier, 83 lieux
+- La Perle : `quartiers/la-perle.html` ; quartier, 64 lieux
 
 ### Marques de véhicules (51)
 
