@@ -45,14 +45,60 @@ function mapSvg(places, opts = {}) {
     if (opts.dots) return '<g class="lk-loc-pin" data-place="' + esc(p.id) + '" data-name="' + esc(places[i].name) + '"><circle class="lk-loc-halo" cx="' + p.x + '" cy="' + p.y + '" r="' + dot * 2.4 + '"/><circle class="lk-loc-dot" cx="' + p.x + '" cy="' + p.y + '" r="' + dot + '"/></g>';
     return '<g class="lk-loc-pin" data-place="' + esc(p.id) + '" data-name="' + esc(places[i].name) + '"><line class="lk-loc-lead" x1="' + p.x + '" y1="' + p.y + '" x2="' + l.x + '" y2="' + l.y + '" stroke-width="' + Math.max(8, Math.round(dot * 0.35)) + '"/><circle class="lk-loc-halo" cx="' + p.x + '" cy="' + p.y + '" r="' + dot * 2.4 + '"/><circle class="lk-loc-dot" cx="' + p.x + '" cy="' + p.y + '" r="' + dot + '"/>'
       + '<circle class="lk-loc-lab" cx="' + l.x + '" cy="' + l.y + '" r="' + lab + '" stroke-width="' + Math.round(lab * 0.14) + '"/><text class="lk-loc-pin-n" x="' + l.x + '" y="' + l.y + '" dy="' + Math.round(lab * 0.42) + '" text-anchor="middle" font-size="' + Math.round(lab * 1.15) + '">' + p.n + '</text></g>'; }).join('');
-  return '<div class="lk-loc-stage">' + REF.image(opts.prefix) + '<svg class="lk-loc-svg" viewBox="' + f.vx + ' ' + f.vy + ' ' + f.vw + ' ' + f.vh + '" role="img" aria-label="' + esc(opts.label || 'Carte de Leonida et lieux repérés') + '" focusable="false">' + pins + '</svg></div>';
+  return '<div class="lk-loc-stage">' + REF.image(opts.prefix) + '<svg class="lk-loc-svg" viewBox="' + f.vx + ' ' + f.vy + ' ' + f.vw + ' ' + f.vh + '" role="img" aria-label="' + esc(opts.label || 'Carte de Leonida et lieux repérés') + '" focusable="false">' + (opts.sea ? sea() : '') + pins + '</svg></div>';
+}
+/* v8.04 (lot H) : dans les fiches, la carte prend la hauteur de sa colonne voisine ; l’image et les repères gardent leurs
+   proportions (contain d’un côté, viewBox de l’autre) et le reste du cadre est de la mer : le même dégradé et les mêmes vagues
+   que la référence (lus dans img/leonida-carte.svg, mêmes unités), tracés hors de la boîte 5200 × 6000, sous les repères.
+   Aucune couture visible entre l’image et le cadre, quelle que soit sa forme. */
+let SEA = null;
+function sea() {
+  if (SEA === null) {
+    SEA = '';
+    try {
+      const svg = fs.readFileSync(path.join(root, REF.FILE), 'utf8');
+      const g = svg.match(/<linearGradient id="water"[^>]*>([\s\S]*?)<\/linearGradient>/), w = svg.match(/<pattern id="waves"([^>]*)>([\s\S]*?)<\/pattern>/);
+      if (g && w) SEA = '<defs><linearGradient id="lk-sea-g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="' + carte.H + '">' + g[1] + '</linearGradient><pattern id="lk-sea-w"' + w[1] + '>' + w[2] + '</pattern></defs>'
+        + ['lk-sea-g', 'lk-sea-w'].map(id => '<path class="lk-loc-sea" fill-rule="evenodd" fill="url(#' + id + ')" d="M-60000 -60000H' + (carte.W + 60000) + 'V' + (carte.H + 60000) + 'H-60000ZM0 0V' + carte.H + 'H' + carte.W + 'V0Z"/>').join('');
+      SEA = SEA.replace(/>\s+</g, '><');
+    } catch (e) { SEA = ''; }
+  }
+  return SEA;
 }
 /* Carte sans lieu lié : le même fond, sans repère. */
-function emptyMap(prefix) {
-  return '<div class="lk-loc-stage">' + REF.image(prefix) + '<svg class="lk-loc-svg lk-loc-svg--empty" viewBox="0 0 ' + carte.W + ' ' + carte.H + '" role="img" aria-label="Carte de Leonida, aucun lieu lié" focusable="false"></svg></div>';
+function emptyMap(prefix, opts = {}) {
+  return '<div class="lk-loc-stage">' + REF.image(prefix) + '<svg class="lk-loc-svg lk-loc-svg--empty" viewBox="0 0 ' + carte.W + ' ' + carte.H + '" role="img" aria-label="Carte de Leonida, aucun lieu lié" focusable="false">' + (opts.sea ? sea() : '') + '</svg></div>';
+}
+/* v8.04 (lot H) : chaque lieu montré mène directement à lui : sa page (lieux-carte/…, lieux/…, d’après
+   outils/pages-elements-index.json, écrit par gen-pages-elements.cjs) quand elle existe, sinon la carte interactive centrée
+   sur lui (carte.html#lieu=…). */
+let PAGES = null;
+function placePage(id) {
+  if (PAGES === null) { try { PAGES = JSON.parse(fs.readFileSync(path.join(root, 'outils/pages-elements-index.json'), 'utf8')).elements || {}; } catch (e) { PAGES = {}; } }
+  const pg = PAGES[id]; return pg && fs.existsSync(path.join(root, pg)) ? pg : null;
+}
+function placeHref(prefix, id) { const pg = placePage(id); return pg ? prefix + pg : prefix + 'carte.html#lieu=' + encodeURIComponent(id); }
+const CHEV = '<svg class="lk-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+const PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>';
+/* vignette d’un lieu (forme complète) : image officielle passée par le générateur (p.img : {variants:[{src,w,h}…]} ou
+   {src,w,h}), décorative (le nom suit dans le lien) ; srcset quand plusieurs tailles existent */
+function placeImg(img) {
+  const vs = img && (img.variants || (img.src ? [img] : [])).filter(v => v && v.src); if (!vs || !vs.length) return '';
+  const v = vs[0];
+  return '<img src="' + esc(v.src) + '"' + (vs.length > 1 ? ' srcset="' + esc(vs.map(x => x.src + ' ' + x.w + 'w').join(', ')) + '" sizes="(max-width:600px) 92vw, 360px"' : '') + ' width="' + (v.w || 480) + '" height="' + (v.h || 270) + '" alt="" loading="lazy" decoding="async">';
 }
 function placeList(places, prefix, opts = {}) {
-  return '<ol class="lk-loc-places"' + (opts.data ? ' data-loc-places-list' : '') + '>' + places.map((p, i) => '<li data-place="' + esc(p.id) + '"><a class="lk-loc-place" href="' + prefix + 'carte.html#lieu=' + esc(p.id) + '"><span class="lk-loc-num" aria-hidden="true">' + (i + 1) + '</span><span class="lk-loc-place-t"><b>' + esc(p.name) + '</b>' + (p.where || p.group ? '<small>' + esc([p.group, p.where].filter(Boolean).join(', ')) + '</small>' : '') + '</span><span class="veh-go">Voir sur la carte</span></a></li>').join('') + '</ol>';
+  const media = places.some(p => placeImg(p.img));
+  return '<ol class="lk-loc-places' + (media ? ' lk-loc-places--media' : '') + '"' + (opts.data ? ' data-loc-places-list' : '') + '>' + places.map((p, i) => { const pg = placePage(p.id), im = media ? placeImg(p.img) : '';
+    return '<li data-place="' + esc(p.id) + '"><a class="lk-loc-place" href="' + placeHref(prefix, p.id) + '">'
+      + (media ? '<span class="lk-loc-place-fig' + (im ? '' : ' lk-loc-place-fig--none') + '">' + (im || PIN) + '</span>' : '')
+      + '<span class="lk-loc-num" aria-hidden="true">' + (i + 1) + '</span><div class="lk-loc-place-t"><p class="lk-loc-place-n">' + esc(p.name) + '</p>' + (p.where || p.group ? '<p class="lk-loc-place-w">' + esc([p.group, p.where].filter(Boolean).join(', ')) + '</p>' : '') + '</div><span class="veh-go">' + (pg ? 'Voir la fiche' : 'Voir sur la carte') + '</span></a></li>'; }).join('') + '</ol>';
+}
+/* v8.04 (lot H) : légende des fiches (forme courte) : le numéro du repère, le nom du lieu et son quartier, un lien vers le lieu ;
+   rien d’autre (pas de paragraphe répété d’une fiche à l’autre). Nom et quartier ont chacun leur bloc (p) : la mémoire de
+   traduction les reprend un par un (noms de lieux déjà traduits), sans une phrase par ligne et par numéro. */
+function legendList(places, prefix) {
+  return '<ol class="lk-loc-legend-list">' + places.map((p, i) => '<li data-place="' + esc(p.id) + '"><a class="lk-loc-legend-a" href="' + placeHref(prefix, p.id) + '"><span class="lk-loc-num" aria-hidden="true">' + (i + 1) + '</span><div class="lk-loc-legend-t"><p class="lk-loc-legend-n">' + esc(p.name) + '</p>' + (p.where ? '<p class="lk-loc-legend-w">' + esc(p.where) + '</p>' : '') + '</div>' + CHEV + '</a></li>').join('') + '</ol>';
 }
 function pinsHref(prefix, ids, title) { return prefix + 'carte.html#pins=' + ids.map(encodeURIComponent).join(',') + '&amp;t=' + encodeURIComponent(title); }
 /* Résumé de l’objet choisi (même texte que celui écrit par localisateur.js). */
@@ -60,7 +106,7 @@ function summary(item, placesById, prefix, opts = {}) {
   const linked = item.places.map(id => placesById[id]).filter(Boolean);
   return '<div class="lk-loc-sum-in"><span class="lk-loc-sum-thumb">' + item.thumb + '</span><div class="lk-loc-sum-t"><p class="lk-loc-kicker">' + esc(item.catLabel) + '</p><p class="lk-loc-name">' + esc(item.name) + '</p>'
     + '<p class="lk-loc-status"><b>Où ' + esc(item.pronoun || 'le') + ' trouver :</b> ' + esc(item.status || EMPTY) + '</p>'
-    + '<p class="lk-loc-note">' + esc(linked.length ? item.linkedText + ' ' + linked.map(p => p.name).join(', ') + '.' : item.noneText) + '</p>'
+    + (opts.noNote ? '' : '<p class="lk-loc-note">' + esc(linked.length ? item.linkedText + ' ' + linked.map(p => p.name).join(', ') + '.' : item.noneText) + '</p>')
     + '<p class="lk-loc-actions">' + (opts.self ? '' : '<a class="lk-loc-btn lk-loc-btn--main" href="' + esc(prefix + item.url) + '">Ouvrir la fiche</a>') + (linked.length ? '<a class="lk-loc-btn" href="' + pinsHref(prefix, linked.map(p => p.id), item.mapTitle) + '">Voir ces lieux sur la carte</a>' : '') + '</p></div></div>';
 }
 /* Forme « hub » : items = [{id, name, cat, catLabel, thumb (HTML), url, places:[ids], status, linkedText, noneText, mapTitle, pronoun}],
@@ -81,14 +127,23 @@ function single(o) {
   /* v7.86 (référencement) : forme courte des fiches véhicules et armes — la carte et ses repères, la légende et un lien vers
      ces lieux sur la carte interactive ; ni résumé ni liste des lieux, identiques sur toutes les fiches d’une catégorie (ils
      restent sur les pages de section, dans le sélecteur des hubs). L’emplacement de l’objet est dit dans « Ce qui arrive avec le jeu ». */
-  if (o.compact) return '<div class="lk-loc lk-loc--single lk-loc--compact">'
-    + '<figure class="lk-loc-map">' + (linked.length ? mapSvg(linked, { label: o.mapLabel, prefix, dots: true }) : emptyMap(prefix))
-    + '<figcaption>' + esc(linked.length ? o.caption : 'Aucun lieu repéré pour cette catégorie : rien n’est placé au hasard.') + '</figcaption></figure>'
-    + (linked.length ? '<p class="lk-loc-more"><a class="lk-loc-btn lk-loc-btn--main" href="' + pinsHref(prefix, linked.map(p => p.id), o.item.mapTitle) + '">Voir ces lieux sur la carte</a></p>' : '') + '</div>';
-  return '<div class="lk-loc lk-loc--single">'
-    + '<figure class="lk-loc-map">' + (linked.length ? mapSvg(linked, { label: o.mapLabel, prefix }) : emptyMap(prefix))
-    + '<figcaption>' + esc(linked.length ? o.caption : 'Aucun lieu repéré pour cette catégorie : rien n’est placé au hasard.') + '</figcaption></figure>'
-    + '<div class="lk-loc-side"><div class="lk-loc-sum">' + summary(o.item, Object.fromEntries(o.places.map(p => [p.id, p])), prefix, { self: true }) + '</div>'
+  /* v8.04 (lot H, Téva : « l’agencement est maladroit, les deux images ne sont pas centrées et font tache ») : la forme courte
+     des fiches pose côte à côte la carte (repères numérotés) et sa légende : chaque lieu, son numéro, son nom, un lien vers
+     lui ; puis la mise en garde (pas un point de vente confirmé) et le lien vers ces lieux sur la carte interactive. Pas de
+     résumé : l’emplacement de l’objet est dit dans « Ce qui arrive avec le jeu ». La mise en garde quitte le dessous de la
+     carte (aucune légende sous une image). Sans lieu lié : la carte vide et une phrase, avec un lien vers la carte. */
+  if (o.compact) return '<div class="lk-loc lk-loc--single lk-loc--compact' + (linked.length ? '' : ' lk-loc--none') + '">'
+    + '<figure class="lk-loc-map">' + (linked.length ? mapSvg(linked, { label: o.mapLabel, prefix, sea: true }) : emptyMap(prefix, { sea: true })) + '</figure>'
+    + '<div class="lk-loc-legend"><h3 class="lk-loc-h">' + esc(o.placesTitle) + '</h3>'
+    + (linked.length ? legendList(linked, prefix) + '<p class="lk-loc-legend-note">' + esc(o.caption) + '</p><p class="lk-loc-more"><a class="lk-loc-btn lk-loc-btn--main" href="' + pinsHref(prefix, linked.map(p => p.id), o.item.mapTitle) + '">Voir ces lieux sur la carte</a></p>'
+      : '<p class="lk-loc-legend-note">Aucun lieu repéré pour cette catégorie : rien n’est placé au hasard.</p><p class="lk-loc-open"><a class="lk-loc-btn" href="' + prefix + 'carte.html">Ouvrir la carte de Leonida</a></p>')
+    + '</div></div>';
+  /* v8.04 (lot H) : forme complète (fiches du monde, activités) : la carte prend la hauteur de la colonne voisine (résumé et
+     lieux), les lieux reçoivent leur vignette officielle quand elle existe et mènent à leur page ; le résumé ne répète plus
+     la liste des lieux (la liste suit). La phrase sous la carte disait la même chose que l’introduction du bloc. */
+  return '<div class="lk-loc lk-loc--single lk-loc--full">'
+    + '<figure class="lk-loc-map">' + (linked.length ? mapSvg(linked, { label: o.mapLabel, prefix, sea: true }) : emptyMap(prefix, { sea: true })) + '</figure>'
+    + '<div class="lk-loc-side"><div class="lk-loc-sum">' + summary(o.item, Object.fromEntries(o.places.map(p => [p.id, p])), prefix, { self: true, noNote: linked.length > 0 }) + '</div>'
     + (linked.length ? '<h3 class="lk-loc-h">' + esc(o.placesTitle) + '</h3>' + placeList(linked, prefix) : '') + '</div></div>';
 }
 /* ---------- Données : objets et lieux liés (mêmes règles pour le hub, les fiches et les carnets) ---------- */
@@ -142,4 +197,4 @@ function weaponItem(a, prefix, schema) {
    carte.html avant de générer les pages. L'ancien sprite de silhouette (img/leonida-silhouette.svg) n'est plus lu. */
 const REFERENCE = REF.FILE;
 function writeReference() { return REF.write(); }
-module.exports = { writeReference, REFERENCE, hub, single, mapSvg, emptyMap, summary, EMPTY, fold, data, vehicleItem, weaponItem, vehicleLinks, VEH_LINK };
+module.exports = { writeReference, REFERENCE, hub, single, mapSvg, emptyMap, summary, EMPTY, fold, data, vehicleItem, weaponItem, vehicleLinks, VEH_LINK, placeHref };

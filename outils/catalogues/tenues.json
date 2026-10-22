@@ -78,7 +78,7 @@
       "id": "milliers-de-tenues",
       "nom": "Des milliers de tenues",
       "categorie": "tenues-completes",
-      "statut": "officiel",
+      "statut": "vu",
       "personnage": "jason-lucia",
       "description": "Rob Nelson : « We have thousands of outfits », bien plus que dans GTA V.",
       "effet": {
@@ -119,9 +119,9 @@
       "id": "tenues-gagnees-en-mission",
       "nom": "Tenues gagnées en mission",
       "categorie": "tenues-completes",
-      "statut": "officiel",
+      "statut": "vu",
       "personnage": "jason-lucia",
-      "description": "Certaines tenues se gagnent en finissant des missions, sans passer en boutique.",
+      "description": "D’après Rob Nelson, certaines tenues se gagnent en finissant des missions, sans passer en boutique.",
       "effet": {
         "texte": "Change l’apparence ; aucun effet de jeu publié",
         "valeur": null,

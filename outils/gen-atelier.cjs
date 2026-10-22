@@ -189,6 +189,9 @@ const listV = vIndex.slice().sort((a, b) => a.nom.localeCompare(b.nom, 'fr')).ma
 const listA = aIndex.slice().sort((a, b) => a.nom.localeCompare(b.nom, 'fr')).map(x => '<li><button type="button" class="at-item" data-at-pick="a" data-at-id="' + esc(x.id) + '" data-at-cat="' + esc(x.cat) + '"><span class="at-item-n">' + esc(x.nom) + '</span><span class="at-item-c">' + esc(ACAT[x.cat] || x.cat) + '</span></button></li>').join('');
 const catSel = (fam, cats, labels, idx) => '<select class="at-catsel" data-at-catsel="' + fam + '" aria-label="' + (fam === 'v' ? 'Catégorie de véhicule' : 'Catégorie d’arme') + '"><option value="">Toutes les catégories</option>' + cats.filter(c => idx.some(x => x.cat === c)).map(c => '<option value="' + c + '">' + esc(labels[c] || c) + '</option>').join('') + '</select>';
 const first = vIndex.find(x => x.id === 'pegassi-zentorno') || vIndex[0];
+/* v8.04 (lot M, Téva : « précise que l'Atelier 3D est en construction ») : bandeau « En construction » sous l'en-tête de la
+   page (section at-wip) : ce qui marche déjà, ce qui arrive ; le lien du menu (outils/site-shell.cjs) et les boutons des
+   fiches (outils/perso-fiche.cjs) portent la même étiquette. */
 const html = `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -225,6 +228,16 @@ ${header}
       <p class="lede">Choisis un véhicule ou une arme, fais-le tourner, peins-le, équipe-le, monte à bord. Chaque option renvoie au poste de personnalisation du catalogue, avec le repère de la série quand il existe ; les pré-listes donnent, atelier par atelier, ce que GTA V et GTA Online proposent. Les volumes sont des maquettes bâties sur les schémas Leonidakit, pas les modèles du jeu.</p>
     </div>
     <ul class="at-facts" aria-label="L’Atelier en bref"><li><b>${nv}</b><span>véhicules</span></li><li><b>${na}</b><span>armes</span></li><li><b>${PV.items.length + PA.items.length}</b><span>postes du catalogue reliés</span></li><li><b>${preCount}</b><span>éléments en pré-liste</span></li><li><b>0</b><span>modèle inventé</span></li></ul>
+  </div>
+</section>
+
+<section class="shell at-wip" aria-labelledby="at-wip-t">
+  <div class="at-wip-box">
+    <div class="at-wip-head"><p class="at-wip-tag">En construction</p><h2 class="at-wip-t" id="at-wip-t">L’Atelier 3D est en construction</h2><p class="at-wip-lede">Tu peux déjà t’en servir : il s’enrichit à chaque mise à jour du site.</p></div>
+    <div class="at-wip-cols">
+      <div class="at-wip-col"><h3>Ce qui marche déjà</h3><ul><li>Tous les véhicules et toutes les armes du site, à faire tourner et à regarder de profil, de face, de dessus ou de l’intérieur</li><li>Peinture, jantes, néons, vitres, plaque et pièces de carrosserie ; finition, viseur, canon et chargeur pour les armes</li><li>Les pré-listes de GTA V et de GTA Online, à essayer sur la maquette</li><li>Ta configuration enregistrée sur cet appareil, en lien à copier ou en image ; celle cochée sur une fiche s’ouvre ici d’un clic</li></ul></div>
+      <div class="at-wip-col at-wip-col--next"><h3>Ce qui arrive</h3><ul><li>Les options, les teintes et les prix de GTA VI dès que Rockstar les publie : en attendant, les repères viennent de GTA V et de GTA Online</li><li>Des maquettes plus fidèles, modèle par modèle, au fil des mises à jour : aujourd’hui, ce sont des volumes bâtis sur les schémas du site, pas les modèles du jeu</li></ul></div>
+    </div>
   </div>
 </section>
 

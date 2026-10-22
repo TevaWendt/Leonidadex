@@ -1,0 +1,96 @@
+{
+ "_note": "v8.03 (calculateur lot 2) : dix questions sur les sept sujets ajoutés (Mes hypothèses en plus, soins et amendes, revenu passif, bonus et partage, argent de Jason et de Lucia, réglages Expert du business plan, revente dans Mon objectif), sujet attendu. Rejoué par node outils/tests/leo-eval.cjs --lang pt --questions=outils/tests/leo-questions-v803-pt.json, après la régénération de Léo et des langues.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "o que é minhas hipóteses extras na calculadora",
+   "expect": {
+    "topic": "hypotheses-en-plus"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "como conto as curas, as multas ou o dinheiro perdido ao morrer",
+   "expect": {
+    "topic": "simuler-soins-amendes"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "como conto as multas na calculadora",
+   "expect": {
+    "topic": "simuler-soins-amendes"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "como conto uma renda passiva na calculadora",
+   "expect": {
+    "topic": "simuler-revenu-passif"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "como conto um bônus ou divido uma recompensa entre jogadores",
+   "expect": {
+    "topic": "simuler-bonus-partage"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "dividir cada recompensa em partes iguais entre os jogadores",
+   "expect": {
+    "topic": "simuler-bonus-partage"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "jason e lucia têm cada um o seu dinheiro",
+   "expect": {
+    "topic": "argent-jason-lucia"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "quais ajustes extras o plano de negócios tem no modo avançado",
+   "expect": {
+    "topic": "plan-reglages-expert"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "contar as tentativas fracassadas no plano de negócios",
+   "expect": {
+    "topic": "plan-reglages-expert"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "como conto a revenda do que possuo em meu objetivo",
+   "expect": {
+    "topic": "objectif-revente"
+   },
+   "tags": [
+    "v803"
+   ]
+  }
+ ]
+}

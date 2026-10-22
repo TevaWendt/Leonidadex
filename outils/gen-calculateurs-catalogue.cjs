@@ -39,7 +39,9 @@ for (const [collection, type, folder, category] of [
       provenance: `outils/editorial.json#${collection}/${entry.id}`
     };
     // Propager les données économiques futures uniquement quand la source les porte.
-    for (const key of ['price', 'prix', 'economy', 'fieldMeta', 'priceMeta', 'aliases', 'purchasable', 'activityIds']) {
+    // v8.02 (lot 1) : « revenu » = revenu passif d’une entreprise, d’une demeure ou d’une planque (montant, fréquence, plafond,
+    // conditions : outils/QUAND-ROCKSTAR-PUBLIE.md), lu par calculateurs-data.js (champ income) ; absent, rien n’est ajouté.
+    for (const key of ['price', 'prix', 'economy', 'fieldMeta', 'priceMeta', 'aliases', 'purchasable', 'activityIds', 'revenu']) {
       if (Object.prototype.hasOwnProperty.call(entry, key)) item[key] = entry[key];
     }
     entries.push(item);

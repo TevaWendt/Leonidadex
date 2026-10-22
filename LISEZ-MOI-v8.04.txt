@@ -1,0 +1,27 @@
+LEONIDAKIT v8.04 : refonte des six pages, informations vérifiées au 20 octobre 2026, Léo dans les six langues, chiffres du site,
+formats du jour J, et les ajouts du 21 octobre (fiches, « En lien », hubs, Collectibles, jeux, Atelier 3D)
+
+Ces archives contiennent aussi la v8.02 et la v8.03 (jamais poussées avant) : tous les fichiers changés depuis la v8.01.
+Décompresser toutes les parties à la racine du dossier du site en remplaçant les fichiers, puis dans GitHub Desktop :
+« Commit to main » puis « Push origin ». Rien à faire dans Vercel. Aucun fichier à supprimer.
+
+CE QUI CHANGE POUR LE VISITEUR
+  - prix.html, verification.html, prechargement.html, gta-6-pc.html, videos.html, gta-6-vs-gta-5.html : sections refaites
+    (tapis des objets du coffret, déballage et vue liste, tableau de bord qui ouvre la carte, cartes « Confirmé » filtrables,
+    panneau de prix à volets, frise et écrans de console, choix de plateforme, course d'arcade, écran VERSUS, carte superposable,
+    cartes entièrement cliquables) ; mouvement réduit respecté partout.
+  - Toutes les informations sur GTA VI recontrôlées au 20 octobre 2026 : « Officiel » seulement pour ce que Rockstar, Take-Two,
+    Sony ou Microsoft publient eux-mêmes ; tout ce que rapporte la presse est « Vu dans un média », avec le média et la date.
+  - Les chiffres que le site donne sur lui-même sont recalculés (3 291 lieux, 26 664 pages toutes langues comprises…).
+  - Fiches d'armes et de véhicules : carte et légende qui mène aux lieux, aperçus animés, « Voir ma configuration ».
+  - « En lien » illustré sur toutes les pages par élément ; plus d'air avant les sous-navigations ; cartes des hubs alignées.
+  - collectibles.html refaite ; deux nouveaux jeux et une progression commune (jeux.html) ; Atelier 3D « En construction ».
+  - Léo répond dans les six langues ; 28 avertissements de référencement corrigés.
+
+LE JOUR J
+  outils/PROMPT-2-JOUR-J.txt : le prompt 2 ajusté, à coller dans une nouvelle conversation le 19 novembre.
+
+VÉRIFIÉ (détail : outils/RAPPORT-AUDIT-v8.04.md ; grille : outils/MATRICE-v8.04.md)
+  0 lien cassé sur 26 731 pages ; référencement : 0 défaut, 0 avertissement ; 0 texte sans traduction dans les cinq langues ;
+  851 résultats du calculateur identiques réglages éteints ; Léo 512 sur 512 ; 101 fichiers de tests, 1 296 tests réussis,
+  0 échec ; écrans de 320 à 2 560 px, mouvement réduit, accessibilité et langues contrôlés dans Chromium.

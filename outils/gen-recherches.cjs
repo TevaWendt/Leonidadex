@@ -21,6 +21,17 @@ module.exports = function run(H) {
   const para = list => (list || []).map(p => '<p>' + gta(p) + '</p>').join('');
   const ext = (href, label) => '<a href="' + esc(href) + '" target="_blank" rel="noopener nofollow">' + esc(label) + ' <span aria-hidden="true">↗</span></a>';
     const SITE = 'https://www.leonidakit.com';
+  /* v8.04 : les nombres que ces pages disent du site ne sont plus écrits à la main : {vehicules} (fiches de vehicules-data.js),
+     {lieux} (pages lieux-carte, les mêmes que lieux-carte/index.html) et {captures} (ceux qui ont une capture officielle),
+     calculés ici depuis les données, au format français (la mémoire de traduction reconnaît les nombres) */
+  const COUNTS = (() => {
+    const cx = { window: {} }; vm.createContext(cx); vm.runInContext(fs.readFileSync(path.join(root, 'vehicules-data.js'), 'utf8'), cx);
+    const INV = require('./couverture-pages.cjs'), LC = INV.FAMILLES.find(f => f.id === 'lieux-carte'), G = INV.donnees.GTA_BY_ID;
+    if (!LC || !LC.items.length || !Array.isArray(cx.window.LK_VEHICULES)) throw Error('gen-recherches : données des véhicules ou des lieux introuvables');
+    const fr = n => new Intl.NumberFormat('fr-FR').format(n), avecPage = LC.items.filter(l => l.page);
+    return { vehicules: fr(cx.window.LK_VEHICULES.length), lieux: fr(avecPage.length), captures: fr(avecPage.filter(l => (G.get(l.id) || {}).img).length) };
+  })();
+  const fillN = t => { const s = String(t).replace(/\{(vehicules|lieux|captures)\}/g, (m, k) => COUNTS[k]); if (/\{[a-z]+\}/.test(s)) throw Error('gen-recherches : marqueur inconnu dans « ' + s + ' »'); return s; };
   const WEBSITE = { '@id': SITE + '/#website' };
   const VIDEOGAME = { '@type': 'VideoGame', name: 'Grand Theft Auto VI' };
 
@@ -34,9 +45,8 @@ module.exports = function run(H) {
   /* statut + source en pied d’un point : « Officiel, Rockstar Support » */
   const stamp = (SRC, statut, id) => '<p class="rc-stamp">' + S.pip(statut, true) + srcRef(SRC, id) + '</p>';
   const links = (SRC, ids) => ids.map(id => ext(SRC[id].url, SRC[id].short || SRC[id].publisher)).join(', ');
-  /* encadré « Ce qui n’est pas confirmé » : tuiles sombres à point d’interrogation (comme Ce qui est confirmé) */
-  /* v8.01 : un visuel officiel en fond de chaque question, assombri, qui s’éclaire au survol (vitrine.css, 31) */
-  const openQs = items => '<ul class="vf-qs rc-qs vt-in" data-lk-reveal>' + items.map((x, i) => '<li class="vf-q' + (x.media ? ' vt-has-bg' : '') + '" id="' + esc(x.id) + '" style="--i:' + i + '">' + (x.media ? VT.bg(x.media, x.mediaAlt) : '') + '<span class="vf-q-ico">' + S.icon(x.ico) + '<b class="vt-stamp" aria-hidden="true">?</b></span><h3>' + gta(x.t) + '</h3><p>' + gta(x.d) + '</p>' + (x.ou ? '<p class="rc-q-ou"><span>' + esc(x.ouLabel) + '</span> ' + x.ou + '</p>' : '') + '</li>').join('') + '</ul>';
+  /* v8.04 : les questions ouvertes ne sont plus des tuiles sombres (openQs) : tableau de bord (Préchargement) et cartes-liens
+     (GTA VI et GTA V), plus bas */
   /* points clés (vitrine.css, 16) : icône de la charte, titre, texte, statut et source */
   const points = (list, SRC, o = {}) => '<ul class="vt-points vt-in vt-in--deal" style="--n:' + (o.n || list.length) + '" data-lk-reveal>' + list.map((p, i) => '<li style="--i:' + i + '"><div class="vt-point' + (p.main ? ' rc-point--main' : '') + '"><span class="vt-point-ico">' + S.icon(p.icon) + '</span><h3>' + gta(p.t) + '</h3><p>' + gta(p.d) + '</p>' + (p.src ? stamp(SRC, p.statut || 'officiel', p.src) : '') + '</div></li>').join('') + '</ul>';
   /* coupures de presse : citations rapportées, en anglais, avec leur auteur, leur date et la source */
@@ -50,14 +60,38 @@ module.exports = function run(H) {
     code: '<svg viewBox="0 0 120 84" fill="none" stroke="#1A1A1E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="26" width="80" height="36" rx="6" fill="#FDFBF7"/><path d="M30 44h8M44 44h8M58 44h8M72 44h8M86 44h4" stroke-width="3.2" stroke="#F5A524"/><path d="M30 54h40" stroke="#1A1A1E" stroke-dasharray="4 4"/><path d="M92 18l6 6-6 6" stroke="#E8452C"/></svg>'
   };
   /* v8.01 : une mosaïque d’images titrée (vitrine.cjs → mosaic) : titre, phrase, tuiles-liens vers des pages du site */
-  const mosaique = (M, cls) => '<div class="rc-mosaic' + (cls ? ' ' + cls : '') + '"><h3 class="ed-h3 rc-h3">' + gta(M.titre) + '</h3><p class="rc-lede2">' + gta(M.lede) + '</p>' + VT.mosaic(M.items.map(x => ({ ...x, go: M.go })), { cls: 'rc-mosaic-l' }) + '</div>';
+  const mosaique = (M, cls) => '<div class="rc-mosaic' + (cls ? ' ' + cls : '') + '"><h3 class="ed-h3 rc-h3">' + gta(M.titre) + '</h3><p class="rc-lede2">' + gta(M.lede) + '</p>' + VT.mosaic(M.items.map(x => ({ ...x, title: fillN(x.title), text: x.text === undefined ? x.text : fillN(x.text), go: M.go })), { cls: 'rc-mosaic-l' }) + '</div>';
   /* v8.01 : la console dessinée (recherches.css, 9) : la vignette du jeu avec la jaquette officielle, une barre en attente qui
      respire, les deux dates ; tout est écrit en texte (traduit comme le reste), rien n’est une capture d’écran de console */
   const console_ = (A, size) => '<figure class="rc-console lk-reveal"><div class="rc-console-screen"><p class="rc-console-k">' + esc(A.kicker) + '</p><div class="rc-console-tile"><span class="rc-console-cover">' + VT.img('cover-art-officielle', 'La jaquette officielle de GTA VI, visuel officiel Rockstar Games', { sizes: '96px' }) + '</span><span class="rc-console-txt"><b>' + gta(A.label) + '</b><small>' + esc(A.sub) + '</small></span></div><div class="rc-console-bar' + (size ? ' rc-console-bar--on' : '') + '"><i aria-hidden="true"></i><span>' + esc(A.bar) + '</span></div><p class="rc-console-meta"><span>' + esc(size ? size : A.size) + '</span><span>' + esc(A.play) + '</span></p></div><div class="rc-console-base" aria-hidden="true"><i></i></div></figure>';
   /* v8.01 : vrai ou faux (recherches.css, 10) : ce qu’on propose (tampon « Faux ») face à ce qui existe (tampon « Officiel ») */
   const vraiFaux = VF => '<div class="rc-vf"><h3 class="ed-h3 rc-h3">' + gta(VF.titre) + '</h3><div class="rc-vf-grid">' + [['faux', VF.faux], ['vrai', VF.vrai]].map(([k, c], i) => '<div class="rc-vf-card rc-vf-card--' + k + ' lk-reveal" style="--i:' + i + '"><span class="rc-vf-stamp vt-stamp" aria-hidden="true">' + esc(c.stamp) + '</span><span class="sr-only">' + esc(c.stamp) + ' : </span><p class="rc-vf-k">' + esc(c.k) + '</p><p class="rc-vf-t">' + gta(c.t) + '</p><ul class="rc-vf-l">' + c.lines.map(l => '<li>' + gta(l) + '</li>').join('') + '</ul><p class="rc-vf-f">' + gta(c.foot) + '</p></div>').join('') + '</div></div>';
-  /* la marche à suivre d’une console : titre, étapes illustrées (vitrine.css, 7), statut et source */
-  const howto = (c, SRC) => '<div class="rc-howto"><h3 class="rc-howto-t"><span class="ed-col-ico">' + S.icon(c.icon) + '</span>' + esc(c.titre) + '</h3>' + VT.steps(c.steps.map(s => ({ title: s.t, text: s.d, ill: ILL[s.ill] })), { cls: 'rc-steps' }) + '<p class="rc-stamp">' + S.pip('officiel', true) + srcRef(SRC, c.src) + '</p></div>';
+  /* v8.04 (refonte) : la marche à suivre d’une console, posée dans un écran de menu de console (panneau nuit, barre du haut,
+     une ligne par étape : numéro, dessin, titre, texte) ; à l’entrée, l’écran s’allume puis les étapes s’allument dans l’ordre
+     (recherches.css, « v8.04 refonte C ») ; le statut et la source en pied d’écran. Une suite réelle : les numéros servent. */
+  const howto = (c, SRC, k) => '<div class="rc-os rc-os--' + k + '" data-lk-reveal>'
+    + '<div class="rc-os-bar"><span class="rc-os-ico" aria-hidden="true">' + S.icon(c.icon) + '</span><h3 class="rc-os-t">' + esc(c.titre) + '</h3><span class="rc-os-led" aria-hidden="true"><i></i><i></i><i></i></span></div>'
+    + '<ol class="rc-os-l">' + c.steps.map((s, i) => '<li class="rc-os-i" style="--i:' + i + '"><span class="rc-os-n" aria-hidden="true">' + (i + 1) + '</span><span class="rc-os-ill" aria-hidden="true">' + ILL[s.ill] + '</span><span class="rc-os-b"><b>' + gta(s.t) + '</b><span>' + gta(s.d) + '</span></span></li>').join('') + '</ol>'
+    + '<p class="rc-stamp rc-os-f">' + S.pip('officiel', true) + srcRef(SRC, c.src) + '</p></div>';
+  /* v8.04 : statut et source d’une carte-lien, écrits sans lien (un lien ne se met pas dans un autre) : « Vu dans un média,
+     Famitsu, 28 août 2026 » ; la source elle-même reste dans la liste des sources en bas de page */
+  const stText = (SRC, statut, id) => { const s = SRC[id]; if (!s) throw Error('Source inconnue : ' + id); return '<span class="rc-cardst">' + S.pip(statut, true) + '<span>' + esc(s.short || s.publisher) + (s.publishedAt ? ', ' + esc(frDate(s.publishedAt)) : '') + '</span></span>'; };
+  /* v8.04 : dessins en traits de la charte (jamais un logo ni une capture de console) : consoles, PC, cadenas, voiture d’arcade,
+     drapeaux, disque, horloge */
+  const PIC = {
+    console: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10h16a8 8 0 0 1 8 8v34H20z"/><path d="M20 52h24"/><path d="M28 18h8"/><circle cx="32" cy="44" r="2" fill="currentColor"/></svg>',
+    manette: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 22h28c6 0 10 5 11 11l2 11c1 5-5 8-9 4l-6-6H20l-6 6c-4 4-10 1-9-4l2-11c1-6 5-11 11-11z"/><path d="M20 30v8M16 34h8"/><circle cx="43" cy="31" r="2" fill="currentColor"/><circle cx="48" cy="36" r="2" fill="currentColor"/></svg>',
+    pc: '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="12" width="48" height="32" rx="4"/><path d="M26 54h12M32 44v10"/><path d="M16 20h12" opacity=".5"/></svg>',
+    cadenas: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="11" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14.5v3"/></svg>',
+    auto: '<svg viewBox="0 0 40 20" shape-rendering="crispEdges" fill="currentColor"><path d="M8 4h16v2h4v2h6v2h2v6h-4v-2h-4v2H12v-2H8v2H4v-2H2v-6h2V8h4z"/><path d="M12 6h4v3h-6V8h2zM18 6h4v2h2v1h-6z" fill="#241740"/><rect x="8" y="14" width="4" height="4" fill="#1A1A1E"/><rect x="28" y="14" width="4" height="4" fill="#1A1A1E"/><rect x="34" y="10" width="2" height="2" fill="#FDFBF7"/></svg>',
+    drapeau: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 4h12l-3 4 3 4H6"/></svg>',
+    arrivee: '<svg viewBox="0 0 24 24" shape-rendering="crispEdges"><path d="M5 3h2v18H5z" fill="currentColor"/><path d="M7 4h4v3H7zM15 4h4v3h-4zM11 7h4v3h-4zM7 10h4v3H7zM15 10h4v3h-4z" fill="currentColor"/><path d="M11 4h4v3h-4zM7 7h4v3H7zM15 7h4v3h-4zM11 10h4v3h-4z" fill="currentColor" opacity=".25"/></svg>',
+    disque: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="4"/><path d="M8 40 40 8" stroke-width="3.6"/></svg>'
+  };
+  /* v8.04 : une horloge dessinée (préchargement : minuit) ; les aiguilles tournent jusqu’à minuit à l’entrée (recherches.css) */
+  const clock = () => '<svg class="rc-clock" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" class="rc-clock-face"/>'
+    + Array.from({ length: 12 }, (_, i) => { const a = i * Math.PI / 6, r1 = i % 3 ? 37 : 33, x1 = 50 + r1 * Math.sin(a), y1 = 50 - r1 * Math.cos(a), x2 = 50 + 40 * Math.sin(a), y2 = 50 - 40 * Math.cos(a); return '<path d="M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + 'L' + x2.toFixed(1) + ' ' + y2.toFixed(1) + '" class="rc-clock-tick' + (i % 3 ? '' : ' is-q') + '"/>'; }).join('')
+    + '<g class="rc-clock-h"><path d="M50 50V27"/></g><g class="rc-clock-m"><path d="M50 50V15"/></g><circle cx="50" cy="50" r="4.5" class="rc-clock-c"/></svg>';
 
   const LDPage = (file, X, more) => Object.assign({ '@context': 'https://schema.org', '@type': 'WebPage', '@id': SITE + '/' + file + '#webpage', url: SITE + '/' + file, name: X.title, description: X.description, inLanguage: 'fr-FR', isPartOf: WEBSITE, datePublished: X.publishedAt, dateModified: X.checkedAt, about: VIDEOGAME }, more || {});
   const opts = (X, extra) => Object.assign({ cls: 'info-page--recherche', css: ['vitrine.css', 'recherches.css'], scripts: ['vitrine.js'], og: SITE + (visuals.pick(X.stack)[0].big || visuals.pick(X.stack)[0].src) }, extra || {});
@@ -79,10 +113,10 @@ module.exports = function run(H) {
       '<div class="rc-dates-grid"><div class="rc-state rc-state--' + esc(X.etat) + ' lk-reveal" data-lk-preload="' + esc(D[0].iso) + '"><p class="rc-state-k">' + esc(E.etatLabel) + '</p><p class="rc-state-t">' + gta(E.etatTexte) + '</p>' + (X.etat === 'ouvert' ? '<dl class="rc-state-dl"><div><dt>' + esc(X.ouvert.heureLabel) + '</dt><dd>' + esc(X.ouvert.heure) + '</dd></div><div><dt>' + esc(X.ouvert.taillePs5Label) + '</dt><dd>' + esc(X.ouvert.taillePs5) + '</dd></div><div><dt>' + esc(X.ouvert.tailleXboxLabel) + '</dt><dd>' + esc(X.ouvert.tailleXbox) + '</dd></div></dl>' : '') + '</div>'
       + console_(X.avant.anim, X.etat === 'ouvert' && X.ouvert.taillePs5 ? X.ouvert.taillePs5Label + ' : ' + X.ouvert.taillePs5 : null) + '</div>'
       + VT.rail(D.map(d => ({ iso: d.iso, date: frDate(d.iso), title: gta(d.t), text: gta(d.d), foot: VT.cd(d.iso) + srcRef(SRC, d.src), main: d.main })), { cls: 'rc-rail' })));
-    /* 2. comment précharger (PS5, Xbox), d’après les pages d’assistance officielles : étapes dessinées */
+    /* 2. comment précharger (PS5, Xbox), d’après les pages d’assistance officielles : deux écrans de menu de console (v8.04) */
     const C = X.comment;
     parts.push(sec({ id: 'comment', kicker: C.kicker, title: C.title, icon: 'conduite', tone: 'paper', accent: 'coral', lede: gta(C.lede) },
-      '<div class="rc-howtos">' + C.consoles.map(c => howto(c, SRC)).join('') + '</div><div class="ed-callout rc-callout"><p>' + gta(C.note) + '</p></div>'));
+      '<div class="rc-oss">' + C.consoles.map((c, i) => howto(c, SRC, i ? 'xbox' : 'ps')).join('') + '</div><div class="ed-callout rc-callout"><p>' + gta(C.note) + '</p></div>'));
     /* 3. le temps de téléchargement : calcul du visiteur (taille tapée, débit tapé) et repère de la série */
     const Tm = X.temps;
     parts.push(sec({ id: 'temps', kicker: Tm.kicker, title: Tm.title, icon: 'calcul', tone: 'night', lede: gta(Tm.lede) },
@@ -90,14 +124,22 @@ module.exports = function run(H) {
       + '<div class="rc-reperes lk-reveal"><p class="rc-reperes-k">' + S.pip('serie', true) + '</p><h3>' + esc(Tm.repereTitle) + '</h3>'
       + VT.figs(Tm.reperes.map(r => ({ n: r.n + ' ' + r.unit, label: r.label, accent: !!r.open })), { cls: 'rc-figs rc-figs--3' })
       + '<p class="rc-reperes-n">' + gta(Tm.repereNote) + ' ' + srcRef(SRC, 'gi-rdr2') + '</p></div>'));
-    /* 4. la boîte : la jaquette officielle à côté des trois points */
-    const B = X.boite;
+    /* 4. la boîte (v8.04) : la jaquette officielle posée en boîte (face, tranche), qui s’ouvre à l’entrée : la carte du code glisse
+       hors de la boîte, le disque barré se pose à côté (rien n’est une photo du produit : la jaquette officielle et des formes
+       dessinées) ; les trois points à côté */
+    const B = X.boite, Bs = B.scene;
     parts.push(sec({ id: 'boite', kicker: B.kicker, title: B.title, icon: 'kit', tone: 'paper2', lede: gta(B.lede) },
-      '<div class="vt-split vt-split--top rc-boite"><figure class="rc-boite-fig lk-reveal" data-vt-tilt="6">' + VT.img('cover-art-officielle', 'La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, Raul, un alligator et des scènes de Leonida, visuel officiel Rockstar Games', { sizes: '(max-width:899px) 70vw, 380px' }) + '<figcaption>' + esc(B.credit || 'Jaquette officielle, Rockstar Games') + '</figcaption></figure><div>' + points(B.points, SRC, { n: 1 }) + '<p class="rc-more"><a href="editions.html#boite">' + esc(B.lien) + '</a></p></div></div>'));
-    /* 5. ce qui n’est pas confirmé, et où ce sera annoncé */
+      '<div class="vt-split vt-split--top rc-boite"><div class="rc-box vt-tilt" data-lk-reveal data-vt-tilt="6"><div class="rc-box-3d"><span class="rc-box-face">' + VT.img('cover-art-officielle', 'La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, Raul, un alligator et des scènes de Leonida, visuel officiel Rockstar Games', { sizes: '(max-width:899px) 62vw, 300px' }) + '</span><span class="rc-box-side" aria-hidden="true"></span></div>'
+      + '<span class="rc-box-code" aria-hidden="true"><b>' + esc(Bs.code) + '</b><i class="rc-box-mask"></i></span><span class="rc-box-disc" aria-hidden="true">' + PIC.disque + '<b>' + esc(Bs.disque) + '</b></span></div>'
+      + '<div>' + points(B.points, SRC, { n: 1 }) + '<p class="rc-more"><a href="editions.html#boite">' + esc(B.lien) + '</a></p></div></div>'));
+    /* 5. ce qui n’est pas confirmé, et où ce sera annoncé (v8.04) : un tableau de bord de trois instruments : la jauge de stockage
+       vide (« ? Go ») pour la taille, deux horloges qui tombent sur minuit pour les heures (ce que dit chaque source, rien de plus) */
     const P = X.pasConfirme;
+    const instr = x => x.id === 'q-taille'
+      ? '<div class="rc-gauge" aria-hidden="true"><b class="rc-gauge-n">? Go</b><span class="rc-gauge-bar">' + '<i></i>'.repeat(10) + '</span></div>'
+      : '<div class="rc-clk" aria-hidden="true">' + clock() + '<b class="rc-clk-d">' + esc(x.jour) + '</b></div>';
     parts.push(sec({ id: 'pas-confirme', kicker: P.kicker, title: P.title, icon: 'sablier', tone: 'paper', accent: 'coral', lede: gta(P.lede) },
-      openQs(P.items.map(x => ({ ...x, ouLabel: P.ouLabel, ou: x.ou ? links(SRC, x.ou) : null })))
+      '<ul class="rc-hud" data-lk-reveal>' + P.items.map((x, i) => '<li class="rc-hud-i' + (x.statut === 'officiel' ? ' is-known' : '') + '" id="' + esc(x.id) + '" style="--i:' + i + '">' + instr(x) + '<div class="rc-hud-b"><h3>' + gta(x.t) + '</h3><p>' + gta(x.d) + '</p>' + (x.statut ? '<p class="rc-stamp">' + S.pip(x.statut, true) + '</p>' : '') + (x.ou ? '<p class="rc-q-ou"><span>' + esc(P.ouLabel) + '</span> ' + links(SRC, x.ou) + '</p>' : '') + '</div></li>').join('') + '</ul>'
       + '<div class="ed-callout rc-callout rc-callout--maj"><p>' + gta(P.maj) + '</p></div>'));
     /* 6. avant le 12 novembre : la liste, à cocher, gardée sur l’appareil */
     const L = X.liste;
@@ -114,23 +156,33 @@ module.exports = function run(H) {
     const X = ED_ALL.pc, SRC = X.sources;
     let n = 0; const parts = [S.nav(X.nav, 'Sections de la page')];
     const sec = (o, body) => S.section({ ...o, num: ++n }, body);
-    /* 1. ce que Rockstar a annoncé : trois points ; ce que Take-Two a dit : deux coupures de presse */
-    const O = X.officiel;
+    /* 1. ce que Rockstar a annoncé (v8.04) : un écran de sélection de plateforme (PS5 et Xbox Series allumées, PC verrouillé),
+       les trois points alignés dessous ; ce que Take-Two a dit : deux transcriptions alignées */
+    const O = X.officiel, Ec = O.ecran;
+    const plat = '<div class="rc-plat" data-lk-reveal><div class="rc-plat-scr"><p class="rc-plat-k">' + esc(Ec.kicker) + '</p><ul class="rc-plat-l">'
+      + Ec.items.map((p, i) => '<li class="rc-plat-i ' + (p.ferme ? 'is-locked' : 'is-on') + '" style="--i:' + i + '"><span class="rc-plat-ico" aria-hidden="true">' + PIC[p.pic] + (p.ferme ? '<span class="rc-plat-lock">' + PIC.cadenas + '</span>' : '') + '</span><b translate="no">' + esc(p.nom) + '</b><span class="rc-plat-s">' + esc(p.etat) + '</span></li>').join('') + '</ul></div>'
+      + '<ul class="rc-plat-pts">' + O.points.map((p, i) => '<li class="rc-plat-pt' + (p.main ? ' is-main' : '') + '" style="--i:' + i + '"><span class="rc-plat-pt-ico" aria-hidden="true">' + S.icon(p.icon) + '</span><h3>' + gta(p.t) + '</h3><p>' + gta(p.d) + '</p>' + stamp(SRC, p.statut || 'officiel', p.src) + '</li>').join('') + '</ul></div>';
     parts.push(sec({ id: 'officiel', kicker: O.kicker, title: O.title, icon: 'statuts', tone: 'paper2', lede: gta(O.lede) },
-      points(O.points, SRC) + (O.dits ? '<h3 class="ed-h3 rc-h3">' + esc(O.ditTitre) + '</h3><p class="rc-lede2">' + gta(O.ditLede) + '</p>' + clips(O.dits, SRC) : '')
+      plat + (O.dits ? '<h3 class="ed-h3 rc-h3">' + esc(O.ditTitre) + '</h3><p class="rc-lede2">' + gta(O.ditLede) + '</p>' + clips(O.dits, SRC) : '')
       + mosaique(O.mosaique)/* v8.01 : le jeu annoncé, en images officielles */));
-    /* 2. les précédents de la série : une frise datée, consoles puis PC, avec l’écart ; GTA VI reste une ligne ouverte */
+    /* 2. les précédents de la série (v8.04) : une course d’arcade : une piste par jeu, toutes partent de la sortie sur consoles ;
+       la barre file jusqu’à la sortie sur PC (longueur = temps écoulé, un repère par année sur la piste), l’écart s’affiche en
+       chiffres d’arcade ; GTA VI attend sur la ligne de départ. Les dates exactes sont écrites à côté de chaque piste. */
     const R = X.serie;
     const months = (a, b) => { const A = new Date(a + 'T12:00:00Z'), B = new Date(b + 'T12:00:00Z'); return Math.round((B - A) / (30.4375 * 864e5)); };
     const gap = m => m >= 24 ? R.ans.replace('{n}', String(Math.round(m / 12))) : R.mois.replace('{n}', String(m));
+    const maxM = Math.max(...R.items.filter(x => x.pc).map(x => months(x.consoles, x.pc)));
+    const lane = (x, i) => { const m = x.pc ? months(x.consoles, x.pc) : 0, p = x.pc ? Math.max(3, 100 * m / maxM) : 0, d = Math.round(420 + 880 * p / 100);
+      return '<li class="rc-lane' + (x.pc ? '' : ' rc-lane--open') + '" style="--i:' + i + ';--p:' + p.toFixed(2) + '%;--d:' + d + 'ms">'
+        + '<div class="rc-lane-h"><h3 translate="no">' + esc(x.jeu) + '</h3><p class="rc-lane-dates"><span><b>' + esc(R.consolesLabel) + '</b> <time datetime="' + esc(x.consoles) + '">' + esc(frDate(x.consoles)) + '</time></span><span><b>' + esc(R.pcLabel) + '</b> ' + (x.pc ? '<time datetime="' + esc(x.pc) + '">' + esc(frDate(x.pc)) + '</time>' : esc(R.openLabel)) + '</span></p><p class="rc-lane-f">' + S.pip(x.pc ? 'serie' : 'officiel', true) + srcRef(SRC, x.src) + '</p></div>'
+        + '<div class="rc-lane-t"><span class="rc-lane-flag" aria-hidden="true">' + PIC.drapeau + '</span><span class="rc-lane-track" aria-hidden="true"><span class="rc-lane-run">' + (x.pc ? '<span class="rc-lane-end">' + PIC.arrivee + '</span>' : '') + '<span class="rc-lane-car">' + PIC.auto + '</span></span></span><b class="rc-lane-gap">' + esc(x.pc ? gap(m) : R.pcLabel + ' : ' + R.openLabel) + '</b></div></li>'; };
     parts.push(sec({ id: 'serie', kicker: R.kicker, title: R.title, icon: 'horloge', tone: 'paper', accent: 'coral', lede: gta(R.lede) },
-      VT.dated({ from: R.axe.from, to: R.axe.to, ticks: R.axe.ticks, aLabel: R.consolesLabel, bLabel: R.pcLabel, openLabel: R.openLabel,
-        rows: R.items.map(x => ({ label: x.jeu, a: { iso: x.consoles, label: frDate(x.consoles) }, b: x.pc ? { iso: x.pc, label: frDate(x.pc) } : null, gap: x.pc ? gap(months(x.consoles, x.pc)) : '', foot: S.pip(x.pc ? 'serie' : 'officiel', true) + srcRef(SRC, x.src) })) })
-      + '<div class="ed-callout rc-callout"><p>' + gta(R.note) + '</p></div>'));
+      '<div class="rc-race" data-lk-reveal style="--yr:' + (1200 / maxM).toFixed(3) + '%"><div class="rc-race-hd"><span>' + esc(R.depart) + '</span><span>' + esc(R.echelle) + '</span><span>' + esc(R.arrivee) + '</span></div><ol class="rc-race-l">' + R.items.map(lane).join('') + '</ol></div>'
+      + '<div class="ed-callout rc-callout"><p>' + gta(R.note) + (R.noteSrc ? ' ' + srcRef(SRC, R.noteSrc) : '') + '</p></div>'));
     /* 3. l’encadré « arnaque » */
     const A = X.arnaque;
     parts.push(sec({ id: 'arnaques', kicker: A.kicker, title: A.title, icon: 'droits', tone: 'night', accent: 'coral', lede: gta(A.lede) },
-      '<div class="rc-alert lk-reveal"><p class="rc-alert-t">' + gta(A.phrase) + '</p>' + para(A.p) + '<ul class="rc-alert-l">' + A.regles.map(r => '<li>' + gta(r) + '</li>').join('') + '</ul><p class="rc-alert-f">' + esc(A.officielLabel) + ' ' + links(SRC, A.officiel) + '</p>' + (A.srcs ? '<p class="rc-stamp">' + S.pip('officiel', true) + A.srcs.map(id => srcRef(SRC, id)).join(', ') + '</p>' : '') + '</div>'
+      '<div class="rc-alert lk-reveal"><p class="rc-alert-t">' + gta(A.phrase) + '</p>' + para(A.p) + '<ul class="rc-alert-l">' + A.regles.map(r => '<li>' + gta(r) + '</li>').join('') + '</ul><p class="rc-alert-f">' + esc(A.officielLabel) + ' ' + links(SRC, A.officiel) + '</p>' + (A.srcs ? '<p class="rc-stamp">' + S.pip('officiel', true) + A.srcs.map(id => srcRef(SRC, id)).join(', ') + (A.srcsVu ? '<span class="rc-stamp-sep" aria-hidden="true"></span>' + S.pip('vu', true) + A.srcsVu.map(id => srcRef(SRC, id)).join(', ') : '') + '</p>' : '') + '</div>'
       + vraiFaux(A.vraiFaux)/* v8.01 : la fausse page face à l’annonce officielle */));
     /* 4. où suivre l’annonce */
     const W = X.suivre;
@@ -147,26 +199,40 @@ module.exports = function run(H) {
     const X = ED_ALL.comparatif, SRC = X.sources;
     let n = 0; const parts = [S.nav(X.nav, 'Sections de la page')];
     const sec = (o, body) => S.section({ ...o, num: ++n }, body);
-    /* 1. le tableau : une ligne par sujet, GTA VI (confirmé, source) face à GTA V (repère de la série), lien vers la page du site */
+    /* 1. le tableau (v8.04) : un écran « VERSUS » : « VI » et « V » en très grand, le badge VS qui claque une fois ; chaque sujet est
+       un duel (GTA VI d’un côté, GTA V de l’autre, le sujet, son icône et la page du site au centre). Dans la page, le sujet vient
+       d’abord (lecteurs d’écran), puis GTA VI, puis GTA V ; au téléphone, un choix « Les deux, GTA VI, GTA V » (CSS seul). */
     const T = X.tableau;
-    const cell = (c, cls) => '<td class="' + cls + '" data-l="' + esc(cls === 'rc-cmp-vi' ? T.colVI : T.colV) + '"><span class="rc-cmp-v">' + gta(c.v) + '</span>' + (c.note ? '<span class="rc-cmp-n">' + gta(c.note) + '</span>' : '') + '<span class="rc-cmp-s">' + S.pip(c.statut, true) + (c.src ? srcRef(SRC, c.src) : '') + '</span></td>';
-    const table = '<div class="rc-cmp-wrap"><table class="rc-cmp"><caption class="sr-only">' + esc(T.caption) + '</caption><thead><tr><th scope="col">' + esc(T.colSujet) + '</th><th scope="col" class="rc-cmp-vi">' + esc(T.colVI) + '</th><th scope="col">' + esc(T.colV) + '</th></tr></thead><tbody>'
-      + T.rows.map(r => '<tr id="' + esc(r.id) + '"><th scope="row"><span class="rc-cmp-ico">' + S.icon(r.icon) + '</span><span class="rc-cmp-sub">' + gta(r.sujet) + '</span><a class="rc-cmp-link" href="' + esc(r.href) + '">' + esc(r.label) + '</a></th>' + cell(r.vi, 'rc-cmp-vi') + cell(r.v, 'rc-cmp-v5') + '</tr>').join('') + '</tbody></table></div>';
-    parts.push(sec({ id: 'tableau', kicker: T.kicker, title: T.title, icon: 'balance', tone: 'paper2', lede: gta(T.lede) }, table + '<ul class="rc-legend"><li>' + S.pip('officiel', true) + ' ' + esc(T.legOfficiel) + '</li><li>' + S.pip('vu', true) + ' ' + esc(T.legVu) + '</li><li>' + S.pip('serie', true) + ' ' + esc(T.legSerie) + '</li><li>' + S.pip('conf', true) + ' ' + esc(T.legConf) + '</li></ul>'));
-    /* 2. la carte, mot pour mot : les deux coupures, le rapport des deux cartes en surfaces, et ce que ça veut dire */
-    const M = X.carte, Eh = M.echelle;
+    const side = (c, k, label) => '<div class="rc-vs-c rc-vs-c--' + k + '"><p class="rc-vs-v"><span class="rc-vs-tag">' + esc(label) + '<span class="sr-only"> : </span></span>' + gta(c.v) + '</p>' + (c.note ? '<p class="rc-vs-n">' + gta(c.note) + '</p>' : '') + '<p class="rc-vs-s">' + S.pip(c.statut, true) + (c.src ? srcRef(SRC, c.src) : '') + '</p></div>';
+    const vs = '<div class="rc-vs"><div class="rc-vs-top" aria-hidden="true" data-lk-reveal><span class="rc-vs-big rc-vs-big--vi"></span><span class="rc-vs-badge"></span><span class="rc-vs-big rc-vs-big--v"></span></div>'
+      + '<div class="rc-vs-heads" aria-hidden="true"><span class="rc-vs-h rc-vs-h--vi">' + esc(T.colVI) + '</span><span class="rc-vs-h rc-vs-h--v">' + esc(T.colV) + '</span></div>'
+      + '<fieldset class="rc-vs-pick"><legend>' + esc(T.pick.label) + '</legend>' + [['deux', T.pick.deux], ['vi', T.pick.vi], ['v', T.pick.v]].map(([v, l], i) => '<label><input type="radio" name="rc-vs-pick" value="' + v + '"' + (i ? '' : ' checked') + '><span>' + esc(l) + '</span></label>').join('') + '</fieldset>'
+      + '<ol class="rc-vs-l">' + T.rows.map((r, i) => '<li class="rc-vs-r" id="' + esc(r.id) + '" style="--i:' + i + '" data-lk-reveal><div class="rc-vs-mid"><span class="rc-vs-ico" aria-hidden="true">' + S.icon(r.icon) + '</span><h3>' + gta(r.sujet) + '</h3><a class="rc-vs-link" href="' + esc(r.href) + '">' + esc(r.label) + '</a></div>' + side(r.vi, 'vi', T.colVI) + side(r.v, 'v', T.colV) + '</li>').join('') + '</ol></div>';
+    parts.push(sec({ id: 'tableau', kicker: T.kicker, title: T.title, icon: 'balance', tone: 'paper2', lede: gta(T.lede) }, vs + '<ul class="rc-legend"><li>' + S.pip('officiel', true) + ' ' + esc(T.legOfficiel) + '</li><li>' + S.pip('vu', true) + ' ' + esc(T.legVu) + '</li><li>' + S.pip('serie', true) + ' ' + esc(T.legSerie) + '</li><li>' + S.pip('conf', true) + ' ' + esc(T.legConf) + '</li></ul>'));
+    /* 2. la carte, mot pour mot (v8.04) : les deux citations, alignées ; puis la proportion rapportée en superposition : le carré
+       GTA VI porte le fond de carte du site (reconstruction communautaire, dite comme telle), le carré GTA V une trame de référence,
+       à la moitié de la surface ; un curseur fait glisser GTA V sur GTA VI (vitrine.js). Aucune image de la carte de GTA V : on
+       ne la dessine pas. */
+    const M = X.carte, Ov = M.superpose;
+    const ov = '<div class="rc-ov" data-rc-ov data-lk-reveal><div class="rc-ov-stage" style="--t:0">'
+      + '<div class="rc-ov-vi"><img src="img/leonida-carte.svg" width="520" height="600" alt="' + esc(Ov.alt) + '" loading="lazy" decoding="async"><span class="rc-ov-l"><b translate="no">GTA VI</b><span>' + esc(Ov.vi) + '</span></span></div>'
+      + '<div class="rc-ov-v5"><span class="rc-ov-l"><b translate="no">GTA V</b><span>' + esc(Ov.v) + '</span></span><span class="rc-ov-half">' + esc(Ov.moitie) + '</span></div></div>'
+      + '<label class="rc-ov-ctl" hidden><span>' + esc(Ov.curseur) + '</span><input type="range" min="0" max="100" step="1" value="0" data-rc-ov-in></label>'
+      + '<p class="rc-ov-cap">' + S.pip(Ov.statut, true) + ' ' + gta(Ov.caption) + '</p></div>';
     parts.push(sec({ id: 'carte', kicker: M.kicker, title: M.title, icon: 'carte', tone: 'paper', accent: 'coral', lede: gta(M.lede) },
-      clips(M.citations, SRC) + '<div class="vt-split vt-split--top rc-carte"><div>' + para(M.p) + '</div>' + VT.areas(Eh.a, Eh.b, S.pip(Eh.statut, true) + ' ' + gta(Eh.caption)) + '</div>'
+      clips(M.citations, SRC) + '<div class="vt-split vt-split--top rc-carte"><div>' + para(M.p) + '</div>' + ov + '</div>'
       + '<p class="rc-more"><a href="carte.html">' + esc(M.lien) + '</a><a href="lieux.html">' + esc(M.lien2) + '</a></p>'
       + mosaique(M.regions)/* v8.01 : les six régions, une tuile chacune */));
-    /* 3. ce qui est nouveau d’après les présentations officielles */
+    /* 3. ce qui est nouveau (v8.04) : six cartes-liens, chacune avec son statut et sa source écrits (sans lien imbriqué) ; à
+       l’entrée, l’image se découvre et le badge « Nouveau » clignote une fois, comme un objet débloqué ; au clic, la carte s’enfonce */
     const N = X.nouveau;
     parts.push(sec({ id: 'nouveau', kicker: N.kicker, title: N.title, icon: 'film', tone: 'night', lede: gta(N.lede) },
-      '<ul class="vt-cards vt-cards--3 vt-in vt-in--deal rc-cards" data-lk-reveal>' + N.items.map((p, i) => '<li style="--i:' + i + '">' + VT.card({ href: p.href, media: p.media, alt: p.alt, title: p.t, text: p.d, go: N.go }, { sizes: '(max-width:719px) 92vw, 420px' }) + '</li>').join('') + '</ul>'
-      + '<p class="rc-stamp rc-stamp--sec">' + S.pip('vu', true) + esc(N.statut) + ', ' + N.src.map(id => srcRef(SRC, id)).join(', ') + '</p>'));
-    /* 4. ce qu’on ne peut pas encore comparer */
+      '<ul class="rc-new" data-lk-reveal>' + N.items.map((p, i) => '<li style="--i:' + i + '"><a class="rc-new-a" href="' + esc(p.href) + '"><span class="rc-new-m">' + VT.img(p.media, p.alt, { sizes: '(max-width:719px) 92vw, 420px' }) + '<span class="rc-new-badge">' + esc(N.badge) + '</span></span><span class="rc-new-b"><h3 class="rc-new-t">' + gta(p.t) + '</h3><span class="rc-new-d">' + gta(p.d) + '</span>' + stText(SRC, p.statut || 'vu', p.src) + '<span class="vt-go">' + esc(N.go) + '</span></span></a></li>').join('') + '</ul>'
+      + '<p class="rc-stamp rc-stamp--sec">' + esc(N.srcLabel) + ' ' + [...new Set(N.items.map(p => p.src))].map(id => srcRef(SRC, id)).join(', ') + '</p>'));
+    /* 4. ce qu’on ne peut pas encore comparer (v8.04) : six cartes-liens, chacune vers la page du site qui en parle */
     const P = X.pasEncore;
-    parts.push(sec({ id: 'pas-encore', kicker: P.kicker, title: P.title, icon: 'sablier', tone: 'paper2', accent: 'coral', lede: gta(P.lede) }, openQs(P.items)));
+    parts.push(sec({ id: 'pas-encore', kicker: P.kicker, title: P.title, icon: 'sablier', tone: 'paper2', accent: 'coral', lede: gta(P.lede) },
+      '<ul class="rc-qs2" data-lk-reveal>' + P.items.map((x, i) => '<li id="' + esc(x.id) + '" style="--i:' + i + '"><a class="rc-q2' + (x.media ? ' vt-has-bg' : '') + '" href="' + esc(x.href) + '">' + (x.media ? VT.bg(x.media, x.mediaAlt) : '') + '<span class="rc-q2-ico" aria-hidden="true">' + S.icon(x.ico) + '<b>?</b></span><h3>' + gta(x.t) + '</h3><span class="rc-q2-d">' + gta(fillN(x.d)) + '</span><span class="vt-go">' + esc(x.go) + '</span></a></li>').join('') + '</ul>'));
     parts.push(sec({ id: 'faq', kicker: X.faqKicker, title: X.faqTitle, icon: 'faq', tone: 'paper' }, VT.faqGrid(faqBlock(X.faq), leoAside(X.leo, 'leonida-keys-01', 'Route au-dessus de la mer dans les Leonida Keys, visuel officiel Rockstar Games'))));
     parts.push(sec({ id: 'sources', kicker: X.sourcesKicker, title: X.sourcesTitle, icon: 'lire', tone: 'paper2', lede: gta(X.sourcesLede) }, srcList(SRC, Object.keys(SRC))));
     build(X, parts, { ld: [LDPage(X.file, X), faqLD(X.faq)] });

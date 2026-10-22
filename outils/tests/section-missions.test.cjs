@@ -24,7 +24,8 @@ const FICTIVE = () => ({
 });
 
 test('modèle de données : aucune mission sans nom officiel, schéma documenté, types, valeurs au schéma des valeurs publiées', () => {
-  assert.equal(M.missions.length, 0, 'aucune mission n’a de nom officiel au 4 octobre 2026');
+  /* v8.04 (jour J) : aucune mission avant la sortie ; ensuite, seulement des missions dont le nom est publié */
+  assert.ok(M.missions.every(m => ['officiel', 'vu'].includes(m.statutNom)), 'chaque mission a un nom publié (statutNom officiel ou vu)');
   for (const k of ['id', 'nom', 'type', 'chapitre', 'personnages', 'lieux', 'deblocage', 'objectifs', 'recompenses', 'duree', 'medailles', 'manquable', 'solution', 'astuces', 'sources', 'statut']) assert.ok(M._schema[k], 'schéma : ' + k);
   assert.deepEqual(M.types.map(t => t.id), ['histoire', 'secondaire', 'braquage', 'rencontre', 'edition']);
   const ctx = G.context(root);
@@ -43,6 +44,8 @@ test('modèle de données : aucune mission sans nom officiel, schéma documenté
 });
 
 test('générateur, 0 mission : le hub dit qu’aucune mission n’est publiée, aucune fiche, seule la page modèle', () => {
+  /* v8.04 (jour J) : avec des missions publiées, une fiche par mission, plus la page modèle, jamais reliée */
+  if (M.missions.length) { assert.deepEqual(fs.readdirSync(path.join(root, 'missions')).filter(f => f.endsWith('.html')).sort(), [...M.missions.map(m => m.id + '.html'), 'modele.html'].sort()); assert.ok(!/href="missions\/modele\.html"/.test(read('missions.html'))); return; }
   assert.deepEqual(fs.readdirSync(path.join(root, 'missions')).filter(f => f.endsWith('.html')), ['modele.html']);
   const d = doc('missions.html');
   assert.ok(d.querySelector('#liste .missions-vide'));
@@ -83,14 +86,14 @@ test('pont avec le calculateur : une mission au gain et à la durée publiés de
   /* écriture sur une copie : ajout, idempotence, retrait ; le site lui-même n’a aucune activité de mission */
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'lk-missions-'));
   try {
-    const f = path.join(tmp, 'calculateurs-activites.js'); fs.copyFileSync(path.join(root, 'calculateurs-activites.js'), f); const orig = fs.readFileSync(f, 'utf8');
+    const f = path.join(tmp, 'calculateurs-activites.js'); fs.copyFileSync(path.join(root, 'calculateurs-activites.js'), f); G.pont(tmp, []); /* v8.04 (jour J) : la copie repart sans mission (le site peut déjà en porter) ; sans donnée, rien ne change */ const orig = fs.readFileSync(f, 'utf8');
     assert.deepEqual(G.pont(tmp, []), { ecrit: false, activites: 0 }); assert.equal(fs.readFileSync(f, 'utf8'), orig, 'fichier intact sans mission publiée');
     assert.equal(G.pont(tmp, [FICTIVE()]).ecrit, true);
-    const c2 = { window: {} }; vm.runInNewContext(fs.readFileSync(f, 'utf8'), c2); assert.equal(c2.window.LK_ACTIVITIES[0].id, 'mission-test-fictive');
+    const c2 = { window: {} }; vm.runInNewContext(fs.readFileSync(f, 'utf8'), c2); assert.ok(c2.window.LK_ACTIVITIES.some(x => x.id === 'mission-test-fictive')); /* v8.04 (jour J) : les activités déjà publiées du site restent devant */
     assert.equal(G.pont(tmp, [FICTIVE()]).ecrit, false, 'idempotent');
     assert.equal(G.pont(tmp, []).ecrit, true); assert.equal(fs.readFileSync(f, 'utf8'), orig, 'retour à l’état d’origine');
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
-  assert.doesNotMatch(read('calculateurs-activites.js'), /mission-/);
+  { const c = { window: {} }; vm.runInNewContext(read('calculateurs-activites.js'), c); assert.equal(c.window.LK_ACTIVITIES.filter(x => /^mission-/.test(x.id)).length, G.activitesDe(M.missions).length, 'aucune mission écrite tant que rien n’est publié (v8.02 : l’en-tête du fichier décrit ces identifiants, le tableau reste vide) ; v8.04 (jour J) : une par mission au gain et à la durée publiés'); }
 });
 
 test('missions.html : histoire, séquences, Édition Ultimate, guide, zone éditoriale, encart du calculateur, données structurées', () => {

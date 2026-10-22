@@ -134,14 +134,14 @@
    "title": "Game Informer : six stations de radio de GTA VI à écouter (texte de Rockstar)",
    "publishedAt": "2026-10-08",
    "consultedAt": "2026-10-10",
-   "statut": "officiel"
+   "statut": "vu"
   },
   "trois-couleurs": {
    "url": "https://www.troiscouleurs.fr/?p=74349",
    "title": "Trois Couleurs : la démo de GTA VI présentée par Rob Nelson",
    "publishedAt": "2026-08-27",
    "consultedAt": "2026-10-10",
-   "statut": "officiel"
+   "statut": "vu"
   },
   "techradar-16": {
    "url": "https://www.techradar.com/gaming/ps5/16-new-gta-6-details-we-learned-from-the-big-extended-look-gameplay-video-captured-in-game-on-a-ps5",
@@ -155,7 +155,7 @@
    "title": "Insider Gaming : Alexa D’Agostino (Rockstar) sur Lucia et Liberty City, sa ville natale",
    "publishedAt": null,
    "consultedAt": "2026-10-10",
-   "statut": "officiel"
+   "statut": "vu"
   },
   "nme-extended": {
    "url": "https://www.nme.com/features/gaming-features/gta6-netflix-jason-lucia-plot-reveals-soundtrack-3965148",
@@ -176,6 +176,20 @@
    "title": "MP1st : les détails de l’aperçu d’IGN (bracelet de Lucia, avis de recherche, planques)",
    "publishedAt": "2026-08-27",
    "consultedAt": "2026-10-10",
+   "statut": "vu"
+  },
+  "gamespot-lancement": {
+   "url": "https://www.gamespot.com/articles/things-we-noticed-in-the-gta-6-launch-trailer/",
+   "title": "GameSpot : dix choses remarquées dans la bande-annonce de lancement",
+   "publishedAt": "2026-10-15",
+   "consultedAt": "2026-10-21",
+   "statut": "vu"
+  },
+  "svg-lancement": {
+   "url": "https://www.svg.com/2287842/gta-6-launch-trailer-breakdown-biggest-reveals/",
+   "title": "SVG : GTA 6 Launch Trailer Breakdown, 5 Biggest Reveals",
+   "publishedAt": "2026-10-15",
+   "consultedAt": "2026-10-21",
    "statut": "vu"
   }
  },
@@ -246,7 +260,7 @@
     },
     {
      "ev": "presse",
-     "statut": "officiel",
+     "statut": "vu",
      "media": null,
      "texte": "Selon Rob Nelson, qui présentait la démo, Vice City fait à elle seule deux fois la taille de Los Santos, la ville de GTA V."
     },
@@ -342,7 +356,7 @@
     },
     {
      "ev": "presse",
-     "statut": "officiel",
+     "statut": "vu",
      "media": null,
      "texte": "D’après la démo de Rob Nelson racontée par Trois Couleurs, l’histoire commence chez Jason, dans les Keys."
     },
@@ -419,7 +433,7 @@
      "ev": "radio",
      "statut": "officiel",
      "media": null,
-     "texte": "Back Country Radio, la country de MW et Delta Dawne, est présentée comme « Airboat-ready » : prête pour l’hydroglisseur."
+     "texte": "Back Country Radio, la country de MW et Delta Dawne, a son reporter, Mud Dog Mike, qui intervient depuis son hydroglisseur de Grassrivers."
     }
    ],
    "serie": [
@@ -742,6 +756,12 @@
      "statut": "officiel",
      "media": "jason-duval-07",
      "texte": "Quatre captures de plus : derrière un grillage sous les gyrophares, près d’un hydravion, un chargeur à la main, un fusil sous la capuche."
+    },
+    {
+     "ev": "lancement",
+     "statut": "vu",
+     "media": "affiche-bande-annonce-lancement",
+     "texte": "D’après la presse, la bande-annonce de lancement le montre dans l’eau d’un marais avec deux hommes armés, lunettes de vision nocturne sur les yeux, et accompagné d’un chien équipé de lunettes de protection."
     }
    ],
    "serie": [
@@ -767,7 +787,9 @@
     "rs-artwork",
     "rs-screens",
     "techradar-16",
-    "trois-couleurs"
+    "trois-couleurs",
+    "gamespot-lancement",
+    "svg-lancement"
    ]
   },
   "characters/lucia": {
@@ -839,6 +861,12 @@
      "statut": "officiel",
      "media": "lucia-caminos-07",
      "texte": "Quatre captures de plus : fusillade dans un tunnel, sortie d’un comptoir d’encaissement de chèques, salle de sport, et la nuit au volant."
+    },
+    {
+     "ev": "lancement",
+     "statut": "vu",
+     "media": "affiche-bande-annonce-lancement",
+     "texte": "D’après la presse, la bande-annonce de lancement s’ouvre sur un appel de Lucia à Jason depuis la prison ; elle montre le bracelet électronique à sa cheville pendant une scène de douche, puis Lucia qui tire à la mitrailleuse rotative depuis un hélicoptère au-dessus de Vice City."
     }
    ],
    "serie": [
@@ -864,7 +892,9 @@
     "rs-screens",
     "insider-lucia",
     "nme-extended",
-    "mp1st-ign"
+    "mp1st-ign",
+    "gamespot-lancement",
+    "svg-lancement"
    ]
   },
   "characters/cal": {
@@ -1332,7 +1362,7 @@
     },
     {
      "ev": "famitsu",
-     "statut": "officiel",
+     "statut": "vu",
      "media": null,
      "texte": "Rob Nelson évoque d’innombrables boutiques et salons, et une coupe possible à la planque, avec un choix limité."
     }
@@ -1398,7 +1428,7 @@
     },
     {
      "ev": "famitsu",
-     "statut": "officiel",
+     "statut": "vu",
      "media": null,
      "texte": "Rob Nelson parle de « milliers » de tenues, gagnées en mission ou achetées en boutique."
     }
@@ -1562,7 +1592,7 @@
     },
     {
      "ev": "famitsu",
-     "statut": "officiel",
+     "statut": "vu",
      "media": null,
      "texte": "Rob Nelson : la carte indique ce qu’un repaire de gang contient avant d’y entrer, et la drogue volée se revend à un receleur."
     }
@@ -1732,7 +1762,7 @@
     },
     {
      "ev": "presse",
-     "statut": "officiel",
+     "statut": "vu",
      "media": null,
      "texte": "D’après la démo de Rob Nelson racontée par Trois Couleurs, la partie commence ici."
     }
@@ -1953,7 +1983,7 @@
     },
     {
      "ev": "famitsu",
-     "statut": "officiel",
+     "statut": "vu",
      "media": null,
      "texte": "Rob Nelson n’évoque l’achat que pour des garages ; aucune autre planque à acheter n’est annoncée."
     }
@@ -2186,7 +2216,7 @@
     },
     {
      "ev": "famitsu",
-     "statut": "officiel",
+     "statut": "vu",
      "media": null,
      "texte": "Rob Nelson : la carte dit ce qu’un repaire contient avant d’y entrer, et la drogue volée se revend à un receleur."
     }
@@ -2448,7 +2478,7 @@
     },
     {
      "ev": "famitsu",
-     "statut": "officiel",
+     "statut": "vu",
      "media": null,
      "texte": "Rob Nelson : un crime n’est signalé que s’il a un témoin ou déclenche une alarme, et il faut changer de vêtements pour se faire oublier."
     },

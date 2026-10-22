@@ -8,6 +8,7 @@ const { JSDOM } = require('jsdom');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 const doc = f => new JSDOM(read(f)).window.document;
 const FD = require('../fiche-doc.cjs'), LOC = require('../localisateur.cjs'), C = require('../catalogues.cjs'), carte = require('../carte-vignette.cjs');
+const J4=require('./jour-j-helper.cjs'); /* v8.04 (jour J) : « aucun chiffre inventé » plutôt que « aucun chiffre » */
 const exists = src => fs.existsSync(path.join(root, src.replace(/^(\.\.\/)+/, '').replace(/^\//, '').split(/[?#]/)[0]));
 const data = (() => { const c = { window: {} }; vm.createContext(c); for (const f of ['vehicules-data.js', 'armes-data.js']) vm.runInContext(read(f), c); return c.window; })();
 const fire = (p, node, type = 'click') => node.dispatchEvent(new p.w.Event(type, { bubbles: true, cancelable: true }));
@@ -59,7 +60,20 @@ test('listes des catalogues : vignette (visuel officiel ou pictogramme dit comme
 
 /* v7.86 (référencement) : forme courte des fiches véhicules et armes — « Ce qui arrive avec le jeu » (valeurs connues seules, les
    rubriques encore vides en pastilles, lien vers verification.html), localisateur sans résumé ni liste des lieux de la catégorie
-   (la carte, ses repères non numérotés, la légende et un lien vers ces lieux sur la carte interactive). */
+   (la carte, ses repères non numérotés, la légende et un lien vers ces lieux sur la carte interactive).
+   v8.04 (lot H, Téva) : la carte a de nouveau sa légende, légère : repères numérotés, et pour chaque lieu son numéro (le même
+   que sur la carte), son nom et un lien qui mène à lui (sa page quand elle existe, sinon la carte centrée sur lui) ; toujours
+   ni résumé ni paragraphe répété. */
+const legendOk = (loc, pins, id) => {
+  const rows = [...loc.querySelectorAll('.lk-loc-legend-list > li')];
+  assert.deepEqual(rows.map(li => li.dataset.place), pins.map(p => p.dataset.place), id + ' : légende dans l’ordre des repères');
+  rows.forEach((li, i) => {
+    assert.equal(li.querySelector('.lk-loc-num').textContent, String(i + 1), id + ' : numéro de la légende');
+    assert.equal(pins[i].querySelector('text').textContent, String(i + 1), id + ' : numéro du repère');
+    const href = li.querySelector('a').getAttribute('href'), page = href.replace(/^\.\.\//, '');
+    assert.ok(/^carte\.html#lieu=/.test(page) ? true : exists(page), id + ' : le lien mène au lieu (' + href + ')');
+  });
+};
 const avenir = d => [...d.querySelectorAll('.fiche-col')].find(c => (c.querySelector('h2') || {}).textContent === 'Ce qui arrive avec le jeu');
 const rubTitles = d => { const col = avenir(d); return new Set([...col.querySelectorAll('.doc-rub-t'), ...col.querySelectorAll('.fv-wait li')].map(x => x.textContent)); };
 test('fiches armes : « Ce qui arrive avec le jeu » (4 rubriques, connues ou à relever) et localisateur court, repères sur la vraie carte', () => {
@@ -72,15 +86,16 @@ test('fiches armes : « Ce qui arrive avec le jeu » (4 rubriques, connues ou à
     assert.ok(col, a.id + ' : bloc « Ce qui arrive avec le jeu »');
     assert.deepEqual([...rubTitles(d)].sort(), ['Améliorations et restrictions', 'Au tir', 'Munitions', 'L’obtenir'].sort(), a.id);
     assert.equal(col.querySelector('a[href="../verification.html#a-venir"]').textContent, 'Ce qui est confirmé et comment on vérifie', a.id);
-    const prix = [...d.querySelectorAll('.doc-row')].find(r => r.querySelector('dt').textContent === 'Prix'); if (prix) assert.doesNotMatch(prix.textContent, /\d/, a.id);
+    const prix = [...d.querySelectorAll('.doc-row')].find(r => r.querySelector('dt').textContent === 'Prix'); if (prix && !J4.prixAffiche(prix.textContent.replace(/^Prix/, ''))) assert.doesNotMatch(prix.textContent, /\d/, a.id);
     assert.ok(![...d.querySelectorAll('.doc-row .doc-v')].some(v => /^(À confirmer|Prix à venir|Achat à confirmer|Obtention à confirmer|Emplacement à venir)$/.test(v.textContent)), a.id + ' : aucune case « à confirmer » répétée');
     const loc = d.querySelector('#carte .lk-loc--single.lk-loc--compact'); assert.ok(loc, a.id);
     const pins = [...loc.querySelectorAll('.lk-loc-pin')]; assert.equal(pins.length, 3, a.id);
-    pins.forEach(p => { const pt = carte.point(p.dataset.place); assert.equal(p.querySelector('.lk-loc-dot').getAttribute('cx'), String(pt.x)); assert.equal(p.querySelector('text'), null, 'repère sans numéro'); });
+    pins.forEach(p => { const pt = carte.point(p.dataset.place); assert.equal(p.querySelector('.lk-loc-dot').getAttribute('cx'), String(pt.x)); });
+    legendOk(loc, pins, a.id);
     const base = loc.querySelector('.lk-loc-stage > img.lk-loc-base'); assert.ok(base, a.id + ' : fond de référence');
     assert.match(base.getAttribute('src'), /^\.\.\/img\/leonida-carte\.svg\?v=[a-f0-9]{12}$/); assert.equal(loc.querySelector('.lk-loc-svg').getAttribute('viewBox'), '0 0 5200 6000');
     assert.equal(loc.querySelector('use'), null, 'plus de silhouette dans le localisateur');
-    assert.equal(loc.querySelectorAll('.lk-loc-places, .lk-loc-sum, .lk-loc-status').length, 0, a.id + ' : ni liste ni résumé répétés');
+    assert.equal(loc.querySelectorAll('.lk-loc-places, .lk-loc-sum, .lk-loc-status, .lk-loc-note').length, 0, a.id + ' : ni résumé ni paragraphe répétés');
     assert.equal(loc.querySelector('.lk-loc-more a').getAttribute('href'), '../carte.html#pins=' + pins.map(p => encodeURIComponent(p.dataset.place)).join(',') + '&t=' + encodeURIComponent(LOC.weaponItem(a, '../', () => '').mapTitle), a.id);
     assert.equal(d.querySelector('#carte .fiche-liens'), null, 'plus de petits carrés portant seulement un nom');
   }
@@ -95,9 +110,9 @@ test('fiches véhicules : lieux liés au type (marinas pour un bateau, aucun pou
     const ids = [...loc.querySelectorAll('.lk-loc-pin')].map(p => p.dataset.place);
     assert.deepEqual(ids, LOC.vehicleLinks(v), v.id);
     (byCat[v.cat] = byCat[v.cat] || new Set()).add(ids.join(','));
-    if (v.cat === 'service') { assert.match(loc.textContent, /Aucun lieu repéré pour cette catégorie/); assert.ok(loc.querySelector('.lk-loc-svg--empty')); assert.equal(loc.querySelector('.lk-loc-more'), null); }
-    else assert.ok(loc.querySelector('.lk-loc-more a[href^="../carte.html#pins="]'), v.id);
-    assert.equal(loc.querySelectorAll('.lk-loc-places, .lk-loc-sum, .lk-loc-status').length, 0, v.id);
+    if (v.cat === 'service') { assert.match(loc.textContent, /Aucun lieu repéré pour cette catégorie/); assert.ok(loc.querySelector('.lk-loc-svg--empty')); assert.equal(loc.querySelector('.lk-loc-more'), null); assert.equal(loc.querySelector('.lk-loc-legend-list'), null); }
+    else { assert.ok(loc.querySelector('.lk-loc-more a[href^="../carte.html#pins="]'), v.id); legendOk(loc, [...loc.querySelectorAll('.lk-loc-pin')], v.id); }
+    assert.equal(loc.querySelectorAll('.lk-loc-places, .lk-loc-sum, .lk-loc-status, .lk-loc-note').length, 0, v.id);
   }
   assert.deepEqual([...byCat.bateau], ['g-L120,g-L328,g-L326']);
   for (const set of Object.values(byCat)) assert.equal(set.size, 1, 'même règle pour toute une catégorie');
@@ -168,7 +183,7 @@ test('Consommables en un regard : cartes par besoin, aucune fausse jauge, compar
   assert.equal(box.querySelectorAll('.cg-card').length, tracked.length);
   for (const c of box.querySelectorAll('.cg-card')) {
     const dd = [...c.querySelectorAll('.cg-facts dd')].map(x => x.firstChild.textContent);
-    assert.ok(dd.includes('Prix à venir') || dd.includes('Ne s’achète pas'), c.dataset.cgId);
+    assert.ok(dd.includes('Prix à venir') || dd.includes('Ne s’achète pas') || dd.some(t => J4.prixAffiche(t)), c.dataset.cgId); /* v8.04 (jour J) : une des cases porte le prix publié */
     for (const t of dd) assert.doesNotMatch(t, /\d+\s*%/, 'aucun pourcentage de GTA VI');
     assert.ok(d.getElementById(c.querySelector('.cg-link').getAttribute('href').slice(1)));
   }

@@ -27796,7 +27796,7 @@
  },
  "css": {
   "fr/": [
-   "style.css 8530436304b34e18",
+   "style.css 8d7d2c229391123d",
    "calculateurs.css 6b2c47df7373f0a6",
    "calculateurs-brand.css b1bc2a34feb61488",
    "calculateurs-workspace.css 066b32fcc20babf7",
@@ -27804,7 +27804,7 @@
    "/leo.css e8eaf8052b1b4421"
   ],
   "en/": [
-   "../style.css 8530436304b34e18",
+   "../style.css 8d7d2c229391123d",
    "../calculateurs.css 6b2c47df7373f0a6",
    "../calculateurs-brand.css b1bc2a34feb61488",
    "../calculateurs-workspace.css 066b32fcc20babf7",
@@ -27812,7 +27812,7 @@
    "/leo.css e8eaf8052b1b4421"
   ],
   "es/": [
-   "../style.css 8530436304b34e18",
+   "../style.css 8d7d2c229391123d",
    "../calculateurs.css 6b2c47df7373f0a6",
    "../calculateurs-brand.css b1bc2a34feb61488",
    "../calculateurs-workspace.css 066b32fcc20babf7",
@@ -27820,7 +27820,7 @@
    "/leo.css e8eaf8052b1b4421"
   ],
   "it/": [
-   "../style.css 8530436304b34e18",
+   "../style.css 8d7d2c229391123d",
    "../calculateurs.css 6b2c47df7373f0a6",
    "../calculateurs-brand.css b1bc2a34feb61488",
    "../calculateurs-workspace.css 066b32fcc20babf7",
@@ -27828,7 +27828,7 @@
    "/leo.css e8eaf8052b1b4421"
   ],
   "de/": [
-   "../style.css 8530436304b34e18",
+   "../style.css 8d7d2c229391123d",
    "../calculateurs.css 6b2c47df7373f0a6",
    "../calculateurs-brand.css b1bc2a34feb61488",
    "../calculateurs-workspace.css 066b32fcc20babf7",
@@ -27836,7 +27836,7 @@
    "/leo.css e8eaf8052b1b4421"
   ],
   "pt/": [
-   "../style.css 8530436304b34e18",
+   "../style.css 8d7d2c229391123d",
    "../calculateurs.css 6b2c47df7373f0a6",
    "../calculateurs-brand.css b1bc2a34feb61488",
    "../calculateurs-workspace.css 066b32fcc20babf7",
@@ -27844,5 +27844,6 @@
    "/leo.css e8eaf8052b1b4421"
   ]
  },
- "errors": []
+ "errors": [],
+ "noteV804": "v8.04 : seule l’empreinte de style.css (feuille commune à tout le site) est mise à jour : refonte des fiches, des hubs, de la page Collectibles et étiquette « En construction » de l’Atelier 3D dans le menu. Les feuilles du calculateur (calculateurs*.css) et le cadre ligne par ligne restent ceux d’avant le lot 1."
 }

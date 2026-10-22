@@ -10,7 +10,7 @@
   "carnets": {
     "garage": {
       "seoTitle": "Mon garage GTA VI : véhicules possédés, envies et restants | Leonidakit",
-      "seoDesc": "Ton garage GTA VI sur cet appareil : les véhicules que tu possèdes, ceux que tu veux et ceux qui restent. Recherche, filtres, fiches et calculateur, sans compte.",
+      "seoDesc": "Ton garage GTA VI sur cet appareil : les véhicules que tu possèdes, ceux que tu veux, ceux qui restent. Recherche, filtres, fiches et calculateur, sans compte.",
       "lede": "Les véhicules que tu as rangés dans ton garage, ceux que tu gardes en envie et tous ceux qui restent. Tout est enregistré dans ce navigateur, sans compte.",
       "app": "Ton garage sur cet appareil",
       "vues": { "own": "Dans mon garage", "wish": "Mes envies", "rest": "Pas encore dans mon garage" },
@@ -106,7 +106,7 @@
     },
     "personnalisations": {
       "seoTitle": "Mes personnalisations GTA VI : modifs de véhicule et d’arme | Leonidakit",
-      "seoDesc": "Tes personnalisations GTA VI sur cet appareil : modifs de véhicule et d’arme posées, envies et restants. Recherche, filtres et liens vers chaque ligne, sans compte.",
+      "seoDesc": "Tes personnalisations GTA VI sur cet appareil : modifs de véhicule et d’arme posées, envies, restants. Recherche, filtres, liens vers chaque ligne, sans compte.",
       "lede": "Les modifs que tu as posées sur tes véhicules et tes armes, celles que tu vises, et toutes celles qui restent.",
       "app": "Tes personnalisations sur cet appareil",
       "vues": { "own": "Posées", "wish": "Mes envies", "rest": "Pas encore posées" },

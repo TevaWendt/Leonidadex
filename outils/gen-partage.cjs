@@ -54,6 +54,10 @@ const PAGES = [
   ['presse.html', 'artwork-jason-lucia-beach', '50% 40%'],
   ['compagnon.html', 'jason-and-lucia-02', '50% 40%'] /* assemblage v7.91 : Mode compagnon (lot 5) */,
   ['devine-le-lieu.html', 'vice-city-09', '50% 50%'] /* assemblage v7.91 : jeu « Devine le lieu » (lot 6) */,
+  /* v8.04 (lot L) : les jeux du site et leur progression commune */
+  ['jeux.html', 'cover-art-officielle', '50% 35%'],
+  ['frise-des-annonces.html', 'annonce-extended-look', '50% 40%'],
+  ['devine-la-station.html', 'dre-quan-priest-04', '50% 35%'],
   /* v7.93 (lot 8) : les quatre pages qui répondent aux recherches des joueurs */
   ['prechargement.html', 'cover-art-officielle', '50% 30%'],
   ['gta-6-pc.html', 'jason-and-lucia-06', '50% 40%'],

@@ -5,14 +5,17 @@
    sync-site.cjs). Même gabarit que les hubs du monde (outils/lore-gen.js), zone éditoriale des hubs (outils/sections.cjs),
    sources datées en bas. Textes de la page principale : outils/activites/hub.json.
    Valeurs chiffrées (gain, durée) au schéma des valeurs publiées de outils/donnees-publiees.cjs ; aucune n’est publiée au
-   4 octobre 2026. activitesCalculateur() rend les activités qui auraient un gain ET une durée publiés, au format de
-   calculateurs-activites.js (« activite-<id> ») : ce fichier n’est pas modifié ici (voir « Pour l’assemblage »).
+   4 octobre 2026. activitesCalculateur() rend les activités qui ont un gain ET une durée publiés, au format de
+   calculateurs-activites.js (« activite-<id> »), et pont() les y écrit (v8.02, lot 1 : avant, le pont décrivait sans écrire) ; avec
+   aussi la préparation, les frais, l’attente avant de recommencer, la part du butin, l’achat de départ, les joueurs, les achats
+   demandés, l’argent à avoir en poche et le rang, quand ils sont publiés (rapporte.preparation, cout, attente, part,
+   investissement, joueurs, achats, argentMinimum, rang).
    leo() rend à outils/gen-leo.cjs les fiches (morceau « monde ») et les questions de la section (morceau leo/activites.json).
    Usage : node outils/gen-activites.cjs   (appelé par outils/regenerer.cjs, juste après lore-gen.js) */
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
-const LKX = require('./lk-sections.cjs'), LOC = require('./localisateur.cjs'); /* fiches plein écran, mini-cartes, entrées animées (lk-sections.css, lk-sections.js) */
+const LKX = require('./lk-sections.cjs'), LOC = require('./localisateur.cjs'), EL = require('./en-lien.cjs'); /* fiches plein écran, mini-cartes, entrées animées (lk-sections.css, lk-sections.js) */
 /* visuel des pages du site citées dans « Sur le site » et « Ailleurs sur le site » (cartes de liens) */
 const PAGE_IMG = { 'gangs.html': 'ambrosia-01', 'planques.html': 'jason-s-safehouse-vehicles', 'entreprises.html': 'rideout-customs-mod-shop-01', 'armes.html': 'hawk-little-morgan-revolvers-01', 'vehicules.html': 'one-eyed-willie-s-mod-shop-01', 'personnalisations.html': 'ultimate-edition-rideout-customs-02', 'collectibles.html': 'classic-car-collection-04', 'lieux/mount-kalaga.html': 'mount-kalaga-national-park-01', 'bateaux.html': 'shitzu-squalo-01', 'lieux/grassrivers.html': 'grassrivers-03', 'planques/planque-jason.html': 'jason-s-safehouse-vehicles', 'lieux/leonida-keys.html': 'leonida-keys-01', 'nourriture.html': 'jason-duval-06', 'lieux/ambrosia.html': 'ambrosia-01', 'gangs/ptt-youngin-gang.html': 'ptt-youngin-illegal-goods-store', 'personnages/cal.html': 'cal-hampton-01', 'armes/queue-billard.html': 'cal-hampton-02', 'entreprises/jack-of-hearts.html': 'boobie-ike-02', 'style.html': 'stock-305-clothing-store-01' };
 const slug = t => 'act-' + String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[’']/g, '-').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -24,7 +27,7 @@ const TOOLS = ['activities', 'session', 'roi'];
 const ST = ['officiel', 'vu', 'comm', 'conf'];
 const FAMILLES = ['crime', 'nature', 'ville'];
 const FOLDER = { characters: 'personnages', regions: 'lieux', factions: 'gangs', businesses: 'entreprises', hideouts: 'planques', residences: 'demeures' };
-const REL_LABEL = { characters: 'Personnages', regions: 'Régions', factions: 'Gangs et factions', businesses: 'Entreprises', hideouts: 'Planques', residences: 'Demeures' };
+const ONE = { characters: 'Personnage', regions: 'Région', factions: 'Faction', businesses: 'Entreprise', hideouts: 'Planque', residences: 'Demeure' }; /* v8.04 (lot I) : type écrit sur chaque carte « En lien », comme sur les fiches du monde */
 
 function load(root = ROOT) {
   const read = f => fs.readFileSync(path.join(root, f), 'utf8');
@@ -32,7 +35,7 @@ function load(root = ROOT) {
 }
 
 /* ---------- valeurs publiées (schéma de outils/donnees-publiees.cjs) ---------- */
-const VAL_ST = ['official', 'officiel', 'verified', 'estimated', 'unverified', 'unknown'];
+const VAL_ST = ['official', 'officiel', 'verified', 'media', 'presse', 'estimated', 'community', 'comm', 'unverified', 'unknown']; /* v8.04 (jour J) : media (presse) et community (comm), voir outils/donnees-publiees.cjs */
 function checkValue(v, label, unit) {
   const err = [];
   if (v === null || v === undefined) return err;
@@ -40,11 +43,16 @@ function checkValue(v, label, unit) {
   if (!VAL_ST.includes(v.status)) err.push(label + ' : status attendu parmi ' + VAL_ST.join(', '));
   if (v.value !== null && (typeof v.value !== 'number' || !Number.isFinite(v.value) || v.value < 0)) err.push(label + ' : value doit être un nombre positif ou null');
   if (v.value === null && v.status !== 'unknown') err.push(label + ' : une valeur inconnue a le statut « unknown »');
-  if (['official', 'officiel', 'verified'].includes(v.status) && (!v.source || !/^\d{4}-\d\d-\d\d$/.test(v.verifiedAt || ''))) err.push(label + ' : une valeur « ' + v.status + ' » exige source et verifiedAt (AAAA-MM-JJ)');
+  if (DP.AVEC_SOURCE.includes(DP.statutCanon(v.status)) && (!v.source || !/^\d{4}-\d\d-\d\d$/.test(v.verifiedAt || ''))) err.push(label + ' : une valeur « ' + v.status + ' » exige source et verifiedAt (AAAA-MM-JJ)');
   if (unit && v.unit !== unit) err.push(label + ' : unité attendue « ' + unit + ' »');
+  err.push(...DP.verifierExtras(v, label, v.value)); /* v8.04 (jour J) : fourchette, note, sources ; « media » demande deux sources */
   return err;
 }
 const known = v => v && typeof v.value === 'number' && v.status !== 'unknown';
+/* v8.02 (lot 1) : valeurs chiffrées facultatives de « rapporte » (clé, unité, libellé) et leur nom dans le calculateur */
+const VALEURS = [['cout', '$', 'frais à chaque fois'], ['preparation', 'min', 'préparation'], ['attente', 'min', 'attente avant de recommencer'], ['part', '%', 'part du butin'], ['investissement', '$', 'achat de départ']];
+const CALC_KEY = { cout: 'cost', preparation: 'prep', attente: 'cooldown', part: 'share', investissement: 'investment' };
+function achatsConnus(root, ED) { const w = vehiclesAndWeapons(root); return new Set([...w.v, ...w.a, ...['businesses', 'residences', 'hideouts'].flatMap(g => ((ED || {})[g] || []).map(x => x.id))]); }
 
 /* ---------- contrôles : une donnée mal formée arrête la génération ---------- */
 let VW = null;
@@ -67,7 +75,10 @@ function checkActivite(a, ctx) {
   for (const id of [a.media, ...(a.galerie || []).map(g => g.media)]) if (!MED[id]) err.push(L + ' : visuel inconnu ' + id);
   for (const g of a.galerie || []) if (!g.alt || !g.legende) err.push(L + ' : visuel de galerie sans texte alternatif ou légende');
   if (!(a.montre || []).length) err.push(L + ' : rien de « montré » (une fiche exige au moins une source officielle)');
-  if (!(a.montre || []).some(x => x.statut === 'officiel')) err.push(L + ' : aucune phrase officielle : l’activité reste une ligne de la page principale');
+  /* v8.04 (refonte F) : la grille des statuts range en « vu dans un média » ce que Rockstar montre sans texte et ce qu’un membre de
+     Rockstar dit à la presse ; une fiche exige donc au moins une phrase appuyée sur une source officielle (texte, image ou vidéo
+     publiée par Rockstar, Take-Two, Sony ou Microsoft), quel que soit le statut de la phrase. */
+  if (!(a.montre || []).some(x => x.statut === 'officiel' || (x.sources || []).some(s => H.sources[s] && H.sources[s].statut === 'officiel'))) err.push(L + ' : aucune phrase appuyée sur une source officielle : l’activité reste une ligne de la page principale');
   for (const b of [...(a.montre || []), a.ou, ...(a.besoin || []), a.rapporte].filter(Boolean)) {
     if (!b.texte) err.push(L + ' : bloc sans texte');
     if (!ST.includes(b.statut)) err.push(L + ' : statut inconnu dans un bloc');
@@ -82,6 +93,13 @@ function checkActivite(a, ctx) {
   const cited = new Set([...(a.montre || []), a.ou, ...(a.besoin || []), a.rapporte].filter(Boolean).flatMap(b => b.sources || []));
   for (const s of cited) if (!(a.sources || []).includes(s)) err.push(L + ' : source citée mais absente de la liste de la fiche : ' + s);
   err.push(...checkValue(a.rapporte && a.rapporte.gain, L + ' gain', '$'), ...checkValue(a.rapporte && a.rapporte.duree, L + ' durée', 'min'));
+  /* v8.02 (lot 1) : valeurs facultatives lues par le calculateur */
+  { const R = a.rapporte || {};
+    for (const [k, unit, what] of VALEURS) err.push(...checkValue(R[k], L + ' ' + what, unit));
+    err.push(...checkValue(R.argentMinimum, L + ' argent à avoir en poche', '$'), ...checkValue(R.rang, L + ' rang demandé', 'rang'));
+    if (R.joueurs !== null && R.joueurs !== undefined && !(Number.isInteger(R.joueurs) && R.joueurs >= 1 && R.joueurs <= 100)) err.push(L + ' : rapporte.joueurs doit être un entier de 1 à 100');
+    if (R.achats !== undefined && (!Array.isArray(R.achats) || R.achats.some(x => typeof x !== 'string'))) err.push(L + ' : rapporte.achats doit être une liste d’identifiants');
+    if (root && (R.achats || []).length) { const k2 = achatsConnus(root, ctx.ED); for (const id of R.achats) if (!k2.has(id)) err.push(L + ' : achat demandé inconnu ' + id + ' (véhicule, arme, entreprise, demeure ou planque du site)'); } }
   if (!a.calc || !TOOLS.includes(a.calc.tool) || !a.calc.q || !a.calc.d || !a.calc.cta) err.push(L + ' : encart du calculateur incomplet');
   const w = vehiclesAndWeapons(root);
   for (const b of a.besoin || []) { for (const id of b.vehicules || []) if (!w.v.has(id)) err.push(L + ' : véhicule inconnu ' + id); for (const id of b.armes || []) if (!w.a.has(id)) err.push(L + ' : arme inconnue ' + id); }
@@ -211,8 +229,9 @@ const chips = (ED, group, ids, pre) => (ids || []).map(id => '<a class="activite
 const carteChips = (list, pre) => (list || []).map(c => '<a class="activites-chip activites-chip--carte" href="' + pre + 'carte.html#lieu=' + esc(c.id) + '">' + esc(c.nom) + '</a>').join('');
 const valText = (v, unknownText) => {
   if (!known(v)) return unknownText;
-  const label = DP.STATUS_LABEL[({ officiel: 'official' })[v.status] || v.status] || 'Non confirmé';
-  return (v.unit === 'min' ? DP.fmt(v.value) + ' min' : DP.fmt(v.value) + ' $') + ', ' + label;
+  const label = DP.STATUS_LABEL[DP.statutCanon(v.status) || v.status] || 'Non confirmé', x = DP.extrasValeur(v, v.value);
+  /* v8.04 (jour J) : fourchette et note, seulement quand la source les donne */
+  return (v.unit === 'min' ? DP.fmt(v.value) + ' min' : DP.fmt(v.value) + ' $') + DP.fourchette(x, v.unit === 'min' ? 'min' : '$') + ', ' + label + (x.note ? ' (' + x.note + ')' : '');
 };
 const famille = (H, id) => H.liste.familles.find(f => f.id === id) || { titre: id };
 
@@ -325,13 +344,19 @@ function fichePage(ctx, a) {
   const ouChips = (O.regions || []).map(regionChip).join('') + placeChips((O.carte || []).filter(c => !(O.regions || []).includes(c.id)));
   const ou = '<div class="lore-texte reveal"><h2>Où la pratiquer</h2><p>' + esc(O.texte) + '</p>' + (ouChips ? '<div class="lkx-chips activites-ou-chips">' + ouChips + '</div>' : '') + '<p class="activites-st">' + st(O) + '</p></div>';
   const besoin = '<div class="lore-texte reveal"><h2>Ce qu’il faut</h2><ul class="activites-besoin">' + a.besoin.map((b, i) => { const extra = vehs(b.vehicules) + arms(b.armes) + links(b.liens); return '<li><span class="activites-besoin-n" aria-hidden="true">' + (i + 1) + '</span><div><p>' + esc(b.texte) + '</p>' + (extra ? '<p class="activites-chips">' + extra + '</p>' : '') + '<p class="activites-st">' + st(b) + '</p></div></li>'; }).join('') + '</ul></div>';
-  const chiffres = '<dl class="activites-chiffres"><div><dt>Gain</dt><dd><span class="activites-ecran" aria-hidden="true">— $</span><span>' + esc(valText(R.gain, 'Pas encore publié')) + '</span></dd></div><div><dt>Durée</dt><dd><span class="activites-ecran" aria-hidden="true">— min</span><span>' + esc(valText(R.duree, 'Pas encore publiée')) + '</span></dd></div></dl>';
+  /* v8.02 (lot 1) : les autres chiffres lus par le calculateur, affichés seulement quand ils sont publiés (aucun au 20 octobre 2026) */
+  const LIB = { cout: 'Frais à chaque fois', preparation: 'Préparation', attente: 'Attente avant de recommencer', part: 'Part du butin', investissement: 'Achat de départ' };
+  const plus = [...VALEURS.filter(([k]) => known(R[k])).map(([k]) => [LIB[k], valText(R[k], '')]), ...(Number.isInteger(R.joueurs) && R.joueurs > 0 ? [['Joueurs', String(R.joueurs)]] : []), ...(known(R.argentMinimum) ? [['Argent à avoir', valText(R.argentMinimum, '') + ', en poche, sans le dépenser']] : []), ...(known(R.rang) ? [['Rang demandé', DP.fmt(R.rang.value)]] : [])];
+  /* v8.04 (jour J) : d’où viennent les chiffres publiés (source et liste sources de chaque valeur), sans doublon */
+  const srcChiffres = [...new Set([R.gain, R.duree, ...VALEURS.map(([k]) => R[k]), R.argentMinimum, R.rang].filter(known).flatMap(v => [v.source].concat(Array.isArray(v.sources) ? v.sources : [])).filter(s => typeof s === 'string' && s.trim()).map(s => s.trim()))];
+  if (srcChiffres.length) plus.push(['Sources des chiffres', srcChiffres.join(' ; ')]);
+  const achats = (R.achats || []).map(id => W.vn[id] ? [W.vn[id], 'vehicules/' + id] : W.an[id] ? [W.an[id], 'armes/' + id] : (() => { for (const [g, f] of [['businesses', 'entreprises'], ['residences', 'demeures'], ['hideouts', 'planques']]) { const x = (ED[g] || []).find(y => y.id === id); if (x) return [x.name, f + '/' + id]; } return null; })()).filter(Boolean);
+  const chiffres = '<dl class="activites-chiffres"><div><dt>Gain</dt><dd><span class="activites-ecran" aria-hidden="true">— $</span><span>' + esc(valText(R.gain, 'Pas encore publié')) + '</span></dd></div><div><dt>Durée</dt><dd><span class="activites-ecran" aria-hidden="true">— min</span><span>' + esc(valText(R.duree, 'Pas encore publiée')) + '</span></dd></div>' + plus.map(([k, v]) => '<div><dt>' + esc(k) + '</dt><dd><span>' + esc(v) + '</span></dd></div>').join('') + (achats.length ? '<div><dt>Il faut avoir</dt><dd><span>' + achats.map(([n, u]) => '<a href="' + p + esc(u) + '.html">' + esc(n) + '</a>').join(', ') + '</span></dd></div>' : '') + '</dl>';
   const rapporte = '<div class="lore-texte reveal activites-fiche-rapporte"><h2>Ce que ça rapporte</h2><p>' + esc(R.texte) + '</p>' + chiffres + '<p class="activites-st">' + st(R) + '</p></div>';
   const confirmer = (a.confirmer || []).length ? '<div class="lore-facts"><h2>Ce qui reste à confirmer</h2><ul>' + a.confirmer.map(x => '<li class="rise"><b>' + esc(x.q) + '</b> ' + esc(x.etat) + '</li>').join('') + '</ul></div>' : '';
   const ailleurs = (a.liens || []).length ? '<div class="lore-texte reveal"><h2>Ailleurs sur le site</h2><div class="lkx-links">' + a.liens.map(l => { const h = l.href.split('#')[0]; return LKX.linkCard({ href: p + l.href, title: l.label, text: l.texte, img: PAGE_IMG[h] ? LKX.thumb(MED, PAGE_IMG[h]) : null }); }).join('') + '</div></div>' : '';
-  const rel = (group, ids) => { const l = (ids || []).map(id => (ED[group] || []).find(y => y.id === id)).filter(Boolean); if (!l.length) return '';
-    return '<div class="lore-rel-group"><h3>' + REL_LABEL[group] + '</h3><div class="lore-mini">' + l.map(y => { const mm = (y.media || []).map(id => MED[id]).filter(Boolean)[0]; return '<a class="lore-minicard" href="../' + FOLDER[group] + '/' + y.id + '.html">' + (mm ? '<img src="' + mm.variants[0].src + '" width="' + mm.variants[0].w + '" height="' + mm.variants[0].h + '" alt="" loading="lazy" decoding="async">' : '<i class="lore-minivide"></i>') + '<span><b>' + esc(y.name) + '</b><i>' + REL_LABEL[group] + '</i></span></a>'; }).join('') + '</div></div>'; };
-  const relBlocks = Object.keys(FOLDER).map(g => rel(g, (a.rel || {})[g])).join('');
+  /* v8.04 (lot I) : « En lien » par le moteur commun (outils/en-lien.cjs) : une grille de cartes avec vignette */
+  const related = EL.block({ items: Object.keys(FOLDER).flatMap(g => ((a.rel || {})[g] || []).map(id => (ED[g] || []).find(y => y.id === id)).filter(Boolean).map(y => EL.entity(y, { href: '../' + FOLDER[g] + '/' + y.id + '.html', kind: y.kind || ONE[g], rel: g }))) });
   /* sur la carte : le localisateur du site, avec les lieux de la fiche ; en images : la galerie animée des fiches du monde */
   const places = (O.carte || []).map(c => LKX.place(c.id, { [c.id]: c.nom }));
   const locate = LKX.locate({ lede: 'Les lieux de notre carte liés à cette activité. Ce sont des repères pour t’y rendre, pas des emplacements confirmés par Rockstar pour l’activité.', item: { name: a.nom, catLabel: fam.titre, thumb: LKX.thumb(MED, a.media), status: 'Lieux repérés sur notre carte', linkedText: 'Lieux de notre carte liés à cette activité :', noneText: 'Aucun lieu n’est encore placé pour cette activité : rien n’est mis au hasard.', mapTitle: a.nom, pronoun: 'la', url: HUB + '/' + a.id + '.html' }, places, caption: 'Lieux repérés sur notre carte : pas un emplacement confirmé pour l’activité.', placesTitle: 'Lieux repérés' });
@@ -354,7 +379,7 @@ ${calcBridge(a, p)}
 ${essentiel}
 <section class="shell lore-body activites-fiche">
   ${montre}${ou}${besoin}${rapporte}${confirmer}${ailleurs}
-  ${relBlocks ? `<div class="lore-related"><h2>En lien</h2>${relBlocks}</div>` : ''}
+  ${related}
 </section>
 ${locate}
 ${gal}
@@ -363,16 +388,40 @@ ${srcs}`;
   return page(SUBC, { p, title: a.nom + ' dans GTA VI | Leonidakit', desc: a.resume, canonical: '/' + HUB + '/' + a.id + '.html', ogImg: og.b.src, body, crumbs: [['Accueil', '/'], [H.hub.label, '/' + HUB + '.html'], [a.nom, '/' + HUB + '/' + a.id + '.html']] });
 }
 
-/* ---------- pont avec le calculateur (décrit, pas écrit : voir « Pour l’assemblage » du LISEZ-MOI) ---------- */
-const ACT_ST = { officiel: 'official', official: 'official', verified: 'verified', estimated: 'estimated', unverified: 'unverified' };
-const RANK = ['unknown', 'unverified', 'estimated', 'verified', 'official'];
-/* Activités qui ont un gain ET une durée publiés, au format de calculateurs-activites.js (« activite-<id> ») : vide au 4 octobre 2026. */
+/* ---------- pont avec le calculateur (calculateurs-activites.js) ---------- */
+/* v8.02 (lot 1) : le pont écrit (avant, il décrivait sans écrire). Même règle que outils/gen-missions.cjs : une activité qui a un gain
+   ET une durée publiés devient « activite-<id> » ; tout ce que « rapporte » publie en plus est transmis, rien d’autre. Une activité
+   annexe se refait : once vaut false. */
+const ACT_ST = { officiel: 'official', official: 'official', verified: 'verified', media: 'media', presse: 'media', estimated: 'estimated', community: 'community', comm: 'community', unverified: 'unverified' };
+/* v8.04 (jour J) : un chiffre de médias ou de la communauté n’est jamais confirmé ; la mission prend le statut le plus faible de son gain et de sa durée */
+const RANK = ['unknown', 'unverified', 'community', 'estimated', 'media', 'verified', 'official'];
 function activitesCalculateur(list) {
   return list.filter(a => a.rapporte && known(a.rapporte.gain) && known(a.rapporte.duree) && a.rapporte.duree.value > 0).map(a => {
-    const r = a.rapporte.gain, d = a.rapporte.duree, rs = ACT_ST[r.status] || 'unverified', ds = ACT_ST[d.status] || 'unverified';
-    const meta = v => ({ status: ACT_ST[v.status] || 'unverified', source: v.source || null, verifiedAt: v.verifiedAt || null, unit: v.unit });
-    return { id: 'activite-' + a.id, name: a.nom, reward: { value: r.value, ...meta(r) }, duration: { value: d.value, ...meta(d) }, players: null, source: r.source || d.source || null, status: RANK[Math.min(RANK.indexOf(rs), RANK.indexOf(ds))], verifiedAt: [r.verifiedAt, d.verifiedAt].filter(Boolean).sort()[0] || null, beginner: null };
+    const R = a.rapporte, r = R.gain, d = R.duree, rs = ACT_ST[r.status] || 'unverified', ds = ACT_ST[d.status] || 'unverified';
+    const meta = v => ({ status: ACT_ST[v.status] || 'unverified', source: v.source || null, verifiedAt: v.verifiedAt || null, unit: v.unit, ...DP.extrasValeur(v, v.value) /* v8.04 (jour J) : fourchette, note, sources, seulement si publiées */ });
+    const out = { id: 'activite-' + a.id, name: a.nom, reward: { value: r.value, ...meta(r) }, duration: { value: d.value, ...meta(d) } };
+    for (const [k] of VALEURS) if (known(R[k])) out[CALC_KEY[k]] = { value: R[k].value, ...meta(R[k]) };
+    out.players = Number.isInteger(R.joueurs) && R.joueurs > 0 ? R.joueurs : null;
+    if (known(R.argentMinimum)) out.minCash = { value: R.argentMinimum.value, ...meta(R.argentMinimum) };
+    if (known(R.rang)) out.minRank = { value: R.rang.value, ...meta(R.rang) };
+    if ((R.achats || []).length) out.requiresPurchaseIds = R.achats.slice();
+    out.once = false;
+    out.kind = 'activite';
+    Object.assign(out, { source: r.source || d.source || null, status: RANK[Math.min(RANK.indexOf(rs), RANK.indexOf(ds))], verifiedAt: [r.verifiedAt, d.verifiedAt].filter(Boolean).sort()[0] || null, beginner: null });
+    return out;
   });
+}
+/* Écrit les activités « activite-* » dans calculateurs-activites.js ; garde les autres entrées (missions, saisies à la main) ; ne
+   touche pas au fichier s’il n’y a rien à changer (même fonctionnement que le pont de outils/gen-missions.cjs). */
+function pont(root, list) {
+  const f = path.join(root, 'calculateurs-activites.js'), src = fs.readFileSync(f, 'utf8');
+  const m = src.match(/window\.LK_ACTIVITIES = (\[[\s\S]*?\]);\s*$/);
+  if (!m) throw new Error('calculateurs-activites.js : tableau window.LK_ACTIVITIES introuvable');
+  const current = JSON.parse(m[1]), keep = current.filter(a => !/^activite-/.test(a.id || '')), add = activitesCalculateur(list);
+  const next = [...keep, ...add];
+  if (JSON.stringify(next) === JSON.stringify(current)) return { ecrit: false, activites: add.length };
+  fs.writeFileSync(f, src.slice(0, m.index) + 'window.LK_ACTIVITIES = ' + (next.length ? JSON.stringify(next, null, 1) : '[]') + ';\n');
+  return { ecrit: true, activites: add.length };
 }
 
 /* ---------- recherche du site (outils/activites-index.json, lu par sync-site.cjs) ---------- */
@@ -408,8 +457,9 @@ function generate(root = ROOT) {
   for (const a of L.A.activites) fs.writeFileSync(path.join(root, HUB, a.id + '.html'), fichePage(ctx, a));
   fs.writeFileSync(path.join(root, 'outils/activites-index.json'), JSON.stringify(indexEntries(L.H, L.A)));
   const lignes = L.H.liste.familles.reduce((n, f) => n + f.items.length, 0);
-  console.log('activites : ' + L.A.activites.length + ' fiche(s), ' + lignes + ' activités listées, ' + L.H.zone.faq.length + ' questions, ' + L.H.zone.sources.length + ' sources ; calculateur : ' + activitesCalculateur(L.A.activites).length + ' activité(s) chiffrée(s) à relier');
+  const b = pont(root, L.A.activites);
+  console.log('activites : ' + L.A.activites.length + ' fiche(s), ' + lignes + ' activités listées, ' + L.H.zone.faq.length + ' questions, ' + L.H.zone.sources.length + ' sources ; calculateur : ' + b.activites + ' activité(s) chiffrée(s)' + (b.ecrit ? ' (calculateurs-activites.js mis à jour)' : ''));
 }
 
-module.exports = { generate, context, leo, load, check, checkActivite, checkValue, fichePage, hubPage, activitesCalculateur, indexEntries, FILES };
+module.exports = { generate, context, leo, load, check, checkActivite, checkValue, fichePage, hubPage, activitesCalculateur, pont, indexEntries, FILES, VALEURS };
 if (require.main === module) generate();

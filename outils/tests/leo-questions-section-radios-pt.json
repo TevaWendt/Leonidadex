@@ -50,7 +50,7 @@
   {
    "q": "músicas do extended look",
    "expect": {
-    "topic": "radios-faq-1"
+    "topic": "radios-faq-3"
    },
    "tags": [
     "section-radios"
@@ -59,7 +59,7 @@
   {
    "q": "música do extended look",
    "expect": {
-    "topic": "radios-faq-1"
+    "topic": "radios-faq-3"
    },
    "tags": [
     "section-radios"
@@ -73,7 +73,7 @@
       "entity": "album:gta-vi-the-album"
      },
      {
-      "topic": "radios-faq-2"
+      "topic": "radios-faq-4"
      }
     ]
    },
@@ -89,7 +89,7 @@
       "entity": "album:gta-vi-the-album"
      },
      {
-      "topic": "radios-faq-2"
+      "topic": "radios-faq-4"
      }
     ]
    },
@@ -100,7 +100,7 @@
   {
    "q": "os nomes das rádios que circulam por aí são confirmados",
    "expect": {
-    "topic": "radios-faq-3"
+    "topic": "radio"
    },
    "tags": [
     "section-radios"
@@ -109,7 +109,7 @@
   {
    "q": "as rádios vazadas são reais",
    "expect": {
-    "topic": "radios-faq-3"
+    "topic": "radio"
    },
    "tags": [
     "section-radios"

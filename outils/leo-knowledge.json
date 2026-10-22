@@ -260,6 +260,10 @@
     "gratuit sur pc"
    ],
    "k": [
+    "cloud",
+    "xbox cloud",
+    "cloud gaming",
+    "en nuage",
     "sur pc",
     "version pc",
     "pc",
@@ -271,7 +275,7 @@
     "portage pc",
     "sortira sur ordinateur"
    ],
-   "text": "Aucune version PC n’est annoncée : ni date, ni page Steam, ni configuration requise. GTA VI sort le 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S seulement. Pour situer, GTA V est arrivé sur PC un an et demi après les consoles et Red Dead Redemption 2 un an après : ce sont des repères de la série, pas une annonce. Toute « version PC » ou « bêta » proposée aujourd’hui est une arnaque.",
+   "text": "Aucune version PC n’est annoncée : ni date, ni page Steam, ni configuration requise. GTA VI sort le 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S seulement. Pour situer, GTA V est arrivé sur PC un an et demi après les consoles et Red Dead Redemption 2 un an après : ce sont des repères de la série, pas une annonce. D’après la presse, Matthew Ball, de Xbox, a écrit le 7 octobre 2026 que le jeu ne serait pas non plus diffusé en nuage vers le PC. Toute « version PC » ou « bêta » proposée aujourd’hui est une arnaque.",
    "status": "Non annoncé",
    "links": [
     {
@@ -290,7 +294,7 @@
    "source": "https://www.rockstargames.com/VI",
    "priority": true,
    "min": 1,
-   "checkedAt": "2026-10-16"
+   "checkedAt": "2026-10-21"
   },
   {
    "id": "ps4",
@@ -351,8 +355,9 @@
     "framerate",
     "graphismes"
    ],
-   "text": "Le jeu est annoncé « PS5 Pro Enhanced ». Rockstar n’a pas publié de détails sur la résolution ou le nombre d’images par seconde. L’Extended Look du 27 août 2026 a été capturé sur PS5.",
-   "status": "Officiel, détails non publiés",
+   "text": "Le jeu est annoncé « PS5 Pro Enhanced », sans détail sur la résolution ; la page PlayStation indique aussi la lecture à distance. D’après VGC (28 août 2026), Rob Nelson a parlé de 30 images par seconde sur consoles, une option à 60 n’étant pas décidée : Rockstar ne l’a pas publié lui-même. L’Extended Look du 27 août 2026 a été capturé sur PS5.",
+   "status": "Officiel (PS5 Pro Enhanced), propos rapportés par la presse",
+   "checkedAt": "2026-10-21",
    "links": [
     {
      "label": "Médias et crédits",
@@ -681,6 +686,7 @@
    "theme": "jeu",
    "q": "C’est quoi le Pack Vintage Vice City ?",
    "f": [
+    "que contient le pack vintage vice city",
     "pack vintage vice city",
     "c est quoi le pack vintage",
     "vintage vice city pack",
@@ -880,7 +886,7 @@
     "la presse du jeu gta 6"
    ],
    "text": "Le 27 août 2026, des journalistes ont raconté la démonstration de GTA VI présentée par Rob Nelson, de Rockstar North : l’histoire qui commence dans les Keys, la taille de Vice City, les planques habitées. Rob Nelson a aussi répondu à Famitsu : boutiques et salons, tenues, repaires de gangs, témoins et alarmes. Les Actualités reprennent ces aperçus avec leurs sources.",
-   "status": "Officiel (déclaration à la presse)",
+   "status": "Vu dans un média (aperçus de la presse, entretiens)",
    "links": [
     {
      "label": "Les aperçus de la presse",
@@ -891,7 +897,7 @@
      "url": "/actus.html#frise"
     }
    ],
-   "checkedAt": "2026-10-14"
+   "checkedAt": "2026-10-21"
   },
   {
    "id": "videos-officielles",
@@ -1027,8 +1033,9 @@
     "netflix",
     "26 minutes"
    ],
-   "text": "L’Extended Look est une présentation d’environ 26 minutes diffusée le 27 août 2026, d’abord sur Netflix puis sur YouTube. Capturée sur PS5, elle montre le vol de voitures, des braquages de commerces, la police, les réseaux sociaux du jeu et la vie quotidienne de Jason et Lucia.",
+   "text": "L’Extended Look est une présentation de 26 minutes et 48 secondes, diffusée le 27 août 2026, d’abord sur Netflix puis sur YouTube. Capturée sur PS5, elle montre le vol de voitures, des braquages de commerces, la police, les réseaux sociaux du jeu et la vie quotidienne de Jason et Lucia.",
    "status": "Officiel Rockstar",
+   "checkedAt": "2026-10-21",
    "links": [
     {
      "label": "An Extended Look",
@@ -1095,10 +1102,11 @@
     "flower in a hurricane",
     "quelle musique dans le trailer de sortie de gta 6",
     "trailer de sortie gta 6",
-    "le trailer de sortie",
+    "qui compose la musique de gta 6",
     "musique du trailer de lancement"
    ],
    "k": [
+    "compositeur",
     "bande annonce de lancement",
     "launch trailer",
     "trailer de lancement",
@@ -1108,7 +1116,7 @@
     "trailer de sortie",
     "bande annonce de sortie"
    ],
-   "text": "Rockstar l’a publiée le 15 octobre 2026, avec le résumé de l’histoire : Jason et Lucia, pris dans un complot criminel qui s’étend dans tout l’État de Leonida. Elle se joue sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard, aussi sur GTA VI: The Album ; Justice compose la musique originale du jeu.",
+   "text": "Rockstar l’a publiée le 15 octobre 2026, capturée entièrement en jeu sur une PlayStation 5, avec le résumé de l’histoire : Jason et Lucia, pris dans un complot criminel qui s’étend dans tout l’État de Leonida. Elle se joue sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard, aussi sur GTA VI: The Album ; Justice compose la musique originale du jeu.",
    "status": "Officiel Rockstar, publiée le 15 octobre 2026",
    "links": [
     {
@@ -1121,7 +1129,7 @@
     }
    ],
    "source": "https://www.rockstargames.com/newswire/article/517572321a549a/watch-the-grand-theft-auto-vi-launch-trailer",
-   "checkedAt": "2026-10-16"
+   "checkedAt": "2026-10-21"
   },
   {
    "id": "musique-trailer",
@@ -1325,8 +1333,9 @@
     "qui est lucia",
     "heroine"
    ],
-   "text": "Lucia Caminos est l’un des deux personnages jouables. Son père lui a appris à se battre ; se battre pour sa famille l’a envoyée au pénitencier de Leonida. Fraîchement libérée, elle ne veut plus faire que des coups intelligents. C’est la première héroïne principale de la série.",
+   "text": "Lucia Caminos est l’un des deux personnages jouables. Son père lui a appris à se battre ; se battre pour sa famille l’a envoyée au pénitencier de Leonida. Fraîchement libérée, elle ne veut plus faire que des coups intelligents. Elle forme avec Jason le duo de héros du jeu.",
    "status": "Officiel Rockstar",
+   "checkedAt": "2026-10-21",
    "links": [
     {
      "label": "Sa fiche",
@@ -1487,8 +1496,9 @@
     "floride",
     "florida"
    ],
-   "text": "Leonida est l’État fictif où se passe le jeu : une Floride réinventée, avec Vice City (inspirée de Miami), les Keys, les marais de Grassrivers, Port Gellhorn, Ambrosia et le parc national de Mount Kalaga.",
+   "text": "Leonida est l’État fictif où se passe le jeu, avec Vice City, les Keys, les marais de Grassrivers, Port Gellhorn, Ambrosia et le parc national de Mount Kalaga. La presse et les joueurs y voient une Floride réinventée, Vice City rappelant Miami.",
    "status": "Officiel Rockstar",
+   "checkedAt": "2026-10-21",
    "links": [
     {
      "label": "Les six régions",
@@ -1524,8 +1534,9 @@
     "little cuba",
     "downtown"
    ],
-   "text": "Vice City est la grande ville de Leonida, inspirée de Miami : plages, quartiers commerçants, port de croisière et gratte-ciel de Downtown. Rockstar cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port.",
+   "text": "Vice City est la grande ville de Leonida, que la presse compare à Miami : plages, quartiers commerçants, port de croisière et gratte-ciel de Downtown. Rockstar cite Ocean Beach, Little Cuba, Tisha-Wocka et VC Port.",
    "status": "Officiel Rockstar",
+   "checkedAt": "2026-10-21",
    "links": [
     {
      "label": "Fiche Vice City",
@@ -1840,7 +1851,7 @@
    ],
    "min": 1,
    "checkedAt": "2026-10-04",
-   "source": "https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25"
+   "source": "https://www.rockstargames.com/newswire/article/5171972o3ak5oa/pre-order-grand-theft-auto-vi-on-june-25"
   },
   {
    "id": "police",
@@ -1967,6 +1978,7 @@
    "theme": "jeu",
    "q": "Peut-on grossir ou se muscler dans GTA VI ?",
    "f": [
+    "mon personnage va grossir",
     "prendre du poids gta 6",
     "grossir gta6",
     "maigrir gta 6",
@@ -1974,7 +1986,9 @@
     "salle de sport gta6",
     "condition physique gta 6",
     "on peut grossir",
-    "faire du sport gta 6"
+    "faire du sport gta 6",
+    "ton personnage va grossir",
+    "est ce que ton personnage va grossir"
    ],
    "k": [
     "prendre du poids",
@@ -2111,7 +2125,7 @@
     "stations confirmees",
     "stations des fuites"
    ],
-   "text": "Rockstar a présenté six stations le 8 octobre 2026 : Flash FM (pop), Cocoteo FM (musiques latines), Back Country Radio (country), AfroBank FM (musiques africaines), The Chamber 106.6 (metal) et Dirty South Classics (rap du Sud), avec des animateurs comme Bad Bunny, Lana Del Rey, Morgan Wallen ou Burna Boy. Des podcasts à la demande arrivent aussi, et la radio s’écoute pour la première fois à pied, avec le téléphone et des écouteurs. Rockstar n’a pas dit si la liste est complète. Les autres noms de stations qui circulent viennent de vidéos volées en août 2026 : on ne les reprend pas.",
+   "text": "Rockstar a présenté six stations le 8 octobre 2026 : Flash FM (pop), Cocoteo FM (musiques latines), Back Country Radio (country), AfroBank FM (musiques africaines), The Chamber 106.6 (metal) et Dirty South Classics (rap du Sud), avec des animateurs comme Bad Bunny, Lana Del Rey, Morgan Wallen ou Burna Boy. Des podcasts à la demande arrivent aussi, et la radio s’écoute pour la première fois à pied, avec le téléphone et des écouteurs. La page Musique de Rockstar annonce la plus large sélection de radios et de podcasts de la série, « du rock classique à la radio parlée », sans dire combien de stations en tout. Les autres noms de stations qui circulent viennent de vidéos volées en août 2026 : on ne les reprend pas.",
    "status": "Officiel Rockstar, six stations présentées le 8 octobre 2026",
    "links": [
     {
@@ -2124,7 +2138,7 @@
     }
    ],
    "min": 1,
-   "checkedAt": "2026-10-12",
+   "checkedAt": "2026-10-21",
    "source": "https://www.rockstargames.com/newswire/article/o3982oa93a23k4/the-music-of-grand-theft-auto-vi-in-game-radio-stations"
   },
   {
@@ -2132,6 +2146,8 @@
    "theme": "jeu",
    "q": "Combien coûtent les voitures, armes et maisons dans GTA VI ?",
    "f": [
+    "c est quoi les prix dans le jeu",
+    "prix dans le jeu gta 6",
     "argent du jeu gta 6",
     "prix des voitures gta 6",
     "economie gta6",
@@ -2140,7 +2156,9 @@
     "combien d argent dans gta 6",
     "les prix dans gta 6",
     "cb coute une voiture dans gta6",
-    "prix des armes gta 6"
+    "prix des armes gta 6",
+    "comment sont les prix dans le jeu",
+    "les prix dans le jeu de gta 6"
    ],
    "k": [
     "argent du jeu",
@@ -2174,6 +2192,7 @@
    "theme": "jeu",
    "q": "Peut-on acheter des entreprises ou des maisons dans GTA VI ?",
    "f": [
+    "posseder des entreprises dans gta 6",
     "acheter une entreprise gta 6",
     "entreprises a acheter gta6",
     "acheter une maison gta 6",
@@ -2229,7 +2248,7 @@
     "armes du jeu",
     "arsenal"
    ],
-   "text": "Le site recense 27 armes identifiées dans les médias officiels, dont cinq nommées par Rockstar (le Girardi ES9 de Jason, le Klose K17 de Lucia, les Hawk & Little Morgan…). L’armurerie explique aussi le constructeur d’équipement, les gadgets et les munitions.",
+   "text": "Le site recense {n:armes} armes identifiées dans les médias officiels, dont {n:armes:st=officiel} nommées par Rockstar (le Girardi ES9 de Jason, le Klose K17 de Lucia, les Hawk & Little Morgan…). L’armurerie explique aussi le constructeur d’équipement, les gadgets et les munitions.",
    "status": "Identification à partir des médias officiels",
    "links": [
     {
@@ -2291,7 +2310,7 @@
     "toutes les voitures",
     "marques"
    ],
-   "text": "Le site recense 302 véhicules vus dans les médias officiels (voitures, motos, bateaux, avions, hélicoptères), avec la marque, la catégorie et l’inspiration réelle de chacun. Rockstar n’a publié aucune liste officielle.",
+   "text": "Le site recense {n:vehicules} véhicules vus dans les médias officiels (voitures, motos, bateaux, avions, hélicoptères), avec la marque, la catégorie et l’inspiration réelle de chacun. Rockstar n’a publié aucune liste officielle.",
    "status": "Identification à partir des médias officiels",
    "links": [
     {
@@ -2491,13 +2510,17 @@
    "theme": "jeu",
    "q": "Quel est l’âge minimum (PEGI) pour GTA VI ?",
    "f": [
+    "gta 6 est pour plus de 18 ans",
     "pegi gta 6",
     "age gta6",
     "interdit aux moins de 18 ans gta 6",
     "gta 6 pour les enfants",
     "classification gta 6",
     "gta6 pegi 18",
-    "a partir de quel age gta 6"
+    "a partir de quel age gta 6",
+    "esrb gta 6",
+    "gta 6 interdit aux mineurs",
+    "classification usk gta 6"
    ],
    "k": [
     "pegi",
@@ -2506,9 +2529,14 @@
     "pour les enfants",
     "classification"
    ],
-   "text": "Comme tous les GTA, GTA VI est destiné aux adultes : la classification PEGI 18 est attendue en Europe. La classification officielle sera visible sur la boutique.",
-   "status": "Attendu, à vérifier",
+   "text": "GTA VI est classé pour les adultes. En France, le PlayStation Store et le Microsoft Store affichent PEGI 18 (drogues, contenu sexuel, violence, achats en jeu). Aux États-Unis, l’ESRB le classe M, pour les 17 ans et plus. La presse signale aussi USK 18 en Allemagne ; les pages PlayStation d’Australie et du Japon affichent R18+ et CERO Z.",
+   "status": "Officiel (boutiques PlayStation et Xbox, ESRB)",
+   "checkedAt": "2026-10-21",
    "links": [
+    {
+     "label": "Ce qui est confirmé",
+     "url": "/verification.html"
+    },
     {
      "label": "Tout ce qui s’achète",
      "url": "/achats.html"
@@ -2747,8 +2775,8 @@
     "verifiez",
     "infos officielles"
    ],
-   "text": "La page « Ce qui est confirmé » fait le point au 12 octobre 2026 : ce que Rockstar a confirmé (date et consoles, éditions, bonus de précommande, version en boîte, personnages, régions, vidéos, musique), chaque point avec sa source, puis ce qu’il n’a pas encore dit (version PC, heure de déblocage, poids, GTA Online, prix en jeu, surface de la carte, durée, codes de triche). Elle dit aussi ce que les fiches attendent du jeu et ce que le site s’interdit.",
-   "status": "Le site, relu le 12 octobre 2026",
+   "text": "La page « Ce qui est confirmé » fait le point à la date affichée en haut de la page : ce que Rockstar a confirmé (date et consoles, éditions, bonus de précommande, version en boîte, personnages, régions, vidéos, musique), chaque point avec sa source, puis ce qu’il n’a pas encore dit (version PC, heure de déblocage, poids, GTA Online, prix en jeu, surface de la carte, durée, codes de triche). Elle dit aussi ce que les fiches attendent du jeu et ce que le site s’interdit.",
+   "status": "Le site",
    "links": [
     {
      "label": "Ce que Rockstar a confirmé",
@@ -3094,6 +3122,8 @@
    "theme": "jeu",
    "q": "La date de sortie de GTA VI est-elle définitive ?",
    "f": [
+    "gta 6 peut il encore etre repousse",
+    "gta 6 pourrait etre repousse encore",
     "la date est definitive",
     "sur que ca sort le 19 novembre",
     "encore un report gta 6",
@@ -3101,7 +3131,9 @@
     "la date est fiable",
     "c est sur pour novembre",
     "gta6 sort vraiment en 2026",
-    "ya un risque de report"
+    "ya un risque de report",
+    "gta 6 peut encore etre repousse",
+    "peut gta 6 encore etre repousse"
    ],
    "k": [
     "date definitive",
@@ -3514,6 +3546,7 @@
    "theme": "personnages",
    "q": "Quelle est l’arme de Jason ?",
    "f": [
+    "quel pistolet a jason",
     "l arme de jason",
     "le pistolet de jason",
     "quelle arme a jason",
@@ -3521,7 +3554,8 @@
     "jason flingue",
     "arme de jason gta 6",
     "pistolet jason gta6",
-    "le flingue de jason"
+    "le flingue de jason",
+    "quel pistolet a jason sur lui"
    ],
    "text": "Le pistolet personnel de Jason est le Girardi ES9, nommé par Rockstar dans la présentation de l’Édition Ultimate, qui en propose une version gravée. Il s’inspire du Beretta 92FS. Sa fiche est dans l’armurerie du site.",
    "status": "Officiel Rockstar",
@@ -3574,14 +3608,14 @@
     "histoire d amour gta 6"
    ],
    "text": "C’est toi qui décides : d’après la FAQ des personnages, Rob Nelson a dit à IGN que la romance est facultative. Ses effets sur le jeu ne sont pas détaillés. Rockstar décrit Jason et Lucia comme deux personnes qui n’ont que l’une l’autre.",
-   "status": "Officiel (entretien), détails non publiés",
+   "status": "Vu dans un média (entretien), détails non publiés",
    "links": [
     {
      "label": "La FAQ des personnages",
      "url": "/personnages.html#faq"
     }
    ],
-   "checkedAt": "2026-09-28",
+   "checkedAt": "2026-10-21",
    "source": "https://www.rockstargames.com/VI"
   },
   {
@@ -3589,6 +3623,7 @@
    "theme": "personnages",
    "q": "Peut-on changer de personnage à tout moment ?",
    "f": [
+    "changer entre jason et lucia quand je veux",
     "changer de personnage gta 6",
     "passer de jason a lucia",
     "switch de personnage",
@@ -3599,14 +3634,14 @@
     "alterner jason lucia"
    ],
    "text": "Pas toujours. D’après la FAQ des personnages, l’Extended Look montre un passage de Jason à Lucia en pleine poursuite, mais Rob Nelson a précisé à Famitsu que l’histoire impose parfois le personnage. Le détail des règles n’est pas publié.",
-   "status": "Officiel (entretien), règles non détaillées",
+   "status": "Vu dans un média (entretien), règles non détaillées",
    "links": [
     {
      "label": "La FAQ des personnages",
      "url": "/personnages.html#faq"
     }
    ],
-   "checkedAt": "2026-09-28",
+   "checkedAt": "2026-10-21",
    "source": "https://www.rockstargames.com/VI"
   },
   {
@@ -3651,15 +3686,15 @@
     "ya combien de heros",
     "nombre de protagonistes"
    ],
-   "text": "Deux : Jason et Lucia. D’après la FAQ des personnages, Rob Nelson a expliqué en septembre 2026 que quatre personnages avaient été envisagés avant le duo. Les six autres personnages présentés ne sont pas annoncés comme jouables.",
-   "status": "Officiel Rockstar",
+   "text": "Deux : Jason et Lucia. D’après la FAQ des personnages, Rob Nelson a dit à IGN, fin août 2026, que quatre personnages avaient été envisagés avant le duo. Les six autres personnages présentés ne sont pas annoncés comme jouables.",
+   "status": "Officiel (Jason et Lucia), propos rapportés par la presse",
    "links": [
     {
      "label": "La FAQ des personnages",
      "url": "/personnages.html#faq"
     }
    ],
-   "checkedAt": "2026-09-28",
+   "checkedAt": "2026-10-21",
    "source": "https://www.rockstargames.com/VI"
   },
   {
@@ -3908,15 +3943,15 @@
     "floride gta6",
     "leonida = floride"
    ],
-   "text": "Leonida est un État inventé qui s’inspire de la Floride : Vice City reprend Miami, les Keys les Florida Keys, Grassrivers les Everglades. Ce sont des rapprochements, pas des copies : la FAQ des lieux le rappelle, et chaque lieu réel identifié est marqué comme tel sur la carte.",
-   "status": "Officiel (inspiration), rapprochements",
+   "text": "Leonida est un État inventé que la presse et les joueurs rapprochent de la Floride : Vice City de Miami, les Keys des Florida Keys, Grassrivers des Everglades. À Game Informer (29 septembre 2026), Paul MacPherson, de Rockstar, a parlé de « toute l’expérience de la Floride ». Ce sont des rapprochements, pas des copies : la FAQ des lieux le rappelle, et chaque lieu réel identifié est marqué comme tel sur la carte.",
+   "status": "Rapprochements de la presse et des joueurs",
    "links": [
     {
      "label": "La FAQ des lieux",
      "url": "/lieux.html#faq"
     }
    ],
-   "checkedAt": "2026-09-28",
+   "checkedAt": "2026-10-21",
    "source": "https://www.rockstargames.com/VI/only-in-leonida/vice-city"
   },
   {
@@ -3933,7 +3968,7 @@
     "map gta 6 plus grande",
     "la carte fait 2 fois gta v"
    ],
-   "text": "D’après Rob Nelson, de Rockstar North, rapporté le 27 août 2026 : environ deux fois la carte de GTA V et trois fois la zone jouable de Red Dead Redemption 2. Aucune surface chiffrée n’est publiée, ni pour GTA VI ni pour GTA V. Les mots exacts sont cités sur la page « GTA 6 et GTA 5 ».",
+   "text": "D’après Rob Nelson, de Rockstar North, rapporté le 27 août 2026 par un créateur reçu au studio : environ deux fois la carte de GTA V. Le même jour, le New York Times écrit que, selon le studio, elle fait trois fois la zone jouable de Red Dead Redemption 2. Aucune surface chiffrée n’est publiée, ni pour GTA VI ni pour GTA V. Les mots exacts sont cités sur la page « GTA 6 et GTA 5 ».",
    "status": "Déclaration rapportée",
    "links": [
     {
@@ -3945,7 +3980,7 @@
      "url": "/carte.html"
     }
    ],
-   "checkedAt": "2026-10-16"
+   "checkedAt": "2026-10-21"
   },
   {
    "id": "zones-fermees",
@@ -3988,7 +4023,7 @@
     "comment fonctionne la carte",
     "la carte fonctionne comment"
    ],
-   "text": "La carte de Leonida place 3 291 lieux référencés (dont 14 nommés par Rockstar) : tu la déplaces, tu zoomes, tu filtres par fiabilité, par source et par type, tu coches ce que tu as trouvé, tu calcules un trajet entre deux points, avec le temps à pied et selon ton véhicule, et tu poses tes propres marqueurs et dessins. Tout reste sur ton appareil.",
+   "text": "La carte de Leonida place {n:carte} lieux référencés, zones comprises (régions, villes, quartiers, comtés), dont {n:carte:s=officiel} nommés par Rockstar : tu la déplaces, tu zoomes, tu filtres par fiabilité, par source et par type, tu coches ce que tu as trouvé, tu calcules un trajet entre deux points, avec le temps à pied et selon ton véhicule, et tu poses tes propres marqueurs et dessins. Tout reste sur ton appareil.",
    "status": "Le site",
    "links": [
     {
@@ -4120,7 +4155,7 @@
     "la carte a combien de lieux",
     "nombre de reperes carte"
    ],
-   "text": "La carte référence 3 291 lieux, dont 14 nommés par Rockstar, répartis en 12 catégories, et six régions officielles. Les emplacements précis ne sont affichés que s’ils sont vérifiés et sourcés.",
+   "text": "La carte référence {n:carte} lieux, zones comprises : {n:lieuxPrecis} lieux précis et {n:zonesCarte} régions, villes, quartiers ou comtés. Chacun porte son niveau de certitude : {n:carte:s=officiel} nommés par Rockstar, {n:carte:s=vu} aperçus dans un support officiel, {n:carte:s=spec} reconstitués par la communauté. {n:categoriesCarteUtilisees} de ses {n:categoriesCarte} catégories ont déjà des points.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -4226,7 +4261,7 @@
     "les endroits du jeu",
     "hub lieux"
    ],
-   "text": "La page Lieux réunit les six régions présentées par Rockstar (Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia, Mount Kalaga), une frise datée, des paires fiction et réel sourcées, des questions ouvertes et une FAQ. Les 3 291 lieux précis sont sur la carte.",
+   "text": "La page Lieux réunit les six régions présentées par Rockstar (Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia, Mount Kalaga), une frise datée, des paires fiction et réel sourcées, des questions ouvertes et une FAQ. Les {n:lieuxPrecis} lieux précis sont sur la carte.",
    "status": "Le site",
    "links": [
     {
@@ -4437,7 +4472,7 @@
     "garage a vendre"
    ],
    "text": "Oui, d’après la FAQ des planques : Rob Nelson a dit à Famitsu (28 août 2026) qu’on démarre avec trois places de véhicule et qu’on achète des garages sur la carte pour en avoir plus. Aucun prix n’est publié. Les deux garages décrits avec les éditions (Paradise, Shore Court) ont leur fiche.",
-   "status": "Officiel (entretien), prix non publiés",
+   "status": "Vu dans un média (entretien), prix non publiés",
    "absence": [
     "prix:hideout"
    ],
@@ -4453,7 +4488,7 @@
      "url": "/planques.html#garages"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-10-21"
   },
   {
    "id": "garage-contenu",
@@ -4499,7 +4534,7 @@
     "on peut changer de maison"
    ],
    "text": "Aucun nombre publié. D’après la FAQ des planques, une seule adresse porte officiellement le nom de planque (« Jason’s Safehouse ») et Rob Nelson a dit à Famitsu qu’on en change au fil des chapitres, sans les acheter. La page Planques liste ce qui est documenté.",
-   "status": "Officiel (entretien), nombre non publié",
+   "status": "Vu dans un média (entretien), nombre non publié",
    "links": [
     {
      "label": "La FAQ des planques",
@@ -4527,7 +4562,7 @@
     "carburant gta 6"
    ],
    "text": "Dans les stations-service : d’après la FAQ des entreprises, Rob Nelson a dit début septembre 2026 que le plein prend une dizaine de secondes et que la station répare aussi. Pour repeindre, c’est le Pay ’n’ Spray ou un atelier.",
-   "status": "Officiel (entretien)",
+   "status": "Vu dans un média (entretien)",
    "links": [
     {
      "label": "La FAQ des entreprises",
@@ -4594,6 +4629,7 @@
    "theme": "lieux",
    "q": "Quelles demeures sont sur le site ?",
    "f": [
+    "les maisons de qui sont sur le site",
     "les demeures du site",
     "liste des maisons",
     "page demeures",
@@ -4990,7 +5026,9 @@
     "les reglages avances",
     "j ai change un reglage en expert",
     "change en mode expert",
-    "que veut dire change en mode expert"
+    "que veut dire change en mode expert",
+    "pourquoi je vois change en mode expert en mode simple",
+    "change en mode expert alors que je suis en mode simple"
    ],
    "text": "Un réglage changé en mode Expert compte toujours en Simple : une ligne « Changé en mode Expert » le dit au-dessus de l’outil pour que tu ne l’oublies pas. Revenir en Simple ne l’efface pas. Chaque outil garde son propre mode.",
    "status": "Le site",
@@ -5534,7 +5572,9 @@
     "acheter quelque chose qui n est pas sur le site",
     "achat sans fiche",
     "achat libre c koi",
-    "ecrire un achat libre"
+    "ecrire un achat libre",
+    "je peux ajouter un achat qui n est pas sur le site",
+    "ajouter un achat qui n est pas sur le site"
    ],
    "text": "Un achat libre, c’est un achat sans fiche du site : tu écris son nom et le prix que tu imagines. Il existe dans Mes achats, Quoi acheter d’abord ?, Ça vaut le coup ?, Quel achat choisir ? et le business plan. Le calcul reste ta simulation à toi.",
    "status": "Le site",
@@ -5563,7 +5603,9 @@
     "un lieu ca s achete pas",
     "le calculateur ne propose pas le lieu",
     "acheter une plage",
-    "acheter les keys"
+    "acheter les keys",
+    "pourquoi le calculateur n a pas d option pour acheter une region",
+    "pas d option pour acheter une region dans le calculateur"
    ],
    "text": "Un lieu ou une région, c’est une destination : ça se visite, et rien ne dit qu’on peut l’acheter. Le calculateur ne le propose donc pas à l’achat ; il accepte les fiches de véhicules, d’armes, d’entreprises, de demeures et les achats libres. Tu peux ouvrir la carte ou la fiche du lieu.",
    "status": "Le site",
@@ -5618,7 +5660,9 @@
     "gagner en plus grace a l achat",
     "boost par heure",
     "rapporte en plus c koi",
-    "erreur rapporte en plus"
+    "erreur rapporte en plus",
+    "comment remplir me fait gagner en plus",
+    "comment je dois remplir me fait gagner en plus"
    ],
    "text": "Seulement ce que cet achat te fait gagner EN PLUS de ce que tu gagnais déjà, par heure de jeu. C’est ton chiffre à toi : rien n’est promis par le jeu. Erreur fréquente : compter comme gagné grâce à l’achat ce que tu gagnais déjà sans lui. Écris ce que tu gagnais avant dans Mon objectif pour que la comparaison soit juste.",
    "status": "Le site",
@@ -6123,7 +6167,9 @@
     "graphique expert",
     "courbe du business plan",
     "les courbes c koi",
-    "modifier un point sur la courbe"
+    "modifier un point sur la courbe",
+    "a quoi servent les graphiques du calculateur",
+    "a quoi servent les graphiques"
    ],
    "text": "En Expert : la courbe de ton argent dans le temps (avec tes résultats réels dans le business plan), la courbe « avec ou sans cet achat » et le remboursement dans Ça vaut le coup ?, les barres de budget, et le programme de session. Chaque graphique a un titre, des axes, une légende et un tableau ; sur la courbe, un point réel se corrige d’un clic.",
    "status": "Le site",
@@ -6140,6 +6186,7 @@
    "theme": "calculateur",
    "q": "C’est quoi le Tuto ?",
    "f": [
+    "combien de chapitres dans le tuto",
     "le tuto c est quoi",
     "ouvrir le tuto",
     "tuto leonidakit",
@@ -6149,7 +6196,7 @@
     "tuto c koi",
     "mode d emploi du site"
    ],
-   "text": "Le Tuto est le guide du calculateur en 15 chapitres : ton premier calcul, les modes, un chapitre par outil avec un exemple à essayer et « une erreur fréquente à éviter », tes calculs enregistrés, le business plan, les sources et statuts, les mots du calculateur et une FAQ. Chaque exercice s’ouvre directement dans l’outil.",
+   "text": "Le Tuto est le guide du calculateur, chapitre par chapitre : ton premier calcul, les modes, un chapitre par outil avec un exemple à essayer et « une erreur fréquente à éviter », tes calculs enregistrés, le business plan, les sources et statuts, les mots du calculateur et une FAQ. Chaque exercice s’ouvre directement dans l’outil.",
    "status": "Le site",
    "links": [
     {
@@ -6248,6 +6295,208 @@
    "checkedAt": "2026-09-28"
   },
   {
+   "id": "hypotheses-en-plus",
+   "theme": "calculateur",
+   "q": "C’est quoi « Mes hypothèses en plus » dans le calculateur ?",
+   "f": [
+    "mes hypotheses en plus",
+    "hypotheses en plus calculateur",
+    "c est quoi les hypotheses en plus",
+    "reglages en plus du calculateur",
+    "simuler des soins des amendes et un revenu passif",
+    "hypotheses en plus c koi",
+    "ou regler les soins et les amendes",
+    "mode expert hypotheses en plus",
+    "c est quoi mes hypotheses en plus dans le calculateur"
+   ],
+   "text": "En mode Expert, « Mes hypothèses en plus » (juste sous « Mes hypothèses ») te laisse simuler ce que Rockstar n’a pas chiffré : les soins, les amendes, l’argent perdu à la mort ou à l’arrestation (ajoutés à tes dépenses par partie), un revenu passif avec son stock maximum (ajouté à ton gain par heure), un bonus sur les récompenses des missions, le partage à parts égales entre joueurs et l’argent d’un seul personnage (Jason ou Lucia). Tout est décoché au départ : rien ne change tant que tu ne coches rien, et chaque chiffre choisi reste marqué « simulation ». Le business plan les reprend si tu coches « Compter aussi mes hypothèses en plus ».",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ouvrir le calculateur",
+     "url": "/calculateurs.html"
+    },
+    {
+     "label": "Le chapitre Mon objectif",
+     "url": "/tuto.html#objectif"
+    }
+   ]
+  },
+  {
+   "id": "simuler-soins-amendes",
+   "theme": "calculateur",
+   "q": "Comment compter les soins, les amendes ou l’argent perdu à la mort ?",
+   "f": [
+    "compter les soins",
+    "combien coutent les soins par partie",
+    "compter les amendes",
+    "argent perdu a la mort",
+    "argent perdu quand je meurs",
+    "argent perdu a l arrestation",
+    "combien je perds si je suis arrete",
+    "prix des amendes gta 6",
+    "soins et amendes dans le calculateur",
+    "depenses simulees par partie",
+    "combien d argent je perds quand je meurs",
+    "combien je perds quand je meurs",
+    "compter les soins les amendes ou l argent perdu a la mort"
+   ],
+   "text": "Rockstar n’a publié ni prix de soin, ni amende, ni perte d’argent à la mort ou à l’arrestation pour GTA VI. Dans le calculateur (mode Expert, « Mes hypothèses en plus »), tu peux les simuler : soins = vie perdue par partie ÷ vie rendue par un soin × prix d’un soin ; amendes, mort, arrestation = nombre par partie × montant. Le total s’ajoute à tes dépenses par partie dans Mon objectif, Mon temps de jeu, Quoi acheter d’abord ? et Mon budget. Exemple : 100 points de vie perdus par partie et un soin qui rend 25 points pour 500 $, soit 2 000 $ par partie. Ce sont des exemples, pas des chiffres du jeu.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ouvrir le calculateur",
+     "url": "/calculateurs.html"
+    },
+    {
+     "label": "Le chapitre Mon objectif",
+     "url": "/tuto.html#objectif"
+    }
+   ]
+  },
+  {
+   "id": "simuler-revenu-passif",
+   "theme": "calculateur",
+   "q": "Comment compter un revenu passif dans le calculateur ?",
+   "f": [
+    "revenu passif",
+    "compter un revenu passif",
+    "entreprise qui rapporte toute seule",
+    "revenu d une entreprise dans le calculateur",
+    "stock maximum du revenu passif",
+    "revenu hors ligne",
+    "gagner de l argent hors ligne",
+    "revenu passif c koi",
+    "argent pendant que je ne joue pas"
+   ],
+   "text": "Aucun revenu d’entreprise, stock ou plafond n’est publié pour GTA VI. En mode Expert, dans « Mes hypothèses en plus », coche « Revenu passif » et écris ce qu’il rapporte par heure de jeu et son stock maximum. Il s’ajoute à ton gain par heure (Mon objectif « petit à petit », Quoi acheter d’abord ?, Mon budget) ; en parties, il rapporte au plus son stock par partie. Dans le business plan, « Compter un revenu hors ligne entre deux parties » ajoute aussi ce que rapportent tes achats possédés pendant la pause, avec un plafond par pause si tu veux. Tout reste une simulation.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ouvrir le calculateur",
+     "url": "/calculateurs.html"
+    },
+    {
+     "label": "Le chapitre Mon business plan",
+     "url": "/tuto.html#plan"
+    }
+   ]
+  },
+  {
+   "id": "simuler-bonus-partage",
+   "theme": "calculateur",
+   "q": "Comment compter un bonus ou partager une récompense entre joueurs ?",
+   "f": [
+    "compter un bonus",
+    "bonus sur les recompenses",
+    "double argent dans le calculateur",
+    "partager la recompense",
+    "partage entre joueurs",
+    "ma part a plusieurs",
+    "partage a parts egales",
+    "combien je touche a 4 joueurs",
+    "bonus c koi calculateur",
+    "partager chaque recompense a parts egales entre les joueurs",
+    "compter un bonus ou partager une recompense entre joueurs"
+   ],
+   "text": "En mode Expert, dans « Mes hypothèses en plus » : « Bonus » ajoute un pourcentage à chaque récompense de mission (exemple : avec 50 %, 25 000 $ comptent 37 500 $) ; « Partager chaque récompense à parts égales entre les joueurs » compte 100 ÷ nombre de joueurs pour une mission à plusieurs (exemple : 4 joueurs, 25 %), sans changer la part que tu as écrite. Une part publiée par Rockstar n’est jamais remplacée. Rien de tout cela n’est confirmé dans GTA VI.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ouvrir le calculateur",
+     "url": "/calculateurs.html"
+    },
+    {
+     "label": "Le chapitre Mes activités",
+     "url": "/tuto.html#activites"
+    }
+   ]
+  },
+  {
+   "id": "argent-jason-lucia",
+   "theme": "calculateur",
+   "q": "Jason et Lucia ont-ils chacun leur argent ?",
+   "f": [
+    "jason et lucia ont le meme argent",
+    "argent separe jason lucia",
+    "chacun son argent jason et lucia",
+    "argent de jason",
+    "argent de lucia",
+    "portefeuille de jason et lucia",
+    "compter l argent d un seul personnage",
+    "jason lucia argent commun"
+   ],
+   "text": "Rockstar n’a pas encore dit si Jason et Lucia partagent le même argent ou ont chacun le leur. Le calculateur compte un seul argent pour les deux, comme avant. En mode Expert, « Argent de Jason et de Lucia » (dans « Mes hypothèses en plus ») te laisse compter l’argent d’un seul personnage : une mission jouée seulement avec l’autre est alors écartée, et c’est dit ; une mission à deux reste comptée (écris dans « Ma part » ce que touche ce personnage). Dans le business plan, « Jouée par » se règle sur chaque mission.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ouvrir le calculateur",
+     "url": "/calculateurs.html"
+    },
+    {
+     "label": "Le chapitre Mon business plan",
+     "url": "/tuto.html#plan"
+    }
+   ]
+  },
+  {
+   "id": "plan-reglages-expert",
+   "theme": "calculateur",
+   "q": "Quels réglages en plus a le business plan en mode Expert ?",
+   "f": [
+    "reglages expert du business plan",
+    "tentatives ratees dans le business plan",
+    "compter les echecs dans le plan",
+    "revendre apres mon but",
+    "revente des achats d avant",
+    "revenu hors ligne business plan",
+    "plan avec risque d echec",
+    "options du business plan",
+    "business plan reglages en plus"
+   ],
+   "text": "Dans « Ce qui compte pour toi » (mode Expert), cinq réglages, tous décochés au départ : « Compter aussi mes hypothèses en plus » ; « Compter les tentatives ratées de Mes hypothèses » (avec 2 tentatives ratées sur 10, une mission qui se refait rapporte en moyenne 80 % de sa récompense, et une mission faite une seule fois coûte et dure 1,25 fois plus ; 10 sur 10 est refusé) ; « Compter un revenu hors ligne entre deux parties » ; « Revendre mes achats d’avant après mon but » (écris « Je le revends après mon but » sur l’achat : l’argent à la fin et le coût net en tiennent compte, le temps pour atteindre le but ne change pas) ; et « Jouée par » sur chaque mission quand tu comptes l’argent d’un seul personnage.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Le chapitre Mon business plan",
+     "url": "/tuto.html#plan"
+    },
+    {
+     "label": "Ouvrir Mon business plan",
+     "url": "/calculateurs.html?tool=plan#atelier",
+     "tool": "plan"
+    }
+   ]
+  },
+  {
+   "id": "objectif-revente",
+   "theme": "calculateur",
+   "q": "Comment compter la revente de ce que je possède dans Mon objectif ?",
+   "f": [
+    "revendre ce que je possede",
+    "revente dans mon objectif",
+    "compter la revente",
+    "vendre mes vehicules pour mon objectif",
+    "revente calculateur",
+    "je revends ce que je possede deja",
+    "revendre pour avoir plus d argent",
+    "comment compter la revente de ce que je possede dans mon objectif"
+   ],
+   "text": "En mode Expert, dans Mon objectif (« Argent gardé de côté, dépenses, échéance »), coche « Je revends ce que je possède déjà » : les prix de revente que tu as écrits dans Mes achats (« Je pourrais le revendre ») pour ce que tu as déjà s’ajoutent à ce que tu as. La revente n’est pas confirmée dans GTA VI : c’est une simulation. En « ce que je vais gagner à partir de maintenant », elle ne compte pas comme un gain.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ouvrir Mon objectif",
+     "url": "/calculateurs.html?tool=goal#atelier",
+     "tool": "goal"
+    },
+    {
+     "label": "Le chapitre du Tuto",
+     "url": "/tuto.html#objectif"
+    }
+   ]
+  },
+  {
    "id": "apropos",
    "theme": "site",
    "q": "À quoi sert la page À propos ?",
@@ -6343,7 +6592,7 @@
     "statut c koi",
     "comment lire les statuts"
    ],
-   "text": "Cinq statuts, toujours affichés et reliés à une source datée : Officiel (nommé ou décrit par Rockstar), Vu dans un média (visible dans un trailer, une capture ou l’Extended Look ; ni prix ni achat connus), Identification communautaire (un rapprochement fait par des joueurs), Repère de la série (ce que GTA V ou GTA Online font, jamais dans la colonne GTA VI) et À confirmer (rien de publié : la ligne dit ce qu’on attend).",
+   "text": "Cinq statuts, toujours affichés et reliés à une source datée : Officiel (publié par Rockstar, Take-Two, Sony ou Microsoft sur leurs propres canaux, et écrit comme ils l’ont dit), Vu dans un média (visible dans un trailer, une capture ou l’Extended Look, ou rapporté par un média nommé, propos d’un responsable de Rockstar compris ; ni prix ni achat connus), Identification communautaire (un rapprochement fait par des joueurs, un wiki ou un site de fans), Repère de la série (ce que GTA V ou GTA Online font, jamais dans la colonne GTA VI) et À confirmer (rien de publié : la ligne dit ce qu’on attend).",
    "status": "Le site",
    "links": [
     {
@@ -6480,7 +6729,7 @@
     "le site compte combien",
     "cb de fiches"
    ],
-   "text": "La section « Le site en chiffres » de la page À propos donne les nombres recalculés à chaque régénération : pages en ligne, fiches de véhicules (302) et d’armes (27), lieux sur la carte (3 291), lignes des listes dépliables, visuels officiels crédités, sujets dans ma base, tests automatisés. Aucun nombre n’est tapé à la main.",
+   "text": "La section « Le site en chiffres » de la page À propos donne les nombres recalculés à chaque régénération : pages en ligne, fiches de véhicules ({n:vehicules}) et d’armes ({n:armes}), lieux sur la carte ({n:carte}), lignes des listes dépliables, visuels officiels crédités, sujets dans ma base, tests automatisés. Aucun nombre n’est tapé à la main.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -6788,7 +7037,7 @@
     "comment chercher",
     "la loupe"
    ],
-   "text": "La recherche (barre « Un véhicule, une arme, un lieu ? » sur l’accueil et dans les hubs) cherche dans les fiches, les catégories, les pages et les lignes des listes ; les 2 500 lieux de la carte se chargent à la première recherche. Tu peux aussi me donner un nom : je retrouve la fiche.",
+   "text": "La recherche (barre « Un véhicule, une arme, un lieu ? » sur l’accueil et dans les hubs) cherche dans les fiches, les catégories, les pages et les lignes des listes ; les lieux de la carte se chargent à la première recherche. Tu peux aussi me donner un nom : je retrouve la fiche.",
    "status": "Le site",
    "links": [
     {
@@ -7009,6 +7258,7 @@
    "theme": "suivi",
    "q": "Peut-on cocher les équipements et les munitions ?",
    "f": [
+    "marquer les munitions et les gadgets comme possedes",
     "cocher les equipements",
     "cocher les munitions",
     "mon equipement",
@@ -7257,6 +7507,7 @@
    "theme": "suivi",
    "q": "Le suivi lit-il ma sauvegarde de console ?",
    "f": [
+    "le suivi de progression lit ma sauvegarde ps5",
     "synchroniser avec ma console",
     "lire ma sauvegarde ps5",
     "le site se connecte au jeu",
@@ -7733,7 +7984,7 @@
     "la carte stp",
     "la map"
    ],
-   "text": "Voici la carte de Leonida : 3 291 lieux, filtres, distance et suivi.",
+   "text": "Voici la carte de Leonida : {n:carte} lieux, filtres, distance et suivi.",
    "status": "Le site",
    "links": [
     {
@@ -7779,7 +8030,10 @@
     "dominator buggy",
     "crest kayak ultimate",
     "les vehicules bonus",
-    "vehicules exclusifs ultimate"
+    "vehicules exclusifs ultimate",
+    "quelles voitures avec l ultimate",
+    "voitures avec l ultimate",
+    "vehicules avec l edition ultimate"
    ],
    "text": "D’après les textes des éditions relevés sur le site : le Crest Kayak et le Shitzu Squalo (Washington Beach, avec une caisse d’armes), le Dominator Buggy avec le garage Paradise, et le kit rétro du Vapid Ganado de Jason. Le Pack Vintage Vice City (précommande) ajoute le Stanier ’55 avec le garage de Shore Court. Leurs prix séparés en jeu ne sont pas publiés.",
    "status": "Officiel Rockstar (textes des éditions)",
@@ -8013,7 +8267,7 @@
     "classement par categorie",
     "categories voitures"
    ],
-   "text": "Treize catégories sur la page Véhicules : berlines (26), voitures de sport (45), supercars (6), muscle cars (29), SUV et 4x4 (27), pick-ups et tout-terrain (23), vans et cargos (19), deux-roues et quads (19), hélicoptères (8), avions (9), bateaux et jet-skis (37), service et urgence (45), divers (9). Les compteurs sont mis à jour par script.",
+   "text": "{n:categoriesVehicules} catégories sur la page Véhicules : berlines ({n:vehicules:cat=berline}), voitures de sport ({n:vehicules:cat=sport}), supercars ({n:vehicules:cat=supercar}), muscle cars ({n:vehicules:cat=muscle}), SUV et 4x4 ({n:vehicules:cat=suv}), pick-ups et tout-terrain ({n:vehicules:cat=pickup}), vans et cargos ({n:vehicules:cat=van}), deux-roues et quads ({n:vehicules:cat=moto}), hélicoptères ({n:vehicules:cat=helicoptere}), avions ({n:vehicules:cat=avion}), bateaux et jet-skis ({n:vehicules:cat=bateau}), service et urgence ({n:vehicules:cat=service}), divers ({n:vehicules:cat=divers}). Les compteurs sont mis à jour par script.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -8037,7 +8291,7 @@
     "les 50 constructeurs",
     "liste des marques"
    ],
-   "text": "Le site recense 50 constructeurs fictifs (Albany, Karin, Grotti, Vapid, Dinka, Canis, Bravado…) sur 302 véhicules, avec 296 modèles réels identifiés. La section « Marques » de la page Véhicules les présente avec un filtre et leur inspiration ; 10 véhicules sont nommés par Rockstar, les autres sont vus officiellement ou identifiés par la communauté.",
+   "text": "Le site recense {n:marques} constructeurs fictifs (Albany, Karin, Grotti, Vapid, Dinka, Canis, Bravado…) sur {n:vehicules} véhicules, avec {n:modelesReels} modèles réels identifiés. La section « Marques » de la page Véhicules les présente avec un filtre et leur inspiration ; {n:vehicules:st=officiel} véhicules sont nommés par Rockstar, les autres sont vus officiellement ou identifiés par la communauté.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -8093,7 +8347,7 @@
     "page vehicules rares",
     "exclusifs"
    ],
-   "text": "La page « Véhicules rares et exclusifs » réunit ce qui vient d’une édition (les 9 véhicules de l’Ultimate, le Stanier ’55 du Pack Vintage) et les modèles uniques vus dans les médias, avec leur statut et le lien vers chaque fiche.",
+   "text": "La page « Véhicules rares et exclusifs » réunit ce qui vient d’une édition (les {n:vehiculesUltimate} véhicules de l’Ultimate, le Stanier ’55 du Pack Vintage) et les modèles uniques vus dans les médias, avec leur statut et le lien vers chaque fiche.",
    "status": "Le site",
    "links": [
     {
@@ -8223,7 +8477,7 @@
     "categories armurerie",
     "types d armes"
    ],
-   "text": "Neuf classes dans l’Armurerie : pistolets (7), fusils à pompe (2), pistolets-mitrailleurs (4), fusils d’assaut (2), précision (2), mitrailleuses (1), mêlée (5), projectiles (2) et spéciales (2), soit 27 armes identifiées, dont 5 nommées par Rockstar.",
+   "text": "{n:classesArmes} classes dans l’Armurerie : pistolets ({n:armes:cat=pistolet}), fusils à pompe ({n:armes:cat=pompe}), pistolets-mitrailleurs ({n:armes:cat=pm}), fusils d’assaut ({n:armes:cat=assaut}), précision ({n:armes:cat=precision}), mitrailleuses ({n:armes:cat=mitrailleuse}), mêlée ({n:armes:cat=melee}), projectiles ({n:armes:cat=projectile}) et spéciales ({n:armes:cat=speciale}), soit {n:armes} armes identifiées, dont {n:armes:st=officiel} nommées par Rockstar.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -8245,7 +8499,9 @@
     "armes officielles gta 6",
     "nom officiel des armes",
     "les armes confirmees",
-    "armes nommees"
+    "armes nommees",
+    "quelles armes rockstar a vraiment nommees",
+    "quelles armes a rockstar nommees"
    ],
    "text": "Cinq armes sont nommées par Rockstar : le Girardi ES9 (Jason), le Klose K17 (Lucia), le Nipper .38, le Mustang .357 et les Hawk & Little Morgan. Les 22 autres sont identifiées dans les trailers, les captures et l’Extended Look, avec leur inspiration réelle.",
    "status": "Officiel Rockstar",
@@ -8369,8 +8625,8 @@
     "ou acheter une arme",
     "armurerie ammu nation"
    ],
-   "text": "Oui : d’après les textes officiels relevés dans la liste des personnalisations d’armes, chaque Ammu-Nation a un casier où tu gères et récupères tes armes longues, et certains magasins vendent des armes exclusives. Trois armureries sont placées sur la carte. Aucun prix n’est publié.",
-   "status": "Officiel Rockstar",
+   "text": "Oui : d’après Rob Nelson, dans Famitsu (traduit en anglais le 9 septembre 2026), chaque Ammu-Nation a un casier où tu gères et récupères tes armes longues, et certains magasins vendent des armes exclusives. Trois armureries sont placées sur la carte. Aucun prix n’est publié.",
+   "status": "Vu dans un média (entretien)",
    "absence": [
     "prix:weapon"
    ],
@@ -8386,8 +8642,7 @@
      "url": "/personnalisations.html#ateliers"
     }
    ],
-   "checkedAt": "2026-09-28",
-   "source": "https://www.rockstargames.com/VI"
+   "checkedAt": "2026-09-28"
   },
   {
    "id": "consommables-liste",
@@ -8428,7 +8683,7 @@
     "effet des consommables"
    ],
    "text": "D’après la FAQ des consommables, Rockstar montre Jason et Lucia qui mangent et boivent, et Rob Nelson dit que la nourriture renforce les jauges et joue sur le poids : trop manger fait grossir, la salle de sport muscle. Aucun chiffre n’est publié ; dans GTA V, une canette au distributeur rendait toute la vie.",
-   "status": "Officiel (entretien), repère de la série",
+   "status": "Vu dans un média (entretien), repère de la série",
    "absence": [
     "catalogue:consommables"
    ],
@@ -8626,7 +8881,7 @@
     "barbier gta6"
    ],
    "text": "Oui : à la planque avec un choix limité, ou dans un salon pour beaucoup plus de coupes, d’après Rob Nelson (FAQ de Vêtements et style). Sara’s Unisex Salon (Édition Ultimate) ajoute des coiffures signature, la barbe de Jason, le maquillage et les ongles de Lucia. Aucun prix GTA VI n’est publié.",
-   "status": "Officiel (entretien et textes des éditions)",
+   "status": "Vu dans un média (entretien) et officiel (textes des éditions)",
    "absence": [
     "catalogue:coiffures"
    ],
@@ -8642,7 +8897,7 @@
      "url": "/style.html#coiffures"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-10-21"
   },
   {
    "id": "prix-coiffure",
@@ -8773,7 +9028,7 @@
     "combien d habits"
    ],
    "text": "« Des milliers », selon Rob Nelson (FAQ de Vêtements et style), achetées en boutique ou gagnées en mission, dans des boutiques « innombrables ». Stock 305 (Édition Ultimate) vend des looks exclusifs. Aucune pièce n’a de prix publié.",
-   "status": "Officiel (entretien)",
+   "status": "Vu dans un média (entretien)",
    "links": [
     {
      "label": "La FAQ de Vêtements et style",
@@ -8787,6 +9042,7 @@
    "theme": "listes",
    "q": "Y a-t-il des accessoires (lunettes, bijoux, montres) dans GTA VI ?",
    "f": [
+    "porter des lunettes de soleil ou des bijoux",
     "accessoires gta 6",
     "lunettes de soleil gta6",
     "bijoux gta 6",
@@ -8972,7 +9228,7 @@
     "peindre ma caisse"
    ],
    "text": "Oui. D’après la FAQ des personnalisations, Rob Nelson explique que le Pay ’n’ Spray répare et repeint ta voiture pour semer la police, mais seule la couleur change : pour une peinture élaborée, il faut un atelier comme Rideout Customs ou One-Eyed Willie’s (livrées peintes à la main).",
-   "status": "Officiel (entretien)",
+   "status": "Vu dans un média (entretien)",
    "links": [
     {
      "label": "La FAQ des personnalisations",
@@ -9000,7 +9256,7 @@
     "options de personnalisation des armes"
    ],
    "text": "Oui : Rob Nelson promet « more weapon customization options than ever before », sans détail. Rockstar montre des pistolets gravés (Girardi ES9, Klose K17), des Morgan aux crosses gravées, un motif tropical et un PM à crosse rabattable. Les silencieux, viseurs et chargeurs de GTA V et GTA Online sont listés comme repères, avec leurs prix.",
-   "status": "Officiel (entretien et captures), repères de la série",
+   "status": "Vu dans un média (entretien et captures), repères de la série",
    "links": [
     {
      "label": "La FAQ des personnalisations",
@@ -9129,7 +9385,7 @@
     "voler une supercar"
    ],
    "text": "Oui, d’après Rob Nelson (ligne « Alarme et traceur » de la liste des personnalisations) : les voitures de luxe ont souvent une alarme et un traceur ; il faut cloner la clé, et un receleur peut s’en occuper. Dans GTA Online, un traceur coûtait 2 000 $ et l’assurance 4 000 $ : repères de la série.",
-   "status": "Officiel (entretien), repère de la série",
+   "status": "Vu dans un média (entretien), repère de la série",
    "links": [
     {
      "label": "La ligne Alarme et traceur",
@@ -9228,7 +9484,7 @@
     "modifs pour une supercar",
     "accessoires pour le girardi"
    ],
-   "text": "Sur chaque fiche de véhicule, « Personnaliser ce véhicule » ouvre la liste filtrée sur sa catégorie ; sur chaque fiche d’arme, « Accessoires compatibles » fait pareil. Les fiches d’armes ne sont citées dans une ligne que sur source officielle ou capture.",
+   "text": "Sur chaque fiche, « Personnaliser ce véhicule » ou « Personnaliser cette arme » liste les postes qui vont sur ce modèle, atelier par atelier, avec leurs repères. Coche « Je le prends » ou choisis une teinte, puis « Voir ma configuration » : le dessin du modèle change avec tes choix, et un lien ouvre la même configuration dans l’Atelier 3D, encore en construction. Les fiches d’armes ne sont citées dans une ligne que sur source officielle ou capture.",
    "status": "Le site",
    "links": [
     {
@@ -9240,7 +9496,7 @@
      "url": "/personnalisations.html#perso-armes"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-10-21"
   },
   {
    "id": "bateaux-page",
@@ -9415,7 +9671,7 @@
     "combien de vehicules sont nommes par rockstar",
     "vehicules nommes par rockstar"
    ],
-   "text": "Rockstar n’a publié aucune liste officielle de véhicules : chaque entrée porte son niveau de certitude. Nommé par Rockstar (10 véhicules : le nom apparaît tel quel dans un support officiel), Vu dans un média officiel (269 : visible dans un trailer, l’Extended Look ou une capture, sans nom communiqué), Identification communautaire (23 : rapprochement visuel fait par les joueurs).",
+   "text": "Rockstar n’a publié aucune liste officielle de véhicules : chaque entrée porte son niveau de certitude. Nommé par Rockstar ({n:vehicules:st=officiel} véhicules : le nom apparaît tel quel dans un support officiel), Vu dans un média officiel ({n:vehicules:st=vu} : visible dans un trailer, l’Extended Look ou une capture, sans nom communiqué), Identification communautaire ({n:vehicules:st=comm} : rapprochement visuel fait par les joueurs).",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -9439,7 +9695,7 @@
     "les marques japonaises",
     "voitures europeennes gta6"
    ],
-   "text": "Sur la page Véhicules, les filtres comptent 145 modèles d’inspiration américaine, 30 japonaise et 59 européenne parmi les 296 modèles réels identifiés. Chaque fiche dit de quelle vraie voiture le modèle se rapproche, et si c’est une identification officielle ou communautaire.",
+   "text": "Sur la page Véhicules, les filtres comptent {n:vehicules:slot=americain} modèles d’inspiration américaine, {n:vehicules:slot=japonais} japonaise et {n:vehicules:slot=europeen} européenne parmi les {n:modelesReels} modèles réels identifiés. Chaque fiche dit de quelle vraie voiture le modèle se rapproche, et si c’est une identification officielle ou communautaire.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -9487,6 +9743,7 @@
    "theme": "vehicules",
    "q": "Quelles mécaniques de conduite sont montrées (carburant, vue intérieure, coffre) ?",
    "f": [
+    "carburant ou vue a la premiere personne en conduisant",
     "carburant gta 6",
     "vue interieure gta 6",
     "le coffre sert a quoi",
@@ -9567,6 +9824,7 @@
    "theme": "site",
    "q": "Un lien de calcul partagé contient-il mes données ?",
    "f": [
+    "si je partage un lien de calcul les autres voient mes chiffres",
     "lien partage donnees",
     "le lien contient mes chiffres",
     "partager un lien c est prive",
@@ -9624,7 +9882,7 @@
     "lucia surveillee",
     "bracelet lucia c koi"
    ],
-   "text": "Une théorie de joueurs : le bracelet de Lucia limiterait la zone de jeu au début. Le site la cite comme telle dans les sources des lieux (article de SVG) ; Rockstar n’a rien dit sur des zones fermées au départ.",
+   "text": "Une théorie de joueurs : le bracelet de Lucia limiterait la zone de jeu au début. Le site la cite comme telle dans les sources des lieux (article de SVG) ; Rockstar n’a rien dit sur des zones fermées au départ. La bande-annonce de lancement du 15 octobre 2026 montre bien le bracelet à sa cheville, sans dire à quoi il sert.",
    "status": "Théorie de joueurs, non confirmée",
    "links": [
     {
@@ -9636,7 +9894,7 @@
      "url": "/lieux.html#src-svg-anklet"
     }
    ],
-   "checkedAt": "2026-09-28"
+   "checkedAt": "2026-10-21"
   },
   {
    "id": "liberty-city",
@@ -9780,6 +10038,8 @@
    "theme": "lieux",
    "q": "Où est le pénitencier de Leonida ?",
    "f": [
+    "ou est la prison de lucia",
+    "ou est le penitencier de lucia",
     "penitencier de leonida",
     "la prison de lucia",
     "ou est la prison",
@@ -9820,7 +10080,7 @@
     "standard vehicules",
     "sans l ultimate j ai quoi"
    ],
-   "text": "Sur la page Véhicules, le filtre « Édition standard » compte 292 véhicules, contre 9 liés à l’Édition Ultimate et 1 au bonus de précommande. Ce sont les véhicules vus dans les médias : leur obtention exacte dans le jeu (achat, vol, mission) n’est pas publiée.",
+   "text": "Sur la page Véhicules, le filtre « Édition standard » compte {n:vehiculesStandard} véhicules, contre {n:vehiculesUltimate} liés à l’Édition Ultimate et {n:vehiculesPrecommande} au bonus de précommande. Ce sont les véhicules vus dans les médias : leur obtention exacte dans le jeu (achat, vol, mission) n’est pas publiée.",
    "status": "Le site (compté par script)",
    "links": [
     {
@@ -10267,9 +10527,11 @@
     "badge vert badge orange",
     "legende des statuts",
     "les badges de couleur dans les listes",
-    "ca veut dire quoi les badges"
+    "ca veut dire quoi les badges",
+    "c est quoi la legende en haut de chaque liste",
+    "la legende en haut de chaque liste c est quoi"
    ],
-   "text": "En tête de chaque liste, la légende montre les badges présents dans la liste, avec leur sens et leur nombre de lignes : Officiel (nommé ou décrit par Rockstar pour GTA VI), Vu (vu dans un trailer ou une capture officielle), Repère de la série (chiffre d’un autre GTA, qui ne vaut pas pour GTA VI), À confirmer (rien de publié : on attend Rockstar) et, dans certaines listes, Rapprochement de joueurs (non confirmé). Chaque badge a sa couleur, son pictogramme et son libellé : la couleur seule ne porte jamais l’information. Un clic sur un badge de la légende filtre la liste sur ce statut, un second clic l’enlève ; c’est le même filtre que la case « Statut ». Le badge se retrouve dans la colonne Statut, dans la fiche complète et sur les cartes « En un regard ».",
+   "text": "En tête de chaque liste, la légende montre les badges présents dans la liste, avec leur sens et leur nombre de lignes : Officiel (publié par Rockstar, Take-Two, Sony ou Microsoft sur leurs propres canaux), Vu (vu dans un trailer ou une capture officielle, ou rapporté par un média nommé), Repère de la série (chiffre d’un autre GTA, qui ne vaut pas pour GTA VI), À confirmer (rien de publié : on attend Rockstar) et, dans certaines listes, Rapprochement de joueurs (non confirmé). Chaque badge a sa couleur, son pictogramme et son libellé : la couleur seule ne porte jamais l’information. Un clic sur un badge de la légende filtre la liste sur ce statut, un second clic l’enlève ; c’est le même filtre que la case « Statut ». Le badge se retrouve dans la colonne Statut, dans la fiche complète et sur les cartes « En un regard ».",
    "status": "Le site",
    "links": [
     {
@@ -10333,7 +10595,7 @@
     "que faire sur la page vehicules",
     "mode d emploi vehicules"
    ],
-   "text": "La page recense 302 véhicules. La barre « Chercher un véhicule, une marque, un modèle réel » filtre en tapant. Les puces filtrent par catégorie (berlines, sport, supercars, muscle cars, SUV et 4x4, pick-up, vans, deux-roues, hélicoptères, avions, bateaux, service, divers), par certitude (nommés par Rockstar, vus officiellement, communautaires), par origine du modèle réel (américains, japonais, européens) et par édition (Standard, Ultimate, précommande). Tri : ordre par défaut, nom de A à Z ou de Z à A, constructeur, certitude. Les 48 premières cartes s’affichent, « Afficher plus » complète. Sur chaque carte, la case en haut à droite coche un véhicule possédé (puce « Mon garage » pour ne voir que ceux-là) et « Comparer » en met jusqu’à trois côte à côte ; tout reste sur ton appareil. Les filtres se mettent dans l’adresse (#cat=suv&q=…), donc un lien filtré se partage.",
+   "text": "La page recense {n:vehicules} véhicules. La barre « Chercher un véhicule, une marque, un modèle réel » filtre en tapant. Les puces filtrent par catégorie (berlines, sport, supercars, muscle cars, SUV et 4x4, pick-up, vans, deux-roues, hélicoptères, avions, bateaux, service, divers), par certitude (nommés par Rockstar, vus officiellement, communautaires), par origine du modèle réel (américains, japonais, européens) et par édition (Standard, Ultimate, précommande). Tri : ordre par défaut, nom de A à Z ou de Z à A, constructeur, certitude. Les 48 premières cartes s’affichent, « Afficher plus » complète. Sur chaque carte, la case en haut à droite coche un véhicule possédé (puce « Mon garage » pour ne voir que ceux-là) et « Comparer » en met jusqu’à trois côte à côte ; tout reste sur ton appareil. Les filtres se mettent dans l’adresse (#cat=suv&q=…), donc un lien filtré se partage.",
    "status": "Le site",
    "links": [
     {
@@ -10369,7 +10631,7 @@
     "mode d emploi armurerie",
     "copier mon equipement"
    ],
-   "text": "La page recense 27 armes identifiées. En haut, le constructeur d’équipement : tu choisis une arme par emplacement (poing, longues, mêlée, projectiles…), puis « Copier mon équipement » ou « Partager » (le lien le contient). Plus bas, la grille « Toutes les armes identifiées » se filtre par classe (pistolets, pistolets-mitrailleurs, fusils d’assaut, fusils à pompe, précision, mitrailleuses, mêlée, projectiles, spéciales) et par certitude (nommées par Rockstar), avec une recherche et la puce « Mon arsenal » pour tes armes cochées. Chaque carte mène à la fiche de l’arme. Suivent le système d’inventaire, les chiffres sans arrondi, les équipements et gadgets, les types de munitions (pistolet, fusil, lourdes), les six changements du combat et la carte des lieux liés.",
+   "text": "La page recense {n:armes} armes identifiées. En haut, le constructeur d’équipement : tu choisis une arme par emplacement (poing, longues, mêlée, projectiles…), puis « Copier mon équipement » ou « Partager » (le lien le contient). Plus bas, la grille « Toutes les armes identifiées » se filtre par classe (pistolets, pistolets-mitrailleurs, fusils d’assaut, fusils à pompe, précision, mitrailleuses, mêlée, projectiles, spéciales) et par certitude (nommées par Rockstar), avec une recherche et la puce « Mon arsenal » pour tes armes cochées. Chaque carte mène à la fiche de l’arme. Suivent le système d’inventaire, les chiffres sans arrondi, les équipements et gadgets, les types de munitions (pistolet, fusil, lourdes), les six changements du combat et la carte des lieux liés.",
    "status": "Le site",
    "links": [
     {
@@ -10687,6 +10949,148 @@
     }
    ],
    "checkedAt": "2026-10-16"
+  },
+  {
+   "id": "jeux-du-site",
+   "theme": "site",
+   "q": "C’est quoi les jeux du site ?",
+   "f": [
+    "c est quoi les jeux du site",
+    "quels jeux y a t il sur leonidakit",
+    "les jeux de leonidakit",
+    "tous les jeux du site",
+    "d autres jeux sur le site",
+    "les trois jeux du site",
+    "ou sont les jeux du site",
+    "page des jeux"
+   ],
+   "k": [
+    "jeux du site",
+    "les jeux",
+    "trois jeux",
+    "page jeux",
+    "autres jeux"
+   ],
+   "text": "Le site propose trois jeux du jour sur GTA VI : Devine le lieu (une capture officielle, six régions), La frise des annonces (remettre les annonces dans l’ordre) et Devine la station (trouver la radio d’un animateur, d’un style ou d’un morceau). Cinq questions par jour et par jeu, les mêmes pour tout le monde, puis une partie libre. La page des jeux montre ta progression : points, niveau, série et badges.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Les jeux du site",
+     "url": "/jeux.html"
+    },
+    {
+     "label": "Ta progression",
+     "url": "/jeux.html#progression"
+    }
+   ],
+   "checkedAt": "2026-10-21"
+  },
+  {
+   "id": "jeux-progression",
+   "theme": "site",
+   "q": "Comment gagner des points aux jeux ?",
+   "f": [
+    "comment gagner des points aux jeux",
+    "comment monter de niveau",
+    "c est quoi les badges",
+    "comment reussir le defi du jour",
+    "ma progression dans les jeux",
+    "mes points sont ils enregistres",
+    "combien de niveaux",
+    "comment avoir un badge",
+    "le defi du jour des jeux du site"
+   ],
+   "k": [
+    "points",
+    "niveau",
+    "niveaux",
+    "badges",
+    "badge",
+    "defi des jeux",
+    "progression des jeux",
+    "monter de niveau"
+   ],
+   "text": "Chaque bonne réponse d’une partie du jour rapporte 10 points, un sans-faute 20 de plus et le défi du jour 50. Huit niveaux, de Touriste à Leonida à Légende de Leonida, et dix badges à gagner. La partie libre ne rapporte rien. Tout reste sur ton appareil, sans compte ni cookie, et tes parties de Devine le lieu déjà jouées comptent.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Ta progression",
+     "url": "/jeux.html#progression"
+    },
+    {
+     "label": "Ce qui reste dans ton navigateur",
+     "url": "/mentions-legales.html#donnees-navigateur"
+    }
+   ],
+   "checkedAt": "2026-10-21"
+  },
+  {
+   "id": "frise-des-annonces",
+   "theme": "site",
+   "q": "C’est quoi La frise des annonces ?",
+   "f": [
+    "c est quoi la frise des annonces",
+    "la frise des annonces",
+    "un jeu sur les dates des annonces",
+    "remettre les annonces dans l ordre",
+    "jeu de chronologie gta 6",
+    "quiz sur les trailers et les dates"
+   ],
+   "k": [
+    "frise des annonces",
+    "la frise",
+    "chronologie",
+    "remettre dans l ordre",
+    "jeu des dates"
+   ],
+   "text": "La frise des annonces est un jeu du site : une annonce de GTA VI est déjà posée sur la frise avec sa date, et tu places les cinq suivantes avant, entre ou après. Chaque réponse montre la date, le statut (officiel ou vu dans un média), la source et mène à la page de l’annonce.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Jouer à La frise des annonces",
+     "url": "/frise-des-annonces.html"
+    },
+    {
+     "label": "Les actualités de GTA VI",
+     "url": "/actus.html"
+    }
+   ],
+   "checkedAt": "2026-10-21"
+  },
+  {
+   "id": "devine-la-station",
+   "theme": "site",
+   "q": "C’est quoi Devine la station ?",
+   "f": [
+    "c est quoi devine la station",
+    "devine la station",
+    "un jeu sur les radios",
+    "quiz radio gta 6",
+    "deviner la station de radio",
+    "jeu des animateurs radio",
+    "un quiz sur les radios de gta 6",
+    "quiz sur les stations de radio de gta 6"
+   ],
+   "k": [
+    "devine la station",
+    "jeu radio",
+    "quiz radio",
+    "deviner la station",
+    "jeu des radios"
+   ],
+   "text": "Devine la station est un jeu du site : un animateur, son nom à l’antenne, le style de la station ou un morceau entendu dans son aperçu, et tu choisis parmi les six stations présentées par Rockstar le 8 octobre 2026. Les morceaux viennent du relevé de Game Informer, dit comme tel. Chaque réponse mène à la fiche de la station.",
+   "status": "Le site",
+   "links": [
+    {
+     "label": "Jouer à Devine la station",
+     "url": "/devine-la-station.html"
+    },
+    {
+     "label": "Les radios de GTA VI",
+     "url": "/radios.html"
+    }
+   ],
+   "checkedAt": "2026-10-21"
   }
  ]
 }

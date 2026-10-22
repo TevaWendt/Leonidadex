@@ -12,6 +12,9 @@
    Progression. Aucun texte n'est écrit ici : tout vient des JSON. */
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const S = require('./sections.cjs');
+/* v8.04 (jour J) : statuts d’un prix publié (prix_gta6) et contrôle de la fourchette, de la note et des sources */
+const DP = require('./donnees-publiees.cjs');
+const PRIX_STATUTS = ['officiel', 'official', 'verified', 'vu', 'media', 'presse', 'estimated', 'comm', 'community'];
 /* v7.76 (lot C) : une illustration par élément sans visuel officiel propre (outils/illustrations/).
    v7.77 : silhouettes « teaser » (WebP) à la place des dessins SVG, toujours dites comme telles. */
 const IL = require('./illustrations/index.cjs');
@@ -110,9 +113,13 @@ function load(options = {}) {
       if (it.prix_gta6 && it.prix_gta6.valeur !== null && it.prix_gta6.valeur !== undefined) {
         const p = it.prix_gta6;
         if (typeof p.valeur !== 'number' || !Number.isFinite(p.valeur) || p.valeur < 0 || p.valeur > 1e12) errors.push(at + ' : prix_gta6.valeur illisible (nombre ≥ 0 attendu)');
-        if (!['officiel', 'official', 'verified', 'vu'].includes(p.statut)) errors.push(at + ' : prix_gta6.valeur écrit exige le statut « officiel » (publié par Rockstar) ou « verified » (relevé dans le jeu), trouvé « ' + p.statut + ' »');
+        /* v8.04 (jour J, prompt 2) : aussi « media » (alias presse : au moins deux médias concordants, source et sources),
+           « estimated » (une seule source de médias, ou un calcul) et « comm » (alias community : un chiffre de la communauté,
+           jamais officiel) ; fourchette min et max, note et liste sources vérifiées par outils/donnees-publiees.cjs */
+        if (!PRIX_STATUTS.includes(p.statut)) errors.push(at + ' : prix_gta6.valeur écrit exige le statut « officiel » (publié par Rockstar), « verified » (relevé dans le jeu), « media » (deux médias concordants), « estimated » ou « comm » (communauté), trouvé « ' + p.statut + ' »');
         if (!p.source || typeof p.source !== 'string') errors.push(at + ' : prix_gta6.valeur écrit exige une source (URL ou référence précise)');
         if (!/^\d{4}-\d{2}-\d{2}/.test(p.verifiedAt || '')) errors.push(at + ' : prix_gta6.valeur écrit exige verifiedAt (AAAA-MM-JJ)');
+        errors.push(...DP.verifierExtras(p, at + ' : prix_gta6', p.valeur));
       }
       if (it.effet && it.effet.valeur !== null && !it.effet.jeu) errors.push(at + ' : un chiffre d’effet doit dire de quel jeu il vient');
       if (it.effet && it.effet.valeur !== null && !it.effet.unite) errors.push(at + ' : un chiffre d’effet doit avoir une unité');
@@ -269,14 +276,15 @@ function ficheBox(fam, it) {
 const FOLDED = new Set(['consommables']);
 /* v7.56 (lot 3, UI-02) : légende des statuts en tête de chaque liste — un badge par statut présent, son sens en une ligne et
    son nombre de lignes ; avec script, chaque badge filtre la liste (catalogue.js). Mêmes couleurs sur toutes les pages. */
-const KEY = { officiel: 'Nommé ou décrit par Rockstar pour GTA VI', vu: 'Vu dans un trailer ou une capture officielle', comm: 'Rapprochement de joueurs, non confirmé', serie: 'Chiffre d’un autre GTA : ne vaut pas pour GTA VI', conf: 'Rien de publié : on attend Rockstar' };
+/* v8.04 (refonte F) : sens des statuts aligné sur la grille du site (Tuto, Léo) : un propos de Rockstar rapporté par la presse est « vu » */
+const KEY = { officiel: 'Publié par Rockstar, Take-Two, Sony ou Microsoft sur leurs propres canaux', vu: 'Vu dans un trailer ou une capture officielle, ou rapporté par un média nommé', comm: 'Rapprochement de joueurs, non confirmé', serie: 'Chiffre d’un autre GTA : ne vaut pas pour GTA VI', conf: 'Rien de publié : on attend Rockstar' };
 function keyStrip(fam) {
   const c = counts(fam);
   return '<div class="cat-key" role="group" aria-label="Légende des statuts de la liste"><span class="cat-key-t">Légende</span>'
     + STATUS_ORDER.filter(s => c[s]).map(s => '<button type="button" class="cat-key-bt" data-cat-key="' + s + '" aria-pressed="false" disabled title="' + esc(KEY[s]) + '">' + S.pip(s, true) + '<span class="cat-key-d">' + esc(KEY[s]) + '</span><span class="cat-key-n">' + c[s] + ' ligne' + (c[s] > 1 ? 's' : '') + '</span></button>').join('')
     + '</div>';
 }
-function accessHtml(it) { const a = FD.accessCell(it); return '<span class="cat-conf">' + S.pip(a.known ? 'officiel' : 'conf') + esc(a.price) + '</span><small class="cat-buy">' + esc(a.buy) + '</small>'; }
+function accessHtml(it) { const a = FD.accessCell(it); return '<span class="cat-conf">' + S.pip(a.pip || (a.known ? 'officiel' : 'conf')) /* v8.04 (jour J) : pastille selon le statut du prix */ + esc(a.price) + '</span><small class="cat-buy">' + esc(a.buy) + '</small>'; }
 function row(fam, it, cat, sources) {
   const d = load(), media = it.media ? d.ctx.medias[it.media] : null, ci = d.families[fam].categories.findIndex(x => x.id === cat.id);
   const srcLinks = it.sources.map((id, i) => '<a href="#src-' + esc(id) + '" class="cat-src" aria-label="Source : ' + esc(sources[id].title) + '">source' + (it.sources.length > 1 ? ' ' + (i + 1) : '') + '</a>').join(' ');
@@ -335,7 +343,7 @@ function pickBlock(fam) {
     + '<div class="cat-pick-card" data-cat-pick-card hidden><span class="cat-pick-badge" aria-hidden="true">' + S.icon(P.icon, 'cat-pick-badge-i') + '</span><div class="cat-pick-txt"><p class="cat-pick-name" data-cat-pick-name></p><p class="cat-pick-meta" data-cat-pick-meta role="status" aria-live="polite"></p></div>'
     + '<a class="cat-pick-fiche" data-cat-pick-fiche href="' + esc(fam === 'perso-armes' ? 'armes.html' : 'vehicules.html') + '">Personnaliser sur sa fiche</a>'
     /* v7.81 : l'Atelier 3D ouvre le modèle choisi (catalogue.js pose l'adresse exacte) */
-    + '<a class="cat-pick-fiche cat-pick-atelier" data-cat-pick-atelier href="atelier-3d.html">Essayer dans l’Atelier 3D</a><button type="button" class="cat-pick-clear" data-cat-pick-clear>' + esc(P.clear) + '</button></div></div>';
+    + '<a class="cat-pick-fiche cat-pick-atelier" data-cat-pick-atelier href="atelier-3d.html">Essayer dans l’Atelier 3D</a><span class="cat-pick-wip">En construction</span><button type="button" class="cat-pick-clear" data-cat-pick-clear>' + esc(P.clear) + '</button></div></div>';
 }
 /* v7.69 : « Pour qui ? » sur les listes qui savent qui porte quoi (tatouages, coiffures, tenues) : Jason, Lucia ou tout */
 function whoSwitch(fam) {
@@ -392,7 +400,7 @@ function searchEntries(fam) {
   /* v7.97 (lot C) : le résultat ouvre la page de l’élément quand elle existe (outils/pages-elements-index.json), sinon sa ligne */
   return data.items.map(it => ({ l: it.nom, k: KIND[fam] || data.label, u: pageOf(fam, it) ? '/' + pageOf(fam, it) : data.page + '#' + rowId(fam, it), s: fold([it.nom, it.description, cats.get(it.categorie).label, data.label, ...(it.variantes || []), ...it.ou_le_trouver.map(o => o.lieu ? place(o.lieu).name : o.type), ...compatWords(it)].join(' ')), w: 0, t: 'element' }));
 }
-const PROOF = { officiel: 'Nommé ou décrit par Rockstar pour GTA VI ; prix et effet chiffré non publiés.', vu: 'Vu dans une capture ou une vidéo officielle de GTA VI ; prix et effet chiffré non publiés.', comm: 'Identification communautaire, non confirmée par Rockstar.', serie: 'Repère de la série (GTA V, GTA Online, GTA IV ou San Andreas), présenté comme tel : rien n’est confirmé pour GTA VI.', conf: 'Rien de publié par Rockstar pour GTA VI : à confirmer.' };
+const PROOF = { officiel: 'Nommé ou décrit par Rockstar pour GTA VI ; prix et effet chiffré non publiés.', vu: 'Vu dans une capture ou une vidéo officielle de GTA VI, ou rapporté par un média nommé ; prix et effet chiffré non publiés.', comm: 'Identification communautaire, non confirmée par Rockstar.', serie: 'Repère de la série (GTA V, GTA Online, GTA IV ou San Andreas), présenté comme tel : rien n’est confirmé pour GTA VI.', conf: 'Rien de publié par Rockstar pour GTA VI : à confirmer.' };
 function leoRows(fam) {
   const d = load(), data = d.families[fam], cats = new Map(data.categories.map(x => [x.id, x]));
   return data.items.map(it => { const m = it.media ? d.ctx.medias[it.media] : null; const src = d.sources[it.sources[0]];

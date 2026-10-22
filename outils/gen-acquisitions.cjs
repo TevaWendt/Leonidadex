@@ -20,16 +20,22 @@ const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const cat=id=>source.categories.find(x=>x.id===id);
 const visuals=require('./lot-c-visuals.cjs');
 const images=ids=>(ids||[]).map(id=>{if(!media[id])throw Error('Média inconnu : '+id);return {id,...media[id]};});
+/* v8.04 (jour J, prompt 2) : le prix d’une munition s’écrit ici, dans la catégorie « munitions » (type ammo, lue par le calculateur),
+   avec l’identifiant de la munition (outils/hubs-editoriaux.json, armes.munitions.items) ; le nom en vient s’il manque et la ligne
+   mène à la fiche munitions/<id>.html (outils/QUAND-ROCKSTAR-PUBLIE.md § 2) */
+const MUNITIONS=new Map(((JSON.parse(read('outils/hubs-editoriaux.json')).armes||{}).munitions||{items:[]}).items.map(x=>[x.id,x]));
 const items=source.items.map(item=>{
  if(!/^[a-z0-9-]+$/.test(item.id)||!cat(item.category)||!source.sources[item.sourceId])throw Error('Référence incorrecte : '+item.id);
+ if(item.category==='munitions'&&(item.ref||!MUNITIONS.has(item.id)))throw Error('Munition inconnue : '+item.id+' (identifiants de outils/hubs-editoriaux.json, armes.munitions.items ; pas de ref)');
+ const mun=item.category==='munitions'?MUNITIONS.get(item.id):null;
  const ref=item.ref?.type==='vehicle'?vehicles.find(x=>x.id===item.ref.id):item.ref?.type==='weapon'?weapons.find(x=>x.id===item.ref.id):null;
  if(item.ref&&!ref)throw Error('Objet canonique absent : '+item.id);
  if(item.trackable&&item.evidenceLevel!==1)throw Error('Un simple aperçu ne peut être suivi comme acquisition : '+item.id);
  const type=item.ref?.type||cat(item.category).type;
  const route=cat(item.category).route.split('#')[0];
- return {...item,type,name:ref?((ref.marque?ref.marque+' ':'')+ref.nom):item.name,
-  url:ref?'/'+(type==='vehicle'?'vehicules':'armes')+'/'+ref.id+'.html':route+'#'+item.id,
-  hubUrl:route+'#'+item.id,images:images(item.media),source:source.sources[item.sourceId].url,
+ return {...item,type,name:ref?((ref.marque?ref.marque+' ':'')+ref.nom):mun&&!item.name?mun.nom:item.name,
+  url:ref?'/'+(type==='vehicle'?'vehicules':'armes')+'/'+ref.id+'.html':mun?'/munitions/'+item.id+'.html':route+'#'+item.id,
+  hubUrl:mun?'/munitions/'+item.id+'.html':route+'#'+item.id,images:images(item.media),source:source.sources[item.sourceId].url,
   verifiedAt:item.verifiedAt||source.verifiedAt,status:'official',purchasable:null};
 });
 if(new Set(items.map(x=>x.id)).size!==items.length)throw Error('Identifiant dupliqué');

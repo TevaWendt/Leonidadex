@@ -7,7 +7,15 @@
    Aucun chiffre ici n'est un prix ou un gain de GTA VI : ce sont des valeurs d'essai. */
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'../..');
-function siteData(){const ctx={window:{}};vm.createContext(ctx);for(const f of ['vehicules-data.js','armes-data.js','acquisitions-data.js','calculateurs-catalogue.js','calculateurs-activites.js','calculateurs-data.js'])vm.runInContext(fs.readFileSync(path.join(root,f),'utf8'),ctx);const D=ctx.window.LKCalcData;return {D,catalogue:D.catalogue(),sourceActivities:D.activities(),presets:JSON.parse(JSON.stringify(D.presets))};}
+/* v8.04 (jour J) : siteData({ sansPublication: true }) lit le site comme au 20 octobre 2026, sans aucune donnée publiée (prix,
+   achat confirmé, revenus, munitions chiffrées, missions et activités du site, règles d’argent) : la référence v8.01
+   (reference-v801.cjs) compare ainsi le code, et non les données, le jour où les données arrivent. Sans données, rien ne change. */
+const REGLES_0={argentPersonnages:{value:null,status:'unknown',source:null,verifiedAt:null,unit:null},amende:{value:null,status:'unknown',source:null,verifiedAt:null,unit:'$'},perteMort:{value:null,status:'unknown',source:null,verifiedAt:null,unit:'$'},perteArrestation:{value:null,status:'unknown',source:null,verifiedAt:null,unit:'$'}};
+const SANS_PRIX=['price','prix','prixAchat','economy','priceMeta','fieldMeta','revenu','income','purchasable'];
+function sansPublication(w){for(const list of [w.LK_VEHICULES,w.LK_ARMES,w.LK_CALCULATEURS_CATALOGUE&&w.LK_CALCULATEURS_CATALOGUE.entries])for(const e of list||[])for(const k of SANS_PRIX)delete e[k];
+ if(w.LK_ACQUISITIONS&&Array.isArray(w.LK_ACQUISITIONS.items)){w.LK_ACQUISITIONS.items=w.LK_ACQUISITIONS.items.filter(x=>x.category!=='munitions');for(const x of w.LK_ACQUISITIONS.items)if('price' in x)x.price=null;}
+ w.LK_ACTIVITIES=[];w.LK_CALC_REGLES=JSON.parse(JSON.stringify(REGLES_0));}
+function siteData(opts={}){const ctx={window:{}};vm.createContext(ctx);for(const f of ['vehicules-data.js','armes-data.js','acquisitions-data.js','calculateurs-catalogue.js','calculateurs-activites.js','calculateurs-data.js']){if(f==='calculateurs-data.js'&&opts.sansPublication)sansPublication(ctx.window);vm.runInContext(fs.readFileSync(path.join(root,f),'utf8'),ctx);}const D=ctx.window.LKCalcData;return {D,catalogue:D.catalogue(),sourceActivities:D.activities(),presets:JSON.parse(JSON.stringify(D.presets))};}
 /* Empreinte des données, calculée comme dans calculateurs.js (dataVersion) : une sauvegarde faite avec cette empreinte ne déclenche pas « les données ont changé ». */
 /* v7.60 : empreinte des seules données de calcul (même formule que calculateurs.js), identique dans toutes les langues ;
    legacyDataVersion = l'ancienne formule (libellés compris), toujours reconnue. */

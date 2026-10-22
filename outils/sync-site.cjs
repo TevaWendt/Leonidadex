@@ -66,6 +66,8 @@ let ranking=fs.readFileSync('classement-vehicules.html','utf8');ranking=ranking.
 /* v7.47 : largeur et hauteur réelles des vignettes (WebP ou schéma SVG), pour réserver la place avant le chargement */
 function imgDims(src){const f=String(src).replace(/^\//,'');try{const b=fs.readFileSync(f);let d=null;if(/\.webp$/.test(f)){const c=b.toString('latin1',12,16);if(c==='VP8 ')d=[b.readUInt16LE(26)&0x3fff,b.readUInt16LE(28)&0x3fff];else if(c==='VP8L'){const x=b.readUInt32LE(21);d=[(x&0x3fff)+1,((x>>>14)&0x3fff)+1];}else if(c==='VP8X')d=[b.readUIntLE(24,3)+1,b.readUIntLE(27,3)+1];}else if(/\.svg$/.test(f)){const m=b.toString('utf8',0,800).match(/viewBox="\s*[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)\s*"/);if(m)d=[Math.round(+m[1]),Math.round(+m[2])];}return d?' width="'+d[0]+'" height="'+d[1]+'"':'';}catch(e){return '';}}
 let rare=fs.readFileSync('vehicules-rares.html','utf8');rare=rare.replace(/(<a class="rare-card rise" href="vehicules\/([^"/]+)\.html">)([\s\S]*?)(<\/a>)/g,(all,open,id,body,end)=>{const v=V.find(x=>x.id===id);if(!v)return all;return open+body.replace(/<div class="rare-img">[\s\S]*?<\/div>/,'<div class="rare-img'+(/\.svg$/.test(v.thumb||'')?' rare-img--schema':'')+'"><img src="'+(v.thumb||'/img/schemas/'+v.id+'.svg')+'"'+imgDims(v.thumb||'/img/schemas/'+v.id+'.svg')+' alt="" loading="lazy" decoding="async"></div>').replace(/(<span class="veh-marque">)[\s\S]*?<\/span>/,'$1'+esc(v.marque)+'</span>').replace(/<h3>[\s\S]*?<\/h3>/,'<h3>'+esc(v.nom)+'</h3>').replace(/<p>[\s\S]*?<\/p>/,'<p>'+esc(v.insp||v.fam)+'</p>').replace(/(<span class="rare-src">)[\s\S]*?<\/span>/,'$1'+esc(v.src)+'</span>')+end;});
+/* v8.04 (chiffres du site) : le nombre de véhicules nommés par Rockstar (statut « officiel ») suit les données */
+rare=rare.replace(/(Rockstar en a nommé )\d+( en tout)/,'$1'+V.filter(v=>v.st==='officiel').length+'$2');
 rare=rare.replace('Vus une seule fois','Noms repérés sur les visuels').replace(/mais qui n'apparaissent nulle part ailleurs : ni dans les trailers, ni dans les listes des autres\s+sites\./,"dont l'identification est consignée dans notre base.");fs.writeFileSync('vehicules-rares.html',rare);
 
 const rawPath='outils/data/carte-gtadb-source.json';fs.mkdirSync('outils/data',{recursive:true});
@@ -168,6 +170,8 @@ if(fs.existsSync('outils/activites-index.json'))index=index.concat(JSON.parse(fs
 if(fs.existsSync('outils/actus-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/actus-index.json','utf8')));
 /* v7.90 (lot 6) : le jeu « Devine le lieu » (outils/devine-index.json, écrit par outils/gen-devine.cjs : une entrée vers #jeu, avec les mots du joueur) */
 if(fs.existsSync('outils/devine-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/devine-index.json','utf8')));
+/* v8.04 (lot L) : les jeux du site (outils/jeux-index.json, écrit par outils/gen-jeux.cjs : le tableau de progression et les deux nouveaux jeux) */
+if(fs.existsSync('outils/jeux-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/jeux-index.json','utf8')));
 /* section radios : hub et fiches de la section (outils/radios-index.json, écrit par outils/gen-radios.cjs) */
 if(fs.existsSync('outils/radios-index.json'))index=index.concat(JSON.parse(fs.readFileSync('outils/radios-index.json','utf8')));
 /* section codes : page principale et fiches de catégorie (outils/codes-index.json, écrit par outils/gen-codes.cjs ; sans la page modèle) */
@@ -205,8 +209,19 @@ const cats=vm.runInNewContext('('+mapSource.match(/const CATS = (\{[\s\S]*?\n  \
 // lot 1 bis (corrections de l’audit, point 6) : le troisième chiffre est le nombre de régions officielles (outils/editorial.json :
 // six), comme le titre « Les six régions de Leonida », lieux.html et l’accueil ; il n’était plus calculé (« 7 »).
 const nRegions=JSON.parse(fs.readFileSync('outils/editorial.json','utf8')).regions.length;
-const mapCounts=[allPoints.length,allPoints.filter(p=>p.s==='officiel').length,nRegions,Object.keys(cats).length];let mi=0;
-fs.writeFileSync('carte.html',fs.readFileSync('carte.html','utf8').replace(/(<span class="n" data-count=")\d+(">)\d+(<\/span>)/g,(_,a,b,c)=>{const n=mapCounts[mi++];return a+n+b+n+c;}));
+/* v8.04 (chiffres du site) : le quatrième chiffre compte les catégories qui ont au moins un point (neuf), comme le carnet « Mes
+   lieux » ; les catégories encore vides (activités, collectibles, missions) attendent les données du jeu. Avant : les douze
+   catégories définies dans carte.js. */
+const catsUsed=new Set(allPoints.map(p=>p.c).filter(c=>Object.prototype.hasOwnProperty.call(cats,c))).size;
+const mapCounts=[allPoints.length,allPoints.filter(p=>p.s==='officiel').length,nRegions,catsUsed];let mi=0;
+/* v8.04 : la phrase sous les chiffres de la carte dit ce que compte « lieux référencés » : les zones (régions, villes, quartiers,
+   comtés) et les autres lieux, qui ont chacun leur page (lieux-carte/). Calculée ici, jamais tapée à la main. */
+const ZONE_CATS=new Set(['region','ville','quartier','comte']),nZones=allPoints.filter(p=>ZONE_CATS.has(p.c)).length;
+const frNb=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+const pagesIdx=fs.existsSync('outils/pages-elements-index.json')?JSON.parse(fs.readFileSync('outils/pages-elements-index.json','utf8')).elements||{}:{};
+const toutesPages=allPoints.every(p=>pagesIdx[p.id]&&fs.existsSync(pagesIdx[p.id]));
+const carteNote='Dont '+frNb(nZones)+' zones (régions, villes, quartiers, comtés) et '+frNb(allPoints.length-nZones)+' autres lieux'+(toutesPages?' ; chacun a sa page.':'.');
+fs.writeFileSync('carte.html',fs.readFileSync('carte.html','utf8').replace(/(<span class="n" data-count=")\d+(">)\d+(<\/span>)/g,(_,a,b,c)=>{const n=mapCounts[mi++];return a+n+b+n+c;}).replace(/(<p class="vstats-note" data-lk-carte-note>)[^<]*(<\/p>)/,(m,a,b)=>a+carteNote+b));
 // v7.69 : calculateur de trajet de la carte : liste légère des véhicules du site (identifiant, marque et nom, catégorie),
 // sans les textes des fiches ; chargée par carte.js à l'ouverture du calculateur (lk/lazy, partagée par toutes les langues).
 {const c={window:{}};vm.runInNewContext(fs.readFileSync('vehicules-data.js','utf8'),c);const V=(c.window.LK_VEHICULES||[]).map(v=>[v.id,(v.marque&&!String(v.nom).startsWith(v.marque)?v.marque+' ':'')+v.nom,v.cat]).sort((a,b)=>a[1].localeCompare(b[1],'fr'));
@@ -219,6 +234,18 @@ fs.writeFileSync('carte.html',fs.readFileSync('carte.html','utf8').replace(/(<sp
  fs.writeFileSync('armes-schemas.js','/* Généré par outils/sync-site.cjs (v7.69) : schéma SVG de chaque arme pour le comparateur (les mêmes que les cartes de l’Armurerie). */\nwindow.LK_ARMES_SCHEMAS='+JSON.stringify(A)+';\n');}
 // v7.37 : la carte d'outil de l'accueil affiche le même nombre de lieux que la carte.
 {const nb=String(allPoints.length).replace(/\B(?=(\d{3})+(?!\d))/g,'\u202f');fs.writeFileSync('index.html',fs.readFileSync('index.html','utf8').replace(/(<h3>Carte interactive <span class="chip live">)[^<]*lieux(<\/span>)/,'$1'+nb+' lieux$2'));}
+/* v8.04 (chiffres du site) : les nombres de lieux et de véhicules des cartes « Continuer la visite » (« La carte, N lieux
+   repérés, à cocher », « Les N véhicules ») et de quatre phrases suivent les données sur toutes les pages françaises (les
+   traductions les reprennent) : ils étaient figés dans sept générateurs, outils/hubs-editoriaux.json, editorial-hubs.json,
+   editorial.json et cinq pages écrites à la main (classement-vehicules, collectibles, comparateur, progression,
+   vehicules-rares), qui disaient encore 2 547 lieux. Même définition que la carte : tous ses points, zones comprises. */
+{const N='\\d{1,3}(?:[\\u202f\\u00a0 ]\\d{3})*',nbL=frNb(allPoints.length),nbV=frNb(V.length);
+ const R=[[new RegExp('(<b>La carte<\\/b><i>)'+N+'( lieux repérés, à cocher<\\/i>)','g'),'$1'+nbL+'$2'],
+  [new RegExp('(à côté des )'+N+'( lieux déjà repérés)','g'),'$1'+nbL+'$2'],
+  [new RegExp('(Un repère par région, )'+N+'( lieux avec leur niveau de certitude)','g'),'$1'+nbL+'$2'],
+  [new RegExp('(la majorité des )'+N+'( lieux repérés)','g'),'$1'+nbL+'$2'],
+  [new RegExp('(<b>Les )'+N+'( véhicules<\\/b><i>Fiches, photos officielles et schémas<\\/i>)','g'),'$1'+nbV+'$2']];
+ for(const file of htmlFiles){if(file.startsWith('google'))continue;const html=fs.readFileSync(file,'utf8');let next=html;for(const [re,to] of R)next=next.replace(re,to);if(next!==html)fs.writeFileSync(file,next);}}
 // v7.38 : familles suivies génériques (équipements, munitions) lues dans armes.html (data-track), et noms pour les listes de la page Progression.
 const tracked={equipements:[],munitions:[]},trackedNames={equipements:{},munitions:{}};
 {const armesHtml=fs.readFileSync('armes.html','utf8');const re=/data-track="(equipements|munitions)" data-track-id="([a-z0-9-]+)"(?: data-dot="[a-z0-9]+")?>(?:<span class="ed-kit-ico">[\s\S]*?<\/span>|<i class="ed-dot"[^>]*><\/i>)?<b>([^<]*)<\/b>/g;let m;while((m=re.exec(armesHtml))){if(!tracked[m[1]].includes(m[2])){tracked[m[1]].push(m[2]);trackedNames[m[1]][m[2]]={n:m[3].replace(/&#39;|&#x27;/g,'’').replace(/&amp;/g,'&')};}}}
@@ -244,6 +271,11 @@ const progressIds={vehicules:V.map(v=>v.id),armes:A.map(v=>v.id),lieux:pointIds,
  const STATS={pages:htmlFiles.filter(f=>!f.startsWith('google')&&f!=='404.html'&&!/http-equiv=["']refresh/i.test(fs.readFileSync(f,'utf8'))).length,vehicules:V.length,armes:A.length,lieux:new Set(pointIds).size,lignes:C.FAMILIES.reduce((n,f)=>n+C.counts(f).n,0),visuels:Object.keys(medias).length,leo:leoTopics,tests};
  /* v7.88 : les mêmes chiffres sur la page Presse (presse.html), plus le nombre de langues publiées (outils/langues.json) */
  STATS.langues=JSON.parse(fs.readFileSync('outils/langues.json','utf8')).langues.filter(l=>l.etat==='publiee').length;
+ /* v8.04 (chiffres du site) : « pages » ne comptait que les pages françaises (4 429 en octobre 2026) ; À propos et Presse
+    l’affichaient à côté des « 6 langues ». pagestotal : les pages de toutes les langues publiées. Chaque langue traduit toutes
+    les pages françaises (outils/langues.json : pages « * », seul le fichier Google exclu) : pages × langues. Vérifié après
+    outils/langues.cjs, plus bas (compte des pages réellement écrites dans chaque dossier de langue). */
+ STATS.pagestotal=STATS.pages*STATS.langues;
  /* page Presse : chiffres fixes (sans data-count), au format français (« 2 547 », espace fine insécable) */
  const frN=n=>new Intl.NumberFormat('fr-FR').format(n).replace(/\u00a0/g,'\u202f');
  for(const f of ['a-propos.html','presse.html'])if(fs.existsSync(f)){let ap=fs.readFileSync(f,'utf8');ap=ap.replace(/(<b class="fig-n" data-count=")\d+(" data-stat="([a-z]+)">)\d+(<\/b>)/g,(m,a,b,key,c)=>STATS[key]===undefined?m:a+STATS[key]+b+STATS[key]+c);
@@ -358,6 +390,16 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
 // v7.60 : langues publiées (outils/langues.json) : pages traduites dans /en/…, scripts traduits, hreflang, sitemap.
 // Fait en dernier, à partir des pages françaises finales (empreintes comprises).
 {const L=require('./langues.cjs');const r=L.toutGenerer(root);for(const x of r.summary)console.log('Langue '+x.code+' : '+x.pages+' pages, '+x.scripts+' scripts traduits, '+x.manques+' texte(s) sans traduction'+(x.casses?', '+x.casses+' repère(s) cassé(s)':'')+(x.conflits?', '+x.conflits+' conflit(s)':'')+'.');}
+/* v8.04 (chiffres du site) : contrôle du nombre de pages annoncé par À propos et Presse (STATS.pagestotal = pages françaises ×
+   langues publiées) : chaque page française réelle (ni 404, ni renvoi, ni fichier Google) doit avoir sa traduction dans chaque
+   dossier de langue. Lecture du seul début de chaque fichier (la balise de renvoi est dans l’en-tête). */
+{const head=f=>{let fd=null;try{fd=fs.openSync(f,'r');const b=Buffer.alloc(4096);const n=fs.readSync(fd,b,0,4096,0);return b.toString('utf8',0,n);}catch(e){return null;}finally{if(fd!==null)fs.closeSync(fd);}};
+ const reelle=f=>{const h=head(f);return h!==null&&!/http-equiv=["']refresh/i.test(h);};
+ const frPages=htmlFiles.filter(f=>!f.startsWith('google')&&f!=='404.html'&&reelle(f));
+ const pub=JSON.parse(fs.readFileSync('outils/langues.json','utf8')).langues.filter(l=>l.etat==='publiee');
+ let ecrites=0;for(const l of pub){const dir=l.dossier?l.dossier+'/':'';for(const f of frPages)if(reelle(dir+f))ecrites++;}
+ const annonce=frPages.length*pub.length;
+ console.log(ecrites===annonce?'Pages en ligne : '+frPages.length+' en français, '+annonce+' dans les '+pub.length+' langues (nombre annoncé sur À propos et Presse).':'ATTENTION : À propos et Presse annoncent '+annonce+' pages dans les '+pub.length+' langues, mais '+ecrites+' sont écrites : revoir STATS.pagestotal (outils/sync-site.cjs).');}
 
 // v7.89 (lot 5) : service worker : VERSION (empreinte de la coquille : sw.js, manifestes, pages hors connexion de chaque langue et
 // leurs fichiers), LANGUES et PACK réécrits dans sw.js, après les langues (outils/appli.cjs). Une coquille modifiée = un nouveau

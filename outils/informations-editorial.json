@@ -153,21 +153,21 @@
         {
           "statut": "officiel",
           "titre": "Officiel",
-          "texte": "Nommé ou décrit par Rockstar, ou texte officiel reproduit par un média nommé.",
+          "texte": "Publié par Rockstar, Take-Two, Sony ou Microsoft sur leurs propres canaux, écrit comme ils l’ont dit.",
           "exemple": "Rideout Customs, nommé dans le texte de l’Édition Ultimate du 24 juin 2026.",
           "href": "personnalisations.html#ateliers"
         },
         {
           "statut": "vu",
           "titre": "Vu dans un média",
-          "texte": "Visible dans un trailer, une capture ou l’Extended Look ; ni prix ni achat connus.",
+          "texte": "Visible dans un trailer, une capture ou l’Extended Look, ou rapporté par un média nommé, propos d’un responsable de Rockstar compris ; ni prix ni achat connus.",
           "exemple": "Le PM à motif tropical, vu sur la capture du Pack Vintage Vice City.",
           "href": "armes/micro-smg.html"
         },
         {
           "statut": "comm",
           "titre": "Identification communautaire",
-          "texte": "Un rapprochement fait par des joueurs, cité comme tel.",
+          "texte": "Un rapprochement fait par des joueurs, un wiki ou un site de fans, cité comme tel.",
           "exemple": "La Karin Asterope, rapprochée d’une Toyota Camry par la communauté.",
           "href": "vehicules/karin-asterope.html"
         },
@@ -222,8 +222,8 @@
       "lede": "Ces nombres sont recalculés à chaque régénération du site, jamais tapés à la main.",
       "stats": [
         {
-          "stat": "pages",
-          "label": "pages en ligne"
+          "stat": "pagestotal",
+          "label": "pages en ligne, toutes langues comprises"
         },
         {
           "stat": "vehicules",
@@ -389,8 +389,8 @@
   "verification": {
     "title": "Ce qui est confirmé sur GTA 6, et comment on le vérifie",
     "h1": "Ce qui est confirmé,<br>et comment on le vérifie.",
-    "description": "Ce que Rockstar a vraiment confirmé sur GTA 6 au 17 octobre 2026, ce qui ne l’est pas encore, et comment chaque fiche de Leonidakit le signale.",
-    "checkedAt": "2026-10-17",
+    "description": "Ce que Rockstar a vraiment confirmé sur GTA 6 au 20 octobre 2026, ce qui ne l’est pas encore, et comment chaque fiche de Leonidakit le signale.",
+    "checkedAt": "2026-10-20",
     "hero": {
       "eyebrow": "LA MÉTHODE",
       "lede": "GTA VI sort le 19 novembre 2026. D’ici là, une règle : ce que Rockstar a publié est écrit comme tel, le reste attend le jeu. Voici ce qui est officiel aujourd’hui, ce qui ne l’est pas encore, et comment les fiches le montrent.",
@@ -461,9 +461,30 @@
     "confirme": {
       "kicker": "Officiel aujourd’hui",
       "title": "Ce que Rockstar a confirmé",
-      "lede": "Les annonces officielles, relues le 17 octobre 2026. Chaque point renvoie à la page du site qui le détaille, et à sa source.",
+      "lede": "Les annonces officielles, relues le 20 octobre 2026. Chaque point renvoie à la page du site qui le détaille, et à sa source.",
+      "trier": "Trier les points confirmés par sujet",
+      "tous": "Tous",
+      "cats": [
+        {
+          "id": "jeu",
+          "label": "Le jeu et sa sortie"
+        },
+        {
+          "id": "monde",
+          "label": "Personnages et Leonida"
+        },
+        {
+          "id": "medias",
+          "label": "Vidéos et musique"
+        },
+        {
+          "id": "objets",
+          "label": "Objets de collection"
+        }
+      ],
       "items": [
         {
+          "cat": "jeu",
           "t": "Date et consoles",
           "d": "GTA VI sort le jeudi 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. Rockstar a annoncé cette date le 6 novembre 2025, au deuxième report du jeu.",
           "href": "index.html",
@@ -474,6 +495,7 @@
           "ico": "horloge"
         },
         {
+          "cat": "jeu",
           "t": "Précommandes et éditions",
           "d": "Les précommandes sont ouvertes depuis le 25 juin 2026. Deux éditions : Standard et Ultimate ; l’Ultimate ajoute seize contenus, dont la Grotti Cheetah ’95, les revolvers Hawk & Little Morgan et la Classic Car Collection.",
           "href": "editions.html",
@@ -484,6 +506,7 @@
           "ico": "achats"
         },
         {
+          "cat": "jeu",
           "t": "Le prix du jeu",
           "d": "Sur le PlayStation Store en France : 79,99 € l’Édition Standard, 99,99 € l’Édition Ultimate. En boîte, chaque revendeur fixe son prix.",
           "href": "prix.html",
@@ -502,6 +525,7 @@
           "ico": "argent"
         },
         {
+          "cat": "jeu",
           "t": "Bonus de précommande",
           "d": "Avant le 20 novembre 2026, une précommande ou un achat numérique donne aussi le pack Vintage Vice City (la Vapid Stanier ’55 et son garage, des tenues et coiffures, un motif d’arme) et un mois de GTA+ ; la précommande en boîte donne le pack.",
           "href": "vehicules/vapid-stanier.html",
@@ -512,8 +536,9 @@
           "ico": "etiquette"
         },
         {
+          "cat": "jeu",
           "t": "La version en boîte",
-          "d": "La boîte contient un code de téléchargement, pas de disque. Elle arrive en magasin dès le 12 novembre 2026, jour où commence le préchargement. L’Édition Ultimate n’existe pas en boîte.",
+          "d": "La boîte contient un code de téléchargement, pas de disque. Elle est attendue en magasin dès le 12 novembre 2026, jour où commence le préchargement. L’Édition Ultimate n’existe pas en boîte.",
           "href": "editions.html#boite",
           "label": "La version en boîte",
           "src": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions",
@@ -522,6 +547,7 @@
           "ico": "kit"
         },
         {
+          "cat": "monde",
           "t": "Les personnages",
           "d": "Lucia Caminos et Jason Duval sont les deux héros. Rockstar a aussi présenté Cal Hampton, Boobie Ike, Dre’Quan Priest, Real Dimez, Raul Bautista et Brian Heder.",
           "href": "personnages.html",
@@ -532,8 +558,9 @@
           "ico": "nommes"
         },
         {
+          "cat": "monde",
           "t": "Leonida",
-          "d": "L’histoire se passe dans l’État de Leonida, inspiré de la Floride : Vice City, les Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et le Mount Kalaga National Park.",
+          "d": "L’histoire se passe dans l’État de Leonida. Rockstar en présente six régions : Vice City, les Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et le Mount Kalaga National Park.",
           "href": "lieux.html",
           "label": "Les régions",
           "src": "https://www.rockstargames.com/VI",
@@ -542,8 +569,9 @@
           "ico": "carte"
         },
         {
+          "cat": "medias",
           "t": "Les vidéos",
-          "d": "Quatre vidéos officielles : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025), An Extended Look (27 août 2026), entièrement capturé en jeu sur PlayStation 5, et la bande-annonce de lancement (15 octobre 2026).",
+          "d": "Quatre vidéos officielles : le Trailer 1 (4 décembre 2023), le Trailer 2 (6 mai 2025), An Extended Look (27 août 2026) et la bande-annonce de lancement (15 octobre 2026), ces deux dernières capturées entièrement en jeu sur PlayStation 5.",
           "href": "videos.html",
           "label": "Les vidéos officielles",
           "src": "https://www.rockstargames.com/VI/media/videos",
@@ -552,6 +580,7 @@
           "ico": "film"
         },
         {
+          "cat": "medias",
           "t": "La musique",
           "d": "Six stations de radio présentées le 8 octobre 2026, avec leurs animateurs, des podcasts à la demande et une radio qu’on écoute aussi à pied. L’album officiel, 34 titres originaux, sort le 19 novembre 2026.",
           "href": "radios.html",
@@ -562,6 +591,7 @@
           "ico": "note"
         },
         {
+          "cat": "objets",
           "t": "Le coffret collector",
           "d": "The Goodtime State – Vice City Collection : onze objets inspirés de Macca the Gator, sans le jeu, en édition limitée sur la boutique Rockstar (399,99 $), expédiés à partir du 19 novembre 2026.",
           "href": "prix.html#collector",
@@ -572,6 +602,7 @@
           "ico": "coffret"
         },
         {
+          "cat": "objets",
           "t": "Les manettes en édition limitée",
           "d": "Deux manettes DualSense aux couleurs de GTA VI, une noire et une blanche, au prix conseillé de 84,99 € chacune, à partir du 19 novembre 2026, présentées par PlayStation.",
           "href": "prix.html#manettes",
@@ -582,6 +613,7 @@
           "ico": "manette"
         },
         {
+          "cat": "objets",
           "t": "La collection de la boutique Rockstar",
           "d": "Depuis le 8 octobre 2026, la boutique Rockstar vend la Collection Grand Theft Auto VI : tee-shirts, casquettes, porte-clés, pince à billets, briquet Zippo, tote bags et autocollants.",
           "href": "prix.html#boutique",
@@ -590,6 +622,34 @@
           "media": "collection-gta-vi",
           "alt": "Tee-shirts, casquettes, tote bags, autocollants et petits objets en métal aux logos de GTA VI, de Vice City et de Rockstar Games, photo officielle",
           "ico": "tenue"
+        },
+        {
+          "cat": "jeu",
+          "t": "L’âge conseillé",
+          "d": "PEGI 18 en Europe : le PlayStation Store et le Microsoft Store l’affichent, pour la drogue, le sexe et la violence. Aux États-Unis, l’ESRB classe le jeu M, à partir de 17 ans.",
+          "href": "moments/classifications.html",
+          "label": "Les classifications",
+          "srcs": [
+            {
+              "href": "https://www.playstation.com/fr-fr/games/grand-theft-auto-vi/",
+              "label": "PlayStation Store"
+            },
+            {
+              "href": "https://www.esrb.org/ratings/41627/grand-theft-auto-vi/",
+              "label": "ESRB"
+            }
+          ],
+          "tags": [
+            {
+              "l": "Europe",
+              "p": "PEGI 18"
+            },
+            {
+              "l": "États-Unis",
+              "p": "ESRB M"
+            }
+          ],
+          "ico": "statuts"
         }
       ],
       "statsLede": "Dans la base du site, aujourd’hui :",
@@ -615,7 +675,7 @@
     "pasEncore": {
       "kicker": "Pas encore annoncé",
       "title": "Ce que Rockstar n’a pas encore dit",
-      "lede": "Les questions qu’on nous pose le plus, sans réponse officielle au 17 octobre 2026.",
+      "lede": "Les questions qu’on nous pose le plus, sans réponse officielle au 20 octobre 2026.",
       "items": [
         {
           "t": "Une version PC",
@@ -628,7 +688,7 @@
         },
         {
           "t": "L’heure de déblocage",
-          "d": "Rockstar ne l’a pas annoncée. Le PlayStation Store indique minuit, heure locale, dans la nuit du 18 au 19 novembre : vérifie l’heure sur ta boutique juste avant la sortie.",
+          "d": "Rockstar ne l’a pas annoncée. Le PlayStation Store français affiche la sortie le 18 novembre 2026 à 23 h UTC, soit minuit à Paris : vérifie l’heure sur ta boutique juste avant la sortie.",
           "ico": "horloge",
           "href": "prechargement.html#pas-confirme",
           "label": "Préchargement : l’heure et la taille",
@@ -664,7 +724,8 @@
         },
         {
           "t": "La surface de la carte",
-          "d": "Aucun chiffre. Fin août 2026, Rockstar a dit à la presse que la carte fait environ deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2.",
+          "d": "Aucun chiffre officiel. Le 27 août 2026, deux comparaisons ont été rapportées : environ deux fois la carte de GTA V, d’après Rob Nelson cité par le créateur TGG, et trois fois la zone jouable de Red Dead Redemption 2, d’après le studio cité par le New York Times.",
+          "statut": "vu",
           "ico": "carte",
           "href": "gta-6-vs-gta-5.html#carte",
           "label": "GTA VI et GTA V : la carte, mot pour mot",
@@ -673,8 +734,11 @@
         },
         {
           "t": "La durée de vie",
-          "d": "Aucune durée officielle. Rob Nelson, de Rockstar North, dit avoir fini sa partie en 80 heures environ, histoire et une partie des objectifs facultatifs compris.",
+          "d": "Aucune durée officielle. Rob Nelson, de Rockstar North, a dit au New York Times, le 27 août 2026, avoir fini sa partie en 80 heures environ, histoire et une partie des objectifs facultatifs compris.",
+          "statut": "vu",
           "ico": "sablier",
+          "href": "gta-6-vs-gta-5.html#q-duree",
+          "label": "GTA VI et GTA V : la durée",
           "media": "mount-kalaga-national-park-04",
           "mediaAlt": "Route en corniche dans Mount Kalaga, visuel officiel Rockstar Games"
         },
@@ -712,9 +776,19 @@
         }
       ],
       "coutsTitre": "Les coûts d’usage, poste par poste",
-      "coutsLede": "Le carburant existe dans le jeu : on fait le plein dans les stations-service de l’Extended Look. Mais aucun prix ni aucune consommation n’est publié, et rien n’est annoncé pour les autres postes. Le calculateur peut les simuler si tu choisis une hypothèse.",
+      "coutsLede": "Le carburant existe : Rob Nelson, de Rockstar North, l’a montré aux créateurs reçus au studio, d’après leurs reportages du 27 août 2026. Mais aucun prix ni aucune consommation n’est publié, et rien n’est annoncé pour les autres postes. Le calculateur peut les simuler si tu choisis une hypothèse.",
       "fin": "Dès qu’une valeur est publiée ou relevée en jeu, elle s’affiche sur la fiche avec sa source et sa date.",
-      "sheetLabel": "Une fiche du site : les cases en pointillé attendent le jeu, avec leur point d’interrogation."
+      "sheetLabel": "Une fiche du site : les cases en pointillé attendent le jeu, avec leur point d’interrogation.",
+      "panneau": {
+        "label": "Les coûts d’usage et leur prix publié",
+        "poste": "Poste",
+        "sait": "Ce qu’on sait",
+        "prix": "Prix publié",
+        "statut": "Statut",
+        "aucun": "Aucun prix publié",
+        "calc": "Compter ces coûts dans le calculateur",
+        "calcHref": "calculateurs.html?tool=purchase"
+      }
     },
     "modeles": {
       "kicker": "Rapprochements",
@@ -795,11 +869,18 @@
     "tableau": {
       "kicker": "D’un coup d’œil",
       "title": "Le tableau de bord",
-      "lede": "Ce que Rockstar a confirmé, et ce qu’il n’a pas encore dit, au 17 octobre 2026. Un clic mène au détail.",
+      "lede": "Ce que Rockstar a confirmé, et ce qu’il n’a pas encore dit, au 20 octobre 2026. Un clic ouvre la carte du point.",
       "confirme": "Confirmé",
       "attente": "Pas encore annoncé",
       "nConfirme": "points confirmés",
-      "nAttente": "questions sans réponse officielle"
+      "nAttente": "questions sans réponse officielle",
+      "score": "{n} sujets sur {t} suivis ici sont confirmés.",
+      "fiche": {
+        "fermer": "Fermer",
+        "precedent": "Point précédent",
+        "suivant": "Point suivant",
+        "voir": "Voir dans la page"
+      }
     },
     "echelle": {
       "plusSur": "Le plus sûr",
@@ -875,8 +956,8 @@
       "statsLede": "Les chiffres du site, recomptés à chaque mise à jour.",
       "stats": [
         {
-          "stat": "pages",
-          "label": "pages"
+          "stat": "pagestotal",
+          "label": "pages, toutes langues comprises"
         },
         {
           "stat": "vehicules",
@@ -1092,7 +1173,7 @@
       "k": "Presse et créateurs",
       "stats": [
         {
-          "stat": "pages",
+          "stat": "pagestotal",
           "label": "pages"
         },
         {
@@ -1261,7 +1342,7 @@
     "stack": "prechargement",
     "stackLabel": "Trois visuels officiels de GTA VI",
     "publishedAt": "2026-10-16",
-    "checkedAt": "2026-10-17",
+    "checkedAt": "2026-10-20",
     "etat": "avant",
     "hero": {
       "eyebrow": "Préchargement, le 12 novembre 2026",
@@ -1331,7 +1412,7 @@
       {
         "iso": "2026-11-19",
         "t": "GTA VI sort",
-        "d": "Sur PlayStation 5 et Xbox Series X|S. Le PlayStation Store affiche un déblocage à minuit, heure locale ; vérifie ta boutique la veille.",
+        "d": "Sur PlayStation 5 et Xbox Series X|S. Le PlayStation Store français affiche un déblocage à minuit, heure de Paris ; Rockstar n’a pas annoncé d’heure. Vérifie ta boutique la veille.",
         "src": "rs-date"
       },
       {
@@ -1342,7 +1423,7 @@
       }
     ],
     "avant": {
-      "kicker": "Le point au 17 octobre 2026",
+      "kicker": "Le point au 20 octobre 2026",
       "title": "Quand commence le préchargement de GTA VI ?",
       "lede": "Le 12 novembre 2026, d’après l’assistance de Rockstar. Trois dates à retenir, chacune avec sa source.",
       "etatLabel": "Aujourd’hui",
@@ -1445,12 +1526,16 @@
           "src": "rs-support"
         }
       ],
-      "lien": "La version en boîte en détail, sur la page des éditions"
+      "lien": "La version en boîte en détail, sur la page des éditions",
+      "scene": {
+        "code": "Code de téléchargement",
+        "disque": "Pas de disque"
+      }
     },
     "pasConfirme": {
       "kicker": "Pas encore annoncé",
       "title": "La taille du jeu et l’heure du 19 : ce qui n’est pas confirmé",
-      "lede": "Au 17 octobre 2026, Rockstar n’a publié ni la taille du téléchargement, ni l’heure de déblocage du 19 novembre. Voici ce qu’on sait, et où ce sera annoncé.",
+      "lede": "Au 20 octobre 2026, Rockstar n’a publié ni la taille du téléchargement, ni l’heure de déblocage du 19 novembre. Voici ce qu’on sait, et où ce sera annoncé.",
       "ouLabel": "Où ce sera annoncé",
       "items": [
         {
@@ -1462,20 +1547,19 @@
             "ps-store",
             "xbox-store"
           ],
-          "media": "vice-city-03",
-          "mediaAlt": "Vue aérienne de Vice City, visuel officiel Rockstar Games"
+          "statut": "conf"
         },
         {
           "id": "q-heure-sortie",
           "ico": "sablier",
           "t": "L’heure de déblocage le 19 novembre",
-          "d": "Rockstar ne l’a pas annoncée. Les boutiques affichent des horaires qui reviennent à minuit, heure locale, dans la nuit du 18 au 19 ; Xbox dit « généralement peu après minuit ». Vérifie ta boutique la veille.",
+          "d": "Rockstar ne l’a pas annoncée. Le PlayStation Store français affiche minuit, heure de Paris (le 18 novembre à 23 h en temps universel) ; la fiche du Microsoft Store n’affiche pas d’heure. Vérifie ta boutique la veille.",
           "ou": [
             "ps-store",
-            "xbox-support"
+            "xbox-store"
           ],
-          "media": "vice-city-08",
-          "mediaAlt": "Vice City de nuit, grande roue illuminée et immeubles au bord de l’eau, visuel officiel Rockstar Games"
+          "statut": "conf",
+          "jour": "19 novembre"
         },
         {
           "id": "q-heure-preload",
@@ -1485,8 +1569,8 @@
           "ou": [
             "rs-support"
           ],
-          "media": "port-gellhorn-01",
-          "mediaAlt": "Enseigne d’un motel de Port Gellhorn au crépuscule, visuel officiel Rockstar Games"
+          "statut": "officiel",
+          "jour": "12 novembre"
         }
       ],
       "maj": "Cette page est mise à jour dès qu’un de ces chiffres est publié, avec sa source et sa date. Si tu le vois avant nous, signale-le."
@@ -1529,7 +1613,7 @@
             "alt": "Vue aérienne de Vice City, visuel officiel Rockstar Games",
             "kicker": "La carte",
             "title": "Repère Leonida avant d’y poser le pied",
-            "text": "Plus de 3 000 lieux repérés sur les captures officielles, chacun avec sa page.",
+            "text": "{lieux} lieux repérés, dont {captures} sur une capture officielle, chacun avec sa page.",
             "big": true
           },
           {
@@ -1545,7 +1629,7 @@
             "media": "95-grotti-cheetah-01",
             "alt": "Grotti Cheetah blanche devant un hôtel Art déco, visuel officiel Rockstar Games",
             "kicker": "Les véhicules",
-            "title": "302 véhicules vus dans les médias officiels",
+            "title": "{vehicules} véhicules vus dans les médias officiels",
             "text": "Chaque modèle a sa fiche, son statut et ses visuels."
           },
           {
@@ -1561,7 +1645,7 @@
             "media": "jason-and-lucia-02",
             "alt": "Jason et Lucia prêts pour un braquage, visuel officiel Rockstar Games",
             "kicker": "Le Tuto",
-            "title": "Le site expliqué en quatorze chapitres",
+            "title": "Le site expliqué, chapitre par chapitre",
             "text": "Comment lire une fiche, un statut, un prix repère."
           }
         ]
@@ -1576,7 +1660,7 @@
       },
       {
         "q": "Quelle est la taille de GTA 6 sur PS5 et Xbox ?",
-        "a": "Non communiquée au 17 octobre 2026. Elle sera visible sur la fiche du jeu des boutiques au plus tard à l’ouverture du préchargement ; cette page la reprendra avec sa source."
+        "a": "Non communiquée au 20 octobre 2026. Elle sera visible sur la fiche du jeu des boutiques au plus tard à l’ouverture du préchargement ; cette page la reprendra avec sa source."
       },
       {
         "q": "Combien de temps prend le téléchargement de GTA 6 ?",
@@ -1592,7 +1676,7 @@
       },
       {
         "q": "À quelle heure GTA 6 sera jouable le 19 novembre ?",
-        "a": "Rockstar ne l’a pas annoncée. Les boutiques affichent des horaires qui reviennent à minuit, heure locale, dans la nuit du 18 au 19 novembre ; vérifie sur la tienne la veille."
+        "a": "Rockstar ne l’a pas annoncée. Le PlayStation Store français affiche minuit, heure de Paris, dans la nuit du 18 au 19 novembre ; la fiche du Microsoft Store n’affiche pas d’heure. Vérifie sur ta boutique la veille."
       },
       {
         "q": "Le préchargement est-il possible sur PC ?",
@@ -1616,7 +1700,7 @@
         "short": "Rockstar Support",
         "publisher": "Rockstar Games, assistance",
         "publishedAt": "2026-08-18",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Préchargement « at local midnight on November 12, 2026 » ; la boîte contient un code de téléchargement, sans disque, disponible le 12 novembre ; l’Édition Ultimate n’existe pas en boîte ; bonus de précommande jusqu’au 20 novembre. Ni taille, ni heure de déblocage."
       },
@@ -1626,7 +1710,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2026-06-24",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Les précommandes numériques pourront précharger dès le 12 novembre ; la boîte, avec un code et sans disque, est disponible le 12 novembre pour précharger."
       },
@@ -1636,16 +1720,16 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2025-11-06",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "La date de sortie du 19 novembre 2026, sur PlayStation 5 et Xbox Series X|S."
+        "claim": "La date de sortie : le 19 novembre 2026."
       },
       "rs-newswire": {
         "url": "https://www.rockstargames.com/newswire",
         "title": "Rockstar Newswire : les annonces officielles",
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "C’est là que Rockstar publie ses annonces ; l’heure du préchargement ou de la sortie, si elle est annoncée, y sera."
       },
@@ -1654,25 +1738,25 @@
         "title": "PlayStation Store : Grand Theft Auto VI, édition Standard",
         "short": "PlayStation Store",
         "publisher": "Sony Interactive Entertainment",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "La fiche du jeu sur le PlayStation Store : « Préchargement 7 jours en avance », sortie affichée à un horaire qui revient à minuit, heure locale, le 19 novembre 2026 ; aucune taille de téléchargement affichée au 16 octobre."
+        "claim": "La fiche du jeu sur le PlayStation Store : « Préchargement 7 jours en avance », sortie affichée le 18 novembre 2026 à 23 h en temps universel, soit minuit à Paris le 19 ; aucune taille de téléchargement affichée au 20 octobre."
       },
       "xbox-store": {
         "url": "https://www.xbox.com/fr-FR/games/store/grand-theft-auto-vi/9nl3wwnzlzzn",
         "title": "Microsoft Store : Grand Theft Auto VI",
         "short": "Microsoft Store",
         "publisher": "Microsoft",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "La fiche du jeu sur la boutique Xbox (Xbox Series X|S seulement) ; aucune « taille approximative » affichée au 16 octobre."
+        "claim": "La fiche du jeu sur la boutique Xbox (Xbox Series X|S seulement) ; ni « taille approximative » ni heure de sortie affichée au 20 octobre."
       },
       "ps-support": {
         "url": "https://www.playstation.com/fr-fr/support/games/pre-order-games-automatic-download-ps-store/",
         "title": "Assistance PlayStation : précommander et télécharger automatiquement des jeux sur le PlayStation Store",
         "short": "Assistance PlayStation",
         "publisher": "Sony Interactive Entertainment",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "La précommande apparaît dans la bibliothèque de jeux avec un compte à rebours ; si la case du contenu est cochée, le téléchargement automatique est activé et part dès que le contenu est disponible ; « Rester connecté à Internet » conseillé."
       },
@@ -1681,7 +1765,7 @@
         "title": "Assistance PlayStation : configurer les téléchargements et mises à jour automatiques",
         "short": "Assistance PlayStation",
         "publisher": "Sony Interactive Entertainment",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "PS5 : Paramètres, Données sauvegardées et paramètres des jeux/applications, Mises à jour automatiques ; mode repos avec « Rester connecté à Internet »."
       },
@@ -1690,16 +1774,16 @@
         "title": "Assistance Xbox : précommander des jeux Xbox numériques dans le Microsoft Store",
         "short": "Assistance Xbox",
         "publisher": "Microsoft",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "Un jeu précommandé se joue « généralement peu après minuit (heure locale) le jour de sa sortie » ; s’il n’apparaît pas, le retrouver dans le Store et sélectionner Installer, sans le racheter."
+        "claim": "La page d’assistance de Xbox sur les précommandes de jeux numériques : un jeu précommandé qui n’apparaît pas se retrouve dans le Store, où l’on sélectionne Installer, sans le racheter."
       },
       "xbox-support-install": {
         "url": "https://support.xbox.com/fr-FR/help/games-apps/my-games-apps/view-downloadable-content",
         "title": "Assistance Xbox : rechercher vos jeux et extensions",
         "short": "Assistance Xbox",
         "publisher": "Microsoft",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Les jeux possédés s’installent automatiquement sur la console principale en mode veille avec « Maintenir mes jeux et applications à jour » ; sinon Bibliothèque complète, Jeux détenus, Installer."
       },
@@ -1709,7 +1793,7 @@
         "short": "Game Informer",
         "publisher": "Game Informer",
         "publishedAt": "2018-10-18",
-        "consultedAt": "2026-10-17",
+        "consultedAt": "2026-10-20",
         "statut": "vu",
         "claim": "D’après la page d’assistance de Rockstar : 99 Go d’espace d’installation sur PlayStation 4, 107 Go sur Xbox One, et 50 Go de plus le temps d’installer la version numérique sur PS4."
       }
@@ -1721,7 +1805,7 @@
       "calc": {
         "title": "Ton temps de téléchargement",
         "size": "Taille du jeu",
-        "sizeHint": "Pas annoncée au 17 octobre 2026 : tape une hypothèse. La page reprendra la vraie taille dès sa publication.",
+        "sizeHint": "Pas annoncée au 20 octobre 2026 : tape une hypothèse. La page reprendra la vraie taille dès sa publication.",
         "speed": "Ton débit",
         "speedHint": "Débits courants",
         "presets": [
@@ -1744,7 +1828,12 @@
         ],
         "result": "Durée estimée",
         "resultHint": "À débit constant, sans ralentissement de la boutique ni de la console. Un test de débit te donne ton chiffre réel.",
-        "empty": "Tape une taille"
+        "empty": "Tape une taille",
+        "essai": {
+          "n": 99,
+          "label": "Essayer avec 99 Go, la taille de Red Dead Redemption 2 sur PS4"
+        },
+        "cmpTitle": "Pour cette taille, selon le débit"
       },
       "repereKicker": "Repère de la série",
       "repereTitle": "Red Dead Redemption 2 à sa sortie, en 2018",
@@ -1780,7 +1869,7 @@
     "stack": "pc",
     "stackLabel": "Trois visuels officiels de GTA VI",
     "publishedAt": "2026-10-16",
-    "checkedAt": "2026-10-17",
+    "checkedAt": "2026-10-20",
     "hero": {
       "eyebrow": "PC : rien d’annoncé",
       "lede": "GTA VI sort le 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S. Rockstar n’a annoncé ni version PC, ni date, ni page Steam. Voici ce qui est officiel, ce que la série a fait avant, où l’annonce arrivera, et pourquoi toute « version PC » proposée aujourd’hui est une arnaque.",
@@ -1829,15 +1918,36 @@
       }
     ],
     "officiel": {
-      "kicker": "Officiel au 17 octobre 2026",
+      "kicker": "Officiel au 20 octobre 2026",
       "title": "GTA VI sur PC : ce que Rockstar a annoncé",
       "lede": "Trois points, et pas un de plus.",
+      "ecran": {
+        "kicker": "Plateformes annoncées pour le 19 novembre 2026",
+        "items": [
+          {
+            "nom": "PlayStation 5",
+            "pic": "console",
+            "etat": "Annoncé"
+          },
+          {
+            "nom": "Xbox Series X|S",
+            "pic": "console",
+            "etat": "Annoncé"
+          },
+          {
+            "nom": "PC",
+            "pic": "pc",
+            "etat": "Pas annoncé",
+            "ferme": true
+          }
+        ]
+      },
       "points": [
         {
           "icon": "inventaire",
           "t": "Consoles seulement",
           "d": "GTA VI est annoncé sur PlayStation 5 et Xbox Series X|S pour le 19 novembre 2026. Aucune autre plateforme n’est citée.",
-          "src": "rs-date",
+          "src": "rs-support",
           "main": true
         },
         {
@@ -1901,7 +2011,7 @@
             "media": "trailer-1-vehicles-033",
             "alt": "Voitures sous les néons d’Ocean Drive, Trailer 1 de GTA VI, visuel officiel Rockstar Games",
             "kicker": "Les véhicules",
-            "title": "302 véhicules repérés",
+            "title": "{vehicules} véhicules repérés",
             "text": "Sportives, motos, bateaux, hélicoptères : une fiche chacun."
           },
           {
@@ -1949,33 +2059,11 @@
           "src": "rs-date"
         }
       ],
-      "note": "Trois jeux, trois écarts très différents : un an, un an et demi, quatorze ans. La seule chose qu’ils ont en commun : à chaque fois, la version PC a été annoncée par Rockstar sur son Newswire, quelques semaines avant sa sortie, et la date de GTA V sur PC a été repoussée deux fois avant d’arriver. Pour GTA VI, la ligne reste ouverte.",
-      "axe": {
-        "from": "2010-01-01",
-        "to": "2028-07-01",
-        "ticks": [
-          {
-            "iso": "2010-01-01",
-            "label": "2010"
-          },
-          {
-            "iso": "2014-01-01",
-            "label": "2014"
-          },
-          {
-            "iso": "2018-01-01",
-            "label": "2018"
-          },
-          {
-            "iso": "2022-01-01",
-            "label": "2022"
-          },
-          {
-            "iso": "2026-01-01",
-            "label": "2026"
-          }
-        ]
-      },
+      "note": "Trois jeux, trois écarts très différents : un an, un an et demi, quatorze ans. Leur point commun : à chaque fois, c’est Rockstar qui a annoncé la version PC, environ dix mois avant sa sortie pour GTA V (en juin 2014), un mois avant pour Red Dead Redemption 2 et trois semaines avant pour Red Dead Redemption ; la date de GTA V sur PC a été repoussée deux fois avant d’arriver. Pour GTA VI, la ligne reste ouverte.",
+      "noteSrc": "gi-gtav-pc",
+      "depart": "Départ : la sortie sur consoles",
+      "arrivee": "Arrivée : la sortie sur PC",
+      "echelle": "Un repère par année sur la piste",
       "openLabel": "pas annoncé"
     },
     "arnaque": {
@@ -1989,7 +2077,7 @@
       "regles": [
         "GTA VI ne s’achète que sur le PlayStation Store, le Microsoft Store, le Rockstar Store et chez les revendeurs de la boîte (un code, pas de disque).",
         "Rockstar n’a ouvert aucune bêta ni aucun test public : personne ne peut t’y inviter.",
-        "Acheter une « clé » ou un compte à un vendeur tiers est contraire à la politique de Rockstar, qui le dit sur sa page de sécurité du compte.",
+        "Ne donne jamais tes identifiants Rockstar : l’assistance de Rockstar prévient que de faux « services » tiers les demandent pour voler des comptes.",
         "Aucun site, aucune vidéo, aucun message ne peut te donner le jeu « en avance » ; en août 2026, de faux sites « Extended Look » et « démo » distribuaient un programme qui vole les mots de passe.",
         "Rockstar le rappelle pour son compte : ne télécharge rien d’un site tiers, et méfie-toi des e-mails qui imitent les siens.",
         "Si tu as entré un identifiant ou un paiement sur une de ces pages, change ton mot de passe et préviens ta banque."
@@ -2003,7 +2091,9 @@
       ],
       "srcs": [
         "rs-compte",
-        "rs-keep-safe",
+        "rs-keep-safe"
+      ],
+      "srcsVu": [
         "malwarebytes"
       ],
       "vraiFaux": {
@@ -2096,7 +2186,7 @@
       },
       {
         "q": "Peut-on jouer à GTA 6 sur PC en streaming ?",
-        "a": "Rien n’est annoncé à ce sujet. La seule information officielle est la sortie sur PlayStation 5 et Xbox Series X|S.",
+        "a": "Non, d’après Xbox : le 7 octobre 2026, Matthew Ball, directeur de la stratégie de Xbox, a écrit que le jeu ne serait diffusé en nuage ni en exclusivité, ni vers le PC (propos rapportés par Dexerto). Rien d’autre n’est annoncé : GTA 6 sort le 19 novembre 2026 sur PlayStation 5 et Xbox Series X|S.",
         "href": "verification.html#pas-encore",
         "label": "Ce que Rockstar n’a pas encore dit"
       }
@@ -2116,9 +2206,9 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2025-11-06",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "La date de sortie, sur PlayStation 5 et Xbox Series X|S ; aucune autre plateforme."
+        "claim": "La date de sortie : le 19 novembre 2026."
       },
       "rs-support": {
         "url": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions",
@@ -2126,26 +2216,26 @@
         "short": "Rockstar Support",
         "publisher": "Rockstar Games, assistance",
         "publishedAt": "2026-08-18",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Les plateformes du jeu : PlayStation 5 et Xbox Series X|S ; rien sur une version PC."
       },
       "rs-precommandes": {
-        "url": "https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25",
-        "title": "Rockstar Newswire : les précommandes de Grand Theft Auto VI ouvrent le 25 juin",
+        "url": "https://www.rockstargames.com/newswire/article/5171972o3ak5oa/pre-order-grand-theft-auto-vi-on-june-25",
+        "title": "Rockstar Newswire : précommander Grand Theft Auto VI le 25 juin",
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2026-06-24",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "GTA VI est présenté comme une expérience solo, le 19 novembre sur PlayStation 5 et Xbox Series X|S."
+        "claim": "GTA VI « features a single player experience », le 19 novembre sur PlayStation 5 et Xbox Series X|S."
       },
       "rs-vi": {
         "url": "https://www.rockstargames.com/VI",
         "title": "Site officiel de Grand Theft Auto VI",
         "short": "rockstargames.com/VI",
         "publisher": "Rockstar Games",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "La page officielle du jeu et ses plateformes."
       },
@@ -2154,7 +2244,7 @@
         "title": "Rockstar Newswire : les annonces officielles",
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Là où Rockstar annonce ses sorties, dont les versions PC."
       },
@@ -2164,16 +2254,16 @@
         "short": "Rockstar Support, précommandes",
         "publisher": "Rockstar Games, assistance",
         "publishedAt": "2026-06-26",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "Les meilleurs endroits pour s’informer sur GTA VI : le site officiel, le Rockstar Newswire et la lettre d’information Rockstar Propaganda ; la liste des boutiques officielles."
+        "claim": "Les meilleurs endroits pour s’informer sur GTA VI : le site officiel, le Rockstar Newswire et la lettre d’information Rockstar Propaganda."
       },
       "rs-store": {
         "url": "https://store.rockstargames.com/game/buy-gta-vi",
         "title": "Rockstar Store : Grand Theft Auto VI",
         "short": "Rockstar Store",
         "publisher": "Rockstar Games",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "La boutique de Rockstar : sortie le 19 novembre 2026, préchargement le 12, boîte avec un code sans disque ; aucune version PC."
       },
@@ -2183,9 +2273,9 @@
         "short": "Rockstar Support, sécurité",
         "publisher": "Rockstar Games, assistance",
         "publishedAt": "2026-02-17",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "Rockstar met en garde contre les e-mails qui imitent les siens et conseille de ne rien télécharger depuis un site tiers, jeux piratés compris."
+        "claim": "Rockstar met en garde contre les e-mails qui imitent les siens et les faux services tiers qui demandent les identifiants, et conseille de ne rien télécharger depuis un site tiers, jeux piratés compris."
       },
       "malwarebytes": {
         "url": "https://www.malwarebytes.com/blog/threat-intel/2026/08/fake-gta-6-extended-look-and-demo-sites-deliver-an-infostealer",
@@ -2193,7 +2283,7 @@
         "short": "Malwarebytes",
         "publisher": "Malwarebytes",
         "publishedAt": "2026-08-24",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "vu",
         "claim": "Des sites qui promettaient une démo ou la vidéo livraient en fait un programme malveillant ; le conseil : vérifier d’abord le site et les boutiques de l’éditeur."
       },
@@ -2203,7 +2293,7 @@
         "short": "PCWorld",
         "publisher": "PCWorld",
         "publishedAt": "2026-05-05",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "vu",
         "claim": "Strauss Zelnick : Rockstar commence toujours sur console, pour « servir le cœur » des joueurs ; aucune date PC."
       },
@@ -2213,7 +2303,7 @@
         "short": "Inven Global",
         "publisher": "Inven Global",
         "publishedAt": "2026-09-18",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "vu",
         "claim": "GTA VI est lancé comme une expérience solo sur deux plateformes ; aucune version PC annoncée."
       },
@@ -2223,7 +2313,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2015-02-24",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "GTA V : sorti le 17 septembre 2013 sur PlayStation 3 et Xbox 360, annoncé sur PC pour le 14 avril 2015 après deux reports (27 janvier, puis 24 mars)."
       },
@@ -2233,7 +2323,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2019-10-04",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "Red Dead Redemption 2 : sorti le 26 octobre 2018 sur consoles, annoncé sur PC pour le 5 novembre 2019."
       },
@@ -2243,7 +2333,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2024-10-08",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "Red Dead Redemption : sorti le 18 mai 2010 sur consoles, annoncé sur PC pour le 29 octobre 2024."
       },
@@ -2252,9 +2342,29 @@
         "title": "Rockstar Games : garder son compte Rockstar Games en sécurité",
         "short": "Rockstar Games, sécurité du compte",
         "publisher": "Rockstar Games",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "Méfiance envers les e-mails qui imitent ceux de Rockstar (liste des domaines officiels) ; acheter des clés ou des comptes auprès de vendeurs tiers est contraire à la politique de Rockstar."
+        "claim": "La page de Rockstar sur la sécurité du compte, avec la liste des domaines d’où viennent ses vrais e-mails (citée par l’assistance de Rockstar)."
+      },
+      "gi-gtav-pc": {
+        "url": "https://gameinformer.com/b/news/archive/2014/06/09/gta-v-coming-to-playstation-4-xbox-one-pc.aspx",
+        "title": "Game Informer : GTA V arrive sur PlayStation 4, Xbox One et PC (9 juin 2014)",
+        "short": "Game Informer",
+        "publisher": "Game Informer",
+        "publishedAt": "2014-06-09",
+        "consultedAt": "2026-10-21",
+        "statut": "serie",
+        "claim": "Le 9 juin 2014, juste après la conférence de Sony à l’E3, Rockstar annonce GTA V sur PC et sur Xbox One pour l’automne : environ dix mois avant la sortie sur PC, le 14 avril 2015."
+      },
+      "dexerto-xbox": {
+        "url": "https://www.dexerto.com/gta/xbox-confirms-gta-6-wont-stream-on-pc-3416221/",
+        "title": "Dexerto : Xbox confirme que GTA 6 ne sera pas diffusé en nuage vers le PC (7 octobre 2026)",
+        "short": "Dexerto",
+        "publisher": "Dexerto",
+        "publishedAt": "2026-10-07",
+        "consultedAt": "2026-10-21",
+        "statut": "vu",
+        "claim": "Matthew Ball, directeur de la stratégie de Xbox, sur X : « We are looking forward to launching GTAVI on XBOX November 19, though the game will not be streaming exclusively or to PC. »"
       }
     }
   },
@@ -2266,7 +2376,7 @@
     "stack": "comparatif",
     "stackLabel": "Trois visuels officiels de GTA VI",
     "publishedAt": "2026-10-16",
-    "checkedAt": "2026-10-17",
+    "checkedAt": "2026-10-20",
     "hero": {
       "eyebrow": "GTA VI face à GTA V",
       "lede": "Treize ans séparent les deux jeux. Ce tableau met face à face ce que Rockstar a confirmé pour GTA VI et ce qu’on sait de GTA V, ligne par ligne, avec la source et la page du site qui détaille chaque point. Ce qui n’est pas annoncé reste vide, et c’est dit.",
@@ -2319,12 +2429,18 @@
       "title": "GTA VI et GTA V en un tableau",
       "lede": "Chaque ligne : ce qui est confirmé pour GTA VI, le repère de GTA V, et la page du site qui en parle.",
       "caption": "Comparatif de GTA VI et GTA V, point par point",
+      "pick": {
+        "label": "Afficher",
+        "deux": "Les deux",
+        "vi": "GTA VI",
+        "v": "GTA V"
+      },
       "colSujet": "Sujet",
       "colVI": "GTA VI",
       "colV": "GTA V (repère de la série)",
       "colPage": "Sur le site",
       "legOfficiel": "confirmé par Rockstar",
-      "legVu": "vu dans un média officiel",
+      "legVu": "vu dans un média, avec sa source et sa date",
       "legSerie": "repère de la série",
       "legConf": "à confirmer",
       "rows": [
@@ -2333,7 +2449,8 @@
           "icon": "carte",
           "sujet": "Le cadre",
           "vi": {
-            "v": "L’État de Leonida, inspiré de la Floride : Vice City, les Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et le Mount Kalaga National Park.",
+            "v": "L’État de Leonida : Vice City, les Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia et le Mount Kalaga National Park.",
+            "note": "La presse le compare à la Floride ; Rockstar ne la nomme pas.",
             "statut": "officiel",
             "src": "rs-vi"
           },
@@ -2367,7 +2484,7 @@
           "icon": "boussole",
           "sujet": "La taille de la carte",
           "vi": {
-            "v": "Pas de surface chiffrée. D’après Rob Nelson (Rockstar North), rapporté le 27 août 2026 : environ deux fois la carte de GTA V, trois fois la zone jouable de Red Dead Redemption 2.",
+            "v": "Pas de surface chiffrée. D’après les chiffres de Rob Nelson (Rockstar North), rapportés par TGG le 27 août 2026 : deux fois la carte de GTA V et trois fois celle de Red Dead Redemption 2 ; le New York Times attribue au studio la comparaison avec la zone jouable de Red Dead Redemption 2.",
             "note": "Six régions officielles. Les mots exacts sont cités plus bas.",
             "statut": "vu",
             "src": "tgg-video"
@@ -2388,7 +2505,7 @@
             "v": "PlayStation 5 et Xbox Series X|S.",
             "note": "Aucune version PC annoncée.",
             "statut": "officiel",
-            "src": "rs-date"
+            "src": "rs-support"
           },
           "v": {
             "v": "PlayStation 3 et Xbox 360 le 17 septembre 2013 ; PS4 et Xbox One le 18 novembre 2014 ; PC le 14 avril 2015 ; PS5 et Xbox Series le 15 mars 2022.",
@@ -2443,9 +2560,9 @@
             "src": "rs-date"
           },
           "v": {
-            "v": "Première vidéo le 2 novembre 2011, annonce officielle sur le Newswire le 3 ; sortie le 17 septembre 2013.",
+            "v": "Annonce officielle le 25 octobre 2011, première vidéo le 2 novembre ; sortie le 17 septembre 2013.",
             "statut": "serie",
-            "src": "rs-gtav-annonce"
+            "src": "gd-gtav-annonce"
           },
           "href": "actus.html",
           "label": "Toutes les annonces"
@@ -2489,7 +2606,7 @@
     "carte": {
       "kicker": "Mot pour mot",
       "title": "La carte de GTA VI face à celle de GTA V : ce que Rockstar a dit",
-      "lede": "Aucun chiffre officiel. Ce qu’a dit Rob Nelson, de Rockstar North, tel que rapporté le 27 août 2026 par un créateur reçu au studio, puis par le New York Times : cité tel quel, en anglais.",
+      "lede": "Aucun chiffre officiel. Ce que Rockstar North a dit, tel que rapporté le 27 août 2026 : par un créateur reçu au studio, qui cite Rob Nelson, puis par le New York Times, qui cite le studio. Les mots sont repris tels quels, en anglais.",
       "citations": [
         {
           "texte": "The map is twice the size of GTA 5’s map",
@@ -2507,23 +2624,18 @@
         }
       ],
       "p": [
-        "Ces chiffres n’ont jamais été publiés par Rockstar sur son site ni sur son Newswire : Rob Nelson, qui dirige Rockstar North, les a donnés à des créateurs reçus au studio en juillet 2026, et ils ont été rapportés le 27 août, le jour d’An Extended Look. Le New York Times a confirmé auprès du studio la comparaison avec Red Dead Redemption 2. Selon le même récit, Vice City à elle seule ferait deux fois Los Santos, la ville de GTA V.",
+        "Ces chiffres n’ont jamais été publiés par Rockstar sur son site ni sur son Newswire : Rob Nelson, qui codirige Rockstar North, les a donnés à des créateurs reçus au studio en juillet 2026, et ils ont été rapportés le 27 août, le jour d’An Extended Look. D’après les mêmes chiffres, Vice City à elle seule ferait deux fois Los Santos, la ville de GTA V. Le New York Times a confirmé auprès du studio la comparaison avec Red Dead Redemption 2.",
         "Aucune surface en km² n’existe, ni pour GTA VI, ni pour GTA V : Rockstar n’en a jamais publié. Sur le site, la carte interactive recense les lieux repérés dans les médias officiels, région par région ; elle ne mesure pas la surface du jeu."
       ],
       "lien": "Ouvrir la carte de Leonida",
       "lien2": "Les six régions",
-      "echelle": {
-        "a": {
-          "label": "GTA V",
-          "n": 1,
-          "sub": "la carte de Los Santos et son comté"
-        },
-        "b": {
-          "label": "GTA VI",
-          "n": 2,
-          "sub": "« twice the size », d’après Rob Nelson"
-        },
-        "caption": "Deux fois la carte de GTA V : c’est ce que rapporte TGG des propos de Rob Nelson, de Rockstar North. Les carrés montrent ce rapport, pas une mesure : Rockstar n’a publié aucune surface, pour aucun des deux jeux.",
+      "superpose": {
+        "vi": "deux fois la surface, d’après les chiffres de Rob Nelson",
+        "v": "la surface de référence",
+        "alt": "Fond de carte de Leonida dessiné par Leonidakit d’après les supports officiels, une reconstruction communautaire et non une carte publiée par Rockstar",
+        "curseur": "Superposer GTA V sur GTA VI",
+        "moitie": "GTA V tient dans la moitié",
+        "caption": "Deux fois la carte de GTA V : c’est ce que rapporte TGG des propos de Rob Nelson, de Rockstar North. Les carrés montrent ce rapport de surfaces, pas une mesure ni la forme des cartes : Rockstar n’a publié aucune surface, pour aucun des deux jeux. Le fond du carré GTA VI est la carte du site, une reconstruction communautaire.",
         "statut": "vu"
       },
       "regions": {
@@ -2588,53 +2700,56 @@
       "title": "Ce qu’on a vu de nouveau par rapport à GTA V",
       "lede": "Six choses montrées dans les vidéos et les présentations officielles, que GTA V ne faisait pas ainsi. Chacune mène à la page du site qui la détaille.",
       "go": "Voir la fiche",
-      "statut": "Vu dans An Extended Look et le Trailer 2",
-      "src": [
-        "rs-extended",
-        "rs-videos"
-      ],
+      "badge": "Nouveau",
+      "srcLabel": "D’où vient chaque nouveauté :",
       "items": [
         {
           "media": "jason-and-lucia-01",
           "alt": "Jason et Lucia côte à côte devant la mer, visuel officiel Rockstar Games",
           "t": "Deux héros qui jouent ensemble",
           "d": "Lucia et Jason partagent l’histoire : on passe de l’un à l’autre, et leur relation fait partie du jeu.",
-          "href": "personnages.html"
+          "href": "personnages.html",
+          "src": "rs-extended"
         },
         {
           "media": "trailer-2-police-riot-119",
           "alt": "Véhicule blindé de la police dans une rue, Trailer 2 de GTA VI, visuel officiel Rockstar Games",
           "t": "Une police qui reconnaît ta voiture et ta tenue",
-          "d": "Changer de véhicule ou de vêtements sert à semer la police, d’après la présentation d’An Extended Look.",
-          "href": "gangs.html"
+          "d": "Changer de véhicule ou de vêtements aide à semer la police : elle cherche d’après ta tenue, ton apparence et ta voiture, a expliqué Rob Nelson, de Rockstar North.",
+          "href": "gangs.html",
+          "src": "famitsu-nelson"
         },
         {
           "media": "trailer-1-vehicles-064",
           "alt": "Fourgonnette blanche sur une scène filmée par Weazel News, Trailer 1 de GTA VI, visuel officiel Rockstar Games",
           "t": "Un réseau social dans le jeu",
           "d": "Les vidéos officielles montrent un réseau social où les habitants de Leonida publient ce qui se passe en ville.",
-          "href": "actus.html"
+          "href": "actus.html",
+          "src": "rs-videos"
         },
         {
           "media": "jason-duval-01",
           "alt": "Jason Duval sur une moto sportive verte, un pistolet à la main, sous les palmiers, visuel officiel Rockstar Games",
           "t": "Plusieurs façons de voler une voiture",
           "d": "Casser une vitre, crocheter, ou forcer : les présentations montrent plusieurs méthodes, plus ou moins bruyantes.",
-          "href": "activites/vol-de-voitures.html"
+          "href": "activites/vol-de-voitures.html",
+          "src": "rs-extended"
         },
         {
           "media": "lucia-caminos-01",
           "alt": "Lucia Caminos, visuel officiel Rockstar Games",
           "t": "Le poids qui change avec ce qu’on mange",
-          "d": "Ce que Jason et Lucia mangent joue sur leur silhouette, et le sport les muscle : Rob Nelson l’a confirmé.",
-          "href": "activites/salle-de-sport.html"
+          "d": "Ce que Jason et Lucia mangent joue sur leur silhouette, et la salle de sport les muscle : Rob Nelson, de Rockstar North, l’a expliqué.",
+          "href": "activites/salle-de-sport.html",
+          "src": "famitsu-nelson"
         },
         {
           "media": "hawk-little-morgan-revolvers-01",
           "alt": "Revolver à lunette tenu à la main, visuel officiel Rockstar Games",
           "t": "Une roue d’équipement à deux volets",
           "d": "Armes d’un côté, objets de l’autre : la roue vue dans An Extended Look sépare l’arsenal et l’équipement.",
-          "href": "armes.html"
+          "href": "armes.html",
+          "src": "rs-extended"
         }
       ]
     },
@@ -2647,7 +2762,9 @@
           "id": "q-vehicules",
           "ico": "conduite",
           "t": "Le nombre de véhicules",
-          "d": "Rockstar n’a publié aucun total pour GTA VI : le site recense 302 véhicules vus dans les médias officiels. GTA V en comptait plus de deux cents au lancement, et des centaines de plus avec GTA Online.",
+          "d": "Rockstar n’a publié aucun total pour GTA VI. Le site recense {vehicules} véhicules vus dans les médias officiels, chacun avec sa fiche.",
+          "href": "vehicules.html",
+          "go": "Voir les véhicules",
           "media": "trailer-1-vehicles-028",
           "mediaAlt": "Lowrider bleu clair au premier plan à droite, premier trailer de GTA VI à 00:28"
         },
@@ -2656,6 +2773,8 @@
           "ico": "argent",
           "t": "Les prix en jeu",
           "d": "Aucun prix de véhicule, d’arme ou de logement n’est publié pour GTA VI. Ceux du site sont des repères de GTA V et de GTA Online, signalés comme tels.",
+          "href": "verification.html#pas-encore-5",
+          "go": "Ce qu’on en sait",
           "media": "stock-305-clothing-store-03",
           "mediaAlt": "Vitrine de Stock 305, visuel officiel Rockstar Games"
         },
@@ -2663,7 +2782,9 @@
           "id": "q-duree",
           "ico": "sablier",
           "t": "La durée de l’histoire",
-          "d": "Aucune durée officielle pour GTA VI. Rob Nelson dit avoir fini sa partie en 80 heures environ, objectifs facultatifs compris : un témoignage, pas une donnée.",
+          "d": "Aucune durée officielle pour GTA VI. Rob Nelson dit avoir fini sa partie en 80 heures environ, avec une partie des objectifs facultatifs, d’après le New York Times : un témoignage, pas une donnée.",
+          "href": "verification.html#pas-encore-7",
+          "go": "Ce qu’on en sait",
           "media": "mount-kalaga-national-park-04",
           "mediaAlt": "Route en corniche dans Mount Kalaga, visuel officiel Rockstar Games"
         },
@@ -2672,6 +2793,8 @@
           "ico": "serveur",
           "t": "Le poids du jeu",
           "d": "Non communiqué pour GTA VI. Il sera connu au plus tard à l’ouverture du préchargement, le 12 novembre 2026.",
+          "href": "prechargement.html#q-taille",
+          "go": "La taille, au préchargement",
           "media": "vice-city-03",
           "mediaAlt": "Vue aérienne de Vice City, visuel officiel Rockstar Games"
         },
@@ -2680,14 +2803,18 @@
           "ico": "liste",
           "t": "Les codes de triche",
           "d": "Rien d’annoncé pour GTA VI. GTA V en avait dès le lancement ; les listes « GTA 6 » qui circulent ne sont pas officielles.",
-          "media": "trailer-2-police-riot-119",
-          "mediaAlt": "Véhicule blindé de la police dans une rue, Trailer 2 de GTA VI, visuel officiel Rockstar Games"
+          "href": "codes-de-triche.html",
+          "go": "Voir les codes de triche",
+          "media": "raul-bautista-02",
+          "mediaAlt": "Raul au volant d’une voiture, avec un pistolet portant l’inscription CAPO contre sa jambe, visuel officiel Rockstar Games"
         },
         {
           "id": "q-online",
           "ico": "combat",
           "t": "Le mode en ligne",
           "d": "Rien d’annoncé pour GTA VI, pas même une date. GTA Online est arrivé deux semaines après GTA V.",
+          "href": "online.html",
+          "go": "GTA Online et GTA 6",
           "media": "real-dimez-02",
           "mediaAlt": "Les Real Dimez dansent sur une voiture devant une foule qui filme au téléphone, visuel officiel Rockstar Games"
         }
@@ -2698,7 +2825,7 @@
     "faq": [
       {
         "q": "La carte de GTA 6 est-elle plus grande que celle de GTA 5 ?",
-        "a": "Rockstar n’a publié aucune surface. D’après Rob Nelson, de Rockstar North, rapporté le 27 août 2026, la carte fait environ deux fois celle de GTA V et trois fois la zone jouable de Red Dead Redemption 2 ; les mots exacts sont sur cette page."
+        "a": "Rockstar n’a publié aucune surface. D’après les chiffres de Rob Nelson, de Rockstar North, rapportés par TGG le 27 août 2026, la carte fait deux fois celle de GTA V et trois fois celle de Red Dead Redemption 2 ; le New York Times attribue au studio la comparaison avec la zone jouable de Red Dead Redemption 2. Les mots exacts sont sur cette page."
       },
       {
         "q": "GTA 6 est-il la suite de GTA 5 ?",
@@ -2735,7 +2862,7 @@
         "title": "Site officiel de Grand Theft Auto VI",
         "short": "rockstargames.com/VI",
         "publisher": "Rockstar Games",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Leonida, Vice City et les régions ; Lucia Caminos et Jason Duval."
       },
@@ -2745,9 +2872,9 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2025-11-06",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "Date et plateformes de GTA VI."
+        "claim": "La date de sortie de GTA VI : le 19 novembre 2026."
       },
       "rs-support": {
         "url": "https://support.rockstargames.com/articles/4QfG4FmZCf5W1gS8jy4UVT/grand-theft-auto-vi-platform-editions-and-versions",
@@ -2755,19 +2882,19 @@
         "short": "Rockstar Support",
         "publisher": "Rockstar Games, assistance",
         "publishedAt": "2026-08-18",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Les deux éditions, les seize contenus de l’Ultimate, les bonus de précommande, la boîte et le préchargement."
       },
       "rs-precommandes": {
-        "url": "https://www.rockstargames.com/newswire/article/517oa135328155/grand-theft-auto-vi-pre-orders-begin-on-june-25",
-        "title": "Rockstar Newswire : les précommandes de Grand Theft Auto VI ouvrent le 25 juin",
+        "url": "https://www.rockstargames.com/newswire/article/5171972o3ak5oa/pre-order-grand-theft-auto-vi-on-june-25",
+        "title": "Rockstar Newswire : précommander Grand Theft Auto VI le 25 juin",
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2026-06-24",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
-        "claim": "GTA VI est présenté comme une expérience solo ; rien d’annoncé sur un mode en ligne."
+        "claim": "GTA VI « features a single player experience », le 19 novembre sur PlayStation 5 et Xbox Series X|S ; rien d’annoncé sur un mode en ligne."
       },
       "rs-radios": {
         "url": "https://www.rockstargames.com/newswire/article/o3982oa93a23k4/the-music-of-grand-theft-auto-vi-in-game-radio-stations",
@@ -2775,7 +2902,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2026-10-08",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Six stations de radio présentées, avec leurs animateurs, et l’album officiel."
       },
@@ -2784,7 +2911,7 @@
         "title": "Rockstar Games : les vidéos officielles de Grand Theft Auto VI",
         "short": "Vidéos officielles",
         "publisher": "Rockstar Games",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Les quatre vidéos officielles, dont An Extended Look (27 août 2026), capturé en jeu sur PlayStation 5, et la bande-annonce de lancement (15 octobre 2026)."
       },
@@ -2794,7 +2921,7 @@
         "short": "Trailer 2",
         "publisher": "Rockstar Games",
         "publishedAt": "2025-05-06",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Les séquences du Trailer 2 : police, personnages, véhicules."
       },
@@ -2804,7 +2931,7 @@
         "short": "Take-Two",
         "publisher": "Take-Two Interactive",
         "publishedAt": "2026-06-24",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "officiel",
         "claim": "Édition Standard à 79,99 $, Édition Ultimate à 99,99 $ ; préchargement à partir du 12 novembre 2026."
       },
@@ -2813,8 +2940,8 @@
         "title": "PlayStation Store : Grand Theft Auto VI",
         "short": "PlayStation Store",
         "publisher": "Sony Interactive Entertainment",
-        "consultedAt": "2026-10-16",
-        "statut": "vu",
+        "consultedAt": "2026-10-20",
+        "statut": "officiel",
         "claim": "Prix affichés : 79,99 € (Standard) et 99,99 € (Ultimate) ; sortie le 19 novembre 2026 ; préchargement 7 jours en avance."
       },
       "tgg-video": {
@@ -2823,7 +2950,7 @@
         "short": "TGG, YouTube",
         "publisher": "TGG",
         "publishedAt": "2026-08-27",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "vu",
         "claim": "Le créateur rapporte les chiffres donnés par Rob Nelson : deux fois la carte de GTA V, trois fois celle de Red Dead Redemption 2, Vice City deux fois Los Santos."
       },
@@ -2833,7 +2960,7 @@
         "short": "Kotaku",
         "publisher": "Kotaku",
         "publishedAt": "2026-08-27",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "vu",
         "claim": "Transcription des propos de TGG, le nom de Rob Nelson ajouté par la rédaction."
       },
@@ -2843,9 +2970,9 @@
         "short": "The New York Times",
         "publisher": "The New York Times",
         "publishedAt": "2026-08-27",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "vu",
-        "claim": "D’après le studio, la carte entière fait trois fois la zone jouable de Red Dead Redemption 2 (article payant, phrase reprise par GameSpot le même jour)."
+        "claim": "D’après le studio, la carte entière fait trois fois la zone jouable de Red Dead Redemption 2 (article payant, lu dans sa reprise par The Nightly)."
       },
       "rs-gtav": {
         "url": "https://www.rockstargames.com/newswire/article/172872k8a375k8/gtav-and-gta-online-coming-march-15-for-playstation-5-and-xbox-series",
@@ -2853,7 +2980,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2022-03-04",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "GTA V et GTA Online sur PlayStation 5 et Xbox Series X|S le 15 mars 2022 ; Franklin, Michael et Trevor, Los Santos et le comté de Blaine."
       },
@@ -2863,7 +2990,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2013-09-17",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "GTA V est sorti le 17 septembre 2013 sur PlayStation 3 et Xbox 360 : Los Santos et le comté de Blaine, trois personnages jouables en même temps, et GTA Online annoncé pour le 1er octobre."
       },
@@ -2873,7 +3000,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2015-04-14",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "La version PC de GTA V est sortie le 14 avril 2015, après PS4 et Xbox One (18 novembre 2014) et avant PS5 et Xbox Series (15 mars 2022)."
       },
@@ -2883,7 +3010,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2014-09-12",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "GTA V sur PlayStation 4 et Xbox One le 18 novembre 2014 ; la version PC annoncée pour janvier 2015, puis repoussée."
       },
@@ -2893,7 +3020,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2013-05-23",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "Trois éditions au lancement : standard, Special Edition à 79,99 $ et Collector’s Edition à 149,99 $ ; Michael, Franklin et Trevor."
       },
@@ -2903,7 +3030,7 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2013-09-30",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "GTA Online a ouvert le 1er octobre 2013, deux semaines après GTA V, avec une petite mise à jour à télécharger."
       },
@@ -2913,17 +3040,17 @@
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2013-08-30",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "Quinze stations de musique, deux stations parlées et 240 morceaux sous licence au lancement de GTA V."
       },
       "rs-gtav-annonce": {
         "url": "https://www.rockstargames.com/newswire/article/o349k552544449/grand-theft-auto-v-official-announcement.html",
-        "title": "Rockstar Newswire : annonce officielle de Grand Theft Auto V (3 novembre 2011)",
+        "title": "Rockstar Newswire : le communiqué de Grand Theft Auto V (3 novembre 2011)",
         "short": "Rockstar Newswire",
         "publisher": "Rockstar Games",
         "publishedAt": "2011-11-03",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "GTA V « en plein développement », à Los Santos ; la première vidéo venait de sortir, le 2 novembre 2011."
       },
@@ -2933,9 +3060,29 @@
         "short": "PlayStation.Blog",
         "publisher": "Sony Interactive Entertainment",
         "publishedAt": "2013-09-17",
-        "consultedAt": "2026-10-16",
+        "consultedAt": "2026-10-20",
         "statut": "serie",
         "claim": "Grand Theft Auto V sur PS3 à 59,99 $ sur le PlayStation Store américain le jour de la sortie."
+      },
+      "gd-gtav-annonce": {
+        "url": "https://gamedeveloper.com/business/rockstar-officially-announces-i-grand-theft-auto-v-i-",
+        "title": "Game Developer : Rockstar annonce officiellement Grand Theft Auto V (25 octobre 2011)",
+        "short": "Game Developer",
+        "publisher": "Game Developer",
+        "publishedAt": "2011-10-25",
+        "consultedAt": "2026-10-21",
+        "statut": "serie",
+        "claim": "Le 25 octobre 2011, Rockstar confirme GTA V : le logo sur son site, et la première vidéo annoncée pour le mercredi 2 novembre."
+      },
+      "famitsu-nelson": {
+        "url": "https://www.famitsu.com/article/202608/85753",
+        "title": "Famitsu : entretien avec Rob Nelson, de Rockstar North (28 août 2026)",
+        "short": "Famitsu",
+        "publisher": "Famitsu",
+        "publishedAt": "2026-08-28",
+        "consultedAt": "2026-10-21",
+        "statut": "vu",
+        "claim": "Rob Nelson, responsable du développement et codirecteur de Rockstar North : la police cherche d’après la tenue, l’apparence et le véhicule, et changer de tenue aide à s’échapper ; on peut prendre du poids en mangeant beaucoup, et la salle de sport développe la santé et la force."
       }
     }
   }

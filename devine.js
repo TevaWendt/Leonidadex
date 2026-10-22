@@ -208,6 +208,9 @@
   let sayTimer = 0;
   const say = text => { if (!live) return; window.clearTimeout(sayTimer); live.textContent = ''; sayTimer = window.setTimeout(() => { live.textContent = text; }, 80); };
 
+  /* v8.04 (lot L) : chaque réponse de la partie du jour est annoncée à la progression commune des jeux du site (jeux-core.js,
+     bandeau sous le jeu) ; elle lit la sauvegarde de ce jeu sans jamais l’écrire */
+  const tell = () => { try { doc.dispatchEvent(new CustomEvent('lk-jeux', { detail: { jeu: 'devine' } })); } catch (_) { /* navigateur ancien : le bandeau se mettra à jour au prochain chargement */ } };
   /* ---------- état de la partie ---------- */
   let today = '', dayN = 1, mode = 'day', cur = null, answered = false, lock = false;
   const day = { ids: [], r: [] }, free = { queue: [], last: null, seen: 0, ok: 0 };
@@ -300,7 +303,7 @@
     const right = regionOf[cur], ok = region === right;
     let fresh = false;
     if (mode === 'day') {
-      if (!dayDone()) { fresh = state.st.a.indexOf(cur) < 0; day.r.push(region); state = answerDay(state, today, dayN, day.ids, region, regionOf); save(state); renderAtlas(); }
+      if (!dayDone()) { fresh = state.st.a.indexOf(cur) < 0; day.r.push(region); state = answerDay(state, today, dayN, day.ids, region, regionOf); save(state); renderAtlas(); tell(); }
     } else { free.seen++; if (ok) free.ok++; }
     const mark = (list, attr) => list.forEach(x => { const r = x.getAttribute(attr); x.disabled = true; x.classList.add(r === right ? 'is-right' : r === region ? 'is-wrong' : 'is-off'); });
     mark(opts, 'data-dv-opt'); mark(pins, 'data-dv-pin');

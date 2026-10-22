@@ -73,7 +73,9 @@ function pivotTable(list,lang){const map=new Map(),parts=[];for(const e of list|
  parts.sort((a,b)=>b.length-a.length);const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/ /g,'\\s+');
  return {map,lang:lang||'en',re:parts.length?new RegExp("(^|[^a-z0-9'])("+parts.map(esc).join('|')+")(?=$|[^a-z0-9'])",'g'):null};}
 function pivot(text,table){if(!table||!table.re)return String(text||'');
- let s=norm(text).replace(/[’‘`´]/g,"'");const de=table.lang==='de';
+ /* v8.04 (refonte D) : trait d’union entre deux mots lu comme une espace (« first-person », « in-game », « Waffen-Seite »,
+    « Ego-Perspektive ») : les expressions de plusieurs mots de la table s’y appliquent */
+ let s=norm(text).replace(/[’‘`´]/g,"'").replace(/([a-z0-9])-(?=[a-z])/g,'$1 ');const de=table.lang==='de';
  /* montants à l'américaine : séparateurs de milliers retirés, « $ » placé après le nombre (« $1.5m » → « 1.5m $ ») ;
     v7.62, allemand : point des milliers retiré, virgule décimale gardée (« 1.250,50 $ » → « 1250,50 $ », lu comme en français) */
  if(de)s=s.replace(/(\d)\.(?=\d{3}(?!\d))/g,'$1').replace(/\$\s*(\d+(?:,\d+)?)\s*(k|m|mio|mrd|millionen|million|tausend|milliarden?)?(?![a-z0-9])/g,(m,n,u)=>n+(u?' '+u:'')+' $');

@@ -22,9 +22,9 @@
      lots 3 à 5 (livrés avec le lot 2, jamais publiés à part) : mêmes règles de version, aucune sauvegarde n’existe sous une version intermédiaire */
   var STATUS = {};
   (M.statuts || []).forEach(function (s) { STATUS[s.id] = s; });
-  var CALC = { official: 1, measured: 1, estimated: 1, personal: 1, simulated: 1, example: 1 };
+  var CALC = { official: 1, measured: 1, estimated: 1, personal: 1, simulated: 1, example: 1, media: 1, community: 1 }; /* v8.04 (jour J) : chiffres vus dans un média ou de la communauté : comptés, jamais officiels */
   /* statut d’une valeur publiée (schéma des sources) → statut du modèle */
-  var PUBLISHED_STATUS = { officiel: 'official', official: 'official', verified: 'measured', confirmed: 'measured', measured: 'measured', estimated: 'estimated', manual: 'personal', hypothetical: 'personal', unverified: 'estimated' };
+  var PUBLISHED_STATUS = { officiel: 'official', official: 'official', verified: 'measured', confirmed: 'measured', measured: 'measured', estimated: 'estimated', manual: 'personal', hypothetical: 'personal', unverified: 'estimated', media: 'media', presse: 'media', community: 'community', comm: 'community' };
   var EPS = 1e-9;
   /* v7.60 : montant brut avec le dollar à sa place selon la langue de la page (« 1500 $ » / « $1500 ») */
   function money$(n) { return E && E.dollars ? E.dollars(String(n), ' ') : String(n) + ' $'; }
@@ -79,6 +79,14 @@
       if (typeof m.source === 'string' && m.source.trim()) meta.source = m.source.trim().slice(0, 1000);
       if (typeof m.verifiedAt === 'string' && /^\d{4}-\d{2}-\d{2}/.test(m.verifiedAt)) meta.verifiedAt = m.verifiedAt.slice(0, 10);
       if (typeof m.unit === 'string' && m.unit.trim()) meta.unit = m.unit.trim().slice(0, 40);
+      /* v8.04 (jour J, prompt 2) : fourchette (le calcul garde la valeur), note et liste de sources, seulement si la source les donne */
+      var mn = typeof w.min === 'number' && Number.isFinite(w.min) && w.min >= 0 ? w.min : null, mx = typeof w.max === 'number' && Number.isFinite(w.max) && w.max >= 0 ? w.max : null;
+      if (mn === null && m.min !== undefined) mn = typeof m.min === 'number' && Number.isFinite(m.min) && m.min >= 0 ? m.min : null;
+      if (mx === null && m.max !== undefined) mx = typeof m.max === 'number' && Number.isFinite(m.max) && m.max >= 0 ? m.max : null;
+      if (mn !== null && mx !== null && mn < mx && mn <= value && value <= mx) { meta.min = mn; meta.max = mx; }
+      var nt = typeof w.note === 'string' ? w.note : typeof m.note === 'string' ? m.note : null; if (nt && nt.trim()) meta.note = nt.trim().slice(0, 300);
+      var ss = Array.isArray(w.sources) ? w.sources : Array.isArray(m.sources) ? m.sources : null;
+      if (ss) { ss = ss.filter(function (x) { return typeof x === 'string' && x.trim(); }).map(function (x) { return x.trim().slice(0, 1000); }).slice(0, 10); if (ss.length) meta.sources = ss; }
       return make(value, status, meta);
     },
     emptyText: function (x, vide) {
@@ -457,7 +465,7 @@
     var effet = row && row.effet || {};
     var health = typeof effet.valeur === 'number' && effet.jeu && effet.unite === 'sante' ? V.series(effet.valeur, { ctx: 'Chiffre de ' + effet.jeu + ', pas de GTA VI.', unit: effet.unite || null }) : V.unknown();
     return {
-      price: row && row.prix_gta6 && typeof row.prix_gta6.valeur === 'number' ? V.published({ value: row.prix_gta6.valeur, status: row.prix_gta6.statut === 'officiel' || row.prix_gta6.statut === 'vu' ? 'official' : row.prix_gta6.statut === 'serie' ? 'unverified' : row.prix_gta6.statut || 'official', source: row.prix_gta6.source, verifiedAt: row.prix_gta6.verifiedAt }) : V.unknown(),
+      price: row && row.prix_gta6 && typeof row.prix_gta6.valeur === 'number' ? V.published({ value: row.prix_gta6.valeur, status: row.prix_gta6.statut === 'officiel' || row.prix_gta6.statut === 'vu' ? 'official' : row.prix_gta6.statut === 'serie' ? 'unverified' : row.prix_gta6.statut || 'official', source: row.prix_gta6.source, verifiedAt: row.prix_gta6.verifiedAt, min: row.prix_gta6.min, max: row.prix_gta6.max, note: row.prix_gta6.note, sources: row.prix_gta6.sources /* v8.04 (jour J) */ }) : V.unknown(),
       purchasable: V.unknown(),
       effectType: effet.texte ? make(effet.texte, SITE_STATUS[row.statut] || 'estimated') : V.unknown(),
       health: health, unit: V.unknown(), duration: V.unknown(), conditions: V.unknown(), limits: V.unknown()

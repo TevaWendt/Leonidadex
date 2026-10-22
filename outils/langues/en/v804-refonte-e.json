@@ -1,0 +1,20 @@
+{
+ "_note": "v8.04 (chiffres du site et géolocalisation, chantier E) : textes nouveaux ou changés par le relevé des chiffres que le site affiche sur lui-même.",
+ "Dont 47 zones (régions, villes, quartiers, comtés) et 3 244 autres lieux ; chacun a sa page.": "Including 47 zones (regions, cities, neighborhoods, counties) and 3,244 other places; each one has its own page.",
+ "Les 9 véhicules des éditions nommés par Rockstar (édition Ultimate et Vintage Vice City Pack), et les modèles repérés une seule fois dans le kit média.": "The 9 edition vehicles named by Rockstar (Ultimate Edition and Vintage Vice City Pack), and the models spotted only once in the media kit.",
+ "Véhicules nommés par Rockstar sur la page produit de l’édition Ultimate. Avec celui du Vintage Vice City Pack, ce sont les 9 véhicules des éditions. Rockstar en a nommé 10 en tout à ce jour, Speedophile Seashark compris : son nom est écrit sur la coque dans le second trailer.": "Vehicles named by Rockstar on the Ultimate Edition product page. Together with the one from the Vintage Vice City Pack, they are the 9 edition vehicles. Rockstar has named 10 in all so far, the Speedophile Seashark included: its name is written on the hull in the second trailer.",
+ "Les armes (27 armes), les équipements (16 équipements) et les types de munitions (5 types de munitions à cocher). Le filtre « Famille » n’affiche que l’une d’elles.": "Weapons (27 weapons), gear (16 gear items) and ammo types (5 ammo types to check off). The “Family” filter shows only one of them.",
+ "Les tenues et accessoires (30 tenues et accessoires), les coiffures (55 coiffures) et les tatouages (23 tatouages à cocher). Chacune garde son mot : une tenue portée, une coiffure essayée, un tatouage fait.": "Outfits and accessories (30 outfits and accessories), hairstyles (55 hairstyles) and tattoos (23 tattoos to check off). Each one has its own verb: an outfit worn, a hairstyle tried, a tattoo inked.",
+ "Les modifs de véhicule (57 modifs de véhicule à cocher) et les modifs d’arme (39 modifs d’arme à cocher). Le filtre « Famille » n’affiche que l’une des deux.": "Vehicle mods (57 vehicle mods to check off) and weapon mods (39 weapon mods to check off). The “Family” filter shows only one of the two.",
+ "<1>26574</1><2>pages en ligne, toutes langues comprises</2>": "<1>26,574</1><2>pages online, all languages included</2>",
+ "<1>26 574</1><2>pages, toutes langues comprises</2>": "<1>26,574</1><2>pages, all languages included</2>",
+ "Watson Bay accueille le garage Paradise de l’Édition Ultimate ; Shore Court est « à deux pas d’Ocean Beach » selon le texte du Pack Vintage. Faute d’adresse de Rockstar, seul un « Paradise Garage » repéré par la communauté est placé, à Watson Bay.": "Watson Bay is home to the Ultimate Edition’s Paradise garage; Shore Court is “a stone’s throw from Ocean Beach” according to the Vintage Pack text. With no address from Rockstar, only a “Paradise Garage” spotted by the community is placed, in Watson Bay.",
+ "Paradise Garage placé, Shore Court non : Rockstar donne le quartier, pas l’adresse.": "Paradise Garage placed, Shore Court not: Rockstar gives the neighborhood, not the address.",
+ "re:^Regroupe 1 lieu repéré\\.$": "Groups 1 spotted place.",
+ "re:^Regroupe (\\d+) lieux repérés\\.$": "Groups {1} spotted places.",
+ "re:^Équivalent réel \\(incertain\\) : (.+)\\.$": "Real-world equivalent (uncertain): {t1}.",
+ "_motifs": {
+  "Regroupe {1} lieux repérés.": "Includes {1} spotted places.",
+  "Équivalent réel (incertain) : {1}.": "Real-world equivalent (uncertain): {1}."
+ }
+}

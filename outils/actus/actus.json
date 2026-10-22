@@ -4,9 +4,9 @@
   "label": "Actualités",
   "title": "Tout ce que Rockstar a annoncé sur GTA 6, date par date",
   "seoTitle": "Actualités GTA 6 : la chronologie officielle, date par date",
-  "lede": "Chaque annonce officielle de Rockstar sur GTA VI, de la première vidéo à la bande-annonce de lancement, avec ce qu’elle a montré et sa source.",
-  "desc": "Actualités de GTA 6 : chaque annonce officielle de Rockstar, du Trailer 1 à la bande-annonce de lancement, avec ce qu’elle a montré et sa source.",
-  "note": "Les dates sont celles de la publication officielle. Ce qu’une annonce a montré est relié à la fiche du site qui en parle.",
+  "lede": "Chaque annonce officielle de Rockstar sur GTA VI, de la confirmation du développement, en 2022, à la bande-annonce de lancement, et les dossiers de presse qui les complètent, avec ce qu’ils ont montré et leur source.",
+  "desc": "Actualités de GTA 6 : chaque annonce officielle de Rockstar depuis 2022, jusqu’à la bande-annonce de lancement, avec ce qu’elle a montré et sa source.",
+  "note": "Les dates sont celles de la publication : par Rockstar ou ses partenaires pour une annonce officielle, par le média pour un dossier de presse. Ce qu’une annonce a montré est relié à la fiche du site qui en parle.",
   "flux": "S’abonner au flux RSS",
   "fluxNote": "Le flux reprend cette frise : une entrée par annonce, la plus récente en premier.",
   "pile": [
@@ -46,7 +46,7 @@
    },
    {
     "q": "Combien coûte GTA 6 ?",
-    "a": "79,99 € l’Édition Standard et 99,99 € l’Édition Ultimate sur le PlayStation Store en France, au 16 octobre 2026. Les revendeurs fixent leurs propres prix ; la page des prix les détaille, avec le coffret collector."
+    "a": "79,99 € l’Édition Standard et 99,99 € l’Édition Ultimate sur le PlayStation Store et le Microsoft Store en France, au 20 octobre 2026. Les revendeurs fixent leurs propres prix ; la page des prix les détaille, avec le coffret collector."
    },
    {
     "q": "Combien de vidéos officielles de GTA 6 ?",
@@ -58,7 +58,7 @@
    },
    {
     "q": "Le coffret collector de GTA 6 contient-il le jeu ?",
-    "a": "Non. « The Goodtime State – Vice City Collection » réunit onze objets, sans le jeu, vendu à part. Il est en édition limitée sur la boutique Rockstar et arrive le 19 novembre 2026."
+    "a": "Non. « The Goodtime State – Vice City Collection » réunit onze objets, sans le jeu, vendu à part. Il est en édition limitée sur la boutique Rockstar, qui l’expédie à partir du 19 novembre 2026."
    }
   ],
   "types": {
@@ -72,6 +72,7 @@
   "filtresLabel": "Filtrer les annonces",
   "chiffres": {
    "annonces": "annonces officielles",
+   "presse": "dossiers de presse",
    "videos": "vidéos officielles",
    "sources": "sources ouvertes",
    "jours": "jours entre la première vidéo et la sortie"
@@ -90,6 +91,13 @@
  },
  "aVenir": [
   {
+   "iso": "2026-11-09",
+   "titre": "Résultats de Take-Two",
+   "texte": "Take-Two publie ses résultats du deuxième trimestre après la clôture des marchés ; la conférence commence à 16 h 30, heure de New York (22 h 30 à Paris).",
+   "source": "t2-date-resultats",
+   "contexte": true
+  },
+  {
    "iso": "2026-11-12",
    "titre": "Préchargement et version en boîte",
    "texte": "Le préchargement commence à minuit, heure locale, et la boîte (un code de téléchargement, sans disque) est disponible, en livraison ou en retrait.",
@@ -98,6 +106,13 @@
     "href": "prechargement.html",
     "label": "Le préchargement, pas à pas"
    }
+  },
+  {
+   "iso": "2026-11-18",
+   "titre": "La soirée Vice City du Miami HEAT",
+   "texte": "Le Miami HEAT reçoit les Milwaukee Bucks au Kaseya Center à 19 h, heure de New York (1 h du matin le 19 à Paris), pour une soirée « A Night in Vice City », d’après la page du club.",
+   "source": "heat-vice-city",
+   "contexte": true
   },
   {
    "iso": "2026-11-19",
@@ -126,7 +141,7 @@
    "ev": "lancement",
    "iso": "2026-10-15",
    "titre": "La bande-annonce de lancement",
-   "texte": "Une bande-annonce sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard. Rockstar présente Justice comme le compositeur de la musique originale du jeu.",
+   "texte": "Une bande-annonce capturée entièrement en jeu sur PlayStation 5, sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard. Rockstar présente Justice comme le compositeur de la musique originale du jeu.",
    "statut": "officiel",
    "sources": [
     "rs-launch"
@@ -142,6 +157,54 @@
     "lancement"
    ],
    "type": "video"
+  },
+  {
+   "id": "campagne-lancement",
+   "iso": "2026-10-15",
+   "titre": "La campagne de lancement, de Miami à Paris",
+   "texte": "À Miami, une enseigne « Welcome to Vice City » sur le toit du Kaseya Center, un dirigeable aux couleurs de Vice City et des fresques d’artistes présents dans le jeu au Wynwood Walls ; près de Paris, une tour de la porte de Bagnolet habillée de la jaquette, au bord du périphérique.",
+   "statut": "vu",
+   "sources": [
+    "fortune-miami",
+    "jdg-tour-bagnolet"
+   ],
+   "type": "presse",
+   "media": "vice-city-01",
+   "alt": "Lettres géantes de Vice City au coucher du soleil, visuel officiel Rockstar Games"
+  },
+  {
+   "id": "enquete-bloomberg",
+   "iso": "2026-10-14",
+   "titre": "L’enquête de Bloomberg sur la fabrication du jeu",
+   "texte": "Après une journée chez Rockstar North, Bloomberg raconte environ huit ans de travail, un projet d’abord appelé « Project Americas » et 4 711 personnes dans 12 bureaux en août 2026. Rockstar y dément la rumeur d’un coût de plus de 1,5 milliard de dollars, sans donner de chiffre.",
+   "statut": "vu",
+   "sources": [
+    "vgc-bloomberg",
+    "jdg-bloomberg"
+   ],
+   "type": "presse",
+   "media": "vice-city-11",
+   "alt": "Gratte-ciel au bord de l’eau au crépuscule, un hélicoptère en vol, capture officielle de GTA VI"
+  },
+  {
+   "id": "titres-album",
+   "iso": "2026-10-09",
+   "titre": "Deux nouveaux titres de l’album",
+   "texte": "Rockstar et Atlantic Records sortent « Don’t Chart » de Cardi B et « Suzuki » de Fuerza Regida. La page Musique de GTA VI affiche désormais neuf titres de GTA VI: The Album.",
+   "statut": "officiel",
+   "sources": [
+    "rs-music",
+    "complex-album"
+   ],
+   "liens": [
+    {
+     "href": "radios/gta-vi-the-album.html",
+     "label": "La fiche de l’album"
+    }
+   ],
+   "type": "musique",
+   "media": "real-dimez-04",
+   "alt": "Les deux rappeuses de Real Dimez au micro dans une cabine d’enregistrement, casques sur les oreilles, visuel officiel Rockstar Games"
   },
   {
    "id": "collection-boutique",
@@ -167,10 +230,11 @@
    "ev": "radio",
    "iso": "2026-10-08",
    "titre": "Les six stations de radio",
-   "texte": "Rockstar présente Flash FM, Cocoteo FM, Back Country Radio, AfroBank FM, The Chamber 106.6 et Dirty South Classics, leurs animateurs, des podcasts à la demande, et une radio qu’on écoute aussi à pied.",
+   "texte": "Rockstar présente Flash FM, Cocoteo FM, Back Country Radio, AfroBank FM, The Chamber 106.6 et Dirty South Classics, leurs animateurs, des podcasts à la demande, et une radio qu’on écoute aussi à pied. Il annonce la plus large sélection de radios et de podcasts de la série.",
    "statut": "officiel",
    "sources": [
-    "rs-radios"
+    "rs-radios",
+    "rs-music"
    ],
    "liens": [
     {
@@ -183,15 +247,99 @@
    "alt": "Dre’Quan Priest, une main sur l’épaule de chacune des Real Dimez, capture officielle de GTA VI"
   },
   {
+   "id": "xbox-nuage",
+   "iso": "2026-10-07",
+   "titre": "Xbox : pas de diffusion en nuage vers le PC",
+   "texte": "Après un article de The Verge, Matthew Ball, directeur de la stratégie de Xbox, écrit que GTA VI sort sur Xbox le 19 novembre et qu’il ne sera diffusé en nuage ni en exclusivité, ni vers le PC.",
+   "statut": "vu",
+   "sources": [
+    "dexerto-xbox-nuage",
+    "pushsquare-xbox-nuage"
+   ],
+   "liens": [
+    {
+     "href": "gta-6-pc.html",
+     "label": "GTA 6 sur PC"
+    }
+   ],
+   "type": "presse"
+  },
+  {
+   "id": "entretien-ign",
+   "iso": "2026-10-06",
+   "titre": "L’entretien complet de Rob Nelson à IGN",
+   "texte": "IGN publie un long entretien avec Rob Nelson, de Rockstar North : un mode « Focus » qui signale les policiers proches, l’écran « Busted » à chaque arrestation, un scanner de véhicules dans le téléphone, des braquages possibles dans presque tous les commerces, et un jeu pensé pour être rejoué.",
+   "statut": "vu",
+   "sources": [
+    "inven-ign-nelson",
+    "dexerto-ign-nelson"
+   ],
+   "liens": [
+    {
+     "href": "activites.html",
+     "label": "Les activités annexes"
+    }
+   ],
+   "type": "presse",
+   "media": "lucia-caminos-07",
+   "alt": "Lucia, pistolet en main, se penche par la vitre, une voiture de police derrière elle dans un tunnel, capture officielle"
+  },
+  {
+   "id": "magazine-love",
+   "iso": "2026-10-05",
+   "titre": "Le magazine LOVE",
+   "texte": "Le numéro 27 de LOVE publie une nouvelle illustration de couverture signée Rockstar, quatre nouvelles images de Jason et Lucia et des entretiens avec l’équipe : le rêve américain modeste du couple, une satire qui vise les travers durables plutôt que les modes du moment.",
+   "statut": "vu",
+   "sources": [
+    "keengamer-love",
+    "gtaboom-love"
+   ],
+   "liens": [
+    {
+     "href": "personnages.html",
+     "label": "Les personnages"
+    }
+   ],
+   "type": "presse",
+   "media": "vice-city-02",
+   "alt": "Un couple sur un balcon surplombe une piscine, des palmiers et une plage, capture officielle de GTA VI"
+  },
+  {
+   "id": "classifications",
+   "iso": "2026-10-02",
+   "titre": "Les classifications par âge",
+   "texte": "Aux États-Unis, le PlayStation Store et le Microsoft Store affichent la classification ESRB Mature 17+. En France, les deux boutiques affichent PEGI 18 ; PlayStation affiche R18+ en Australie et CERO Z au Japon.",
+   "statut": "officiel",
+   "sources": [
+    "ps-store-us",
+    "ms-store-us",
+    "ps-store-fr",
+    "ms-store-fr",
+    "ps-store-au",
+    "ps-store-jp"
+   ],
+   "liens": [
+    {
+     "href": "verification.html",
+     "label": "Ce qui est confirmé"
+    }
+   ],
+   "type": "annonce",
+   "media": "jason-and-lucia-04",
+   "alt": "Jason, fusil d’assaut à la main, et Lucia, pistolet levé, au milieu des vitrines brisées d’une bijouterie, visuel officiel Rockstar Games"
+  },
+  {
    "id": "game-informer",
    "ev": null,
    "iso": "2026-09-25",
    "titre": "Le dossier de Game Informer",
-   "texte": "Game Informer révèle sa couverture consacrée à GTA VI, puis, le 29 septembre, plus de 170 espèces animales, selon Michael Kane, de Rockstar.",
-   "statut": "officiel",
+   "texte": "Game Informer consacre sa couverture à GTA VI. Ses articles, faits avec l’équipe de Rockstar : plus de 170 espèces animales, une météo qui change d’un endroit à l’autre, des tempêtes tropicales et des ouragans, et une appli de VTC, Ryde Me, pour se déplacer.",
+   "statut": "vu",
    "sources": [
     "gameinformer-couverture",
-    "gameinformer-faune"
+    "gameinformer-faune",
+    "gameinformer-meteo",
+    "purexbox-gi"
    ],
    "liens": [
     {
@@ -207,7 +355,7 @@
    "id": "coffret-collector",
    "iso": "2026-09-24",
    "titre": "Le coffret collector « The Goodtime State »",
-   "texte": "Un coffret en édition limitée, sans le jeu : onze objets inspirés de l’émission Macca the Gator, de la figurine aux lunettes Oakley, à précommander jusqu’à épuisement des stocks pour une arrivée le 19 novembre.",
+   "texte": "Un coffret en édition limitée, sans le jeu : onze objets inspirés de l’émission Macca the Gator, de la figurine aux lunettes Oakley, à précommander jusqu’à épuisement des stocks, expédié à partir du 19 novembre.",
    "statut": "officiel",
    "sources": [
     "rs-collector",
@@ -244,6 +392,24 @@
    "alt": "Bae-Luxe, des Real Dimez, assise en studio d’enregistrement, un casque à la main, capture officielle de GTA VI"
   },
   {
+   "id": "assemblee-take-two",
+   "iso": "2026-09-17",
+   "titre": "L’assemblée des actionnaires de Take-Two",
+   "texte": "Strauss Zelnick, patron de Take-Two, y répète que GTA VI sort en solo sur deux grandes plateformes, et que GTA Online reste soutenu après la sortie.",
+   "statut": "vu",
+   "sources": [
+    "techradar-assemblee",
+    "inven-zelnick"
+   ],
+   "liens": [
+    {
+     "href": "gta-6-pc.html",
+     "label": "GTA 6 sur PC"
+    }
+   ],
+   "type": "presse"
+  },
+  {
    "id": "manettes-dualsense",
    "iso": "2026-09-03",
    "titre": "Deux manettes aux couleurs de GTA VI",
@@ -268,10 +434,10 @@
    "iso": "2026-08-28",
    "titre": "L’entretien de Rob Nelson à Famitsu",
    "texte": "Rob Nelson, de Rockstar North, répond à Famitsu après la démonstration : boutiques et salons, tenues, repaires de gangs, témoins et alarmes.",
-   "statut": "officiel",
+   "statut": "vu",
    "sources": [
     "famitsu-nelson",
-    "gtavice-famitsu"
+    "pcgamer-famitsu"
    ],
    "liens": [
     {
@@ -288,7 +454,7 @@
    "ev": "el",
    "iso": "2026-08-27",
    "titre": "An Extended Look",
-   "texte": "Une présentation d’environ 26 minutes, d’abord sur Netflix puis sur YouTube, capturée sur PS5 : missions, vol de voitures, braquages, police et vie quotidienne de Jason et Lucia. Rockstar ajoute ensuite de nouvelles captures à son site.",
+   "texte": "Une présentation de 26 minutes 48, d’abord sur Netflix puis sur YouTube, capturée entièrement en jeu sur PS5 : missions, vol de voitures, braquages, police et vie quotidienne de Jason et Lucia. Rockstar ajoute ensuite de nouvelles captures à son site.",
    "statut": "officiel",
    "sources": [
     "rs-extended",
@@ -307,7 +473,7 @@
    "iso": "2026-08-27",
    "titre": "Les aperçus de la presse",
    "texte": "Des journalistes racontent la démonstration présentée par Rob Nelson : l’histoire qui commence dans les Keys, la taille de Vice City, les planques habitées.",
-   "statut": "officiel",
+   "statut": "vu",
    "sources": [
     "trois-couleurs",
     "mp1st-ign"
@@ -362,6 +528,17 @@
    "alt": "Visuel officiel de l’annonce d’An Extended Look : Lucia, un bandana sur le visage et un pistolet à la main, et Jason, qui remonte le sien, devant une station-service, avec la date du 27 août sur Netflix"
   },
   {
+   "id": "resultats-take-two",
+   "iso": "2026-08-06",
+   "titre": "Les résultats de Take-Two",
+   "texte": "Take-Two confirme la sortie du 19 novembre 2026 et maintient sa prévision annuelle : de 8,0 à 8,2 milliards de dollars de réservations nettes.",
+   "statut": "officiel",
+   "sources": [
+    "t2-resultats-t1"
+   ],
+   "type": "annonce"
+  },
+  {
    "id": "precommandes",
    "ev": "ue",
    "iso": "2026-06-24",
@@ -370,7 +547,6 @@
    "statut": "officiel",
    "sources": [
     "rs-preorder",
-    "rs-precommandes",
     "ps-blog-ps5"
    ],
    "liens": [
@@ -447,6 +623,25 @@
    "type": "video"
   },
   {
+   "id": "premier-report",
+   "iso": "2025-05-02",
+   "titre": "Le premier report : le 26 mai 2026",
+   "texte": "Rockstar annonce la sortie pour le 26 mai 2026, plus tard que prévu, et s’en excuse auprès des joueurs.",
+   "statut": "officiel",
+   "sources": [
+    "rs-report-2025"
+   ],
+   "liens": [
+    {
+     "href": "verification.html",
+     "label": "Ce qui est confirmé"
+    }
+   ],
+   "type": "annonce",
+   "media": "leonida-keys-01",
+   "alt": "Route au-dessus de la mer dans les Leonida Keys, visuel officiel Rockstar Games"
+  },
+  {
    "id": "trailer-1",
    "ev": "t1",
    "iso": "2023-12-04",
@@ -459,6 +654,31 @@
    ],
    "video": "trailer-1",
    "type": "video"
+  },
+  {
+   "id": "annonce-trailer-1",
+   "iso": "2023-11-08",
+   "titre": "Le premier trailer annoncé",
+   "texte": "Sam Houser, cofondateur de Rockstar, annonce la première bande-annonce du prochain Grand Theft Auto pour début décembre. Le 1er décembre, Rockstar la fixe au mardi 5 décembre ; elle sort finalement le 4.",
+   "statut": "officiel",
+   "sources": [
+    "rs-x-houser",
+    "techradar-t1-date"
+   ],
+   "type": "annonce",
+   "media": "vice-city-08",
+   "alt": "Une ville de nuit : grande roue illuminée, salle de spectacle et immeubles au bord de l’eau, capture officielle de GTA VI"
+  },
+  {
+   "id": "developpement-confirme",
+   "iso": "2022-02-04",
+   "titre": "Le développement confirmé",
+   "texte": "Dans un message à la communauté, Rockstar confirme que le développement du prochain Grand Theft Auto est bien avancé.",
+   "statut": "officiel",
+   "sources": [
+    "rs-communaute-2022"
+   ],
+   "type": "annonce"
   }
  ],
  "videos": {
@@ -561,6 +781,13 @@
       ]
      },
      {
+      "texte": "Le lendemain, Rockstar précise que la vidéo est capturée entièrement en jeu sur PlayStation 5, moitié gameplay, moitié cinématiques, et qu’elle a dépassé 475 millions de vues le premier jour, toutes plateformes confondues.",
+      "statut": "officiel",
+      "sources": [
+       "rs-x-t2"
+      ]
+     },
+     {
       "texte": "Morceau principal crédité par Rockstar : « Hot Together » des Pointer Sisters (1986) ; de courtes bribes d’autoradio passent aussi, relevées par la presse.",
       "statut": "officiel",
       "sources": [
@@ -594,20 +821,21 @@
     "srcArmes": "Extended Look du 27 août 2026",
     "seo": "GTA 6 Extended Look : ce qu’on y voit, minute par minute",
     "desc": "An Extended Look de GTA 6 (27 août 2026) : comment regarder les 26 minutes diffusées sur Netflix puis YouTube, missions, musique minutée, véhicules, armes.",
-    "lede": "Une présentation d’environ 26 minutes, diffusée le 27 août 2026 d’abord sur Netflix puis sur YouTube, capturée sur PlayStation 5.",
+    "lede": "Une présentation de 26 minutes 48, diffusée le 27 août 2026 d’abord sur Netflix puis sur YouTube, capturée entièrement en jeu sur PlayStation 5.",
     "faits": [
      {
-      "texte": "Rockstar l’annonce comme une présentation d’environ 26 minutes, d’abord sur Netflix puis sur YouTube.",
+      "texte": "La vidéo officielle dure 26 minutes 48 ; Rockstar la diffuse d’abord sur Netflix, puis sur YouTube.",
       "statut": "officiel",
       "sources": [
+       "yt-extended",
        "rs-extended"
       ]
      },
      {
       "texte": "Au programme : salle de sport, basket, stand de tir, courses, vol de voiture, braquages, police et vie quotidienne de Jason et Lucia.",
-      "statut": "officiel",
+      "statut": "vu",
       "sources": [
-       "rs-extended",
+       "gfinity-extended",
        "gi-activites-el"
       ]
      },
@@ -623,7 +851,7 @@
     "faq": [
      {
       "q": "Combien de temps dure l’Extended Look de GTA 6 ?",
-      "a": "Environ 26 minutes, d’après l’annonce de Rockstar. Elle a été diffusée le 27 août 2026, d’abord sur Netflix puis sur YouTube."
+      "a": "26 minutes 48 : c’est la durée de la vidéo officielle. Elle a été diffusée le 27 août 2026, d’abord sur Netflix puis sur YouTube."
      },
      {
       "q": "Comment regarder An Extended Look de GTA 6 (Netflix, YouTube) ?",
@@ -668,6 +896,20 @@
       "statut": "officiel",
       "sources": [
        "rs-launch"
+      ]
+     },
+     {
+      "texte": "Sa description officielle précise qu’elle est capturée entièrement en jeu sur une PlayStation 5.",
+      "statut": "officiel",
+      "sources": [
+       "yt-launch"
+      ]
+     },
+     {
+      "texte": "Elle dure environ une minute et demie, d’après la presse.",
+      "statut": "vu",
+      "sources": [
+       "gamespot-launch"
       ]
      }
     ],
@@ -723,6 +965,7 @@
    "Y a-t-il un Trailer 3 de GTA 6 ?",
    "Quand sort GTA 6 ?"
   ],
+  "record": "Record",
   "chiffresNote": "La bande-annonce de lancement (15 octobre 2026) n’est pas relevée image par image ; sa page reprend ce que Rockstar en a dit.",
   "faq": [
    {
@@ -959,7 +1202,8 @@
   "boite": [
    "La boîte contient un code de téléchargement, pas de disque.",
    "Elle est disponible à partir du 12 novembre 2026, en livraison ou en retrait chez le revendeur, et son code permet de précharger le jeu dès ce jour-là.",
-   "L’Édition Ultimate n’existe pas en boîte : avec la boîte, l’amélioration Ultimate s’achète en numérique une fois le code utilisé."
+   "L’Édition Ultimate n’existe pas en boîte : avec la boîte, l’amélioration Ultimate s’achète en numérique une fois le code utilisé.",
+   "Elle se précommande aussi sur la boutique Rockstar : pour un souci de commande ou une annulation, c’est le support de Xsolla qui répond, et des taxes peuvent s’ajouter hors des États-Unis et du Royaume-Uni."
   ],
   "prechargementTitre": "Préchargement et sortie",
   "prechargementLien": {
@@ -974,7 +1218,8 @@
   "regions": [
    "PlayStation : un code est lié à un pays ou une région de compte ; l’achat doit correspondre à la région du compte.",
    "Xbox : les codes ne sont pas limités à une région.",
-   "Japon : les codes PlayStation expirent 170 jours après leur date d’émission, fixée au jour de la sortie, le 19 novembre 2026."
+   "Japon : les codes PlayStation expirent 170 jours après leur date d’émission, fixée au jour de la sortie, le 19 novembre 2026.",
+   "Autres pays : le jeu y sera proposé quand les règles des plateformes, les lois locales et les classifications par âge le permettront."
   ],
   "faq": [
    {
@@ -1149,7 +1394,7 @@
   "collector": {
    "k": "Nouveau : le coffret collector",
    "t": "The Goodtime State – Vice City Collection",
-   "d": "Onze objets inspirés de Macca the Gator, sans le jeu, en édition limitée sur la boutique Rockstar : 399,99 $, arrivée le 19 novembre.",
+   "d": "Onze objets inspirés de Macca the Gator, sans le jeu, en édition limitée sur la boutique Rockstar : 399,99 $, expédié à partir du 19 novembre.",
    "go": "Le coffret et les prix",
    "href": "prix.html#collector",
    "media": "coffret-the-goodtime-state"
@@ -1159,6 +1404,10 @@
    "standard": "Standard",
    "ultimate": "Ultimate"
   }
+ },
+ "sourcesCorrigees": {
+  "_note": "Source déclarée dans plusieurs registres communs (outils/editorial-hubs.json, outils/activites/hub.json, outils/radios/radios.json, outils/codes/hub.json, outils/trophees/hub.json, outils/missions/hub.json), chacun avec sa phrase : pour les pages de outils/gen-actus.cjs, la phrase du billet de Rockstar est celle-ci. Les statuts des articles de presse (« officiel » → « vu ») sont corrigés dans les registres depuis la v8.04 : plus rien à corriger ici.",
+  "rs-extended": {"claim": "Annonce de la vidéo, capturée entièrement en jeu sur PlayStation 5."}
  },
  "sources": {
   "rs-support-editions": {
@@ -1194,7 +1443,7 @@
    "publisher": "Game Informer",
    "publishedAt": "2026-09-25",
    "consultedAt": "2026-10-01",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "Annonce du dossier (numéro 382, 14 pages) rédigé après des entretiens avec des lead designers de Rockstar."
   },
   "rs-precommandes-date": {
@@ -1249,7 +1498,7 @@
    "publishedAt": "2026-09-24",
    "consultedAt": "2026-10-16",
    "statut": "officiel",
-   "claim": "Un coffret collector exclusif en édition limitée, inspiré de l’émission Macca the Gator : onze objets, sans le jeu, à précommander jusqu’à épuisement des stocks, disponible le 19 novembre."
+   "claim": "Un coffret collector exclusif en édition limitée, inspiré de l’émission Macca the Gator : onze objets, sans le jeu, à précommander jusqu’à épuisement des stocks, expédié à partir du 19 novembre."
   },
   "rs-store-collector": {
    "url": "https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection",
@@ -1258,6 +1507,14 @@
    "consultedAt": "2026-10-16",
    "statut": "officiel",
    "claim": "399,99 $ sur la boutique américaine ; expédition à partir du 19 novembre 2026 ; un seul achat par personne ; pas de livraison gratuite ; environ 48 × 33 × 30 cm ; pour adultes, 18 ans et plus."
+  },
+  "rs-store-collector-fr": {
+   "url": "https://store.rockstargames.com/fr/merchandise/gtavi-goodtime-state-vice-city-collection",
+   "title": "Rockstar Store (France) : The Goodtime State – Vice City Collection",
+   "publisher": "Rockstar Games",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Les onze objets décrits un par un ; environ 48,26 × 33,02 × 30,48 cm ; pas de livraison gratuite ; pour adultes, 18 ans et plus, fragile ; petites pièces, ce n’est pas un jouet."
   },
   "iphonesoft-collector": {
    "url": "https://iphonesoft.fr/2026/09/24/gta-6-coffret-collector-399-99-euro-jeu",
@@ -1293,6 +1550,299 @@
    "consultedAt": "2026-10-16",
    "statut": "officiel",
    "claim": "Édition Standard 79,99 € et Édition Ultimate 99,99 € ; un mois de GTA+ avec la précommande, avant le 20 novembre 2026."
+  },
+  "yt-extended": {
+   "url": "https://www.youtube.com/watch?v=tJbzMqJGH4k",
+   "title": "YouTube, chaîne de Rockstar Games : Grand Theft Auto VI, An Extended Look",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-08-27",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "La vidéo officielle dure 26 minutes 48."
+  },
+  "gfinity-extended": {
+   "url": "https://www.gfinityesports.com/article/gta-6-everything-revealed-in-the-extended-look-special",
+   "title": "Gfinity : tout ce que montre An Extended Look",
+   "publisher": "Gfinity",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Ce que montre la présentation : activités, missions, police et vie quotidienne de Jason et Lucia."
+  },
+  "rs-x-t2": {
+   "url": "https://twitter.com/RockstarGames/status/1920181314092765494",
+   "title": "Rockstar Games sur X : le Trailer 2 capturé en jeu sur PS5",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2025-05-07",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Le Trailer 2 est capturé entièrement en jeu sur PlayStation 5, moitié gameplay, moitié cinématiques ; plus de 475 millions de vues le premier jour, toutes plateformes."
+  },
+  "yt-launch": {
+   "url": "https://www.youtube.com/watch?v=rz1B4B2yBZY",
+   "title": "YouTube, chaîne de Rockstar Games : la bande-annonce de lancement de GTA VI",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2026-10-15",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Description de la vidéo : bande-annonce capturée entièrement en jeu sur une PlayStation 5."
+  },
+  "gamespot-launch": {
+   "url": "https://www.gamespot.com/articles/things-we-noticed-in-the-gta-6-launch-trailer/",
+   "title": "GameSpot : ce qu’on a remarqué dans la bande-annonce de lancement de GTA 6",
+   "publisher": "GameSpot",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Une bande-annonce d’environ 90 secondes."
+  },
+  "fortune-miami": {
+   "url": "https://fortune.com/2026/10/19/gta-6-miami-vice-city-rockstar-marketing-miami-dade-pushback/",
+   "title": "Fortune : la campagne de GTA 6 à Miami",
+   "publisher": "Fortune",
+   "publishedAt": "2026-10-19",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "L’enseigne « Welcome to Vice City » du Kaseya Center, le dirigeable, les fresques du Wynwood Walls et la soirée du Miami HEAT du 18 novembre."
+  },
+  "jdg-tour-bagnolet": {
+   "url": "https://www.journaldugeek.com/2026/10/15/gta-6-soffre-une-tour-entiere-aux-portes-de-paris/",
+   "title": "Journal du Geek : GTA 6 s’offre une tour entière aux portes de Paris",
+   "publisher": "Journal du Geek",
+   "publishedAt": "2026-10-15",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Une tour de la porte de Bagnolet habillée de la jaquette, avec un grand « 19 », au bord du périphérique."
+  },
+  "vgc-bloomberg": {
+   "url": "https://www.videogameschronicle.com/news/rockstar-says-its-next-game-after-grand-theft-auto-6-wont-take-another-eight-years-to-make/",
+   "title": "VGC : ce que dit l’enquête de Bloomberg sur GTA 6",
+   "publisher": "Video Games Chronicle",
+   "publishedAt": "2026-10-14",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Environ huit ans de développement ; le prochain jeu de Rockstar ne prendra pas huit ans."
+  },
+  "jdg-bloomberg": {
+   "url": "https://www.journaldugeek.com/2026/10/14/de-nouvelles-images-pour-gta-6-avec-des-informations-sur-les-coulisses-du-developpement/",
+   "title": "Journal du Geek : les coulisses du développement de GTA 6",
+   "publisher": "Journal du Geek",
+   "publishedAt": "2026-10-14",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Le récit de Bloomberg : « Project Americas », 4 711 personnes dans 12 bureaux, la rumeur d’un coût de 1,5 milliard de dollars démentie."
+  },
+  "complex-album": {
+   "url": "https://www.complex.com/music/a/tracewilliamcowen/grand-theft-auto-vi-cardi-b-fuerza-regida",
+   "title": "Complex : Cardi B et Fuerza Regida sur l’album de GTA VI",
+   "publisher": "Complex",
+   "publishedAt": "2026-10-09",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "« Don’t Chart » de Cardi B et « Suzuki » de Fuerza Regida sortent le 9 octobre 2026."
+  },
+  "dexerto-xbox-nuage": {
+   "url": "https://www.dexerto.com/gta/xbox-confirms-gta-6-wont-stream-on-pc-3416221/",
+   "title": "Dexerto : Xbox confirme que GTA 6 ne sera pas diffusé sur PC",
+   "publisher": "Dexerto",
+   "publishedAt": "2026-10-07",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Matthew Ball, directeur de la stratégie de Xbox : le jeu ne sera diffusé en nuage ni en exclusivité, ni vers le PC."
+  },
+  "pushsquare-xbox-nuage": {
+   "url": "https://www.pushsquare.com/news/2026/10/confusion-as-erroneous-reports-claim-xbox-has-exclusive-gta-6-cloud-streaming-rights",
+   "title": "Push Square : pas d’exclusivité de Xbox pour GTA 6 en nuage",
+   "publisher": "Push Square",
+   "publishedAt": "2026-10-07",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Les articles annonçant une exclusivité de Xbox en nuage étaient faux."
+  },
+  "inven-ign-nelson": {
+   "url": "https://www.invenglobal.com/articles/26913/gta-6-full-interview-with-rockstars-rob-nelson-reveals-new-details",
+   "title": "Inven Global : l’entretien complet de Rob Nelson à IGN",
+   "publisher": "Inven Global",
+   "publishedAt": "2026-10-07",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Mode « Focus », écran « Busted », scanner de véhicules dans le téléphone, braquages dans presque tous les commerces, jeu pensé pour être rejoué."
+  },
+  "dexerto-ign-nelson": {
+   "url": "https://www.dexerto.com/gta/rockstar-says-gta-6-is-so-big-not-even-the-devs-have-seen-everything-3416361/",
+   "title": "Dexerto : personne chez Rockstar n’a tout vu de GTA 6",
+   "publisher": "Dexerto",
+   "publishedAt": "2026-10-07",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "D’après Rob Nelson, à IGN, personne dans l’équipe ne connaît tout le jeu."
+  },
+  "keengamer-love": {
+   "url": "https://www.keengamer.com/articles/news/new-gta-vi-screenshots-revealed-in-love-magazine-ahead-of-rockstar-interview/",
+   "title": "KeenGamer : de nouvelles images de GTA VI dans le magazine LOVE",
+   "publisher": "KeenGamer",
+   "publishedAt": "2026-10-03",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Une nouvelle illustration de couverture et quatre nouvelles images de Jason et Lucia dans LOVE n° 27."
+  },
+  "gtaboom-love": {
+   "url": "https://www.gtaboom.com/rockstar-gives-love-magazine-its-deepest-look-at-jason-and-lucia-of-gta-6-yet-e3ab",
+   "title": "GTA BOOM : Jason et Lucia dans le magazine LOVE",
+   "publisher": "GTA BOOM",
+   "publishedAt": "2026-10-05",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Les entretiens de LOVE avec l’équipe de Rockstar : le rêve américain modeste de Jason et Lucia, une satire qui évite les modes du moment."
+  },
+  "ps-store-us": {
+   "url": "https://www.playstation.com/en-us/games/grand-theft-auto-vi/",
+   "title": "PlayStation États-Unis : Grand Theft Auto VI",
+   "publisher": "Sony Interactive Entertainment",
+   "consultedAt": "2026-10-21",
+   "statut": "officiel",
+   "claim": "Édition Standard 79,99 $ et Édition Ultimate 99,99 $ ; classification ESRB Mature 17+ : sang, violence intense, humour pour adultes, nudité, langage grossier, contenu sexuel explicite, drogues et alcool."
+  },
+  "ms-store-us": {
+   "url": "https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9nl3wwnzlzzn",
+   "title": "Microsoft Store États-Unis : Grand Theft Auto VI",
+   "publisher": "Microsoft",
+   "consultedAt": "2026-10-21",
+   "statut": "officiel",
+   "claim": "Édition Standard 79,99 $ et Édition Ultimate 99,99 $, amélioration vers l’Ultimate à 20 $ ; classification ESRB Mature 17+."
+  },
+  "t2-resultats-t1": {
+   "url": "https://www.businesswire.com/news/home/20260806868549/en/Take-Two-Interactive-Software-Inc.-Reports-Results-for-Fiscal-First-Quarter-2027",
+   "title": "Take-Two Interactive : résultats du premier trimestre de l’exercice 2027",
+   "publisher": "Take-Two Interactive",
+   "publishedAt": "2026-08-06",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Sortie de GTA VI confirmée le 19 novembre 2026 ; prévision de 8,0 à 8,2 milliards de dollars de réservations nettes."
+  },
+  "rs-report-2025": {
+   "url": "https://www.rockstargames.com/newswire/article/258aa538o412ok/grand-theft-auto-vi-is-now-coming-may-26-2026",
+   "title": "Rockstar Newswire : GTA VI sortira le 26 mai 2026",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2025-05-02",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Premier report : la sortie passe au 26 mai 2026, avec les excuses de Rockstar pour ce délai."
+  },
+  "rs-x-houser": {
+   "url": "https://twitter.com/RockstarGames/status/1722237556258120163",
+   "title": "Rockstar Games sur X : message de Sam Houser",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2023-11-08",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "La première bande-annonce du prochain Grand Theft Auto sortira début décembre."
+  },
+  "techradar-t1-date": {
+   "url": "https://www.techradar.com/gaming/consoles-pc/gta-6-trailer-coming-on-december-5-rockstar-confirms",
+   "title": "TechRadar : le trailer de GTA 6 arrive le 5 décembre",
+   "publisher": "TechRadar",
+   "publishedAt": "2023-12-01",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Rockstar annonce la bande-annonce pour le mardi 5 décembre 2023 à 9 h, heure de New York."
+  },
+  "rs-communaute-2022": {
+   "url": "https://www.rockstargames.com/newswire/article/ak73k92o47ko75/grand-theft-auto-community-update",
+   "title": "Rockstar Newswire : Grand Theft Auto Community Update",
+   "publisher": "Rockstar Games",
+   "publishedAt": "2022-02-04",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Le développement du prochain Grand Theft Auto est bien avancé."
+  },
+  "gameinformer-meteo": {
+   "url": "https://gameinformer.com/exclusive/2026/09/28/exclusive-grand-theft-auto-vi-features-tropical-storms-and-hurricanes",
+   "title": "Game Informer : tempêtes tropicales et ouragans dans GTA VI",
+   "publisher": "Game Informer",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Une météo refaite : pluie localisée, orages, tempêtes tropicales et ouragans, vent simulé."
+  },
+  "purexbox-gi": {
+   "url": "https://www.purexbox.com/news/2026/09/five-key-things-we-learned-about-gta-6-from-the-game-informer-cover-story",
+   "title": "Five Key Things We Learned About GTA 6 From The Game Informer Cover Story",
+   "lang": "en",
+   "publisher": "Pure Xbox",
+   "consultedAt": "2026-10-04",
+   "statut": "vu",
+   "claim": "Compte rendu du dossier de Game Informer du 29 septembre 2026 : carte, régions, météo, faune ; aucun mot sur les codes de triche."
+  },
+  "pcgamer-famitsu": {
+   "url": "https://www.pcgamer.com/games/grand-theft-auto/gta-6s-story-is-too-important-for-rockstar-to-let-you-swap-between-lucia-and-jason-whenever-you-want/",
+   "title": "PC Gamer : l’entretien de Famitsu traduit",
+   "publisher": "PC Gamer",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "La traduction des réponses de Rob Nelson à Famitsu, reprise de GamesRadar+."
+  },
+  "t2-date-resultats": {
+   "url": "https://www.take2games.com/ir/news/take-two-interactive-software-inc-report-second-quarter-fiscal-8",
+   "title": "Take-Two Interactive : date des résultats du deuxième trimestre de l’exercice 2027",
+   "publisher": "Take-Two Interactive",
+   "publishedAt": "2026-10-13",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Résultats le lundi 9 novembre 2026, après la clôture des marchés ; conférence à 16 h 30, heure de New York."
+  },
+  "heat-vice-city": {
+   "url": "https://www.nba.com/heat/vicecity",
+   "title": "Miami HEAT : A Night in Vice City",
+   "publisher": "Miami HEAT",
+   "consultedAt": "2026-10-20",
+   "statut": "vu",
+   "claim": "Le mercredi 18 novembre 2026 à 19 h, heure de New York, contre les Milwaukee Bucks au Kaseya Center : terrain et maillot « Vice City »."
+  },
+  "rs-support-precommande": {
+   "url": "https://support.rockstargames.com/articles/46YkMi4rHxYXMeIHtZiKaE/grand-theft-auto-vi-pre-order-details",
+   "title": "Rockstar Support : détails de la précommande de Grand Theft Auto VI",
+   "publisher": "Rockstar Games",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "La version physique contient un code de téléchargement, sans disque ; le jeu sera proposé dans d’autres pays selon les règles des plateformes, les lois locales et les classifications par âge."
+  },
+  "rs-support-achat": {
+   "url": "https://support.rockstargames.com/articles/40DHWEDBnq5jUuWJqKcH02/grand-theft-auto-vi-pre-order-purchase-support-faq",
+   "title": "Rockstar Support : questions sur l’achat en précommande de Grand Theft Auto VI",
+   "publisher": "Rockstar Games",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Boîte précommandée sur la boutique Rockstar : le support de Xsolla répond pour la commande et l’annulation ; des taxes peuvent s’ajouter hors des États-Unis et du Royaume-Uni."
+  },
+  "ms-store-fr": {
+   "url": "https://www.xbox.com/fr-FR/games/store/grand-theft-auto-vi/9nl3wwnzlzzn",
+   "title": "Microsoft Store France : Grand Theft Auto VI",
+   "publisher": "Microsoft",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Édition Standard 79,99 € et Édition Ultimate 99,99 €, comme sur le PlayStation Store ; l’amélioration de la Standard vers l’Ultimate à 20 € ; classification PEGI 18."
+  },
+  "ps-store-gb": {
+   "url": "https://www.playstation.com/en-gb/games/grand-theft-auto-vi/",
+   "title": "PlayStation Royaume-Uni : Grand Theft Auto VI",
+   "publisher": "Sony Interactive Entertainment",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Édition Standard 69,99 £ et Édition Ultimate 89,99 £ au Royaume-Uni."
+  },
+  "ps-store-au": {
+   "url": "https://www.playstation.com/en-au/games/grand-theft-auto-vi/",
+   "title": "PlayStation Australie : Grand Theft Auto VI",
+   "publisher": "Sony Interactive Entertainment",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Édition Standard 129,95 et Édition Ultimate 159,95 dollars australiens ; classification R18+."
+  },
+  "ps-store-jp": {
+   "url": "https://www.playstation.com/ja-jp/games/grand-theft-auto-vi/",
+   "title": "PlayStation Japon : Grand Theft Auto VI",
+   "publisher": "Sony Interactive Entertainment",
+   "consultedAt": "2026-10-20",
+   "statut": "officiel",
+   "claim": "Édition Standard 9 800 yens et Édition Ultimate 12 280 yens ; classification CERO Z affichée en haut de la page."
   }
  },
  "prix": {
@@ -1339,7 +1889,7 @@
   "jeu": {
    "k": "Le jeu",
    "t": "Standard ou Ultimate",
-   "lede": "Les prix du PlayStation Store en France. Microsoft et chaque revendeur fixent les leurs.",
+   "lede": "Les prix du PlayStation Store et du Microsoft Store en France, les mêmes sur les deux boutiques. Chaque revendeur fixe le prix de la boîte.",
    "editions": [
     {
      "nom": "Édition Standard",
@@ -1355,6 +1905,11 @@
        "statut": "officiel",
        "src": "ps-store-fr",
        "t": "PlayStation Store, France"
+      },
+      {
+       "statut": "officiel",
+       "src": "ms-store-fr",
+       "t": "Microsoft Store, France"
       }
      ]
     },
@@ -1372,6 +1927,11 @@
        "statut": "officiel",
        "src": "ps-store-fr",
        "t": "PlayStation Store, France"
+      },
+      {
+       "statut": "officiel",
+       "src": "ms-store-fr",
+       "t": "Microsoft Store, France"
       }
      ]
     }
@@ -1383,7 +1943,15 @@
     },
     {
      "t": "L’amélioration Ultimate",
-     "d": "Elle s’achète à part, en numérique, avec l’Édition Standard. Son prix n’est pas affiché sur la page du jeu de PlayStation au 16 octobre 2026."
+     "d": "Elle s’achète à part, en numérique, avec l’Édition Standard : 20 € sur le Microsoft Store en France. Sur le PlayStation Store, elle n’est pas encore en vente au 20 octobre 2026."
+    },
+    {
+     "t": "Aux États-Unis",
+     "d": "79,99 $ l’Édition Standard et 99,99 $ l’Édition Ultimate : les prix annoncés par Take-Two le 24 juin 2026."
+    },
+    {
+     "t": "Dans d’autres pays",
+     "d": "Sur le PlayStation Store : 69,99 £ et 89,99 £ au Royaume-Uni, 129,95 et 159,95 dollars australiens en Australie, 9 800 et 12 280 yens au Japon."
     }
    ],
    "lien": {
@@ -1412,13 +1980,20 @@
      "t": "399,99 € d’après la presse française"
     }
    ],
+   "vue": {
+    "label": "Afficher les objets",
+    "galerie": "Galerie",
+    "liste": "Liste",
+    "st": "Photo et description de la boutique Rockstar",
+    "src": "rs-store-collector-fr"
+   },
    "objetsT": "Ce qu’il y a dans la boîte",
    "objetsLede": "Les onze objets annoncés par Rockstar, avec leurs photos officielles. Une photo s’ouvre en grand.",
    "objets": [
     {
      "media": "coffret-figurine-macca",
      "t": "Figurine Macca the Gator",
-     "d": "15 cm, en PVC ; le socle se dévisse et cache un compartiment.",
+     "d": "15 cm ; le socle se dévisse et cache un compartiment.",
      "alt": "Figurine rose de Macca the Gator, un martini à la main, sur un socle noir marqué Vice City Leonida, photo officielle"
     },
     {
@@ -1436,7 +2011,7 @@
     {
      "media": "coffret-sac-bandouliere",
      "t": "Sac à bandoulière Leonida Keys",
-     "d": "Tissu ripstop et patchs tissés ; environ 36 × 13 × 8 cm.",
+     "d": "Tissu ripstop, patchs tissés et doublure à motifs noire et rose.",
      "alt": "Sac à bandoulière noir orné de patchs Vice City, de Macca the Gator et d’un soleil à lunettes, photo officielle"
     },
     {
@@ -1454,13 +2029,13 @@
     {
      "media": "coffret-cuillere",
      "t": "Cuillère à mélange Vice City",
-     "d": "Décorative : elle n’est pas faite pour les aliments.",
+     "d": "Décorative, avec les logos de Vice City et de Rockstar Games en émail au bout.",
      "alt": "Longue cuillère argentée gravée du logo Vice City, photo officielle"
     },
     {
      "media": "coffret-porte-cles",
      "t": "Porte-clés lame de rasoir Vice City",
-     "d": "Zinc plaqué argent, logos de GTAVI et de Vice City gravés.",
+     "d": "En métal, en forme de lame de rasoir, avec les logos de GTAVI et de Vice City.",
      "alt": "Porte-clés argenté en forme de lame de rasoir, gravé du logo Vice City, photo officielle"
     },
     {
@@ -1505,8 +2080,8 @@
      "v": "France, Belgique, Suisse, Luxembourg et dix-neuf autres pays ; frais de port au paiement, pas de livraison gratuite."
     },
     {
-     "k": "Taxes",
-     "v": "Hors États-Unis et Royaume-Uni, des taxes et frais peuvent être appliqués par les autorités locales."
+     "k": "Sécurité",
+     "v": "Petites pièces, bords coupants ou pointus : ce n’est pas un jouet, il ne convient pas aux moins de 3 ans."
     },
     {
      "k": "Dimensions",
@@ -1523,6 +2098,7 @@
    ],
    "detailsSrc": [
     "rs-store-collector",
+    "rs-store-collector-fr",
     "rs-collector",
     "iphonesoft-collector"
    ],
@@ -1699,7 +2275,7 @@
   "faq": [
    {
     "q": "Combien coûte GTA 6 ?",
-    "a": "79,99 € l’Édition Standard et 99,99 € l’Édition Ultimate sur le PlayStation Store en France, au 16 octobre 2026. Les revendeurs fixent leurs propres prix, en particulier pour la version en boîte."
+    "a": "79,99 € l’Édition Standard et 99,99 € l’Édition Ultimate sur le PlayStation Store et le Microsoft Store en France, au 20 octobre 2026 ; 79,99 $ et 99,99 $ aux États-Unis. Les revendeurs fixent leurs propres prix, en particulier pour la version en boîte."
    },
    {
     "q": "Combien coûte le coffret collector de GTA 6 ?",
@@ -1719,7 +2295,7 @@
    },
    {
     "q": "Peut-on acheter le coffret collector en France ?",
-    "a": "Oui : la boutique Rockstar livre la France, la Belgique, la Suisse et le Luxembourg, entre autres. Les frais de port sont indiqués au paiement ; des taxes peuvent s’ajouter hors des États-Unis et du Royaume-Uni."
+    "a": "Oui : la boutique Rockstar livre la France, la Belgique, la Suisse et le Luxembourg, entre autres. Les frais de port sont indiqués au paiement : la livraison n’est pas offerte."
    },
    {
     "q": "Combien coûte la manette DualSense GTA 6 ?",
@@ -1733,9 +2309,15 @@
   ],
   "sources": [
    "ps-store-fr",
+   "ms-store-fr",
+   "ps-store-gb",
+   "ps-store-au",
+   "ps-store-jp",
+   "t2-prix",
    "rs-support-editions",
    "rs-collector",
    "rs-store-collector",
+   "rs-store-collector-fr",
    "iphonesoft-collector",
    "ps-blog-dualsense",
    "rs-collection",

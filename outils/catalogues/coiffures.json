@@ -38,7 +38,7 @@
       "id": "coupe-a-la-planque",
       "nom": "Coupe à la planque",
       "categorie": "coupes",
-      "statut": "officiel",
+      "statut": "vu",
       "personnage": "jason-lucia",
       "description": "On peut se couper les cheveux à la planque, avec un choix limité d’après Rob Nelson.",
       "effet": {
@@ -68,7 +68,7 @@
       "id": "coupe-en-salon",
       "nom": "Coupe en salon",
       "categorie": "coupes",
-      "statut": "officiel",
+      "statut": "vu",
       "personnage": "jason-lucia",
       "description": "Les salons, « innombrables » selon Rob Nelson, offrent bien plus de coiffures que la planque.",
       "effet": {
@@ -170,6 +170,7 @@
       ],
       "variantes": [],
       "sources": [
+        "xbox-ultimate",
         "vgc-editions",
         "gamesradar-63",
         "gtawiki-barbers-v"
@@ -268,6 +269,7 @@
       ],
       "variantes": [],
       "sources": [
+        "xbox-ultimate",
         "vgc-editions",
         "gamesradar-63",
         "gtawiki-barbers-online"

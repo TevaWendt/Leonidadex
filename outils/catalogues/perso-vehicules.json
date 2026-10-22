@@ -217,6 +217,7 @@
       ],
       "variantes": [],
       "sources": [
+        "rs-preorder",
         "sixthaxis-editions",
         "gamesradar-63"
       ],
@@ -1117,7 +1118,7 @@
       "id": "pay-n-spray",
       "nom": "Repeinte au Pay ’n’ Spray",
       "categorie": "peinture",
-      "statut": "officiel",
+      "statut": "vu",
       "description": "Rob Nelson : au Pay ’n’ Spray tu répares et tu repeins ta voiture pour semer la police ; seule la couleur change, la peinture élaborée se fait dans un atelier.",
       "effet": {
         "texte": "Fait tomber la traque de la police après une repeinte, d’après Rob Nelson",
@@ -2562,7 +2563,7 @@
       "id": "alarme-traceur-gta6",
       "nom": "Alarme et traceur (voitures de luxe)",
       "categorie": "securite",
-      "statut": "officiel",
+      "statut": "vu",
       "description": "Rob Nelson : les voitures de luxe ont souvent une alarme et un traceur ; il faut cloner la clé, et un receleur peut retirer le traceur.",
       "effet": {
         "texte": "Le traceur peut signaler ta position à la police, d’après Rob Nelson",

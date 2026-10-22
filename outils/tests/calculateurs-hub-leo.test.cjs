@@ -5,7 +5,8 @@
 const test=require('node:test'),assert=require('node:assert/strict'),path=require('node:path');
 const H=require('./check-ultime-helper.cjs'),root=H.root,{load}=require('./runtime-helper.cjs');
 const B=require(path.join(root,'calculateurs-scenario.js')),L=require(path.join(root,'leo-link.js'));
-const {D,catalogue,sourceActivities,presets}=H.siteData(),DV=H.dataVersion(D,catalogue,sourceActivities),initial=B.initial(DV,presets);
+/* v8.04 (jour J) : le site sans ses données publiées (la mécanique Léo → calculateur ne dépend pas des prix publiés) */
+const {D,catalogue,sourceActivities,presets}=H.siteData({sansPublication:true}),DV=H.dataVersion(D,catalogue,sourceActivities),initial=B.initial(DV,presets);
 const stored=p=>JSON.parse(p.w.localStorage.getItem('lk-calculator-v1'));
 const ask=(p,q)=>{const input=p.d.getElementById('calc-ask-input');input.value=q;p.d.getElementById('calc-ask').dispatchEvent(new p.w.Event('submit',{bubbles:true,cancelable:true}));p.flush();return {tab:p.d.querySelector('[data-tab][aria-selected="true"]').dataset.tab,out:p.d.getElementById('calc-ask-out').textContent,s:stored(p)};};
 

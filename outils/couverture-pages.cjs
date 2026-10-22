@@ -141,8 +141,11 @@ const CARNET_GROUPES = CARNET.groups; // [id, nom] : les 36 groupes gtadb (quart
     const generique = /^Bâtiment L\d+$/.test(nom) || /\?$/.test(nom); // nom provisoire posé par le site (bâtiment sans nom) ou nom incertain
     const surnom = /^".+"$/.test(nom); // « "Mount Waffles" » : surnom donné par la communauté (guillemets de gtadb), pas un nom en jeu
     const nomme = lm ? lm.nomme && !generique && !surnom : !generique && !surnom; // point de carte.js : nommé par le site
-    const visuel = !!(g && g.img); const reel = !!(g && g.r); const quartier = g && g.p ? g.p : null;
-    let faits = 1; if (quartier) faits++; if (reel) faits++; if (g && g.sv) faits++; if (lm && lm.comte) faits++; if (g && g.src === 'SITE') faits += 2; /* point du site : description éditoriale sourcée, statut */
+    /* v8.04 (géolocalisation) : « ? » n’est pas un lieu réel ; un point du site compte l’équivalent réel et les coordonnées que la
+       carte lui donne (GTADB.enrichit) */
+    const en = (GTADB.enrichit || {})[id] || {};
+    const visuel = !!(g && g.img); const reel = !!(g && g.r && String(g.r).trim() !== '?') || !!(en.reel && String(en.reel).trim() !== '?'); const quartier = g && g.p ? g.p : null;
+    let faits = 1; if (quartier) faits++; if (reel) faits++; if ((g && g.sv) || en.sv) faits++; if (lm && lm.comte) faits++; if (g && g.src === 'SITE') faits += 2; /* point du site : description éditoriale sourcée, statut */
     const douteux = lm && lm.statuts.some(s => ['existence_douteuse', 'fictif', 'annule'].includes(s));
     const page = cat === 'planque' ? pageDe('planques/' + id + '.html') : fiche ? pageDe('lieux/' + id + '.html') : null;
     const base = nom.replace(/\s*\((?:nom réel|nom supposé)\)$/, ''); /* v7.95 : l’adresse garde le nom, pas la mention entre parenthèses */
@@ -204,8 +207,8 @@ for (const cle of ['perso-vehicules', 'perso-armes']) {
 /* 13. Achats et services (acquisitions.json) */
 {
   const f = famille('achats', 'Achats et services', { source: 'outils/acquisitions.json (items, services, weaponVariants)', dossier: 'achats', nouvelle: true });
-  for (const it of ACQ.items) { const ref = it.ref && it.ref.type === 'vehicle' ? pageDe('vehicules/' + it.ref.id + '.html') : it.ref && it.ref.type === 'weapon' ? pageDe('armes/' + it.ref.id + '.html') : null;
-    f.items.push(elem(f.id, { id: it.id, nom: it.id, slug: slug(it.id), page: ref, cible: ref ? null : 'achats/' + slug(it.id) + '.html', doublonDe: ref ? (it.ref.type === 'vehicle' ? 'vehicules' : 'armes') : null, faits: 2 + (it.price != null ? 1 : 0), visuel: !!(it.media && it.media.length), indexable: true, note: it.category + ', ' + it.acquisition })); }
+  for (const it of ACQ.items) { const ref = it.ref && it.ref.type === 'vehicle' ? pageDe('vehicules/' + it.ref.id + '.html') : it.ref && it.ref.type === 'weapon' ? pageDe('armes/' + it.ref.id + '.html') : it.category === 'munitions' ? pageDe('munitions/' + it.id + '.html') /* v8.04 (jour J) : le prix d’une munition vit sur sa fiche */ : null;
+    f.items.push(elem(f.id, { id: it.id, nom: it.id, slug: slug(it.id), page: ref, cible: ref ? null : 'achats/' + slug(it.id) + '.html', doublonDe: ref ? (it.category === 'munitions' ? 'munitions' : it.ref.type === 'vehicle' ? 'vehicules' : 'armes') : null, faits: 2 + (it.price != null ? 1 : 0), visuel: !!(it.media && it.media.length), indexable: true, note: it.category + ', ' + it.acquisition })); }
   for (const s of ACQ.services) { const page = pageDe('entreprises/' + s.ref + '.html'); f.items.push(elem(f.id, { id: 'service-' + s.ref, nom: s.ref, slug: slug(s.ref), page, cible: page ? null : 'achats/' + slug(s.ref) + '.html', doublonDe: page ? 'entreprises' : null, faits: 2, visuel: !!(s.media && s.media.length), indexable: true, note: 'service, ' + s.category })); }
   for (const w of ACQ.weaponVariants || []) { const id = typeof w === 'string' ? w : w.id; const page = pageDe('armes/' + id + '.html'); f.items.push(elem(f.id, { id: 'variante-' + id, nom: id, slug: slug(id), page, doublonDe: page ? 'armes' : null, cible: page ? null : 'achats/' + slug(id) + '.html', faits: 2, indexable: true, note: 'variante d’arme (bonus d’édition)' })); }
 }

@@ -1,0 +1,63 @@
+LEONIDAKIT v8.04 : refonte des six pages, informations vérifiées, Léo, chiffres du site, jour J, ajouts du 21 octobre
+
+Base : v8.03. Le détail complet (demandes, fichiers, preuves, commandes, choix et points ouverts) est dans
+outils/RAPPORT-AUDIT-v8.04.md, écrit pour une relecture par une autre IA ; annexes dans outils/audit-v8.04/.
+
+1. CHANTIERS ET FICHIERS SOURCES
+   Refonte A (prix.html, videos.html, actualités) : outils/actus/actus.json, gen-actus.cjs, sources/actus.css|js,
+     langues/*/v804-refonte-a.json.
+   Refonte B (verification.html) : gen-informations.cjs, informations-editorial.json (verification), sources/informations.css,
+     vitrine.css|js, langues/*/v804-refonte-b.json.
+   Refonte C (prechargement, gta-6-pc, gta-6-vs-gta-5) : gen-recherches.cjs, vitrine.cjs, informations-editorial.json,
+     sources/recherches.css, vitrine.css|js, langues/*/v804-refonte-c.json, langues/*/v794.json (« Go » → « GB »).
+   Refonte D (monde, radios, À propos, Léo dans les six langues) : editorial-hubs.json, monde-dossiers.json, editorial.json,
+     editorial-animaux.json, radios/radios.json, informations-editorial.json, gen-informations.cjs, donnees-publiees.cjs,
+     gen-leo.cjs, leo-knowledge.json, sources/leo-nlp.js, ponts et pivots de Léo, langues/*/v804-refonte-d.json, tests Léo.
+   Refonte E (chiffres du site, géolocalisation) : sync-site.cjs, couverture-pages.cjs, gen-carnets.cjs, gen-pages-elements*.cjs,
+     gen-tuto.cjs, import-gtadb.cjs, data/carte-gtadb-source.json, landmarks-leonidakit.json, informations-editorial.json,
+     editorial-hubs.json, sources/carte-page.css, pages racine tenues à la main, langues/*/v804-refonte-e.json, test
+     chiffres-site-v804.
+   Refonte F (grille des statuts, Léo) : activites/, online/, missions/, codes/, trophees/, collectibles.json, catalogues/,
+     catalogues.cjs, gen-activites.cjs (règle des fiches), gen-pages-elements*.cjs, leo-knowledge.json, leo-editorial.json,
+     pivots et ponts, langues/*/v804-refonte-f.json.
+   G (référencement) : gen-pages-elements-b.cjs, carnets-editorial.json, activites.json, radios.json, vehicules-rares.html,
+     partage.json, img/partage/fr/vehicules-rares.jpg, langues/*/v804-seo.json et elements/v804-seo.json.
+   Jour J (prompt 2) : catalogues.cjs, catalogues/schema.json, donnees-publiees.cjs, fiche-doc.cjs, gen-achats.cjs,
+     gen-acquisitions.cjs, gen-activites.cjs, gen-leo.cjs, gen-missions.cjs, gen-pages-elements*.cjs, leo-editorial.json,
+     leo-langues.cjs, modele-donnees.json, site-shell.cjs, sources/calculateurs-modele.js, calculateurs-workspace.js,
+     calculateurs.js, leo-core.js, calculateurs-data.js, jour-j-controle.cjs (nouveau), PROMPT-2-JOUR-J.txt (nouveau),
+     QUAND-ROCKSTAR-PUBLIE.md, CALCULATEURS-DONNEES.md, langues/*/v804-jour-j.json, tests jour-j-v804 et adaptations.
+   Lot H (carte des fiches, aperçus, carte collante) : localisateur.cjs, gen-armes.cjs, lore-gen.js (bloc carte),
+     sources/style.css, lk-sections.css, acquisitions.css, langues/*/v804-H.json, test catalogues-v750.
+   Lot M (voir sa configuration, Atelier en construction) : perso-fiche.cjs, sources/perso-fiche.js, fiches.css,
+     gen-atelier.cjs, sources/atelier-3d.css, site-shell.cjs, style.css, leo-knowledge.json, langues/*/v804-M.json,
+     test v804-lot-m.
+   Lot I (En lien, espacements, cartes des hubs) : en-lien.cjs (nouveau), lore-gen.js, gen-activites.cjs, gen-missions.cjs,
+     gen-radios.cjs, sources/style.css, tests en-lien-v804 et section-animaux.
+   Lot K (collectibles.html) : gen-collectibles.cjs, sources/collectibles*.css|js, collectibles.html, style.css (33 règles
+     retirées), langues/*/v804-K.json, test collectibles-esthetique.
+   Lot L (jeux) : gen-jeux.cjs, jeux-illus.cjs, jeux/jeux.json, sources/jeux-core.js, frise.js, station.js, jeux.css (nouveaux),
+     gen-devine.cjs, devine.js, site-shell.cjs, regenerer.cjs, sync-site.cjs, leo-knowledge.json, gen-informations.cjs,
+     gen-partage.cjs, langues/*/v804-L.json, tests v804-jeux et v790.
+   Intégration : modele-donnees.json (carburant, soin), actus.json (sourcesCorrigees réduit), online/hub.json et pages.json
+     (presse en « vu »), informations-editorial.json (lien de l'âge conseillé), sections.cjs (titres anglais non traduits),
+     catalogues.cjs (étiquette « En construction »), sources/actus.css, sources/jeux.css, langues/*/v804-integration.json,
+     corrections de valeurs dans la mémoire de traduction, calculateur-cadre.json (empreinte de style.css), tests mis à jour.
+   Documents : RAPPORT-AUDIT-v8.04.md, audit-v8.04/ (relevés du 20 octobre, répétition du jour J), MATRICE-v8.04.md, ce fichier.
+
+2. VÉRIFICATIONS
+   Régénération complète (outils/regenerer.cjs), second passage (gen-pages-elements --verifier, sync-site, gen-leo, sync-site,
+   gen-leo --check), puis :
+   - outils/verifier.js : 0 erreur, 4 070 190 références vérifiées dans 26 731 pages ;
+   - outils/referencement.cjs --tout : 4 445 pages françaises, 2 848 proposées aux moteurs, 0 défaut bloquant, 0 avertissement ;
+   - outils/couverture-pages.cjs : 0 page manquante ;
+   - outils/langues.cjs --verifier en, es, it, de, pt : 0 texte sans traduction, 0 repère cassé, 0 conflit ;
+   - outils/tests/reference-v801.cjs : 851 résultats de la v8.01 rejoués réglages éteints, 0 écart ;
+   - outils/tests/calculateurs-cadre.test.cjs : seules les lignes Expert du lot 2 sont ajoutées au cadre du calculateur ;
+   - Léo : gen-leo --check ; outils/tests/leo-eval.cjs : 512 sur 512, hors sujet refusés 39 sur 39 ;
+   - outils/tests/*.test.cjs, un fichier à la fois : 101 fichiers, 1 296 tests réussis, 0 échec ;
+   - navigateur (Chromium) : écrans de 320 à 2 560 px (16 largeurs, 102 pages en français, 28 en allemand et en portugais) :
+     0 débordement ; mouvement normal, réduit et sans script : 0 bloc caché, 0 erreur ; accessibilité ciblée (noms, alt,
+     contraste AA, focus visible) : 0 défaut hors un faux positif expliqué ; langues : 0 mot étranger visible ;
+   - texte visible des 26 730 pages : 0 signe d'écriture automatique.
+   Détail, latence et points ouverts : outils/RAPPORT-AUDIT-v8.04.md, sections 12 et 13.

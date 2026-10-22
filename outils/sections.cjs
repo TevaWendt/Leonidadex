@@ -291,7 +291,7 @@ function actions(items) {
 const frDate = iso => iso ? iso.split('-').reverse().join('/') : null;
 function sourceList(entries) {
   return '<ol class="ed-srcs">' + entries.map(s => '<li id="src-' + esc(s.id) + '">' + pip(s.statut, true)
-    + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow">' + esc(s.title) + '</a>'
+    + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow"' + (s.lang === 'en' ? ' translate="no"' : '') /* v8.04 : titre anglais d’origine gardé tel quel, comme gen-actus */ + '>' + esc(s.title) + '</a>'
     + '<span class="ed-src-meta">' + (s.publishedAt ? 'publié le ' + esc(frDate(s.publishedAt)) + ', ' : '') + 'consulté le ' + esc(frDate(s.consultedAt)) + '</span>'
     + (s.claim ? '<p>' + esc(s.claim) + '</p>' : '') + '</li>').join('') + '</ol>';
 }

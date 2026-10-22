@@ -1,0 +1,79 @@
+LEONIDAKIT v8.02 : calculateur, lot 1 du prompt « Corriger le calculateur avant la sortie » (l’indispensable, invisible)
+
+Base : v8.01 (commit 21b210d4, main). Uniquement des ajouts : aucune fonction, option, page ni texte existant retiré, remplacé
+ou déplacé ; aucun style touché.
+
+1. CE QUI CHANGE POUR LE JOUEUR
+   Aujourd’hui, rien de visible : tant que Rockstar n’a publié aucune mission chiffrée, tous les résultats sont ceux de la
+   v8.01, au chiffre près, calculs et plans enregistrés compris (preuve au § 4). Le lot prépare le jour où les données
+   arriveront :
+   - une mission publiée avec ses conditions (argent à avoir en poche sans le dépenser, rang demandé, missions à faire avant,
+     achat à posséder) ne sera lancée par le business plan que lorsqu’elles sont remplies, et la réponse dira ce qui manque
+     en mots simples : « Il te faut encore 12 000 $ avant de pouvoir lancer « X » : elle demande d’avoir 50 000 $ en poche
+     (cet argent n’est pas dépensé), tu en as 38 000 $. » ;
+   - deux missions de l’histoire prêtes en même temps passent dans l’ordre de l’histoire ;
+   - une mission qui se fait une seule fois va dans le business plan ; les huit calculs, qui répètent une activité, l’écartent
+     en disant pourquoi ;
+   - « reprendre une mission du site » dans le business plan copie aussi les missions et les achats qu’elle demande ;
+   - la case « Mon rang (ou niveau) dans le jeu » n’apparaît dans le business plan que si une mission demande un rang.
+   Le Tuto (chapitre « Mon business plan », « Ce que le calcul prend en compte ») le dit en une phrase, dans les six langues.
+
+2. FICHIERS SOURCES MODIFIÉS OU AJOUTÉS
+   Ponts de données
+   - calculateurs-data.js : activities() relit requiresMissions, requiresPurchaseIds, once, done, units, order, chapter,
+     chapterTitle, kind, unlockText, minCash, minRank (avec leurs métadonnées) ; rules() lit window.LK_CALC_REGLES ; une fiche
+     qui publie un revenu passif porte income (empreinte des données inchangée tant que rien n’est publié).
+   - calculateurs-activites.js : déclaration de window.LK_CALC_REGLES (argent de Jason et Lucia, amende, perte à la mort, à
+     l’arrestation), toutes inconnues (null) au 20 octobre 2026.
+   - outils/gen-missions.cjs : activitesDe transmet coût, préparation, attente, part, investissement, joueurs, missions et
+     achats demandés, argent minimum, rang, une seule fois, ordre, chapitre, type, déblocage ; contrôles de forme, prérequis
+     inconnus et missions demandées en boucle ; conditions affichées sur la fiche quand elles sont publiées.
+   - outils/gen-activites.cjs : le pont écrit enfin ses activités « activite-<id> » dans calculateurs-activites.js (sans
+     toucher aux missions) ; mêmes champs ; chiffres publiés affichés sur la fiche.
+   - outils/gen-calculateurs-catalogue.cjs : transmet revenu.
+   - outils/donnees-publiees.cjs : forme des nouveaux champs, existence des missions et achats demandés, règles d’argent,
+     revenus (revenuDe, phraseRevenu).
+   - outils/lore-gen.js : phrase du revenu publié dans l’encart calculateur d’une fiche (rien tant que rien n’est publié).
+   - outils/missions/missions.json, outils/activites/activites.json : description du schéma seulement (_schema).
+   Moteur et calcul
+   - outils/sources/calculateurs-engine.js (+ copie minifiée) : conditions de lancement minCash (argent à détenir sans le
+     dépenser, la réserve compte) et minRank (rang) dans missionPlan, sessions et parcours, affordableStart, lockedReason,
+     goal, inverse, goalMixed, sessionPlan ; ordre de l’histoire ; raisons en mots simples ; vérificateur indépendant : règles
+     R11 (argent en poche) et R12 (rang).
+   - outils/sources/calculateurs-scenario.js (+ copie) : gabarits (rang, minCash, minRank, order, sourceId), missions « une
+     seule fois » écartées des huit calculs avec leur raison, transmission au moteur, question du rang, explications.
+   - outils/sources/calculateurs-plan.js (+ copie) : import d’une mission du site avec ce qu’elle demande ; case du rang ;
+     résumé et parcours qui disent l’argent en poche et le rang.
+   Textes, langues, documentation, tests
+   - outils/tuto.json : une phrase ajoutée au chapitre du business plan.
+   - outils/langues/{en,es,it,de,pt}/v802-calculateur.json (nouveaux) : 40 textes traduits par langue.
+   - outils/QUAND-ROCKSTAR-PUBLIE.md, outils/CALCULATEURS-DONNEES.md, outils/CALCULATEURS-MOTEUR.md : procédure du jour J et
+     description des nouveaux champs.
+   - outils/tests/section-activites.test.cjs, outils/tests/section-missions.test.cjs : une assertion alignée (voir § 4).
+   - outils/tests/calculateurs-v802.test.cjs (nouveau, 15 tests), outils/tests/reference-v801.cjs et
+     outils/tests/fixtures/calculateur-v801-reference.json (nouveaux : 206 résultats de la v8.01, rejoués à chaque test).
+   Fichiers régénérés par la chaîne habituelle : les pages (empreinte de common.js, qui suit la version des fichiers de Léo,
+   laquelle dépend du moteur), tuto.html et ses traductions, leo/*, outils/leo-index-manifest.json, outils/sitemap-dates.json.
+
+3. COMMENT C’EST UTILISÉ LE JOUR J
+   outils/QUAND-ROCKSTAR-PUBLIE.md § 2 et 2 bis : où écrire chaque chiffre (missions.json → deblocage.argentMinimum,
+   deblocage.rang, repetable, ordre, chapitre… ; activites.json → rapporte ; editorial.json → revenu ; LK_CALC_REGLES) et ce
+   que le business plan en fait, sans rien coder.
+
+4. VÉRIFICATIONS
+   Régénération complète (outils/regenerer.cjs), puis :
+   - outils/verifier.js : 0 erreur, 3 987 557 références vérifiées dans 26 641 pages ;
+   - outils/referencement.cjs : 0 défaut bloquant (mêmes 28 avertissements qu’en v8.01) ; outils/couverture-pages.cjs : 0 page
+     manquante ;
+   - outils/langues.cjs --verifier en, es, it, de, pt : 0 texte sans traduction, 0 repère cassé, 0 conflit ;
+   - outils/tests/reference-v801.cjs : 206 résultats de la v8.01 rejoués, 0 écart (exemples A, B, C, réglages et données
+     absents) ;
+   - outils/calculateur-cadre.cjs : cadre identique, 180 vues (6 langues × 9 outils × 3 modes, plus le cadre commun), styles
+     identiques ;
+   - captures avant / après au pixel près (Chromium, v8.01 contre v8.02) : 54 vues sur 54 identiques, téléphone (390 px) et
+     ordinateur (1 366 px), 9 outils, modes Simple, Pas à pas et Expert ;
+   - Léo : gen-leo --check ; outils/tests/leo-eval.cjs : 512 sur 512, hors sujet refusés 39 sur 39 ;
+   - outils/tests/*.test.cjs, un fichier à la fois : 94 fichiers, 1 242 tests réussis, 0 échec. Deux tests anciens
+     (section-activites et section-missions, test « pont avec le calculateur ») affirmaient que le pont « décrit, n’écrit
+     jamais » : leur dernière assertion lisait tout le texte de calculateurs-activites.js ; elle lit maintenant le tableau
+     window.LK_ACTIVITIES (toujours vide sans donnée publiée), puisque le prompt demande que le pont écrive.

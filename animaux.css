@@ -57,7 +57,7 @@
 .an-card::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(14,10,26,.18) 0%,rgba(14,10,26,0) 26%,rgba(14,10,26,.5) 58%,rgba(14,10,26,.95) 100%);}
 .an-card::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at var(--mx,70%) var(--my,20%),rgba(255,255,255,.22),transparent 45%);opacity:0;transition:opacity .4s;}
 .an-card-top{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:8px;padding:12px 12px 0;}
-.an-fam{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 5px;border-radius:999px;border:1.5px solid var(--ink);background:var(--fam);color:var(--fam-ink);font:800 .64rem/1.2 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;}
+.an-fam{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 5px;border-radius:999px;border:1.5px solid var(--ink);background:var(--fam);color:var(--fam-ink);font:800 max(11px,.64rem)/1.2 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;}
 .an-fam .an-ico{width:17px;height:17px;}
 .an-card .ed-status{padding:4px 9px;border-radius:999px;background:rgba(12,9,22,.62);border:1px solid rgba(255,255,255,.38);}
 .an-card .ed-st{color:#fff;font-size:max(11px,.62rem);}

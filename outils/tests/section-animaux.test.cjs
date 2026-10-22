@@ -94,10 +94,12 @@ test('fiches : gabarit des fiches du monde, statut et sources, gros plans crédi
 test('« En lien » : le groupe « Animaux » s’ajoute aux fiches des régions, et seulement à elles', () => {
   const byRegion = {}; for (const x of A.fiches) for (const id of x.places) (byRegion[id] = byRegion[id] || []).push(x.id);
   for (const [region, ids] of Object.entries(byRegion)) {
-    const d = doc('lieux/' + region + '.html'), group = [...d.querySelectorAll('.lore-rel-group')].find(g => g.querySelector('h3').textContent === 'Animaux');
-    assert.ok(group, region); assert.deepEqual([...group.querySelectorAll('a')].map(a => a.getAttribute('href').replace('../animaux/', '').replace('.html', '')).sort(), ids.sort());
+    /* v8.04 (lot I) : « En lien » est une seule grille de cartes (outils/en-lien.cjs) ; la famille de chaque carte est dans data-rel */
+    const d = doc('lieux/' + region + '.html'), cards = [...d.querySelectorAll('.lore-related .lk-rel-card[data-rel="animals"]')];
+    assert.ok(cards.length, region); assert.deepEqual(cards.map(a => a.getAttribute('href').replace('../animaux/', '').replace('.html', '')).sort(), ids.sort());
+    for (const a of cards) assert.ok(a.querySelector('.lk-rel-fig img'), region + ' : vignette officielle de ' + a.getAttribute('href'));
   }
-  for (const f of ['personnages/jason.html', 'gangs/final-chapter-mc.html', 'entreprises/jack-of-hearts.html']) assert.ok(![...doc(f).querySelectorAll('.lore-rel-group h3')].some(h => h.textContent === 'Animaux'), f);
+  for (const f of ['personnages/jason.html', 'gangs/final-chapter-mc.html', 'entreprises/jack-of-hearts.html']) assert.ok(!doc(f).querySelector('.lore-related [data-rel="animals"], .lore-related a[href^="../animaux/"]'), f);
 });
 
 test('sécurité et droits : aucun script en ligne, rien de chargé depuis un autre site, aucune vidéo', () => {

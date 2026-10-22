@@ -1,0 +1,96 @@
+{
+ "_note": "v8.03 (calculateur lot 2) : dix questions sur les sept sujets ajoutés (Mes hypothèses en plus, soins et amendes, revenu passif, bonus et partage, argent de Jason et de Lucia, réglages Expert du business plan, revente dans Mon objectif), sujet attendu. Rejoué par node outils/tests/leo-eval.cjs --lang es --questions=outils/tests/leo-questions-v803-es.json, après la régénération de Léo et des langues.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "qué es mis hipótesis extra en la calculadora",
+   "expect": {
+    "topic": "hypotheses-en-plus"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "cómo cuento la curación, las multas o el dinero perdido al morir",
+   "expect": {
+    "topic": "simuler-soins-amendes"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "cómo cuento las multas en la calculadora",
+   "expect": {
+    "topic": "simuler-soins-amendes"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "cómo cuento un ingreso pasivo en la calculadora",
+   "expect": {
+    "topic": "simuler-revenu-passif"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "cómo cuento un bonus o reparto una recompensa entre jugadores",
+   "expect": {
+    "topic": "simuler-bonus-partage"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "repartir cada recompensa a partes iguales entre los jugadores",
+   "expect": {
+    "topic": "simuler-bonus-partage"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "jason y lucia tienen cada uno su dinero",
+   "expect": {
+    "topic": "argent-jason-lucia"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "qué ajustes extra tiene el plan de negocio en modo experto",
+   "expect": {
+    "topic": "plan-reglages-expert"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "contar los intentos fallidos en el plan de negocio",
+   "expect": {
+    "topic": "plan-reglages-expert"
+   },
+   "tags": [
+    "v803"
+   ]
+  },
+  {
+   "q": "cómo cuento la reventa de lo que tengo en mi objetivo",
+   "expect": {
+    "topic": "objectif-revente"
+   },
+   "tags": [
+    "v803"
+   ]
+  }
+ ]
+}

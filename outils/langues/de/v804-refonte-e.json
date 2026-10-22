@@ -1,0 +1,20 @@
+{
+ "_note": "v8.04 (chiffres du site et géolocalisation, chantier E) : textes nouveaux ou changés par le relevé des chiffres que le site affiche sur lui-même.",
+ "Dont 47 zones (régions, villes, quartiers, comtés) et 3 244 autres lieux ; chacun a sa page.": "Darunter 47 Zonen (Regionen, Städte, Viertel, Countys) und 3.244 weitere Orte; jeder hat seine eigene Seite.",
+ "Les 9 véhicules des éditions nommés par Rockstar (édition Ultimate et Vintage Vice City Pack), et les modèles repérés une seule fois dans le kit média.": "Die 9 Fahrzeuge der Editionen, die Rockstar genannt hat (Ultimate Edition und Vintage Vice City Pack), sowie die Modelle, die nur ein einziges Mal im Pressekit entdeckt wurden.",
+ "Véhicules nommés par Rockstar sur la page produit de l’édition Ultimate. Avec celui du Vintage Vice City Pack, ce sont les 9 véhicules des éditions. Rockstar en a nommé 10 en tout à ce jour, Speedophile Seashark compris : son nom est écrit sur la coque dans le second trailer.": "Fahrzeuge, die Rockstar auf der Produktseite der Ultimate Edition nennt. Zusammen mit dem aus dem Vintage Vice City Pack sind es die 9 Fahrzeuge der Editionen. Insgesamt hat Rockstar bisher 10 genannt, den Speedophile Seashark eingeschlossen: Sein Name steht im zweiten Trailer auf dem Rumpf.",
+ "Les armes (27 armes), les équipements (16 équipements) et les types de munitions (5 types de munitions à cocher). Le filtre « Famille » n’affiche que l’une d’elles.": "Die Waffen (27 Waffen), die Ausrüstung (16 Ausrüstungsgegenstände) und die Munitionsarten (5 Munitionsarten zum Abhaken). Der Filter „Bereich“ zeigt nur einen davon an.",
+ "Les tenues et accessoires (30 tenues et accessoires), les coiffures (55 coiffures) et les tatouages (23 tatouages à cocher). Chacune garde son mot : une tenue portée, une coiffure essayée, un tatouage fait.": "Die Outfits und Accessoires (30 Outfits und Accessoires), die Frisuren (55 Frisuren) und die Tattoos (23 Tattoos zum Abhaken). Jeder Bereich hat sein eigenes Wort: ein Outfit getragen, eine Frisur ausprobiert, ein Tattoo gestochen.",
+ "Les modifs de véhicule (57 modifs de véhicule à cocher) et les modifs d’arme (39 modifs d’arme à cocher). Le filtre « Famille » n’affiche que l’une des deux.": "Die Fahrzeugmods (57 Fahrzeugmods zum Abhaken) und die Waffenmods (39 Waffenmods zum Abhaken). Der Filter „Bereich“ zeigt nur einen der beiden an.",
+ "<1>26574</1><2>pages en ligne, toutes langues comprises</2>": "<1>26.574</1><2>Seiten online, alle Sprachen zusammen</2>",
+ "<1>26 574</1><2>pages, toutes langues comprises</2>": "<1>26.574</1><2>Seiten, alle Sprachen zusammen</2>",
+ "Watson Bay accueille le garage Paradise de l’Édition Ultimate ; Shore Court est « à deux pas d’Ocean Beach » selon le texte du Pack Vintage. Faute d’adresse de Rockstar, seul un « Paradise Garage » repéré par la communauté est placé, à Watson Bay.": "In Watson Bay liegt die Paradise-Garage der Ultimate Edition; Shore Court ist laut dem Text des Vintage-Pakets „nur einen Katzensprung von Ocean Beach entfernt“. Da Rockstar keine Adresse nennt, ist nur eine von der Community erfasste „Paradise Garage“ eingetragen, in Watson Bay.",
+ "Paradise Garage placé, Shore Court non : Rockstar donne le quartier, pas l’adresse.": "Paradise Garage eingetragen, Shore Court nicht: Rockstar nennt das Viertel, nicht die Adresse.",
+ "re:^Regroupe 1 lieu repéré\\.$": "Umfasst 1 entdeckten Ort.",
+ "re:^Regroupe (\\d+) lieux repérés\\.$": "Umfasst {1} entdeckte Orte.",
+ "re:^Équivalent réel \\(incertain\\) : (.+)\\.$": "Reales Gegenstück (unsicher): {t1}.",
+ "_motifs": {
+  "Regroupe {1} lieux repérés.": "Umfasst {1} entdeckte Orte.",
+  "Équivalent réel (incertain) : {1}.": "Reales Gegenstück (unsicher): {1}."
+ }
+}

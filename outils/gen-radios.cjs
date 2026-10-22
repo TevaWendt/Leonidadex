@@ -10,7 +10,7 @@
 const fs = require('node:fs'), path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
-const LKX = require('./lk-sections.cjs'); /* écoute des morceaux, vedette de l’album, galerie (lk-sections.css, lk-sections.js) */
+const LKX = require('./lk-sections.cjs'), EL = require('./en-lien.cjs'); /* écoute des morceaux, vedette de l’album, galerie (lk-sections.css, lk-sections.js) */
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', HUB = 'radios';
 const DATA_FILE = 'outils/radios/radios.json';
@@ -285,7 +285,7 @@ function stationPage(ctx, s) {
   <div class="lore-texte reveal"><h2>Ce que l’annonce dit, et ne dit pas</h2><p class="rise">${esc(s.contexte)}</p></div>
   <div class="lore-texte reveal"><h2>Ce qu’on sait pour le jeu</h2><p class="rise">${esc(s.pratique)}</p></div>
   ${facts}
-  <div class="lore-related"><h2>Les autres stations</h2><div class="lore-mini">${others.map(o => '<a class="lore-minicard radios-minicard" href="' + esc(o.id) + '.html" style="--st:' + esc(o.ton) + '"><i class="radios-minidot" aria-hidden="true"></i><span><b translate="no">' + esc(o.name) + '</b><i>' + esc(o.genre) + '</i></span></a>').join('')}</div></div>
+  ${EL.block({ title: 'Les autres stations', items: others.map(o => ({ href: o.id + '.html', name: o.name, nameNo: true, kind: o.genre, rel: 'stations', fig: EL.raw('plaque', plaque(o)) })) }) /* v8.04 (lot I) : moteur commun « En lien » (outils/en-lien.cjs), vignette = la plaque de la station */}
 </section>
 <section class="shell radios-fiche-src reveal" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>${sourceList(D, s.sources)}<p class="radios-note">Toutes les sources de la section, avec les statuts, sont <a href="../radios.html#sources">en bas de la page Radios et musique</a>.</p></section>`;
   /* v7.87.1 : la page (WebPage) parle d’une station du jeu (about), elle-même partie de GTA VI ; plus de « Thing » seul */
@@ -327,9 +327,8 @@ ${zone(D, STATUTS)}`;
 function fichePage(ctx, x) {
   const { D, MED, SUBC, ED } = ctx, H = D.hub, p = '../';
   const byId = id => Object.values(ED).flat().find(y => y.id === id);
-  const rel = (ids, folder, label, kindLabel) => { const l = (ids || []).map(byId).filter(Boolean); if (!l.length) return '';
-    return '<div class="lore-rel-group"><h3>' + label + '</h3><div class="lore-mini">' + l.map(y => { const m = (y.media || []).map(id => MED[id]).filter(Boolean)[0];
-      return '<a class="lore-minicard" href="../' + folder + '/' + y.id + '.html">' + (m ? '<img src="' + m.variants[0].src + '" width="' + m.variants[0].w + '" height="' + m.variants[0].h + '" alt="" loading="lazy" decoding="async">' : '<i class="lore-minivide"></i>') + '<span><b>' + esc(y.name) + '</b><i>' + esc(kindLabel) + '</i></span></a>'; }).join('') + '</div></div>'; };
+  /* v8.04 (lot I) : « En lien » par le moteur commun (outils/en-lien.cjs) : une grille de cartes avec vignette */
+  const rel = (ids, folder, kindLabel, group) => (ids || []).map(byId).filter(Boolean).map(y => EL.entity(y, { href: '../' + folder + '/' + y.id + '.html', kind: y.kind || kindLabel, rel: group }));
   const album = D.videos.find(v => v.fiche === x.id);
   const singles = album ? '<div class="lore-texte reveal"><h2>Les premiers titres sortis</h2><ol class="radios-morceaux radios-morceaux--fiche">' + album.morceaux.map((m, j) => '<li class="radios-morceau" style="--i:' + j + '"><span class="radios-morceau-n" aria-hidden="true">' + String(j + 1).padStart(2, '0') + '</span><span class="radios-mini-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><div class="radios-morceau-body"><p class="radios-morceau-t"><cite translate="no">' + esc(m.titre) + '</cite></p><p class="radios-morceau-a" translate="no">' + esc(m.artiste) + '</p>' + (m.infos ? '<p class="radios-morceau-meta">' + infosHtml(m) + '</p>' : '') + '</div>' + listen(D.poste, m, album, 'ecouter-' + album.id + '-' + (j + 1)) + '</li>').join('') + '</ol></div>' : '';
   const links = [];
@@ -338,7 +337,7 @@ function fichePage(ctx, x) {
   links.push('<a href="../radios.html#poste">Le poste de Leonida</a>');
   const m = (x.media || [])[0];
   const facts = (x.facts || []).length ? '<div class="lore-facts"><h2>À retenir</h2><ul>' + x.facts.map(f => '<li class="rise">' + esc(f) + '</li>').join('') + '</ul></div>' : '';
-  const relBlocks = rel(x.characters, 'personnages', 'Personnages', 'Personnage') + rel(x.businesses, 'entreprises', 'Entreprises', 'Entreprise');
+  const related = EL.block({ items: [...rel(x.characters, 'personnages', 'Personnage', 'characters'), ...rel(x.businesses, 'entreprises', 'Entreprise', 'businesses')] });
   const srcs = (x.sources || []).length ? '<section class="shell radios-fiche-src reveal" aria-labelledby="sources-t"><h2 class="sec-h" id="sources-t">Sources</h2>' + sourceList(D, x.sources) + '<p class="radios-note">Toutes les sources de la section, avec les statuts, sont <a href="../radios.html#sources">en bas de la page Radios et musique</a>.</p></section>' : '';
   const body = `<section class="page-head shell">
   <nav class="crumbs" aria-label="Fil d’Ariane"><a href="../index.html">Accueil</a> <span class="crumbs-sep" aria-hidden="true"></span> <a href="../${HUB}.html">${esc(H.label)}</a> <span class="crumbs-sep" aria-hidden="true"></span> <span translate="no">${esc(x.name)}</span></nav>
@@ -359,7 +358,7 @@ function fichePage(ctx, x) {
   ${x.contexte ? `<div class="lore-texte reveal"><h2>Ce que l’annonce dit, et ne dit pas</h2><p class="rise">${esc(x.contexte)}</p></div>` : ''}
   ${x.pratique ? `<div class="lore-texte reveal"><h2>Ce qu’on sait pour le jeu</h2><p class="rise">${esc(x.pratique)}</p></div>` : ''}
   ${facts}
-  ${relBlocks ? `<div class="lore-related"><h2>En lien</h2>${relBlocks}</div>` : ''}
+  ${related}
 </section>
 ${LKX.gallery(MED, (x.galerie || []).map(g => ({ media: g.media, alt: g.alt, legende: g.legende })), { name: x.name, kicker: x.kind })}
 ${srcs}`;

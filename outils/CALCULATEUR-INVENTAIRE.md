@@ -190,6 +190,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | button |  |  | Rétablir cette valeur | bDefault=goal.deadlineDays bDefaultValue=null |  | Simple + Expert (E) | petit à petit, à la fin de chaque mission |
 | text | f-goal-players | goal.players | Nombre de joueurs dans mon équipe | field=goal.players number min max=100 | invalid=false | Simple + Expert (E) (masqué par un réglage) | petit à petit, à la fin de chaque mission |
 | button |  |  | Rétablir cette valeur | bDefault=goal.players bDefaultValue |  | Simple + Expert (E) (masqué par un réglage) | petit à petit, à la fin de chaque mission |
+| checkbox |  | goal.resaleOwned | Je revends ce que je possède déjà (revente simulée) | field=goal.resaleOwned |  | Simple + Expert (E) | petit à petit, à la fin de chaque mission |
 | button |  |  | Ce qui compte dans ce calcul | foldHead=goal-assumptions | expanded=false controls=fold-goal-assumptions | Simple + Expert | petit à petit, à la fin de chaque mission |
 | button |  |  | Modifier | bFocus=f-goal-capital |  | Simple + Expert | petit à petit, à la fin de chaque mission |
 | button |  |  | Modifier | bFocus=f-goal-target |  | Simple + Expert | petit à petit, à la fin de chaque mission |
@@ -768,6 +769,12 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | plan-deadline | plan.deadlineDays | Je veux y arriver en (jours, si tu veux) | field=plan.deadlineDays number integer min max=36500 |  | Simple + Expert | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | text | plan-max-repeat | plan.maxRepeat | Même mission à la suite, au maximum | field=plan.maxRepeat number integer min max=256 |  | Simple + Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | button |  |  | Rétablir cette valeur | bDefault=plan.maxRepeat bDefaultValue=100 |  | Simple + Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| checkbox |  | plan.useHypotheses | Compter aussi mes hypothèses en plus (soins, amendes, revenu passif, bonus, partage, argen | field=plan.useHypotheses |  | Simple + Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| checkbox |  | plan.includeFailure | Compter les tentatives ratées de Mes hypothèses | field=plan.includeFailure |  | Simple + Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| checkbox |  | plan.offline.on | Compter un revenu hors ligne entre deux parties (simulation) | field=plan.offline.on |  | Simple + Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| text | plan-offline-cap | plan.offline.cap | Au plus, par pause entre deux parties ($) | field=plan.offline.cap number min=0 max=1000000000000 |  | Simple + Expert (E) (masqué par un réglage) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| button |  |  | Rétablir cette valeur | bDefault=plan.offline.cap bDefaultValue=null |  | Simple + Expert (E) (masqué par un réglage) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
+| checkbox |  | plan.resaleAfterGoal | Revendre mes achats d’avant après mon but (simulation) | field=plan.resaleAfterGoal |  | Simple + Expert (E) | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | button |  |  | Voir ma réponse | showAnswer |  | Simple + Expert | somme, gain par heure, achat, missions, achat d’avant, déblocage |
 | button |  |  | Après avoir joué, écrire ce que j’ai vraiment | bFocus=plan-actual |  | Simple + Expert | somme, gain par heure |
 | checkbox |  |  | Afficher plus de détails (partie par partie, et si, courbe, calendrier) | bPlanDetails |  | Expert | somme, gain par heure |
@@ -822,6 +829,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | plan-m-0-share | plan.missions.0.share | Ma part (%) | field=plan.missions.0.share number min=0 max=100 |  | Simple + Expert | achat, missions, achat d’avant |
 | text | plan-m-0-players | plan.missions.0.players | Se joue à (joueurs) | field=plan.missions.0.players number integer min max=100 |  | Simple + Expert | achat, missions, achat d’avant |
 | text | plan-m-0-investment | plan.missions.0.investment | À acheter une seule fois avant de commencer ($) | field=plan.missions.0.investment number min=0 max=1000000000000 |  | Simple + Expert | achat, missions, achat d’avant |
+| select | plan-m-0-who | plan.missions.0.who | Jouée par (si tu comptes l’argent d’un seul personnage) | field=plan.missions.0.who |  | Simple + Expert (E) (masqué par un réglage) | achat, missions, achat d’avant |
 | checkbox |  |  | J’ai déjà payé ce qu’il faut pour commencer | bPlanMOwned=0 |  | Simple + Expert | achat, missions, achat d’avant |
 | checkbox |  |  | Mission à faire une seule fois (elle débloque la suite) | bPlanMOnce=0 |  | Simple + Expert | achat, missions, achat d’avant |
 | checkbox |  |  | Mon achat d’avant | bPlanMReq=0¦p-<id> |  | Simple + Expert | achat, missions, achat d’avant |
@@ -834,6 +842,7 @@ Lecture : **kind** = type de contrôle ; **field** = chemin dans le scénario v6
 | text | plan-p-0-boost | plan.prerequisites.0.boostHourly | Il me fera gagner en plus ($ par heure) | field=plan.prerequisites.0.boostHourly number min=0 max=1000000000000 |  | Simple + Expert | achat, missions, achat d’avant |
 | text | plan-p-0-minutes | plan.prerequisites.0.minutes | Temps pour l’obtenir (min) | field=plan.prerequisites.0.minutes number min=0 max=1000000 |  | Simple + Expert | achat, missions, achat d’avant |
 | text | plan-p-0-usage | plan.prerequisites.0.usagePerSession | Ce qu’il coûte à chaque partie ($) | field=plan.prerequisites.0.usagePerSession number min=0 max=1000000000000 |  | Simple + Expert | achat, missions, achat d’avant |
+| text | plan-p-0-resale | plan.prerequisites.0.resale | Je le revends après mon but ($, mon hypothèse) | field=plan.prerequisites.0.resale number min=0 max=1000000000000 |  | Simple + Expert (E) | achat, missions, achat d’avant |
 | radio |  |  | Prévu | bPlanPState=0 |  | Simple + Expert | achat, missions, achat d’avant |
 | radio |  |  | Commencé (pas encore à moi) | bPlanPState=0 |  | Simple + Expert | achat, missions, achat d’avant |
 | radio |  |  | Déjà à moi | bPlanPState=0 |  | Simple + Expert | achat, missions, achat d’avant |

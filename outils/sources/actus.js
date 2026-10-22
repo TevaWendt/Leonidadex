@@ -75,3 +75,42 @@
     try { f.focus({ preventScroll: true }); } catch (x) { /* rien */ }
   });
 })();
+
+/* v8.04 (refonte A) : Prix et collector, « Ce qu’il y a dans la boîte » : galerie ou liste au choix (deux boutons, l’état est
+   dit par aria-pressed) ; dans la liste, chaque ligne s’ouvre en fiche (balise details, sans script aussi). Une vignette du tapis
+   de caisse mène à son objet : dans la galerie par son ancre ; en vue liste, la ligne de l’objet s’ouvre. Rien n’est écrit sur
+   l’appareil. */
+(function () {
+  'use strict';
+  var bar = document.querySelector('[data-px-vue]');
+  if (!bar) return;
+  var panes = {};
+  Array.prototype.forEach.call(document.querySelectorAll('[data-px-pane]'), function (p) { panes[p.getAttribute('data-px-pane')] = p; });
+  if (!panes.galerie || !panes.liste) return;
+  var current = 'galerie';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function show(name) {
+    if (!panes[name] || name === current) return;
+    current = name;
+    Object.keys(panes).forEach(function (k) { panes[k].hidden = k !== name; });
+    Array.prototype.forEach.call(bar.querySelectorAll('[data-px-pick]'), function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-px-pick') === name)); });
+    var p = panes[name];
+    p.classList.remove('is-shown'); void p.offsetWidth; p.classList.add('is-shown');
+  }
+  bar.hidden = false;
+  bar.addEventListener('click', function (ev) {
+    var b = ev.target.closest ? ev.target.closest('[data-px-pick]') : null;
+    if (b) show(b.getAttribute('data-px-pick'));
+  });
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest ? ev.target.closest('.px-belt-i') : null;
+    if (!a || current !== 'liste') return;
+    var row = document.getElementById('objl-' + (a.getAttribute('href') || '').replace(/^#obj-/, ''));
+    if (!row) return;
+    ev.preventDefault();
+    row.open = true;
+    row.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' });
+    var s = row.querySelector('summary');
+    if (s) try { s.focus({ preventScroll: true }); } catch (_) {}
+  });
+})();

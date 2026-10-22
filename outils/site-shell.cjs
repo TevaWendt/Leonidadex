@@ -8,7 +8,7 @@ const acquisition = JSON.parse(fs.readFileSync(path.join(__dirname, 'acquisition
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 const world = [['lieux.html', 'Lieux'], ['personnages.html', 'Personnages'], ['gangs.html', 'Gangs et factions'] /* v7.65 */, ['demeures.html', 'Demeures'], ['planques.html', 'Planques'], ['entreprises.html', 'Entreprises'], ['animaux.html', 'Animaux'] /* section animaux */, ['collectibles.html', 'Collectibles']];
-const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */, ['codes-de-triche.html', 'Codes de triche'] /* section codes */, ['trophees.html', 'Trophées et succès'] /* section trophees */, ['devine-le-lieu.html', 'Devine le lieu'] /* v7.90 (lot 6) : le jeu du jour, à la fin du groupe « Jouer » (menu, pied de page, puces) */];
+const play = [['missions.html', 'Missions'] /* section missions */, ['activites.html', 'Activités annexes'] /* section activites */, ['radios.html', 'Radios et musique'] /* section radios */, ['codes-de-triche.html', 'Codes de triche'] /* section codes */, ['trophees.html', 'Trophées et succès'] /* section trophees */, ['devine-le-lieu.html', 'Devine le lieu'] /* v7.90 (lot 6) : le jeu du jour, à la fin du groupe « Jouer » (menu, pied de page, puces) */, ['jeux.html', 'Les jeux du site'] /* v8.04 (lot L) : les trois jeux du jour et la progression commune */];
 /* section online : un espace à part, son propre groupe dans « Explorer » et sa colonne au pied de page */
 const online = [['online.html', 'L’espace GTA Online'], ['online/annonces.html', 'Les annonces'], ['online/gta-online-actuel.html', 'Le GTA Online actuel']];
 // Menu « S’équiper » : seules les catégories marquées menu:true dans acquisitions.json (pas de doublon avec Véhicules,
@@ -27,7 +27,7 @@ const news = [['actus.html', 'Actualités'], ['videos.html', 'Vidéos officielle
   ['prechargement.html', 'Préchargement'], ['gta-6-pc.html', 'GTA VI sur PC'], ['gta-6-vs-gta-5.html', 'GTA VI et GTA V']];
 /* v7.93 : « Les vraies voitures » est une page de la famille Véhicules (comme le comparateur ou le classement) : menu « Véhicules » actif, puces « S’équiper » */
 const realCars = 'vraies-voitures.html';
-const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['atelier-3d.html', 'Atelier 3D'] /* v7.83 */, ['achats.html', 'Achats'], ['progression.html', 'Progression']];
+const top = [['calculateurs.html', 'Calculateur'], ['tuto.html', 'Tuto'], ['carte.html', 'Carte'], ['vehicules.html', 'Véhicules'], ['armes.html', 'Armurerie'], ['atelier-3d.html', 'Atelier 3D', 'En construction'] /* v7.83 ; v8.04 (lot M, Téva : « précise que l'Atelier 3D est en construction ») : étiquette sous le lien (style.css : .nav-wip) */, ['achats.html', 'Achats'], ['progression.html', 'Progression']];
 
 /* v7.75 (Téva : « quand on clique sur la section GTA Online, j'aimerais que ça ouvre une nouvelle page du navigateur ; pareil
    pour la section Progression ») : depuis le reste du site, les liens du menu, d'« Explorer », du pied de page et des puces
@@ -55,7 +55,7 @@ function currentOf(file) {
 function nav(file, prefix) {
   const current = currentOf(file);
   const groups = [['Le monde', world], ['Jouer', play] /* sections missions, activites, radios, codes, trophees */, ['S’équiper', shopping], ['L’actualité', news] /* v7.87 */, ['Le site', [companion, ...info]] /* v7.89 */, ['GTA Online', online, 'nav-online'] /* section online */];
-  return '<ul>' + top.map(x => '<li>' + link(x, prefix, current) + '</li>').join('')
+  return '<ul>' + top.map(x => '<li>' + (x[2] ? link(x, prefix, current).replace(/<\/a>$/, '<span class="nav-wip">' + esc(x[2]) + '</span></a>') : link(x, prefix, current)) + '</li>').join('')
     + '<li><details class="nav-more"><summary>Explorer</summary><div class="nav-more-panel">'
     + groups.map(([label, list, cls]) => '<div' + (cls ? ' class="' + cls + '"' : '') + '><strong>' + esc(label) + '</strong>' + list.map(x => link(x, prefix, current)).join('') + '</div>').join('')
     + '</div></details></li></ul>';
@@ -150,7 +150,8 @@ function prixConnus(type) { if (!_etat) _etat = require('./donnees-publiees.cjs'
 function entryText(e) {
   if (!/^Aucun prix n’est publié/.test(e.d) || !e.type) return e.d;
   const n = prixConnus(e.type); if (!n) return e.d;
-  return n + ' prix publié' + (n > 1 ? 's' : '') + ' sur le site, avec leur source : le calculateur les propose comme référence. Pour les autres, écris le prix que tu imagines, ton argent et ce que tu gagnes par partie.';
+  /* v8.04 : accord quand un seul prix est publié */
+  return n + ' prix publié' + (n > 1 ? 's' : '') + ' sur le site, avec ' + (n > 1 ? 'leur source : le calculateur les propose' : 'sa source : le calculateur le propose') + ' comme référence. Pour les autres, écris le prix que tu imagines, ton argent et ce que tu gagnes par partie.';
 }
 function entry(file) {
   const e = ENTRY[file]; if (!e) return '';

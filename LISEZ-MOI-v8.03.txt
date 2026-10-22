@@ -1,0 +1,26 @@
+LEONIDAKIT v8.03 : calculateur, lot 2 (les réglages en plus, tous désactivés par défaut)
+
+À appliquer APRÈS la v8.02 : décompresse les parties de l’archive à la racine du dépôt, dans n’importe quel ordre, puis pousse
+depuis GitHub Desktop. Aucun fichier à supprimer. Rien à faire dans Vercel. Rien n’a été poussé.
+
+CE QUI CHANGE POUR LE JOUEUR
+  Rien en mode Simple ni en mode Pas à pas. En mode Expert, un nouveau bloc replié « Mes hypothèses en plus » : soins, amendes,
+  argent perdu à la mort ou à l’arrestation, revenu passif avec son stock maximum, bonus sur les récompenses, partage à parts
+  égales, argent de Jason et de Lucia (commun ou d’un seul personnage). Mon objectif peut compter la revente de ce que tu
+  possèdes déjà. Le business plan peut reprendre ces hypothèses, compter les tentatives ratées, le revenu hors ligne entre deux
+  parties et la revente des achats d’avant après le but. Tout est décoché au départ : sans un clic du joueur, chaque résultat
+  reste celui d’avant, calculs enregistrés compris. Tout ce qui n’est pas publié par Rockstar est dit « simulation ». Le Tuto et
+  Léo l’expliquent dans les six langues.
+
+POURQUOI PRESQUE TOUTES LES PAGES SONT DANS L’ARCHIVE
+  Le moteur du calculateur a changé : la version des fichiers de Léo, portée par common.js, change avec lui ; chaque page change
+  donc d’une seule empreinte (« common.js?v=… »), comme pour le lot 1.
+
+VÉRIFIÉ (détail : outils/CHANGEMENTS-v8.03.txt § 4 ; grille : outils/MATRICE-v8.03.md)
+  0 lien cassé sur 26 641 pages ; 0 texte sans traduction dans les cinq langues ; 851 résultats de la v8.01 identiques réglages
+  éteints ; captures du calculateur identiques au pixel près en Simple et en Pas à pas (36 vues, téléphone et ordinateur) ;
+  95 fichiers de tests, 1 259 tests réussis, 0 échec ; Léo 512 sur 512.
+
+ENSUITE
+  La refonte des six pages, les corrections de contenu, Léo et les formats du jour J suivent dans une dernière archive, à
+  appliquer après celle-ci.

@@ -1,6 +1,6 @@
 # Couverture des pages : un élément, une page (v7.96)
 
-Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-20. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.
+Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-22. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.
 
 ## Tableau des familles
 
@@ -20,7 +20,7 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-20. Chaque fami
 | Stations de radio et album | `outils/radios/radios.json (stations, fiches)` | 7 | 7 | 0 | 0 | 100 % | 7 | 0 |
 | Vidéos officielles | `outils/actus/actus.json (videos.liste)` | 4 | 4 | 0 | 0 | 100 % | 4 | 0 |
 | Éditions du jeu (nouvelle) | `outils/actus/actus.json (editions)` | 4 | 4 | 0 | 0 | 100 % | 4 | 0 |
-| Lieux de la carte (nouvelle) | `carnets/lieux-data.js (carte.js + carte-gtadb.js), outils/landmarks-leonidakit.json` | 3 244 | 3 244 | 0 | 0 | 100 % | 2 239 | 1 005 |
+| Lieux de la carte (nouvelle) | `carnets/lieux-data.js (carte.js + carte-gtadb.js), outils/landmarks-leonidakit.json` | 3 244 | 3 244 | 0 | 0 | 100 % | 2 240 | 1 004 |
 | Régions, villes, quartiers et comtés (nouvelle) | `carnets/lieux-data.js (catégories region, ville, quartier, comte), carte-gtadb.js (groupes)` | 47 | 47 | 0 | 0 | 100 % | 44 | 3 |
 | Marques de véhicules (nouvelle) | `outils/marques.json, vehicules-data.js (champ marque)` | 51 | 51 | 0 | 0 | 100 % | 50 | 1 |
 | Consommables (nouvelle) | `outils/catalogues/consommables.json` | 30 | 30 | 0 | 0 | 100 % | 30 | 0 |
@@ -33,25 +33,25 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-20. Chaque fami
 | Options de personnalisation (armes) (nouvelle) | `outils/catalogues/perso-options.json (perso-armes)` | 41 | 41 | 0 | 0 | 100 % | 0 | 41 |
 | Achats et services (nouvelle) | `outils/acquisitions.json (items, services, weaponVariants)` | 17 | 17 | 0 | 0 | 100 % | 17 | 0 |
 | Visuels officiels (nouvelle) | `outils/medias-officiels.json` | 196 | 196 | 0 | 0 | 100 % | 31 | 165 |
-| Grands moments (nouvelle) | `outils/monde-dossiers.json (evenements), outils/actus/actus.json (evenements)` | 31 | 31 | 0 | 0 | 100 % | 31 | 0 |
+| Grands moments (nouvelle) | `outils/monde-dossiers.json (evenements), outils/actus/actus.json (evenements)` | 43 | 43 | 0 | 0 | 100 % | 43 | 0 |
 | Missions (modèle, données au jour J) | `outils/missions/missions.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | Trophées et succès (modèle, données au jour J) | `outils/trophees/trophees.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | Codes de triche (modèle, données au jour J) | `outils/codes/codes.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | Collectibles (modèle, données au jour J) | `outils/collectibles.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
 | GTA Online (activités, achats, entreprises) (modèle, données au jour J) | `outils/online/donnees.json` | 0 | 0 | 0 | 0 | : | 0 | 0 |
-| **Total** |  | **4 367** | **4 367** | **0** | **0** | **100 %** | **3 042** | **1 325** |
+| **Total** |  | **4 379** | **4 379** | **0** | **0** | **100 %** | **3 055** | **1 324** |
 
 ## Volume à créer
 
-- Pages à créer en français : **0** (le site compte aujourd’hui 26 641 pages, toutes langues).
+- Pages à créer en français : **0** (le site compte aujourd’hui 26 731 pages, toutes langues).
 - Dans les 6 langues : **0 pages**.
-- Avec le gabarit actuel des fiches (64 Ko par page en moyenne) : **0 Mo**.
+- Avec le gabarit actuel des fiches (69 Ko par page en moyenne) : **0 Mo**.
 - Avec un gabarit allégé (21 Ko par page : CSS et JS partagés, aucun bloc répété) : **0 Mo**.
 
 ## Limites d’hébergement (relevées le 17 octobre 2026)
 
 - Vercel (docs.vercel.com/docs/limits) : aucune limite au nombre de fichiers produits par un déploiement Git ; 15 000 fichiers et 100 Mo (Hobby) ou 1 Go (Pro) seulement pour un envoi par la ligne de commande ; 45 minutes de construction au plus ; 2 048 routes (redirections de vercel.json) par déploiement ; 100 déploiements par jour (Hobby). Le site est publié depuis GitHub sans construction : seul le temps de copie compte.
-- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 998 Mo (fichiers suivis) et son historique compressé 279 Mo.
+- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 1025 Mo (fichiers suivis) et son historique compressé 280 Mo.
 
 ## Doublons (une seule page, l’autre source renvoie vers elle)
 
@@ -107,13 +107,13 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 
 - **Types de munitions** : Une seule information réelle par type (les armes qui l’utilisent) : pages prévues en noindex,follow tant que Rockstar ne publie rien de plus. Garder cette famille ou la renvoyer vers armes.html#munitions ?
 - **Lieux de la carte** : 91 repères gtadb ne sont pas sur la carte du site (34 sans nom, 57 nommés dont 3 avec un « ? ») : les ajouter à la carte (donc une page chacun) ou les laisser hors site ? Liste en annexe.
-- **Lieux de la carte** : Seuil d’indexation : 2239 lieux atteignent le seuil du prompt (nom, catégorie, quartier ou comté, position, équivalent réel ou capture) ; 1001 bâtiments sans nom (« Bâtiment L924 ») restent en noindex ; 1316 ne sont connus que par leur nom réel (« (nom réel) ») et 2365 n’ont pas de nom en jeu confirmé. Proposition prudente : indexer les 879 lieux au nom en jeu connu (avec capture ou trois informations), créer les autres en noindex,follow et les faire passer en indexable quand leur nom en jeu est confirmé. Les captures gtadb (photos/, CC BY 4.0, déjà sur la carte) sont-elles admises comme visuel sur ces pages, ou seulement l’aperçu de carte et les silhouettes teaser (le prompt ne parle que de img/officiel) ?
+- **Lieux de la carte** : Seuil d’indexation : 2240 lieux atteignent le seuil du prompt (nom, catégorie, quartier ou comté, position, équivalent réel ou capture) ; 1001 bâtiments sans nom (« Bâtiment L924 ») restent en noindex ; 1316 ne sont connus que par leur nom réel (« (nom réel) ») et 2358 n’ont pas de nom en jeu confirmé. Proposition prudente : indexer les 886 lieux au nom en jeu connu (avec capture ou trois informations), créer les autres en noindex,follow et les faire passer en indexable quand leur nom en jeu est confirmé. Les captures gtadb (photos/, CC BY 4.0, déjà sur la carte) sont-elles admises comme visuel sur ces pages, ou seulement l’aperçu de carte et les silhouettes teaser (le prompt ne parle que de img/officiel) ?
 - **Lieux de la carte** : 118 noms portés par plusieurs lieux (« Bridge » × 44, « Airfield »…) : slug complété par le quartier ou le comté, page en noindex,follow quand le lieu n’a ni nom propre ni capture officielle.
 - **Régions, villes, quartiers et comtés** : 3 entrées sans lieu rattaché (régions sans groupe gtadb) : page de regroupement quand même (noindex) ou renvoi vers la carte ?
 - **Marques de véhicules** : Marques présentes dans vehicules-data.js mais absentes de outils/marques.json : LCC, BTN, HVY
 - **Options de personnalisation (véhicules)** : 104 valeurs dans 26 familles d’options : une ou deux informations chacune (prix repère de GTA V), aucun visuel : pages prévues en noindex,follow. Les créer quand même (demande du prompt) ou ne faire qu’une page par famille d’options ?
 - **Options de personnalisation (armes)** : 41 valeurs dans 22 familles d’options : une ou deux informations chacune (prix repère de GTA V), aucun visuel : pages prévues en noindex,follow. Les créer quand même (demande du prompt) ou ne faire qu’une page par famille d’options ?
-- **Grands moments** : actus.json décrit 17 annonces datées (frise des Actualités), monde-dossiers.json 31 moments : les deux listes se recoupent (trailers, Extended Look, bande-annonce de lancement…). Proposition : une page par annonce de la frise (17), les moments du monde y renvoient ; à confirmer.
+- **Grands moments** : actus.json décrit 29 annonces datées (frise des Actualités), monde-dossiers.json 43 moments : les deux listes se recoupent (trailers, Extended Look, bande-annonce de lancement…). Proposition : une page par annonce de la frise (29), les moments du monde y renvoient ; à confirmer.
 
 ## Pages existantes hors inventaire
 
@@ -681,7 +681,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Raffinerie Allied Crystal : `lieux-carte/raffinerie-allied-crystal.html` ; lieu, point du site, officiel
 - Leonida Penitentiary : `lieux-carte/leonida-penitentiary.html` ; lieu, point du site, officiel
 - Tour de télévision : `lieux-carte/tour-de-television.html` (noindex) ; batiment, position non confirmée
-- Grand lac intérieur : `lieux-carte/grand-lac-interieur.html` (noindex) ; nature, position non confirmée
+- Grand lac intérieur : `lieux-carte/grand-lac-interieur.html` ; nature, position non confirmée
 - Sommet du Kalaga : `lieux-carte/sommet-du-kalaga.html` ; nature, position non confirmée
 - Port Vice City : `lieux-carte/port-vice-city.html` ; transport, position non confirmée
 - Dalton Island : `lieux-carte/dalton-island.html` ; nature, position non confirmée
@@ -1174,9 +1174,9 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 
 ### Consommables (30)
 
-- Café du matin : `consommables/cafe-du-matin.html` ; officiel
-- Shake protéiné : `consommables/shake-proteine.html` ; officiel
-- Barre protéinée : `consommables/barre-proteinee.html` ; officiel
+- Café du matin : `consommables/cafe-du-matin.html` ; vu
+- Shake protéiné : `consommables/shake-proteine.html` ; vu
+- Barre protéinée : `consommables/barre-proteinee.html` ; vu
 - Chips tortilla : `consommables/chips-tortilla.html` ; vu
 - Sprunk : `consommables/sprunk.html` ; vu
 - Bière au comptoir : `consommables/biere-au-comptoir.html` ; vu
@@ -1207,8 +1207,8 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 
 ### Coiffures (55)
 
-- Coupe à la planque : `coiffures/coupe-a-la-planque.html` ; officiel
-- Coupe en salon : `coiffures/coupe-en-salon.html` ; officiel
+- Coupe à la planque : `coiffures/coupe-a-la-planque.html` ; vu
+- Coupe en salon : `coiffures/coupe-en-salon.html` ; vu
 - Coiffures signature de Sara’s Unisex Salon : `coiffures/sara-coiffures-signature.html` ; officiel
 - Pilosité faciale de Jason : `coiffures/jason-pilosite-faciale.html` ; officiel
 - Coiffure rétro de Jason (Pack Vintage Vice City) : `coiffures/jason-coiffure-retro.html` ; officiel
@@ -1292,8 +1292,8 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 
 ### Tenues et accessoires (30)
 
-- Des milliers de tenues : `tenues/milliers-de-tenues.html` ; officiel
-- Tenues gagnées en mission : `tenues/tenues-gagnees-en-mission.html` ; officiel
+- Des milliers de tenues : `tenues/milliers-de-tenues.html` ; vu
+- Tenues gagnées en mission : `tenues/tenues-gagnees-en-mission.html` ; vu
 - Looks exclusifs de Stock 305 : `tenues/stock-305-looks.html` ; officiel
 - Tenues de la collection Vice City Style : `tenues/vice-city-style-tenues.html` ; officiel
 - Goodtime Gear, la collection Macca the Gator : `tenues/goodtime-gear.html` ; officiel
@@ -1347,7 +1347,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Fumée de pneus colorée : `perso-vehicules/fumee-pneus.html` ; serie
 - Pneus tout-terrain : `perso-vehicules/pneus-tout-terrain.html` ; officiel
 - Pneus à faible adhérence (drift) : `perso-vehicules/pneus-faible-adherence.html` ; serie
-- Repeinte au Pay ’n’ Spray : `perso-vehicules/pay-n-spray.html` ; officiel
+- Repeinte au Pay ’n’ Spray : `perso-vehicules/pay-n-spray.html` ; vu
 - Peinture pailletée dorée (vue) : `perso-vehicules/peinture-pailletee.html` ; vu
 - Peinture bicolore (vue) : `perso-vehicules/peinture-bicolore.html` ; vu
 - Peinture principale : `perso-vehicules/peinture-principale.html` ; serie
@@ -1378,7 +1378,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Livrée peinte à la main : `perso-vehicules/livree-peinte-main.html` ; officiel
 - Livrées et autocollants : `perso-vehicules/livrees-serie.html` ; serie
 - Emblème de crew : `perso-vehicules/embleme-crew.html` ; serie
-- Alarme et traceur (voitures de luxe) : `perso-vehicules/alarme-traceur-gta6.html` ; officiel
+- Alarme et traceur (voitures de luxe) : `perso-vehicules/alarme-traceur-gta6.html` ; vu
 - Traceur et assurance : `perso-vehicules/traceur-assurance.html` ; serie
 - Bombe à distance ou au démarrage : `perso-vehicules/bombes.html` ; serie
 - Personnalisation des motos : `perso-vehicules/motos-conf.html` ; conf
@@ -1389,7 +1389,7 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Girardi ES9 gravé de Jason : `perso-armes/variante-girardi-es9.html` ; officiel
 - Klose K17 gravé de Lucia : `perso-armes/variante-klose-k17.html` ; officiel
 - Hawk & Little Morgan « his and hers » : `perso-armes/variante-morgan.html` ; officiel
-- Plus d’options que jamais (Rob Nelson) : `perso-armes/plus-d-options.html` ; officiel
+- Plus d’options que jamais (Rob Nelson) : `perso-armes/plus-d-options.html` ; vu
 - Motif tropical du Pack Vintage Vice City : `perso-armes/motif-vintage-vice-city.html` ; officiel
 - Camouflages Mk II : `perso-armes/camouflages-mk2.html` ; serie
 - Finition dorée (vue) : `perso-armes/finition-doree.html` ; vu
@@ -1422,8 +1422,8 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Balles explosives : `perso-armes/munitions-explosives.html` ; serie
 - Munitions spéciales dans GTA VI : `perso-armes/munitions-gta6-conf.html` ; conf
 - Conversion Mk II : `perso-armes/conversion-mk2.html` ; serie
-- Casier d’Ammu-Nation : `perso-armes/casier-ammunation.html` ; officiel
-- Armes exclusives à certains magasins : `perso-armes/armes-exclusives.html` ; officiel
+- Casier d’Ammu-Nation : `perso-armes/casier-ammunation.html` ; vu
+- Armes exclusives à certains magasins : `perso-armes/armes-exclusives.html` ; vu
 - Casier d’armes du garage : `perso-armes/casier-garage.html` ; officiel
 - Corps à corps et projectiles : `perso-armes/melee-projectiles-conf.html` ; conf
 
@@ -1797,25 +1797,37 @@ Les points ci-dessous sont ceux relevés par l’inventaire de la v7.94 ; Téva 
 - Coffret collector, stickers : `visuels/coffret-stickers.html` (noindex) ; official-product-photo, sans description
 - Coffret collector, poster de Leonida : `visuels/coffret-poster.html` (noindex) ; official-product-photo, sans description
 
-### Grands moments (31)
+### Grands moments (43)
 
 - La bande-annonce de lancement : `moments/bande-annonce-lancement.html` ; 2026-10-15, annonce video
+- La campagne de lancement, de Miami à Paris : `moments/campagne-lancement.html` ; 2026-10-15, annonce presse
+- L’enquête de Bloomberg sur la fabrication du jeu : `moments/enquete-bloomberg.html` ; 2026-10-14, annonce presse
+- Deux nouveaux titres de l’album : `moments/titres-album.html` ; 2026-10-09, annonce musique
 - La collection de la boutique Rockstar : `moments/collection-boutique.html` ; 2026-10-08, annonce produit
 - Les six stations de radio : `moments/stations-radio.html` ; 2026-10-08, annonce musique
+- Xbox : pas de diffusion en nuage vers le PC : `moments/xbox-nuage.html` ; 2026-10-07, annonce presse
+- L’entretien complet de Rob Nelson à IGN : `moments/entretien-ign.html` ; 2026-10-06, annonce presse
+- Le magazine LOVE : `moments/magazine-love.html` ; 2026-10-05, annonce presse
+- Les classifications par âge : `moments/classifications.html` ; 2026-10-02, annonce annonce
 - Le dossier de Game Informer : `moments/game-informer.html` ; 2026-09-25, annonce presse
 - Le coffret collector « The Goodtime State » : `moments/coffret-collector.html` ; 2026-09-24, annonce produit
 - L’album officiel : `moments/album.html` ; 2026-09-17, annonce musique
+- L’assemblée des actionnaires de Take-Two : `moments/assemblee-take-two.html` ; 2026-09-17, annonce presse
 - Deux manettes aux couleurs de GTA VI : `moments/manettes-dualsense.html` ; 2026-09-03, annonce produit
 - L’entretien de Rob Nelson à Famitsu : `moments/entretien-famitsu.html` ; 2026-08-28, annonce presse
 - An Extended Look : `moments/extended-look.html` ; 2026-08-27, annonce video
 - Les aperçus de la presse : `moments/apercus-presse.html` ; 2026-08-27, annonce presse
 - La version en boîte détaillée : `moments/boite.html` ; 2026-08-18, annonce annonce
 - La date d’An Extended Look : `moments/date-extended-look.html` ; 2026-08-06, annonce annonce
+- Les résultats de Take-Two : `moments/resultats-take-two.html` ; 2026-08-06, annonce annonce
 - Précommandes, Édition Ultimate et Pack Vintage Vice City : `moments/precommandes.html` ; 2026-06-24, annonce annonce
 - La date des précommandes et la jaquette : `moments/precommandes-date.html` ; 2026-06-18, annonce annonce
 - La date du 19 novembre 2026 : `moments/date-sortie.html` ; 2025-11-06, annonce annonce
 - Le Trailer 2, les personnages et les régions : `moments/trailer-2.html` ; 2025-05-06, annonce video
+- Le premier report : le 26 mai 2026 : `moments/premier-report.html` ; 2025-05-02, annonce annonce
 - Le Trailer 1 : `moments/trailer-1.html` ; 2023-12-04, annonce video
+- Le premier trailer annoncé : `moments/annonce-trailer-1.html` ; 2023-11-08, annonce annonce
+- Le développement confirmé : `moments/developpement-confirme.html` ; 2022-02-04, annonce annonce
 - Trailer 1 : `moments/trailer-1.html` ; moment des dossiers du monde, même chose que l’annonce trailer-1
 - Trailer 2 : `moments/trailer-2.html` ; moment des dossiers du monde, même chose que l’annonce trailer-2
 - Pages « Only in Leonida » : `moments/pages-only-in-leonida.html` ; moment des dossiers du monde, 6 mai 2025

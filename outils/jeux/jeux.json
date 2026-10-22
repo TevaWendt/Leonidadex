@@ -1,0 +1,630 @@
+{
+ "_note": "v8.04 (lot L, Téva : « ajouter d’autres jeux en rapport avec mon site, avec un système de progression pour les jeux ») : les jeux du site et leur progression commune, générés par outils/gen-jeux.cjs (jeux.html, frise-des-annonces.html, devine-la-station.html ; le bandeau de progression de devine-le-lieu.html vient de outils/gen-devine.cjs, avec les textes de « bandeau » ci-dessous), joués par jeux-core.js, frise.js et station.js (outils/sources/). Rien d’inventé : La frise des annonces reprend les annonces datées de outils/actus/actus.json (statut et source de chacune), Devine la station les six stations présentées par Rockstar le 8 octobre 2026 et les morceaux relevés par Game Informer dans leurs aperçus (outils/radios/radios.json) ; le générateur s’arrête sur une donnée qui manque. Les niveaux, badges et défis sont ceux du site (des noms de jeu, pas des informations sur GTA VI). Progression : sur l’appareil seulement (clé lk_jeux_v1, écrite à la première réponse ; Devine le lieu garde sa clé lk_devine_v1, lue sans être réécrite). Tous les textes sont en français ; les autres langues viennent de la mémoire de traduction (outils/langues/<code>/v804-L.json).",
+ "version": 1,
+ "cle": "lk_jeux_v1",
+ "points": {
+  "bonne": 10,
+  "sansFaute": 20,
+  "defi": 50
+ },
+ "niveaux": [
+  {
+   "min": 0,
+   "nom": "Touriste à Leonida"
+  },
+  {
+   "min": 100,
+   "nom": "Habitué de Vice City"
+  },
+  {
+   "min": 250,
+   "nom": "Guide des Leonida Keys"
+  },
+  {
+   "min": 500,
+   "nom": "Pisteur des Grassrivers"
+  },
+  {
+   "min": 900,
+   "nom": "Docker de Port Gellhorn"
+  },
+  {
+   "min": 1400,
+   "nom": "Figure d’Ambrosia"
+  },
+  {
+   "min": 2100,
+   "nom": "Ranger de Mount Kalaga"
+  },
+  {
+   "min": 3000,
+   "nom": "Légende de Leonida"
+  }
+ ],
+ "badges": [
+  {
+   "id": "premier-pas",
+   "nom": "Premier pas",
+   "cond": "Finis une partie du jour, dans n’importe quel jeu."
+  },
+  {
+   "id": "sans-faute",
+   "nom": "Sans-faute",
+   "cond": "Fais 5 sur 5 dans une partie du jour."
+  },
+  {
+   "id": "trois-du-jour",
+   "nom": "Les trois du jour",
+   "cond": "Finis les trois parties du jour le même jour."
+  },
+  {
+   "id": "serie-3",
+   "nom": "Trois jours de suite",
+   "cond": "Finis une partie du jour trois jours de suite."
+  },
+  {
+   "id": "serie-7",
+   "nom": "Une semaine complète",
+   "cond": "Finis une partie du jour sept jours de suite."
+  },
+  {
+   "id": "tour-de-leonida",
+   "nom": "Tour de Leonida",
+   "cond": "Devine le lieu : trouve au moins une image dans chacune des six régions."
+  },
+  {
+   "id": "album",
+   "nom": "Album bien rempli",
+   "cond": "Devine le lieu : mets 20 images dans ton album."
+  },
+  {
+   "id": "archiviste",
+   "nom": "Archiviste",
+   "cond": "La frise des annonces : fais un sans-faute."
+  },
+  {
+   "id": "oreille-d-or",
+   "nom": "Oreille d’or",
+   "cond": "Devine la station : fais un sans-faute."
+  },
+  {
+   "id": "defis",
+   "nom": "Défis relevés",
+   "cond": "Réussis cinq défis du jour."
+  }
+ ],
+ "defis": [
+  {
+   "id": "trois",
+   "texte": "Finis les trois parties du jour."
+  },
+  {
+   "id": "devine-4",
+   "texte": "Fais au moins 4 sur 5 à Devine le lieu."
+  },
+  {
+   "id": "frise-4",
+   "texte": "Fais au moins 4 sur 5 à La frise des annonces."
+  },
+  {
+   "id": "station-4",
+   "texte": "Fais au moins 4 sur 5 à Devine la station."
+  },
+  {
+   "id": "parfait",
+   "texte": "Fais un sans-faute dans un des trois jeux."
+  },
+  {
+   "id": "total-12",
+   "texte": "Trouve au moins 12 bonnes réponses sur les trois parties du jour."
+  }
+ ],
+ "jeux": [
+  {
+   "id": "devine",
+   "page": "devine-le-lieu.html",
+   "nom": "Devine le lieu",
+   "texte": "Une capture officielle, six régions de Leonida : dis où elle a été prise.",
+   "media": "carte-postale-vice-city",
+   "alt": "Carte postale « Vice City » de Leonida : la baie, les tours et des bateaux, illustration officielle de GTA VI"
+  },
+  {
+   "id": "frise",
+   "page": "frise-des-annonces.html",
+   "nom": "La frise des annonces",
+   "texte": "Les annonces de GTA VI depuis 2022 : remets chacune à sa place sur la frise.",
+   "media": "cover-art-officielle",
+   "alt": "La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, de Raul, d’un alligator et de scènes de Leonida, illustration officielle"
+  },
+  {
+   "id": "station",
+   "page": "devine-la-station.html",
+   "nom": "Devine la station",
+   "texte": "Un animateur, un style ou un morceau : trouve la radio de GTA VI qui va avec.",
+   "media": "dre-quan-priest-04",
+   "alt": "Dre’Quan Priest debout près d’une console de mixage où travaille un ingénieur du son, visuel officiel Rockstar Games"
+  }
+ ],
+ "bandeau": {
+  "titre": "Ta progression",
+  "sansScript": "Ta progression se calcule dans ton navigateur : elle a besoin de JavaScript.",
+  "aujourdhui": "Les parties du jour",
+  "voir": "Tes badges et ta progression"
+ },
+ "msg": {
+  "lkj-niveau": "Niveau {n} sur {total}",
+  "lkj-pts-one": "{n} point",
+  "lkj-pts-other": "{n} points",
+  "lkj-prochain": "Encore {n} pour « {nom} »",
+  "lkj-max": "Tu as atteint le plus haut niveau.",
+  "lkj-vide": "Joue ta première partie du jour pour gagner tes premiers points.",
+  "lkj-a-jouer": "À jouer",
+  "lkj-en-cours": "En cours : {done} sur {total}",
+  "lkj-fini": "Fini : {score} sur {total}",
+  "lkj-defi-ok": "Réussi : {pts} de plus.",
+  "lkj-defi-ko": "À faire aujourd’hui, pour {pts} de plus.",
+  "lkj-badge-new": "Nouveau badge : {nom}.",
+  "lkj-niveau-new": "Nouveau niveau : {nom}.",
+  "lkj-gagne": "Cette partie te rapporte {pts}.",
+  "lkj-gagne-0": "Pas de point cette fois : retente demain.",
+  "lkj-badges-n": "{n} sur {total}",
+  "lkj-obtenu": "obtenu",
+  "lkj-a-gagner": "à gagner",
+  "lkj-ici": "tu es ici",
+  "lkj-jours-one": "{n} jour",
+  "lkj-jours-other": "{n} jours"
+ },
+ "hub": {
+  "label": "Les jeux",
+  "kicker": "Jouer, GTA VI",
+  "title": "Les jeux du site",
+  "seoTitle": "Jeux GTA VI : trois jeux du jour, tes points et tes badges",
+  "desc": "Trois jeux du jour sur GTA 6, faits avec les images et les annonces officielles : lieux, frise, radios. Gagne des points et des badges, garde ta série.",
+  "lede": "Trois jeux du jour, faits avec les images et les annonces officielles de GTA VI. Chaque bonne réponse te rapporte des points et te mène à la page du site qui en parle.",
+  "note": "Ta progression reste sur cet appareil : aucun compte, aucun cookie, rien n’est envoyé.",
+  "nav": {
+   "progression": "Ta progression",
+   "jeux": "Les trois jeux",
+   "points": "Les points",
+   "faq": "Questions"
+  },
+  "progression": {
+   "kicker": "Ton tableau",
+   "titre": "Ta progression",
+   "lede": "Tes points, ton niveau, ta série et tes badges, calculés avec les parties du jour des trois jeux.",
+   "niveaux": "Les huit niveaux",
+   "parties": "Parties du jour finies",
+   "bonnes": "Bonnes réponses",
+   "serie": "Série de jours",
+   "serieNote": "jours de suite avec au moins une partie du jour finie",
+   "serieMax": "Meilleure série",
+   "defis": "Défis réussis",
+   "sansFaute": "Sans-faute",
+   "defi": "Le défi du jour",
+   "badges": "Tes badges",
+   "aujourdhui": "Aujourd’hui"
+  },
+  "jeux": {
+   "kicker": "Au choix",
+   "titre": "Les trois jeux",
+   "lede": "Cinq questions par jour et par jeu, les mêmes pour tout le monde, puis une partie libre pour t’entraîner.",
+   "jouer": "Jouer"
+  },
+  "points": {
+   "kicker": "Les règles",
+   "titre": "Comment gagner des points",
+   "etapes": [
+    {
+     "titre": "Une bonne réponse",
+     "texte": "Chaque bonne réponse dans une partie du jour te rapporte {bonne} points, dès que la partie est finie."
+    },
+    {
+     "titre": "Un sans-faute",
+     "texte": "5 sur 5 dans une partie du jour : {sansFaute} points de plus."
+    },
+    {
+     "titre": "Le défi du jour",
+     "texte": "Un défi par jour, le même pour tout le monde : {defi} points de plus s’il est réussi."
+    },
+    {
+     "titre": "La partie libre",
+     "texte": "Elle ne rapporte rien : elle sert à t’entraîner, sans limite et sans toucher à tes points."
+    }
+   ]
+  },
+  "faq": {
+   "kicker": "Questions",
+   "titre": "Questions fréquentes",
+   "items": [
+    {
+     "q": "Ma progression est-elle enregistrée ?",
+     "a": "Oui, sur cet appareil seulement, dans le stockage de ton navigateur. Aucun compte, aucun cookie, rien n’est envoyé. Sur un autre appareil ou un autre navigateur, tu repars de zéro."
+    },
+    {
+     "q": "Mes anciennes parties de Devine le lieu comptent-elles ?",
+     "a": "Oui. Les parties du jour déjà finies à Devine le lieu comptent dans tes points, ta série et tes badges, sans rien changer à tes scores."
+    },
+    {
+     "q": "Pourquoi la partie libre ne rapporte-t-elle pas de points ?",
+     "a": "Pour que tout le monde avance de la même façon : seules comptent les parties du jour, les mêmes pour tous. La partie libre sert à t’entraîner."
+    },
+    {
+     "q": "D’où viennent les questions ?",
+     "a": "Des données vérifiées du site : les captures que Rockstar range par région, les annonces datées de Rockstar et de la presse, et les six stations de radio présentées par Rockstar. Rien ne vient des fuites."
+    }
+   ]
+  },
+  "explorer": {
+   "titre": "Continuer la visite",
+   "liens": [
+    {
+     "href": "actus.html",
+     "titre": "Les actualités de GTA VI",
+     "texte": "Chaque annonce, date par date, avec sa source",
+     "icon": "page"
+    },
+    {
+     "href": "radios.html",
+     "titre": "Les radios de GTA VI",
+     "texte": "Les six stations, leurs animateurs et la musique",
+     "icon": "play"
+    },
+    {
+     "href": "lieux.html",
+     "titre": "Les régions de Leonida",
+     "texte": "Les six fiches, leurs images et leurs sources",
+     "icon": "pin"
+    }
+   ]
+  },
+  "leo": {
+   "suggestions": [
+    "C’est quoi les jeux du site ?",
+    "Comment gagner des points aux jeux ?",
+    "C’est quoi La frise des annonces ?"
+   ]
+  }
+ },
+ "frise": {
+  "debut": "2026-10-21",
+  "parPartie": 5,
+  "parGroupeMax": 1,
+  "page": {
+   "label": "La frise des annonces",
+   "kicker": "Jouer, GTA VI",
+   "title": "La frise des annonces",
+   "seoTitle": "La frise des annonces : remets l’histoire de GTA VI dans l’ordre",
+   "desc": "Les annonces de GTA 6 depuis 2022 : place chacune au bon endroit sur la frise. Cinq annonces par jour, les mêmes pour tous, puis une partie libre.",
+   "lede": "Les annonces de GTA VI depuis 2022 : place chacune au bon endroit sur la frise. Cinq annonces par jour, les mêmes pour tout le monde.",
+   "note": "Chaque annonce placée montre sa date, son statut et sa source, et mène à sa page sur le site.",
+   "question": "Où places-tu cette annonce sur la frise ?",
+   "frise": "La frise du jour",
+   "depart": "Point de départ",
+   "ici": "Placer ici",
+   "sansScript": "Le jeu tire les annonces du jour dans ton navigateur : il a besoin de JavaScript. Sans lui, retrouve toutes les annonces, date par date, sur la page Actualités.",
+   "nav": {
+    "jeu": "Le jeu",
+    "regles": "Les règles",
+    "annonces": "Les annonces",
+    "faq": "Questions"
+   }
+  },
+  "msg": {
+   "g-jour": "Partie du jour n° {n}",
+   "g-libre": "Partie libre",
+   "g-num": "Annonce {i} sur {total}",
+   "g-points": "Bonnes réponses : {score} sur {done}",
+   "g-verdict-juste": "Juste",
+   "g-verdict-rate": "Raté",
+   "g-juste": "Bien placée : {date}.",
+   "g-rate": "Raté : cette annonce date du {date}.",
+   "g-suivante": "Annonce suivante",
+   "g-voir": "Voir mon résultat",
+   "g-annonce": "Annonce {i} sur {total} : où la places-tu sur la frise ?",
+   "g-annonce-libre": "Nouvelle annonce : où la places-tu sur la frise ?",
+   "g-fin": "Partie terminée : {score} sur {total}.",
+   "g-deja": "Tu as déjà joué la partie du jour : voici ton résultat.",
+   "g-res-5": "Sans faute : tu connais l’histoire de GTA VI par cœur.",
+   "g-res-4": "Presque parfait.",
+   "g-res-3": "Bien joué.",
+   "g-res-2": "Tu progresses : chaque annonce t’aide pour demain.",
+   "g-res-1": "Un bon début : la frise se retient vite.",
+   "g-res-0": "Pas cette fois : relis les annonces, et à demain.",
+   "g-jours-one": "{n} jour",
+   "g-jours-other": "{n} jours",
+   "g-sur": "{score} sur {total}",
+   "g-partage-titre": "Leonidakit, La frise des annonces n° {n} : {score} sur {total}",
+   "g-copie": "Résultat copié : colle-le où tu veux.",
+   "g-copie-ko": "Copie impossible : sélectionne le texte du résultat et copie-le.",
+   "g-partage-ok": "Résultat partagé.",
+   "g-prochaine": "Prochaine partie dans {h} h {m} min.",
+   "g-prochaine-min": "Prochaine partie dans {m} min.",
+   "g-nouvelle": "La nouvelle partie du jour est prête.",
+   "g-libre-annonce": "Partie libre : des annonces au hasard, sans limite. Ta série ne change pas.",
+   "g-res-ta": "{verdict}, ta place : {choix}",
+   "g-serie": "Série : {n}",
+   "g-sem-score": "{w} : {score} sur {total}",
+   "g-sem-vide": "{w} : pas joué",
+   "fr-avant": "Placer avant « {a} »",
+   "fr-entre": "Placer entre « {a} » et « {b} »",
+   "fr-apres": "Placer après « {a} »",
+   "fr-trop-tot": "trop tôt",
+   "fr-trop-tard": "trop tard",
+   "fr-lien": "Lire l’annonce sur le site",
+   "fr-ta-place": "Ta réponse"
+  },
+  "resultat": {
+   "titre": "Ton résultat",
+   "serie": "Série",
+   "serieNote": "jours de suite où tu as fini la partie du jour",
+   "serieMax": "Meilleure série",
+   "parties": "Parties jouées",
+   "reussite": "Réussite",
+   "meilleur": "Meilleur score",
+   "semaine": "Tes sept derniers jours",
+   "partage": "Partager mon résultat",
+   "copier": "Copier",
+   "partageNote": "Seul ce texte est partagé : ni image, ni donnée de ton appareil.",
+   "libre": "Continuer en partie libre",
+   "retour": "Mon résultat du jour",
+   "jouer": "Jouer la nouvelle partie",
+   "progression": "Ta progression"
+  },
+  "source": "Source :",
+  "regles": {
+   "kicker": "Les règles",
+   "titre": "Comment on joue",
+   "etapes": [
+    {
+     "titre": "Cinq annonces par jour",
+     "texte": "Le tirage change à minuit, heure de Paris. Une première annonce est déjà posée sur la frise, avec sa date : c’est ton point de départ."
+    },
+    {
+     "titre": "Une place pour chaque annonce",
+     "texte": "Lis l’annonce, puis touche l’endroit de la frise où elle va : avant, entre ou après celles déjà posées."
+    },
+    {
+     "titre": "La réponse, tout de suite",
+     "texte": "L’annonce se range à sa vraie place, avec sa date, son statut, sa source et le lien vers sa page sur le site."
+    },
+    {
+     "titre": "Ta série, puis la partie libre",
+     "texte": "Finis la partie du jour pour allonger ta série et gagner tes points. Ensuite, joue autant que tu veux, au hasard."
+    }
+   ]
+  },
+  "annonces": {
+   "kicker": "D’où viennent les annonces",
+   "titre": "Rien que des annonces datées et sourcées",
+   "lede": "Le jeu reprend les annonces de la page Actualités : ce que Rockstar a publié, et ce que la presse a rapporté.",
+   "p1": "Chaque annonce a une date, un statut et une source. « Officiel » : publié par Rockstar, Take-Two, Sony ou Microsoft sur leurs propres canaux. « Vu dans un média » : rapporté par la presse, qui est nommée.",
+   "p2": "Une partie n’a jamais deux annonces du même jour : chaque annonce a une seule bonne place. Les annonces sont réparties en cycles où chacune passe une fois, et aucune ne revient le lendemain.",
+   "total": "annonces dans le jeu",
+   "officielles": "annonces officielles",
+   "presse": "rapportées par la presse",
+   "lienActus": "Toutes les annonces, date par date"
+  },
+  "faq": {
+   "kicker": "Questions",
+   "titre": "Questions fréquentes",
+   "items": [
+    {
+     "q": "Les annonces de La frise viennent-elles des fuites ?",
+     "a": "Non. Seulement ce que Rockstar et ses partenaires ont publié, et ce que la presse a rapporté avec une date et une source. Le site ne reprend rien des fuites."
+    },
+    {
+     "q": "Que veut dire « Vu dans un média » ?",
+     "a": "Que l’information vient de la presse, pas d’un canal de Rockstar : un entretien, un aperçu ou une enquête. La source nomme le média."
+    },
+    {
+     "q": "Mon score est-il enregistré quelque part ?",
+     "a": "Seulement sur ton appareil, dans le stockage de ton navigateur. Rien n’est envoyé ; le partage ne transmet que le texte de ton résultat, à l’application que tu choisis."
+    },
+    {
+     "q": "De nouvelles annonces arriveront-elles ?",
+     "a": "Oui : chaque nouvelle annonce de la page Actualités entre dans le jeu, avec sa date et sa source."
+    }
+   ]
+  },
+  "explorer": {
+   "titre": "Continuer la visite",
+   "liens": [
+    {
+     "href": "actus.html",
+     "titre": "Les actualités de GTA VI",
+     "texte": "Chaque annonce, date par date, avec sa source",
+     "icon": "page"
+    },
+    {
+     "href": "videos.html",
+     "titre": "Les vidéos officielles",
+     "texte": "Les trailers, moment par moment",
+     "icon": "play"
+    },
+    {
+     "href": "jeux.html",
+     "titre": "Les jeux du site",
+     "texte": "Tes points, tes badges et les deux autres jeux",
+     "icon": "map"
+    }
+   ]
+  },
+  "leo": {
+   "suggestions": [
+    "C’est quoi La frise des annonces ?",
+    "Quand sort GTA 6 ?",
+    "Comment gagner des points aux jeux ?"
+   ]
+  }
+ },
+ "station": {
+  "debut": "2026-10-21",
+  "parPartie": 5,
+  "parGroupeMax": 2,
+  "page": {
+   "label": "Devine la station",
+   "kicker": "Jouer, GTA VI",
+   "title": "Devine la station",
+   "seoTitle": "Devine la station : le jeu des radios de GTA VI",
+   "desc": "Un animateur, un style ou un morceau : devine sur quelle radio de GTA 6 on l’entend. Six stations officielles, cinq indices par jour, les mêmes pour tous.",
+   "lede": "Un animateur, un style ou un morceau : trouve la radio de GTA VI qui va avec. Six stations, cinq indices par jour, les mêmes pour tout le monde.",
+   "note": "Chaque réponse montre la bonne station, son statut et sa source, et mène à sa fiche.",
+   "question": "Sur quelle station ?",
+   "sansScript": "Le jeu tire les indices du jour dans ton navigateur : il a besoin de JavaScript. Sans lui, retrouve les six stations et leurs fiches sur la page Radios.",
+   "types": {
+    "host": "À l’antenne",
+    "antenne": "Son nom à l’antenne",
+    "style": "Au programme",
+    "morceau": "Entendu dans l’aperçu de la station"
+   },
+   "nav": {
+    "jeu": "Le jeu",
+    "regles": "Les règles",
+    "stations": "Les stations",
+    "faq": "Questions"
+   }
+  },
+  "msg": {
+   "g-jour": "Partie du jour n° {n}",
+   "g-libre": "Partie libre",
+   "g-num": "Indice {i} sur {total}",
+   "g-points": "Bonnes réponses : {score} sur {done}",
+   "g-verdict-juste": "Juste",
+   "g-verdict-rate": "Raté",
+   "g-juste": "Bien vu : {station}.",
+   "g-rate": "Raté : c’était {station}, pas {choix}.",
+   "g-suivante": "Indice suivant",
+   "g-voir": "Voir mon résultat",
+   "g-annonce": "Indice {i} sur {total} : sur quelle station ?",
+   "g-annonce-libre": "Nouvel indice : sur quelle station ?",
+   "g-fin": "Partie terminée : {score} sur {total}.",
+   "g-deja": "Tu as déjà joué la partie du jour : voici ton résultat.",
+   "g-res-5": "Sans faute : tu connais les radios de Leonida par cœur.",
+   "g-res-4": "Presque parfait.",
+   "g-res-3": "Bien joué.",
+   "g-res-2": "Tu progresses : chaque fiche t’aide pour demain.",
+   "g-res-1": "Un bon début : les stations se retiennent vite.",
+   "g-res-0": "Pas cette fois : ouvre les fiches, et à demain.",
+   "g-jours-one": "{n} jour",
+   "g-jours-other": "{n} jours",
+   "g-sur": "{score} sur {total}",
+   "g-partage-titre": "Leonidakit, Devine la station n° {n} : {score} sur {total}",
+   "g-copie": "Résultat copié : colle-le où tu veux.",
+   "g-copie-ko": "Copie impossible : sélectionne le texte du résultat et copie-le.",
+   "g-partage-ok": "Résultat partagé.",
+   "g-prochaine": "Prochaine partie dans {h} h {m} min.",
+   "g-prochaine-min": "Prochaine partie dans {m} min.",
+   "g-nouvelle": "La nouvelle partie du jour est prête.",
+   "g-libre-annonce": "Partie libre : des indices au hasard, sans limite. Ta série ne change pas.",
+   "g-res-ta": "{verdict}, ta réponse : {choix}",
+   "g-serie": "Série : {n}",
+   "g-sem-score": "{w} : {score} sur {total}",
+   "g-sem-vide": "{w} : pas joué",
+   "st-sr-bonne": "bonne réponse",
+   "st-sr-ta": "ta réponse",
+   "st-fiche": "La fiche de {station}"
+  },
+  "resultat": {
+   "titre": "Ton résultat",
+   "serie": "Série",
+   "serieNote": "jours de suite où tu as fini la partie du jour",
+   "serieMax": "Meilleure série",
+   "parties": "Parties jouées",
+   "reussite": "Réussite",
+   "meilleur": "Meilleur score",
+   "semaine": "Tes sept derniers jours",
+   "partage": "Partager mon résultat",
+   "copier": "Copier",
+   "partageNote": "Seul ce texte est partagé : ni image, ni donnée de ton appareil.",
+   "libre": "Continuer en partie libre",
+   "retour": "Mon résultat du jour",
+   "jouer": "Jouer la nouvelle partie",
+   "progression": "Ta progression"
+  },
+  "regles": {
+   "kicker": "Les règles",
+   "titre": "Comment on joue",
+   "etapes": [
+    {
+     "titre": "Cinq indices par jour",
+     "texte": "Le tirage change à minuit, heure de Paris. Tout le monde a les mêmes indices : tu peux comparer ton score avec tes amis."
+    },
+    {
+     "titre": "Une station par indice",
+     "texte": "Un animateur, son nom à l’antenne, le style de la station ou un morceau entendu dans son aperçu : choisis la station qui va avec."
+    },
+    {
+     "titre": "La réponse, tout de suite",
+     "texte": "La bonne station s’allume sur le cadran, avec son style, ses animateurs, le statut de l’indice, sa source et le lien vers sa fiche."
+    },
+    {
+     "titre": "Ta série, puis la partie libre",
+     "texte": "Finis la partie du jour pour allonger ta série et gagner tes points. Ensuite, joue autant que tu veux, au hasard."
+    }
+   ]
+  },
+  "stations": {
+   "kicker": "D’où viennent les indices",
+   "titre": "Six stations présentées par Rockstar",
+   "lede": "Rockstar a présenté six stations le 8 octobre 2026, avec leur style et leurs animateurs. La liste complète des stations et des morceaux n’est pas publiée.",
+   "p1": "Les animateurs, leurs noms à l’antenne et le style de chaque station viennent de la présentation de Rockstar : ces indices sont officiels.",
+   "p2": "Les morceaux viennent du relevé que Game Informer a fait dans les aperçus des six stations : ils sont « Vu dans un média », pas une liste de Rockstar. Les indices sont répartis en cycles où chacun passe une fois, et aucun ne revient le lendemain.",
+   "total": "indices dans le jeu",
+   "officiels": "indices officiels",
+   "presse": "morceaux relevés par la presse",
+   "lienRadios": "Les six stations et la musique de GTA VI"
+  },
+  "faq": {
+   "kicker": "Questions",
+   "titre": "Questions fréquentes",
+   "items": [
+    {
+     "q": "Les stations de Devine la station viennent-elles des fuites ?",
+     "a": "Non. Seulement les six stations que Rockstar a présentées le 8 octobre 2026, et les morceaux que Game Informer a relevés dans leurs aperçus officiels. Le site ne reprend rien des fuites."
+    },
+    {
+     "q": "Y a-t-il d’autres stations dans GTA VI ?",
+     "a": "Rockstar n’a pas dit combien il y en aura en tout. Quand une nouvelle station est présentée, elle entre dans le jeu."
+    },
+    {
+     "q": "Mon score est-il enregistré quelque part ?",
+     "a": "Seulement sur ton appareil, dans le stockage de ton navigateur. Rien n’est envoyé ; le partage ne transmet que le texte de ton résultat, à l’application que tu choisis."
+    },
+    {
+     "q": "Peut-on écouter les stations ?",
+     "a": "Rockstar propose un aperçu de chaque station sur la page Musique de son site. La fiche de chaque station y renvoie."
+    }
+   ]
+  },
+  "explorer": {
+   "titre": "Continuer la visite",
+   "liens": [
+    {
+     "href": "radios.html",
+     "titre": "Les radios de GTA VI",
+     "texte": "Les six stations, leurs animateurs et la musique",
+     "icon": "play"
+    },
+    {
+     "href": "radios/gta-vi-the-album.html",
+     "titre": "L’album officiel",
+     "texte": "Grand Theft Auto VI: The Album, titre par titre",
+     "icon": "page"
+    },
+    {
+     "href": "jeux.html",
+     "titre": "Les jeux du site",
+     "texte": "Tes points, tes badges et les deux autres jeux",
+     "icon": "map"
+    }
+   ]
+  },
+  "leo": {
+   "suggestions": [
+    "C’est quoi Devine la station ?",
+    "Quelles radios dans GTA 6 ?",
+    "Comment gagner des points aux jeux ?"
+   ]
+  }
+ }
+}

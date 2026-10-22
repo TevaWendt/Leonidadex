@@ -202,6 +202,8 @@ const EDV={'Ultimate Edition':'Offert avec l’édition Ultimate','Pre-Order':'O
      tiennent en une ligne de pastilles, avec un lien vers verification.html qui explique, une seule fois, ce qui est confirmé
      et pourquoi un prix, une performance ou un coût d'usage reste à relever en jeu.
    - « Sur la carte de Leonida » : la carte et ses repères, sans la liste des lieux de la catégorie (identique sur 200 fiches).
+     v8.04 (lot H) : Téva veut de nouveau voir ces lieux : la carte a sa légende à côté (numéro, nom, lien vers le lieu), légère,
+     sans paragraphe répété (outils/localisateur.cjs, forme courte).
    - L'encadré « Une erreur sur cette fiche ? » devient deux liens : signaler une erreur (formulaire prérempli), la méthode.
    - Les paragraphes génériques de catégorie (« Dans un GTA, la catégorie sport… », « Le point ») quittent les fiches : ils
      restent sur les pages de section.

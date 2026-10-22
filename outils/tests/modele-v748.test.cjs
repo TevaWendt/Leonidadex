@@ -229,7 +229,7 @@ test('fiche documentaire : « Prix à venir » et « Achat à confirmer » reste
   const field = (f, id) => f.flatMap(r => r.champs).find(c => c.id === id);
   assert.equal(field(v, 'price').text, 'Prix à venir'); assert.equal(field(v, 'purchasable').text, 'Achat à confirmer');
   assert.equal(field(v, 'terrain').value.v, 'eau'); assert.equal(field(v, 'terrain').value.s, 'estimated');
-  assert.match(field(v, 'fuel').text, /Carburant\s: mécanique non confirmée/); assert.match(field(v, 'fuel').note, /jauge/);
+  assert.match(field(v, 'fuel').text, /Carburant\s: mécanique non confirmée/); assert.match(field(v, 'fuel').note, /aucun prix/); assert.doesNotMatch(field(v, 'fuel').note, /Extended Look|bande-annonce/); /* v8.04 : le plein n’est pas dans l’Extended Look (montré aux créateurs, 27 août 2026) */
   const c = L.fiche('consumable', L.fromConsumable({ statut: 'officiel', effet: { texte: 'Rend de la vie', valeur: 20, unite: 'sante', jeu: 'GTA V' }, prix_gta6: { valeur: null } }));
   const h = field(c, 'health');
   assert.equal(h.text, 'Récupération de vie : à confirmer'); assert.equal(h.repere.v, 20); assert.equal(L.V.usable(h.value), false);

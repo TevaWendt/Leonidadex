@@ -55,7 +55,7 @@ const ALLOW = new Set(['léo', 'pokémon', 'café', 'résumé', 'décor', 'naïv
   'lârss', 'elbö', 'pérez', 'trésor', 'škorpion', 'pißwasser', 'huracán', 'hellión']);
 /* noms propres français cités tels quels (adresses, nom officiel d'une loi ou d'une autorité) et citations anglaises
    gardées dans leur langue (propos de Rob Nelson) */
-const PROPER = ['You’ll obtain outfits by completing missions or purchasing them from stores', 'Le Mans', 'De Hoop', 'De Havilland', 'Sedan de Ville', 'La Perle', 'La Mesa', 'Ctrl+Y', 'UH-1Y', 'Safari Y6', 'Commission Nationale de l’Informatique et des Libertés', 'Commission nationale de l’informatique et des libertés', 'loi Informatique et Libertés', 'Informatique et Libertés', 'rue de Salneuve', 'place de Fontenoy',
+const PROPER = ['You’ll obtain outfits by completing missions or purchasing them from stores', 'Porte de Bagnolet', 'Journal du Geek' /* v8.04 : lieu réel (campagne de lancement en France) et nom d’un média français */, 'El Chaval de la Bachata' /* v8.04 : artiste cité par Game Informer */, 'We are looking forward to launching GTAVI on XBOX November 19, though the game will not be streaming exclusively or to PC.' /* v8.04 : citation de Matthew Ball (Xbox), gardée en anglais */, 'lk_jeux_v1' /* clé de stockage local des jeux */, 'Le Mans', 'De Hoop', 'De Havilland', 'Sedan de Ville', 'La Perle', 'La Mesa', 'Ctrl+Y', 'UH-1Y', 'Safari Y6', 'Commission Nationale de l’Informatique et des Libertés', 'Commission nationale de l’informatique et des libertés', 'loi Informatique et Libertés', 'Informatique et Libertés', 'rue de Salneuve', 'place de Fontenoy',
   'Stanier LE', 'La Quinta', 'Herzog and de Meuron', 'Y Vice City', 'La Côte', 'Sal Y Fuego' /* v8.00 : noms de lieux réels de la carte (gtadb) */, 'SE280LC', 'mud parties', 'Strg+Y', 'Eau de Cologne', 'eau de cologne', 'Michael De Santa' /* section online */, 'D’Agostino' /* v7.83 : Alexa D’Agostino (Rockstar), source du dossier de Lucia */, 'La Gata' /* v7.86 : nom d’antenne de RaiNao sur Cocoteo FM (annonce Rockstar du 8 octobre 2026) */];
 /* v7.62 (allemand) : mots outils français qui sont aussi des mots allemands (« du » = tu, « des » = génitif, « je » = chaque,
    « Partie » = partie de jeu) et lettres accentuées qui appartiennent à l'allemand (trémas) */
@@ -131,6 +131,12 @@ const EN_MIN = 2;
 const EN_KEEP = {
   /* titres d'articles et de vidéos cités en source (« Quelle: Kotaku: … ») */
   titres: [
+    /* v8.04 : citation de Matthew Ball (Xbox, 7 octobre 2026), gardée en anglais sur gta-6-pc.html */
+    /* v8.04 : titres de morceaux entendus dans les aperçus des radios (Game Informer), gardés dans leur langue */
+    'Need a Little Time Off for Bad Behavior', 'Don’t Come Home a Drinkin’', 'The Conversation', 'Good Ones', 'Electric Feel', 'Midnight Sun (Girls Trip)',
+    /* v8.04 : textes des éditions cités en anglais sur personnalisations.html (billet du 24 juin, fiche du Microsoft Store) */
+    'to customize your loadout for any occasion', 'a wide selection of artistic and performance-based vehicle mods',
+    'We are looking forward to launching GTAVI on XBOX November 19, though the game will not be streaming exclusively or to PC.',
     /* v7.93 : sources de la page « GTA 6 et GTA 5 » */
     'I Saw 3 Hours of GTA 6 at Rockstar North', 'Grand Theft Auto VI Has a New Trailer and Grand Ambitions',
     'GTA 6 just revealed a massive number of new gameplay details',

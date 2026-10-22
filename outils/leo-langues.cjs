@@ -80,7 +80,7 @@ function build(code, root, L, ctx) {
         const r = { ...x }, na = nameWithAliases(x.name, x.aliases, 'fiche ' + x.key, name);
         r.name = na.name; if (na.aliases.length) r.aliases = na.aliases; if (na.nameFr) r.nameFr = na.nameFr;
         /* v7.63 : « inspiration » (modèle réel) aussi ; le texte français reste dans les alias */
-        for (const k of ['category', 'description', 'tagline', 'effect', 'repere', 'edition', 'ultimate', 'context', 'ammo', 'range', 'seen', 'proof', 'inspiration'])
+        for (const k of ['category', 'description', 'tagline', 'effect', 'repere', 'edition', 'ultimate', 'context', 'ammo', 'range', 'seen', 'proof', 'inspiration', 'priceStatus' /* v8.04 (jour J) : statut d’un prix publié, avec sa fourchette */])
           if (typeof x[k] === 'string') r[k] = T(x[k], k + ' ' + x.key);
         for (const k of ['url', 'mapUrl']) if (typeof x[k] === 'string') r[k] = U(x[k]);
         if (Array.isArray(x.places)) r.places = x.places.map(p => p && p.name ? { ...p, name: T(p.name, 'lieu ' + x.key), ...(typeof p.type === 'string' ? { type: T(p.type, 'type de lieu ' + x.key) } : {}) } : p);

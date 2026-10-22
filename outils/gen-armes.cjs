@@ -44,6 +44,14 @@ const VIDEO_OF={'Premier trailer':'trailer-1','Second trailer':'trailer-2','Exte
 const signaler=id=>'<p class="fiche-meth"><a class="fiche-meth-a" href="../contact.html#motif='+encodeURIComponent('Erreur dans une fiche')+'&amp;page='+encodeURIComponent('/armes/'+id+'.html')+'">Signaler une erreur sur cette fiche</a><a class="fiche-meth-a" href="'+VERIF+'">Ce qui est confirmé et comment on vérifie</a></p>';
 const carteOf=a=>'<section class="shell reveal" id="carte">\n  <h2 class="sec-h">Sur la carte de Leonida</h2>\n  '
  +LOC.single({compact:true,item:LOC.weaponItem(a,'../',(id,h)=>schema(id,h)),places:LOC.data().placesA,prefix:'../',caption:'Armureries repérées sur notre carte : pas un point de vente confirmé pour cette arme.',placesTitle:'Armureries repérées',mapLabel:'Carte de Leonida : armureries repérées'})+'\n</section>';
+/* v8.04 (lot H, Téva : « l’agencement est maladroit, les deux images ne sont pas centrées et font tache ») : les aperçus
+   officiels occupent toute la colonne, centrés, selon leur nombre (une image en grand, deux côte à côte, trois en
+   mosaïque : une grande et deux petites) ; empilés sur téléphone. Moment de la section : la photo « se développe »
+   (de sombre et sans couleur à pleine couleur) en entrant dans l’écran (moteur commun, data-lk-reveal) ; rien ne bouge en
+   mouvement réduit. data-lkv-group : la visionneuse fait défiler les aperçus de la fiche entre eux. */
+const APX_SIZES={1:['(max-width:1400px) 94vw, 1280px'],2:['(max-width:600px) 94vw, (max-width:1400px) 46vw, 690px'],3:['(max-width:600px) 94vw, (max-width:900px) 92vw, (max-width:1400px) 62vw, 920px','(max-width:600px) 94vw, (max-width:900px) 46vw, (max-width:1400px) 31vw, 460px']};
+const apercus=(a,meds)=>{const n=meds.length,sz=APX_SIZES[Math.min(n,3)]||APX_SIZES[2];
+ return '<div class="lk-apx lk-apx--'+(n>3?'n':n)+'" data-lkv-group data-kicker="'+esc(a.nom)+'">'+meds.map((m,i)=>'<a class="apercu" data-lk-reveal href="'+medBig(m).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(medAlt(a,m))+'"><img src="'+m.variants[0].src+'" srcset="'+medSrcset(m)+'" sizes="'+(n>3?APX_SIZES[2][0]:sz[Math.min(i,sz.length-1)])+'" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="'+esc(medAlt(a,m))+'" loading="lazy" decoding="async"></a>').join('')+'</div>';};
 /* Fiche documentaire : structure du modèle commun ; seules les données déjà sur la fiche sont remplies, avec leur statut. */
 const docCol=a=>{const V=MODEL.V,known=MODEL.fromWeapon(a);known.acquisition=a.ue?V.official('Une version est offerte avec l’édition Ultimate'):V.unknown();known.location=V.unknown();
  if(a.slot==='longue')known.restrictions=V.official('Deux armes longues au plus sur toi : une dans le dos, une en main (Extended Look).');
@@ -182,7 +190,7 @@ ${rows.map(([k,v])=>'        <tr><th scope="row">'+k+'</th><td>'+v+'</td></tr>')
 ${meds.length?`<section class="shell reveal" id="apercus">
   <h2 class="sec-h">Aperçus dans les supports officiels</h2>
   <p class="fiche-txt rise">Les captures officielles où elle apparaît.</p>
-  <div class="lore-gallery-grid rise" data-kicker="${esc(a.nom)}">${meds.map(m=>'<a class="apercu" href="'+medBig(m).src+'" target="_blank" rel="noopener" aria-label="Agrandir : '+esc(medAlt(a,m))+'"><img src="'+m.variants[0].src+'" srcset="'+medSrcset(m)+'" sizes="(max-width:700px) 100vw, 560px" width="'+m.variants[0].w+'" height="'+m.variants[0].h+'" alt="'+esc(medAlt(a,m))+'" loading="lazy" decoding="async"></a>').join('')}</div>
+  ${apercus(a,meds)}
 </section>`:''}
 
 ${carteOf(a)}

@@ -5,6 +5,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),path=require('node:path'),fs=require('node:fs'),vm=require('node:vm');
 const root=path.resolve(__dirname,'../..');
 const DP=require(path.join(root,'outils/donnees-publiees.cjs')),M=require(path.join(root,'calculateurs-modele.js'));
+const J4=require('./jour-j-helper.cjs'); /* v8.04 (jour J) : « aucun chiffre inventé » plutôt que « aucun chiffre » */
 const dataCtx=()=>{const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync(path.join(root,'calculateurs-data.js'),'utf8'),c);return c.window;};
 const SAMPLES=[
  [35000,{data:'unverified',model:'estimated'}],
@@ -31,13 +32,14 @@ test('CALC-13 : le même prix (nombre nu ou {value,status,source,verifiedAt,unit
   if(raw&&typeof raw==='object'&&raw.source&&exp.model!=='unknown'){assert.equal(mv.source,raw.source);assert.equal(it.fieldMeta.price.source,raw.source);assert.equal(dp.source,raw.source);assert.equal(mv.verifiedAt,raw.verifiedAt);assert.equal(it.fieldMeta.price.verifiedAt,raw.verifiedAt);assert.equal(dp.verifiedAt,raw.verifiedAt);}
  }});
 
-test('CALC-13 : aujourd’hui, aucune valeur publiée : 0 prix, 0 activité, aucune erreur, et les phrases disent l’absence',()=>{
+test('CALC-13 : aujourd’hui, aucune valeur publiée : 0 prix, 0 activité, aucune erreur, et les phrases disent l’absence',{skip:J4.publie()?'des données sont publiées : ce test décrit l’état d’avant la sortie':false},()=>{
  const e=DP.etat(root);assert.equal(e.prix.connus,0);assert.equal(e.activites.completes,0);assert.deepEqual(e.errors,[]);assert.ok(e.prix.total>300);
  const ph=DP.phrases(e);assert.match(ph.prix,/n’a publié aucun prix/);assert.match(ph.activites,/aucun gain ni aucune durée/);assert.match(ph.faqExemples,/^Pas encore\./);assert.match(ph.prixMini,/pas encore connus/);assert.match(ph.faqApropos,/^Non\. Rockstar n’a publié aucun prix/);
  assert.ok(Object.values(e.catalogues).every(x=>x.connus===0&&x.total>0),'listes dépliables : colonne GTA VI vide');});
 
 test('CALC-13 : les phrases changent d’elles-mêmes avec les données (1 et plusieurs prix, activités), sans faute d’accord',()=>{
- const base=DP.etat(root);
+ /* v8.04 (jour J) : on part de l’état sans aucun chiffre publié, même quand des données existent */
+ const e0=DP.etat(root),base={...e0,prix:{...e0.prix,connus:0,officiels:0,parType:Object.fromEntries(Object.entries(e0.prix.parType).map(([k,v])=>[k,{...v,connus:0,officiels:0}]))},activites:{...e0.activites,completes:0,officielles:0},catalogues:Object.fromEntries(Object.entries(e0.catalogues||{}).map(([k,v])=>[k,{...v,connus:0}]))};
  const one={...base,prix:{...base.prix,connus:1,officiels:1,parType:{...base.prix.parType,vehicle:{...base.prix.parType.vehicle,connus:1,officiels:1}}}};
  const p1=DP.phrases(one);assert.match(p1.prix,/^Le site connaît 1 prix publié \(1 véhicule ; 1 prix officiel\) : le calculateur le propose/);assert.match(p1.prixMini,/^1 prix du jeu est déjà connu/);assert.match(p1.bientot,/^1 prix publié déjà/);
  const many={...one,prix:{...one.prix,connus:3,officiels:2,parType:{...one.prix.parType,weapon:{total:27,connus:2,officiels:1}}},activites:{...base.activites,completes:2,officielles:1}};
@@ -75,7 +77,7 @@ test('CALC-13 : chaque phrase d’absence des pages est bien celle calculée (da
 
 test('CALC-16 : l’inventaire des phrases d’absence (--absences) distingue les phrases mécaniques des phrases figées à relire',()=>{
  const list=DP.absences(root);assert.ok(list.length>30);const mech=list.filter(x=>x.etat==='mécanique'),fixed=list.filter(x=>x.etat!=='mécanique');
- assert.ok(mech.some(x=>x.file==='calculateurs.html'||x.file==='index.html'),'les data-lk-donnees sont comptés mécaniques');
+ if(!J4.publie())assert.ok(mech.some(x=>x.file==='calculateurs.html'||x.file==='index.html'),'les data-lk-donnees sont comptés mécaniques'); /* v8.04 : avec des données, ces phrases ne disent plus une absence */
  assert.ok(mech.some(x=>x.file==='outils/leo-knowledge.json'),'les sujets Léo « absence » sont comptés mécaniques');
  assert.ok(fixed.every(x=>!/\{donnees:/.test(x.texte)),'un marqueur est toujours mécanique');
  for(const x of list){assert.ok(fs.existsSync(path.join(root,x.file)),x.file);assert.ok(x.line>0);}});

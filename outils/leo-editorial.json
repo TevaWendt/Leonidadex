@@ -39,11 +39,7 @@
    "terms": [
     "amortissement",
     "amortir",
-    "seuil de rentabilite",
-    "rembourse",
-    "remboursement",
-    "rembourser",
-    "remboursee"
+    "seuil de rentabilite"
    ],
    "text": "C’est le moment où un achat t’a rapporté autant qu’il t’a coûté. Dans « Ça vaut le coup ? », le calculateur te dit après combien d’heures de jeu tu y arrives."
   },
@@ -85,10 +81,9 @@
   {
    "id": "modes",
    "terms": [
-    "simple expert",
-    "mode expert",
-    "mode simple",
-    "meme resultat"
+    "meme resultat",
+    "simple et expert donnent",
+    "donnent le meme resultat"
    ],
    "source": "/tuto.html#faq",
    "question": "Pourquoi Simple et Expert donnent le même résultat ?"
@@ -1436,6 +1431,7 @@
    "price": "{name} n’a pas de prix connu : Rockstar n’a publié aucun prix de véhicule. Dans le calculateur, tu peux écrire le prix que tu imagines.",
    "priceKnown": "Le prix publié sur la fiche de {name} est {price} $ ({priceStatus}{priceSource}{priceDate}). Le calculateur le propose comme prix de référence : tu peux en écrire un autre.",
    "priceSourceLine": ", source : {source}",
+   "priceSourcesLine": ", sources : {source}",
    "priceDateLine": ", vérifié le {date}",
    "ultimateYes": "Oui : {name} est relié à une édition sur le site ({condition}).",
    "ultimateNo": "Non : {name} n’est pas cité dans les contenus de l’Édition Ultimate ni du Pack Vintage recensés sur le site.",
@@ -1451,6 +1447,7 @@
    "price": "{name} n’a pas de prix connu : Rockstar n’a publié aucun prix d’arme. Dans le calculateur, tu peux écrire le prix que tu imagines.",
    "priceKnown": "Le prix publié sur la fiche de {name} est {price} $ ({priceStatus}{priceSource}{priceDate}). Le calculateur le propose comme prix de référence : tu peux en écrire un autre.",
    "priceSourceLine": ", source : {source}",
+   "priceSourcesLine": ", sources : {source}",
    "priceDateLine": ", vérifié le {date}",
    "ultimateYes": "Oui : {name} a une version personnalisée décrite avec l’Édition Ultimate.",
    "ultimateNo": "Non : {name} n’est pas citée dans les contenus de l’Édition Ultimate ni du Pack Vintage recensés sur le site.",
@@ -1475,6 +1472,7 @@
    "price": "{name} n’a pas de prix connu et son achat n’est pas confirmé : {proof} Tu peux tester un achat avec un prix que tu imagines dans le calculateur.",
    "priceKnown": "Le prix publié sur la fiche de {name} est {price} $ ({priceStatus}{priceSource}{priceDate}). Le calculateur le propose comme prix de référence : tu peux en écrire un autre.",
    "priceSourceLine": ", source : {source}",
+   "priceSourcesLine": ", sources : {source}",
    "priceDateLine": ", vérifié le {date}",
    "ultimateYes": "Oui : {name} est présenté avec l’Édition Ultimate ({description}).",
    "ultimateNo": "Non : {name} n’est pas cité dans les contenus de l’Édition Ultimate recensés sur le site.",
@@ -1491,6 +1489,7 @@
    "price": "{name} : aucun prix GTA VI n’est publié (colonne « à confirmer »). {repere}",
    "priceKnown": "Le prix GTA VI publié pour {name} est {price} $ ({priceStatus}{priceSource}{priceDate}). {repere}",
    "priceSourceLine": ", source : {source}",
+   "priceSourcesLine": ", sources : {source}",
    "priceDateLine": ", vérifié le {date}",
    "repere": "Repère de la série : {value}.",
    "noRepere": "Aucun repère de la série n’est relevé pour cette ligne.",

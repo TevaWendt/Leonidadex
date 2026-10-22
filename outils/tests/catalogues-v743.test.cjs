@@ -12,6 +12,7 @@ const doc=f=>new JSDOM(read(f)).window.document;
 const C=require(path.join(root,'outils/catalogues.cjs'));
 const S=require(path.join(root,'outils/sections.cjs'));
 const D=C.load();
+const J4=require('./jour-j-helper.cjs'); /* v8.04 (jour J) : « aucun chiffre inventé » plutôt que « aucun chiffre » */
 const LOT6=['perso-vehicules','perso-armes'];
 const withPage=(file,fn,opts={})=>async()=>{const a=await load(root,file,opts);try{await fn(a);assert.deepEqual(a.errors.filter(x=>!x.includes('Not implemented: navigation')),[]);}finally{a.close();}};
 const ld=d=>[...d.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent));
@@ -24,13 +25,15 @@ test('schéma : deux familles de personnalisation, au moins 40 postes chacune, s
   const A=new Map(armes().map(a=>[a.id,a])),lieux=new Set(progress().LK_PROGRESS_IDS.lieux),medias=JSON.parse(read('outils/medias-officiels.json'));
   const acq=JSON.parse(read('outils/acquisitions.json')).items.filter(x=>x.trackable===true).map(x=>x.id);
   for(const fam of LOT6){const d=D.families[fam];assert.ok(d.items.length>=40,fam+' : au moins 40 postes');assert.equal(d.page,'/personnalisations.html');assert.match(d.suivi.cle,/^lk_own_perso-/);
-    const c=C.counts(fam);assert.ok(c.officiel>=8,fam+' : au moins 8 postes officiels');assert.ok(c.serie>=20,fam+' : au moins 20 repères');assert.equal(c.confirmes,c.officiel+c.vu);
+    /* v8.04 (refonte F) : les postes tirés des propos de Rob Nelson à Famitsu passent en « vu dans un média » (6 et 7 officiels restent) */
+    const c=C.counts(fam);assert.ok(c.officiel>=6,fam+' : au moins 6 postes officiels');assert.ok(c.serie>=20,fam+' : au moins 20 repères');assert.equal(c.confirmes,c.officiel+c.vu);
     assert.match(C.counterText(fam),new RegExp('^'+c.n+' postes référencés, dont '+c.confirmes+' confirmés pour GTA VI$'));
     for(const it of d.items){
-      assert.equal(it.prix_gta6.valeur,null,it.id);if(it.effet.valeur!==null)assert.ok(it.effet.jeu&&it.effet.unite,it.id);
+      assert.ok(J4.prixGta6Ok(it.prix_gta6),it.id);if(it.effet.valeur!==null)assert.ok(it.effet.jeu&&it.effet.unite,it.id);
       if(it.statut==='serie')assert.ok(it.prix_repere_serie&&it.sources.some(s=>D.sources[s].statut==='serie'),it.id+' repère sourcé');
       if(it.statut==='officiel')assert.ok(it.sources.some(s=>D.sources[s].statut==='officiel'),it.id+' officiel sourcé');
-      if(it.statut==='vu')assert.ok(it.media&&medias[it.media],it.id+' : un poste vu cite sa capture');
+      /* v8.04 (refonte F) : « vu dans un média » = une capture officielle, ou un média nommé (propos de Rob Nelson à Famitsu) */
+      if(it.statut==='vu')assert.ok((it.media&&medias[it.media])||it.sources.some(s=>D.sources[s].statut==='vu'),it.id+' : un poste vu cite sa capture ou son média');
       for(const o of it.ou_le_trouver){if(o.lieu)assert.ok(lieux.has(o.lieu),it.id+' lieu '+o.lieu);else assert.ok(o.type,it.id+' type');}
       assert.ok(it.compat,it.id+' : chaque poste dit à quoi il s’applique');
       if(fam==='perso-vehicules'){assert.ok(it.compat.vehicules&&it.compat.vehicules.every(x=>C.VEH_CATS[x]),it.id);assert.equal(it.compat.armes,undefined);assert.equal(it.compat.ids,undefined);}
@@ -77,7 +80,7 @@ test('rendu : sept colonnes, compteur « postes », ligne de compatibilité avec
       const own=r.querySelector('.cat-c-own');
       if(it.acq){assert.equal(own.dataset.track,undefined);const inp=own.querySelector('input[data-acq-toggle]');assert.equal(inp.dataset.acqToggle,it.acq);assert.equal(own.querySelector('a.cat-acq-link').getAttribute('href'),'#'+it.acq);}
       else if(it.suivi!==false){assert.equal(own.dataset.track,fam);assert.equal(own.dataset.trackId,it.id);}
-      assert.match(r.querySelector('td.cat-c-p6').textContent.replace(/\s+/g,' ').trim(),/^(Prix à venir\s?Achat à confirmer|Ne s’achète pas\s?.+)$/);}
+      {const t6=r.querySelector('td.cat-c-p6').textContent;if(!J4.prixAffiche(t6))assert.match(t6.replace(/\s+/g,' ').trim(),/^(Prix à venir\s?Achat à confirmer|Ne s’achète pas\s?.+)$/);}}
     for(const b of d.querySelectorAll('.cat-repere'))assert.match(b.textContent.replace(/[  ]/g,' '),/^GTA (V|Online|IV|San Andreas)\s?: /);
     for(const b of d.querySelectorAll('.cat-eff-n'))assert.match(b.textContent,/\((GTA V|GTA Online)\)/);}
   const blind=new JSDOM('<body>'+C.listBox('perso-vehicules')+'</body>').window.document.querySelector('#perso-vehicules-blindage .cat-eff-n');assert.match(blind.textContent,/^100 % d’armure/);
@@ -111,7 +114,7 @@ test('page Personnalisations : gabarit du lot 5, deux listes dans l’ordre, car
   for(const a of d.querySelectorAll('a.cat-link, a.cat-media, .cat-compat a')){const h=a.getAttribute('href');if(h.startsWith('#'))assert.ok(d.getElementById(h.slice(1)),h);else if(h.startsWith('medias.html#'))assert.ok(read('medias.html').includes('id="'+h.split('#')[1]+'"'),h);else assert.ok(fs.existsSync(path.join(root,h.split('#')[0])),h);}
   assert.equal(d.querySelectorAll('.lk-entry-hub').length,1);assert.equal(d.querySelectorAll('nav.lk-chips').length,1);
   assert.ok(d.querySelectorAll('#sources .ed-srcs li').length>=20,'sources');assert.doesNotMatch(html,/pourra acheter|probablement/);
-  const p6=[...d.querySelectorAll('td.cat-c-p6')];assert.equal(p6.length,D.families['perso-vehicules'].items.length+D.families['perso-armes'].items.length);for(const td of p6)assert.doesNotMatch(td.textContent,/\d|\$/);
+  const p6=[...d.querySelectorAll('td.cat-c-p6')];assert.equal(p6.length,D.families['perso-vehicules'].items.length+D.families['perso-armes'].items.length);for(const td of p6){if(J4.prixAffiche(td.textContent))continue; /* v8.04 (jour J) : un prix GTA VI publié s’affiche à sa place */assert.doesNotMatch(td.textContent,/\d|\$/);}
 });
 
 test('navigateur : #perso-vehicules=sport ouvre la liste filtrée sur les voitures de sport avec la note de filtre ; « Tout afficher » retire le filtre ; #perso-armes=girardi-es9 filtre sur les postes qui citent cette arme',withPage('personnalisations.html#perso-vehicules=sport',a=>{
@@ -198,7 +201,7 @@ test('recherche interne, Léo et sitemap : chaque poste indexé vers son ancre (
     for(const it of d.items){const e=idx.find(x=>x.u===cible(fam,it,d));assert.ok(e,it.id+' indexé');assert.equal(e.t,'element');assert.equal(e.k,C.KIND[fam]);}}
   assert.ok(idx.find(e=>e.u==='/personnalisations.html#perso-armes-silencieux').s.includes('pistolets'),'mots de compatibilité dans la recherche');
   const leo=JSON.parse(read('leo-index.json')),core=require(path.join(root,'outils/tests/leo-complet.cjs')).fullCore(root)/* v7.45 : noyau + morceaux */;
-  for(const fam of LOT6){const rows=core.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){const it=D.families[fam].items.find(x=>'catalogue:'+x.id===r.key);assert.ok(r.url.startsWith('/personnalisations.html#')||(it&&r.url===cible(fam,it,D.families[fam])),r.name);assert.equal(r.price,undefined);}}
+  for(const fam of LOT6){const rows=core.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){const it=D.families[fam].items.find(x=>'catalogue:'+x.id===r.key);assert.ok(r.url.startsWith('/personnalisations.html#')||(it&&r.url===cible(fam,it,D.families[fam])),r.name);if(it&&it.prix_gta6&&typeof it.prix_gta6.valeur==='number'){assert.equal(r.price,it.prix_gta6.valeur,r.name);assert.ok(r.priceStatus,r.name);}else assert.equal(r.price,undefined);}} /* v8.04 (jour J) : un prix GTA VI publié passe dans Léo avec son statut ; sinon aucun prix */
   const faq=leo.knowledge.filter(x=>/^acq-customizations-/.test(x.id));assert.equal(faq.length,5);for(const t of faq)assert.equal(t.links[0].url,'/personnalisations.html#faq');
   for(const [q,re] of [['peut-on personnaliser sa voiture dans gta 6 ?',/Rideout Customs/],['peut-on repeindre sa voiture dans gta 6 ?',/Pay ’n’ Spray/],['peut-on personnaliser ses armes dans gta 6 ?',/Rob Nelson/],['c est quoi le kit retro du ganado ?',/Édition Ultimate/],['ou est ammu nation dans gta 6 ?',/Ammu-Nation/]]){const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);/* v7.45 : la réponse rédigée peut viser une ancre plus précise de la même page */assert.ok(a.links[0].url.startsWith('/personnalisations.html'),q+' → '+a.links[0].url);}
   const r=core.answer('trouve silencieux');assert.equal(r.kind,'results');assert.ok(r.results.some(x=>x.url==='/personnalisations.html#perso-armes-silencieux'||x.url===cible('perso-armes',{id:'silencieux'},D.families['perso-armes'])),JSON.stringify(r.results.slice(0,3).map(x=>x.url)));

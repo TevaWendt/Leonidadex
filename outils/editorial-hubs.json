@@ -4,12 +4,12 @@
     {
       "statut": "officiel",
       "titre": "Officiel",
-      "texte": "Page ou vidéo publiée par Rockstar (site GTA VI, Newswire, trailers, Extended Look), ou propos d’un responsable de Rockstar rapportés par un média nommé, avec la date."
+      "texte": "Page, texte ou vidéo publiés par Rockstar sur ses propres canaux (site GTA VI, Newswire, trailers, Extended Look), ou par Take-Two, Sony ou Microsoft, écrits comme ils l’ont dit, avec la date."
     },
     {
       "statut": "vu",
       "titre": "Vu dans un média",
-      "texte": "Ce qu’une image ou une séquence officielle montre, sans texte de Rockstar pour le dire : un plan de trailer, une capture, un moment de l’Extended Look, avec le minutage quand il est connu."
+      "texte": "Ce qu’une image ou une séquence officielle montre sans texte de Rockstar pour le dire (un plan de trailer, une capture, un moment de l’Extended Look, avec le minutage quand il est connu), ou ce qu’un média nommé rapporte, propos d’un responsable de Rockstar compris, avec le média et la date."
     },
     {
       "statut": "comm",
@@ -61,14 +61,14 @@
       "publishedAt": "2026-08-27",
       "consultedAt": "2026-09-23",
       "statut": "officiel",
-      "claim": "Présentation de 26 minutes capturée sur PS5."
+      "claim": "Présentation capturée en jeu sur PlayStation 5, d’abord sur Netflix puis sur YouTube."
     },
     "gi-areas": {
       "url": "https://gameinformer.com/2025/05/06/rockstar-shows-off-six-major-areas-of-vice-city-in-grand-theft-auto-vi",
       "title": "Game Informer : Rockstar Shows Off Six Major Areas Of Vice City In Grand Theft Auto VI",
       "publishedAt": "2025-05-06",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Reprend les descriptions officielles des six régions publiées le 6 mai 2025."
     },
     "gi-characters": {
@@ -76,7 +76,7 @@
       "title": "Game Informer : Rockstar Details Nine of Grand Theft Auto VI’s Characters",
       "publishedAt": "2025-05-06",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Huit fiches officielles pour neuf personnages (Real Dimez est un duo)."
     },
     "gtawiki-vice-city": {
@@ -116,7 +116,7 @@
       "title": "GTA Wiki : plans des trailers, minutés",
       "publishedAt": null,
       "consultedAt": "2026-09-27",
-      "statut": "vu",
+      "statut": "comm",
       "claim": "Plan par plan du Trailer 1 et du Trailer 2 avec les minutages utilisés sur cette page."
     },
     "gtawiki-extended": {
@@ -124,7 +124,7 @@
       "title": "GTA Wiki : Grand Theft Auto VI, An Extended Look",
       "publishedAt": "2026-09-25",
       "consultedAt": "2026-09-27",
-      "statut": "vu",
+      "statut": "comm",
       "claim": "Diffusion du 27 août 2026 (Netflix puis YouTube), 26 min 48 s, quatre missions : Venture Apartments, Effluvia, poursuite avec Raul, Megamundo."
     },
     "gamesradar-85": {
@@ -140,7 +140,7 @@
       "title": "RockstarINTEL : GTA 6, all confirmed locations so far",
       "publishedAt": "2023-12-05",
       "consultedAt": "2026-09-27",
-      "statut": "vu",
+      "statut": "comm",
       "claim": "Panneaux de l’autoroute 404 du Trailer 1 : Kelly County, aéroport VCI, Vice Beaches, VC Port, les Keys."
     },
     "gamespot-t2": {
@@ -196,7 +196,7 @@
       "title": "Kotaku : the whole map is three times larger than Red Dead Redemption 2",
       "publishedAt": "2026-08-27",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Comparaisons de taille données par Rockstar à la presse et à un créateur reçu à Rockstar North ; aucun chiffre en km²."
     },
     "rockstarreport-map": {
@@ -236,7 +236,7 @@
       "title": "GTABase : Jason Duval",
       "publishedAt": null,
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "comm",
       "claim": "Reprend la fiche officielle de Jason (armée, Keys, trafiquants, Brian) ; l’acteur supposé y est donné comme non confirmé."
     },
     "gtabase-lucia": {
@@ -244,7 +244,7 @@
       "title": "GTABase : Lucia Caminos",
       "publishedAt": null,
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "comm",
       "claim": "Reprend la fiche officielle de Lucia (pénitencier, Liberty City, coups intelligents) ; Manni L. Perez donnée comme supposition de fans."
     },
     "gtawiki-characters": {
@@ -260,15 +260,15 @@
       "title": "Variety : GTA 6 trailer 2, Jason and Lucia",
       "publishedAt": "2025-05-06",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Résumé officiel : un coup facile tourne mal, le duo se retrouve du côté sombre de l’endroit le plus ensoleillé des États-Unis."
     },
     "techradar-romance": {
-      "url": "https://www.techradar.com/gaming/rockstar-says-if-you-want-gta-6s-romance-you-can-have-it-and-if-you-dont-you-dont-have-to",
+      "url": "https://www.techradar.com/gaming/rockstar-says-if-you-want-gta-6s-romance-between-jason-and-lucia-to-flourish-you-have-to-nurture-it-but-its-completely-optional-its-not-something-that-we-want-to-foist-upon-players",
       "title": "TechRadar : Rob Nelson (IGN), la romance est facultative",
-      "publishedAt": "2026-09-04",
-      "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "publishedAt": "2026-08-28",
+      "consultedAt": "2026-10-20",
+      "statut": "vu",
       "claim": "Rob Nelson, co-directeur de Rockstar North : la relation entre Jason et Lucia se construit si le joueur le veut."
     },
     "gamesradar-switch": {
@@ -276,15 +276,15 @@
       "title": "GamesRadar+ : Rob Nelson (Famitsu), le changement de personnage dépend parfois de l’histoire",
       "publishedAt": "2026-09-01",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Passage libre ou imposé selon la mission ; Jason ancien des forces spéciales."
     },
     "dexerto-four": {
-      "url": "https://www.dexerto.com/gta/gta-6-almost-had-four-playable-characters-3269861/",
+      "url": "https://www.dexerto.com/gta/gta-6-almost-had-four-playable-characters-instead-of-just-jason-and-lucia-3403255/",
       "title": "Dexerto : Rob Nelson (IGN), GTA 6 a failli avoir quatre personnages jouables",
-      "publishedAt": "2026-09-02",
-      "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "publishedAt": "2026-08-27",
+      "consultedAt": "2026-10-20",
+      "statut": "vu",
       "claim": "Quatre personnages envisagés, un duo choisi pour l’attachement."
     },
     "svg-length": {
@@ -292,14 +292,14 @@
       "title": "SVG : Rob Nelson a fini sa partie en environ 80 heures",
       "publishedAt": "2026-08-27",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Environ 80 heures, histoire principale et une partie du contenu facultatif."
     },
     "pushsquare-root": {
-      "url": "https://www.pushsquare.com/news/2026/09/the-first-gta-6-actor-has-confirmed-his-involvement",
+      "url": "https://www.pushsquare.com/news/2026/09/the-first-gta-6-actor-has-confirmed-their-involvement-and-nobodys-surprised",
       "title": "Push Square : the first GTA 6 actor has confirmed his involvement",
       "publishedAt": "2026-09-14",
-      "consultedAt": "2026-09-27",
+      "consultedAt": "2026-10-20",
       "statut": "comm",
       "claim": "Stephen Root confirme un rôle sans le nommer ; le lien avec Brian Heder vient des fans et de la presse."
     },
@@ -332,7 +332,7 @@
       "title": "VGC : Rockstar confirms GTA 6 Ultimate Edition and pre-order bonuses",
       "publishedAt": "2026-06-24",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Texte officiel : Dinka Enduro et kayak Crest à la planque de Jason ; garage Paradise à Watson Bay, casier d’armes, dépôt pour le receleur."
     },
     "sixthaxis-editions": {
@@ -340,7 +340,7 @@
       "title": "TheSixthAxis : Ultimate Edition and Vintage Vice City Pack revealed",
       "publishedAt": "2026-06-24",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Texte officiel du Pack Vintage : la Stanier ’55 et un garage « à deux pas d’Ocean Beach » ; Ganado Retro Build ; précommandes le 25 juin."
     },
     "gamesradar-63": {
@@ -348,7 +348,7 @@
       "title": "GamesRadar+ : new GTA 6 gameplay details revealed alongside 63 screenshots",
       "publishedAt": "2026-06-24",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "« Jason’s Safehouse » est le nom officiel en jeu ; garages personnels dans tout Leonida avec casier d’armes ; receleur local et Stash Box."
     },
     "gamingnexus-editions": {
@@ -356,7 +356,7 @@
       "title": "Gaming Nexus : GTA VI reveals pricing, editions, and emphasis on immersion",
       "publishedAt": "2026-06-24",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Texte officiel des commerces de l’Édition Ultimate : Rideout Customs, One-Eyed Willie’s à Lake Leonida, Stock 305 et Electric Fang à Stockyard, Sara’s Unisex Salon, PTT Youngin$ à Southside, Ammu-Nation."
     },
     "gamingbible-ultimate": {
@@ -364,7 +364,7 @@
       "title": "GamingBible : GTA 6 locks exclusive content behind the Ultimate Edition",
       "publishedAt": "2026-06-24",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "En édition Standard, ces boutiques « ne sont pas ouvertes »."
     },
     "gtawiki-ultimate": {
@@ -372,7 +372,7 @@
       "title": "GTA Wiki : Grand Theft Auto VI, Ultimate Edition",
       "publishedAt": "2026-09-26",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "comm",
       "claim": "Contenu de l’édition annoncée le 24 juin 2026, garage de Watson Bay."
     },
     "gtawiki-safehouses": {
@@ -396,7 +396,7 @@
       "title": "Famitsu : interview de Rob Nelson (Rockstar North) après la démonstration",
       "publishedAt": "2026-08-28",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Planques qui changent avec les chapitres, trois places de véhicule au départ, garages à acheter, casier Ammu-Nation, Pay ’n’ Spray et receleurs, braquages, salons et magasins, coupe à la maison."
     },
     "gtavice-famitsu": {
@@ -404,7 +404,7 @@
       "title": "GTAVice.net : traduction anglaise de l’interview Famitsu",
       "publishedAt": "2026-09-09",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "comm",
       "claim": "Même interview, citée en anglais ; les propos de Rob Nelson repris ici en viennent."
     },
     "vice-150": {
@@ -460,7 +460,7 @@
       "title": "GTA Wiki : official screenshots of Grand Theft Auto VI",
       "publishedAt": null,
       "consultedAt": "2026-09-27",
-      "statut": "vu",
+      "statut": "comm",
       "claim": "Titres des captures officielles : six enseignes nommées en juin 2026, aucune en mai 2025."
     },
     "dexerto-e11even": {
@@ -500,7 +500,7 @@
       "title": "GamesRadar+ : Rockstar boss on GTA 6’s refueling system",
       "publishedAt": "2026-09-03",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Rob Nelson : le plein prend une dizaine de secondes, la station répare aussi (propos rapportés depuis une présentation à Rockstar North)."
     },
     "gamingbible-7": {
@@ -508,7 +508,7 @@
       "title": "GamingBible : 7 new GTA 6 gameplay details",
       "publishedAt": "2026-09-10",
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Rob Nelson : coupe limitée à la maison, salons pour plus de choix, drogue volée au receleur."
     },
     "gtaintel-businesses": {
@@ -524,7 +524,7 @@
       "title": "GTABase : Cal Hampton",
       "publishedAt": null,
       "consultedAt": "2026-09-27",
-      "statut": "officiel",
+      "statut": "comm",
       "claim": "Reprend la fiche officielle de Cal (garde-côtes, bières, onglets privés) ; Bobby Moynihan donné comme supposition."
     },
     "gtawiki-arena": {
@@ -548,7 +548,7 @@
       "title": "GTABase : PTT Youngin$",
       "publishedAt": null,
       "consultedAt": "2026-10-03",
-      "statut": "officiel",
+      "statut": "comm",
       "claim": "Reprend le texte de Rockstar : piller le repaire de l’un des gangs les plus bruyants de Southside, à Vice City, puis s’enfuir."
     },
     "svg-wanted": {
@@ -556,7 +556,7 @@
       "title": "SVG : GTA 6’s wanted system explained, everything Rockstar has confirmed",
       "publishedAt": "2026-08-28",
       "consultedAt": "2026-10-03",
-      "statut": "officiel",
+      "statut": "vu",
       "claim": "Rob Nelson (IGN) : un crime doit avoir un témoin ou déclencher une alarme ; lunettes et coiffure ne suffisent pas, la police connaît tes vêtements."
     },
     "wikipedia-extended": {
@@ -564,7 +564,7 @@
       "title": "Wikipedia : Grand Theft Auto VI, An Extended Look",
       "publishedAt": null,
       "consultedAt": "2026-10-03",
-      "statut": "vu",
+      "statut": "comm",
       "claim": "Résumé des scènes : livraison pour Boobie interrompue par la police, Raul qui fait entrer le duo dans son équipe, Brian qui confie une affaire au dîner."
     },
     "gtawiki-final-chapter": {
@@ -654,7 +654,7 @@
           "date": "24 juin 2026",
           "titre": "Éditions et précommandes",
           "statut": "officiel",
-          "texte": "Les textes des éditions nomment des quartiers : Watson Bay, Ocean Beach, Lake Leonida (One-Eyed Willie’s), Stockyard (Stock 305, Electric Fang), Southside (PTT Youngin$). Les seuls depuis 2025.",
+          "texte": "Les textes des éditions nomment des quartiers : Watson Bay, Ocean Beach, Lake Leonida (One-Eyed Willie’s), Stockyard (Stock 305, Electric Fang), Southside (PTT Youngin$).",
           "media": "jason-s-safehouse-vehicles",
           "alt": "La maison sur pilotis de Jason dans les Keys, avec un pick-up jaune, une moto et un kayak devant, capture officielle publiée avec les éditions"
         },
@@ -662,7 +662,7 @@
           "date": "27 août 2026",
           "titre": "Extended Look",
           "statut": "vu",
-          "texte": "Vingt-six minutes de jeu : une poursuite avec la police dans Vice City, le quartier de Bayside nommé par Lucia, un bar sur un toit à Vice Beach, une course tout-terrain à Mount Kalaga (18:35), le Starlet Motel de Port Gellhorn (25:58).",
+          "texte": "Près de vingt-sept minutes de jeu : une poursuite avec la police dans Vice City, le quartier de Bayside nommé par Lucia, un bar sur un toit à Vice Beach, une course tout-terrain à Mount Kalaga (18:35), le Starlet Motel de Port Gellhorn (25:58).",
           "media": "extended-look-coquette-d10",
           "alt": "Une décapotable rouge arrêtée dans une rue de Vice City de nuit, devant une bagarre, photogramme de l’Extended Look"
         }
@@ -744,7 +744,7 @@
       "items": [
         {
           "q": "La taille de la carte",
-          "etat": "Fin août 2026, Rockstar a parlé à la presse de trois fois la zone jouable de Red Dead Redemption 2 et de deux fois GTA V. Aucun chiffre en km²."
+          "etat": "Deux fois GTA V pour Rob Nelson, trois fois la zone jouable de Red Dead Redemption 2 pour le studio, cité par le New York Times. Aucun chiffre en km²."
         },
         {
           "q": "Toutes les régions dès le début ?",
@@ -834,7 +834,7 @@
       },
       {
         "q": "La carte de GTA VI est-elle plus grande que celle de GTA V ?",
-        "a": "Fin août 2026, Rockstar a dit à la presse : environ trois fois la zone jouable de Red Dead Redemption 2 et deux fois GTA V. Aucune surface chiffrée.",
+        "a": "Fin août 2026, Rob Nelson a parlé de deux fois GTA V, et le New York Times, citant le studio, de trois fois la zone jouable de Red Dead Redemption 2. Aucune surface chiffrée.",
         "k": [
           "plus grande que gta 5",
           "taille de la carte",
@@ -949,7 +949,7 @@
         }
       ],
       "p": [
-        "Rob Nelson, co-directeur de Rockstar North, à la presse entre le 27 août et le 4 septembre 2026 : la romance est facultative ; le passage d’un personnage à l’autre est parfois libre, parfois imposé ; quatre personnages avaient été envisagés avant le duo ; sa propre partie a duré environ 80 heures, contenu facultatif compris."
+        "Rob Nelson, co-directeur de Rockstar North, à la presse fin août 2026 : la romance est facultative ; le passage d’un personnage à l’autre est parfois libre, parfois imposé ; quatre personnages avaient été envisagés avant le duo ; sa propre partie a duré environ 80 heures, avec une partie du contenu facultatif."
       ]
     },
     "communaute": {
@@ -1016,7 +1016,7 @@
         },
         {
           "q": "La durée de l’histoire",
-          "etat": "Environ 80 heures pour la partie du co-directeur, contenu facultatif compris : pas une durée officielle."
+          "etat": "Environ 80 heures pour la partie du co-directeur, avec une partie du contenu facultatif : pas une durée officielle."
         }
       ]
     },
@@ -1059,7 +1059,7 @@
     "faq": [
       {
         "q": "Qui est Lucia Caminos ?",
-        "a": "L’une des deux personnages qu’on joue, première héroïne principale de la série. Sa fiche officielle (6 mai 2025) : son père lui a appris à se battre, défendre sa famille l’a envoyée au pénitencier, elle en sort décidée à ne plus faire que des coups intelligents.",
+        "a": "L’une des deux personnages qu’on joue, avec Jason. Sa fiche officielle (6 mai 2025) : son père lui a appris à se battre, défendre sa famille l’a envoyée au pénitencier, elle en sort décidée à ne plus faire que des coups intelligents.",
         "k": [
           "qui est lucia caminos",
           "lucia caminos c est qui",
@@ -1068,7 +1068,7 @@
       },
       {
         "q": "Qui est Jason Duval ?",
-        "a": "L’autre personnage jouable : ancien militaire élevé parmi les escrocs, il vit dans les Keys chez Brian Heder et travaille pour les trafiquants du coin.",
+        "a": "L’autre personnage jouable : ancien militaire élevé parmi les escrocs, il vit dans les Keys, dans une propriété de Brian Heder, et travaille pour les trafiquants du coin.",
         "k": [
           "qui est jason duval",
           "jason duval c est qui",
@@ -1077,7 +1077,7 @@
       },
       {
         "q": "Combien de personnages jouables dans GTA VI ?",
-        "a": "Deux : Jason et Lucia. Rob Nelson a expliqué en septembre 2026 que quatre personnages avaient été envisagés avant le duo. Les six autres ne sont pas annoncés comme jouables.",
+        "a": "Deux : Jason et Lucia. Rob Nelson a dit à IGN fin août 2026 que quatre personnages avaient été envisagés avant le duo. Les six autres ne sont pas annoncés comme jouables.",
         "k": [
           "combien de personnages jouables",
           "personnages jouables",
@@ -1483,7 +1483,7 @@
         },
         {
           "fiction": "Watson Bay et Shore Court sur la carte",
-          "reel": "Non placés : Rockstar donne le quartier, pas l’adresse. Les cartes issues de fuites ne sont pas utilisées.",
+          "reel": "Paradise Garage placé, Shore Court non : Rockstar donne le quartier, pas l’adresse. Les cartes issues de fuites ne sont pas utilisées.",
           "src": "rockstarreport-map"
         }
       ],
@@ -1594,7 +1594,7 @@
       },
       {
         "q": "Où sont Watson Bay et Shore Court ?",
-        "a": "Watson Bay accueille le garage Paradise de l’Édition Ultimate ; Shore Court est « à deux pas d’Ocean Beach » selon le texte du Pack Vintage. Rockstar n’a pas donné d’adresse précise, donc ils ne sont pas encore placés sur la carte.",
+        "a": "Watson Bay accueille le garage Paradise de l’Édition Ultimate ; Shore Court est « à deux pas d’Ocean Beach » selon le texte du Pack Vintage. Faute d’adresse de Rockstar, seul un « Paradise Garage » repéré par la communauté est placé, à Watson Bay.",
         "k": [
           "watson bay",
           "shore court",
@@ -1972,7 +1972,7 @@
         {
           "date": "28 août 2026",
           "titre": "Famitsu",
-          "statut": "officiel",
+          "statut": "vu",
           "texte": "Rob Nelson (Rockstar North) : on s’infiltre dans les repaires de gangs pour voler argent ou drogue, que la carte chiffre d’avance ; la drogue se revend à un receleur. Sans témoin ni alarme, pas d’avis de recherche.",
           "media": "vice-city-12",
           "alt": "Un homme tient une arme dorée de silhouette AK à chargeur courbe dans Vice City."

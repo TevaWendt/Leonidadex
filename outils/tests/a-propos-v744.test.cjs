@@ -63,7 +63,10 @@ test('À propos : aucun nombre tapé à la main — les chiffres viennent des do
   /* v7.88 : « pages en ligne » sans les pages de redirection (meta refresh) ni 404.html */
   const real=f=>f!=='404.html'&&!/http-equiv=["']refresh/i.test(read(f));
   const pages=fs.readdirSync(root).filter(f=>f.endsWith('.html')&&!f.startsWith('google')&&real(f)).length+['armes','vehicules','lieux','personnages','entreprises','demeures','planques','gangs','carnets','missions'/* section missions */,'activites'/* section activites */,'radios'/* section radios */,'animaux'/* section animaux */,'codes-de-triche'/* section codes */,'trophees'/* section trophees */,'online'/* section online */,'videos'/* v7.87 */,'lieux-carte','quartiers','consommables'/* v7.95 : une page par élément, lot A */,'coiffures','tatouages','tenues','perso-vehicules','perso-armes','options-vehicules','options-armes','marques','munitions','editions','achats','visuels','moments'/* v7.96 : lot B */].reduce((n,x)=>n+fs.readdirSync(path.join(root,x)).filter(f=>f.endsWith('.html')&&real(x+'/'+f)).length,0);
-  assert.equal(stat('pages'),pages);
+  /* v8.04 (chiffres du site) : « pages en ligne, toutes langues comprises » = pages françaises × langues publiées (chaque langue
+     traduit toutes les pages françaises, outils/langues.json) ; avant, seules les pages françaises étaient comptées */
+  const nLangues=JSON.parse(read('outils/langues.json')).langues.filter(l=>l.etat==='publiee').length;
+  assert.equal(stat('pagestotal'),pages*nLangues);
   for(const b of d.querySelectorAll('.fig-n'))assert.equal(b.textContent.replace(/[  ]/g,''),b.dataset.count,'texte sans JS = valeur');
   const acq=JSON.parse(read('outils/acquisitions.json'));const fr=iso=>new Intl.DateTimeFormat('fr-FR',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));
   assert.ok(d.getElementById('calendrier').textContent.replace(/[\u00a0\u202f]/g, ' ').includes(fr(acq.game.releaseDate)));assert.ok(d.getElementById('calendrier').textContent.replace(/[\u00a0\u202f]/g, ' ').includes(fr(acq.game.checkedAt))||d.getElementById('calendrier').textContent.replace(/[\u00a0\u202f]/g, ' ').includes(fr(acq.game.checkedAt).replace(/^1 /,'1er ')),'date de relecture de la sortie (« 1er » depuis la v7.57)');

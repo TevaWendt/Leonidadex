@@ -103,7 +103,8 @@ test('T3-08 plan : B (demande A) se paie après l’obtention de A (60 min), jam
 });
 
 /* ---------- « Quel achat choisir ? » : deux achats du même nom ne se confondent plus ---------- */
-const site = H.siteData(), initial = B.initial(H.dataVersion(site.D, site.catalogue, site.sourceActivities), site.presets);
+/* v8.04 (jour J) : les exemples se calculent sans les données publiées */
+const site = H.siteData({ sansPublication: true }), initial = B.initial(H.dataVersion(site.D, site.catalogue, site.sourceActivities), site.presets);
 function twoFree() {
   const s = H.baseState(B, initial, site.catalogue);
   s.assets = [...s.assets, { ...B.copy(B.assetTemplate), key: 'free-a', name: 'Mon achat libre', price: 300000, extras: 0, fees: 0, utility: 3 }, { ...B.copy(B.assetTemplate), key: 'free-b', name: 'Mon achat libre', price: 50000, extras: 0, fees: 0, utility: 3 }];

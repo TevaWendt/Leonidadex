@@ -43,6 +43,14 @@ function load(root = ROOT) {
   const add = (id, s, from) => { if (!s || !s.url) return; if (SRC[id] && SRC[id].url !== s.url) err.push('source ' + id + ' : deux adresses (' + SRC[id].from + ', ' + from + ')'); if (!SRC[id]) SRC[id] = { ...s, id, from }; };
   for (const f of REGISTRES) if (fs.existsSync(path.join(root, f))) for (const [id, s] of Object.entries(JSON.parse(read(f)).sources || {})) add(id, s, f);
   for (const [id, s] of Object.entries(A.sources)) add(id, s, DATA_FILE);
+  /* v8.04 (refonte A) : une source d’un registre commun dont le statut ou l’affirmation est à corriger (article de presse noté
+     « officiel ») l’est ici pour les pages de ce générateur (actus.json → sourcesCorrigees) */
+  for (const [id, fix] of Object.entries(A.sourcesCorrigees || {})) {
+    if (id.startsWith('_')) continue;
+    if (!SRC[id]) { err.push('sourcesCorrigees : source inconnue ' + id); continue; }
+    if (Object.keys(fix).some(k => k !== 'statut' && k !== 'claim')) err.push('sourcesCorrigees : seuls statut et claim se corrigent (' + id + ')');
+    SRC[id] = { ...SRC[id], ...fix };
+  }
   if (err.length) throw new Error('Sources en conflit :\n- ' + err.join('\n- '));
   return { A, MD, ED, MED, MI, R, V, W, SRC, STATUTS, read };
 }
@@ -113,6 +121,12 @@ function check(ctx, root = ROOT) {
     for (const id of meds) if (!MED[id]) err.push('prix : visuel inconnu ' + id);
     for (const o of PX.collector.objets) if (!o.alt || !o.t || !o.d) err.push('prix : objet du coffret incomplet ' + o.media);
     if (PX.collector.objets.length !== 11) err.push('le coffret compte onze objets d’après Rockstar, pas ' + PX.collector.objets.length);
+    /* v8.04 (refonte A) : le tapis de caisse donne le nom court de chaque objet, dans l’ordre de la galerie ; la fiche d’un objet
+       (vue liste) cite sa source */
+    if ((PX.collector.defile || []).length !== PX.collector.objets.length) err.push('prix : un nom court (defile) par objet du coffret, dans le même ordre');
+    if (!PX.collector.vue || !PX.collector.vue.galerie || !PX.collector.vue.liste || !PX.collector.vue.label || !PX.collector.vue.st) err.push('prix : textes du choix galerie ou liste manquants');
+    else src(PX.collector.vue.src, 'prix (fiche d’un objet)');
+    if (PX.sources.indexOf(PX.collector.vue && PX.collector.vue.src) < 0) err.push('prix : la source des fiches d’objet doit être listée dans les sources de la page');
     for (const id of PX.sources) src(id, 'prix');
     for (const p of [...PX.jeu.editions.map(x => x.st), PX.collector.st, PX.manettes.st, PX.boutique.st]) for (const s of p || []) { if (!ST.includes(s.statut)) err.push('prix : statut inconnu'); src(s.src, 'prix (statut)'); }
     if (PX.desc.length > 160) err.push('description trop longue : prix');
@@ -280,13 +294,15 @@ function actusPage(ctx) {
   /* chiffres de l’en-tête : calculés sur les données (annonces, vidéos, sources, jours de la première vidéo à la sortie) */
   const first = A.videos.liste.map(v => v.iso).sort()[0], sortie = A.aVenir.find(x => /sortie/i.test(x.titre)) || A.aVenir[1];
   const jours = Math.round((Date.parse(sortie.iso) - Date.parse(first)) / 864e5);
-  const figs = VT.figs([{ n: A.evenements.length, label: X.chiffres.annonces }, { n: A.videos.liste.length, label: X.chiffres.videos }, { n: allSrc.length, label: X.chiffres.sources }, { n: jours.toLocaleString('fr-FR'), label: X.chiffres.jours, accent: true }], { cls: 'ac-figs' });
+  /* v8.04 (refonte A) : les annonces officielles et les dossiers de presse (statut « vu dans un média ») sont comptés à part */
+  const nOff = A.evenements.filter(e => e.statut === 'officiel').length, nPresse = A.evenements.length - nOff;
+  const figs = VT.figs([{ n: nOff, label: X.chiffres.annonces }, { n: nPresse, label: X.chiffres.presse }, { n: A.videos.liste.length, label: X.chiffres.videos }, { n: jours.toLocaleString('fr-FR'), label: X.chiffres.jours, accent: true }], { cls: 'ac-figs' });
   const types = Object.keys(X.types);
   const bar = VT.filters('ac-frise', types.map(t => ({ f: t, label: X.types[t], n: A.evenements.filter(e => e.type === t).length })), { label: X.tout, n: A.evenements.length }, X.filtresLabel);
   /* v7.92.1 : « À la une » : la dernière annonce en grand (son visuel, sa date, son texte et ses liens), avant ce qui est
      daté et la frise ; elle reste aussi en tête de la frise */
   const une = (() => {
-    const e = A.evenements[0], vid = e.video ? A.videos.liste.find(v => v.id === e.video) : null;
+    const e = derniere(A), vid = e.video ? A.videos.liste.find(v => v.id === e.video) : null;
     const media = vid ? vid.affiche : e.media, alt = vid ? 'Affiche officielle : ' + vid.nom : e.alt;
     const links = [...(vid ? [{ href: 'videos/' + vid.id + '.html', label: X.une.voir, main: true }] : []), ...(e.liens || [])];
     return '<article class="vt-feature ac-une lk-reveal">' + (media ? '<figure class="vt-feature-fig">' + VT.img(media, alt, { big: true, sizes: '(max-width:819px) 92vw, 54vw'/* v8.01 : suit la largeur réelle de la colonne (1 004 px à 1 920 px) */ }) + '</figure>' : '')
@@ -455,16 +471,23 @@ function videosHub(ctx) {
       + '<span class="ac-pl-fig"><img src="' + m.a.src + '" srcset="' + m.a.src + ' ' + m.a.w + 'w' + (midOf(m.b.src) ? ', ' + midOf(m.b.src) + ' 800w' : '') + '" sizes="(max-width:599px) 132px, (max-width:959px) 30vw, 132px" width="' + m.a.w + '" height="' + m.a.h + '" alt="" loading="lazy" decoding="async"><span class="ac-pl-play" aria-hidden="true">' + LKX.ICO.play + '</span></span>'
       + '<span class="ac-pl-b"><time datetime="' + esc(v.iso) + '">' + esc(frLong(v.iso)) + '</time><span class="ac-pl-t">' + esc(v.nom) + '</span></span></a></li>'; }).join('') + '</ol>';
   const salle = '<div class="ac-theater"><div class="ac-th-main"><div class="ac-vplayer">' + screen(ctx, feat, P, '', true) + '</div></div><div class="ac-th-side">' + list.map(info).join('') + '</div><div class="ac-th-list">' + pl + '</div></div>';
-  /* les vidéos comparées : une barre par vidéo et par mesure (la plus grande valeur remplit la ligne). v7.92.1 : seules les
-     vidéos relevées image par image (au moins un moment) ; une phrase dit laquelle ne l’est pas, au lieu d’une rangée de zéros */
-  const M = P.metriques;
-  const metrics = [['moments', d => d.moments.length], ['morceaux', d => d.songs.length], ['vehicules', d => d.vehicles.length], ['armes', d => d.weapons.length], ['fiches', d => d.rev.length]];
+  /* les vidéos comparées. v7.92.1 : seules les vidéos relevées image par image (au moins un moment) ; une phrase dit laquelle ne
+     l’est pas, au lieu d’une rangée de zéros. v8.04 (refonte A) : un tableau des scores d’arcade (plus de barres plates) : une
+     colonne par vidéo (son affiche, qui mène à sa page), une rangée par mesure ; chaque score est un lien vers la partie de la page
+     de la vidéo qui le détaille (la page seule quand il vaut 0) ; sa jauge a douze cases, la plus grande valeur de la rangée les
+     remplit toutes, et elle s’allume case par case à l’entrée (actus.css) pendant que le chiffre défile (common.js) ; la meilleure
+     vidéo de la rangée reçoit « Record ». Le nom de la vidéo (lu par les lecteurs d’écran) et « Record » sont des blocs : chacun
+     est un texte à part pour la traduction, quel que soit le chiffre. Sans script ou en « réduire les animations », tout est
+     déjà posé. */
+  const M = P.metriques, SEG = 12;
+  const metrics = [['moments', d => d.moments.length, 'moments'], ['morceaux', d => d.songs.length, 'musique'], ['vehicules', d => d.vehicles.length, 'vehicules'], ['armes', d => d.weapons.length, 'armes'], ['fiches', d => d.rev.length, 'fiches']];
   const chrono = [...list].sort((a, b) => a.iso.localeCompare(b.iso));
   const relevees = chrono.filter(v => data[v.id].moments.length);
-  /* v7.94 : un seul tableau de bord, une rangée par mesure (plus de cinq cartes dont une seule sur sa rangée) */
-  const bars = '<div class="ac-bars vt-in" data-lk-reveal><ul class="ac-bars-key" aria-hidden="true">' + relevees.map((v, k) => '<li class="ac-k' + k + '">' + esc(v.nom) + '</li>').join('') + '</ul>'
-    + metrics.map(([key, f], i) => { const vals = relevees.map(v => f(data[v.id])), max = Math.max(...vals, 1);
-      return '<div class="ac-bar-g" style="--i:' + i + '"><h3 class="ac-bar-h">' + esc(M[key]) + '</h3><ul class="ac-bar-l">' + relevees.map((v, k) => '<li class="ac-bar ac-k' + k + '" style="--p:' + Math.max(2, Math.round(100 * vals[k] / max)) + '%"><span class="ac-bar-n">' + esc(v.nom) + '</span><b>' + vals[k] + '</b><span class="ac-bar-t" aria-hidden="true"><i></i></span></li>').join('') + '</ul></div>'; }).join('') + '</div>'
+  const head = '<div class="ac-score-head"><span class="ac-score-corner" aria-hidden="true"></span><div class="ac-score-vs">' + relevees.map((v, k) => '<a class="ac-score-v" href="videos/' + esc(v.id) + '.html" style="--k:' + k + '"><span class="ac-score-fig">' + VT.img(v.affiche, '', { sizes: '(max-width:759px) 30vw, 240px' }) + '</span><span class="ac-score-vn">' + esc(v.nom) + '</span><time datetime="' + esc(v.iso) + '">' + esc(frLong(v.iso)) + '</time></a>').join('') + '</div></div>';
+  const rows = metrics.map(([key, f, anchor], i) => { const vals = relevees.map(v => f(data[v.id])), max = Math.max(...vals, 0);
+    return '<div class="ac-score-r" style="--i:' + i + '"><h3 class="ac-score-h" id="score-' + key + '">' + esc(M[key]) + '</h3><ul class="ac-score-l">' + relevees.map((v, k) => { const n = vals[k], fill = n > 0 ? Math.max(1, Math.round(SEG * n / max)) : 0, top = max > 0 && n === max;
+      return '<li class="ac-bar ac-score-c' + (top ? ' is-top' : '') + '" style="--f:' + fill + ';--k:' + k + '"><a href="videos/' + esc(v.id) + '.html' + (n > 0 ? '#' + anchor : '') + '" aria-describedby="score-' + key + '"><div class="ac-bar-n">' + esc(v.nom) + '</div><b data-lk-count>' + n + '</b>' + (top ? '<div class="ac-score-top">' + esc(P.record) + '</div>' : '') + '<span class="ac-score-seg" aria-hidden="true"><i></i></span></a></li>'; }).join('') + '</ul></div>'; }).join('');
+  const bars = '<div class="ac-score vt-in" data-lk-reveal style="--cols:' + relevees.length + ';--seg:' + SEG + '">' + head + rows + '</div>'
     + (relevees.length < chrono.length && P.chiffresNote ? '<p class="ac-bars-note">' + esc(P.chiffresNote) + '</p>' : '');
   /* les moments à revoir : les photogrammes des vidéos, dans l’ordre des vidéos puis du minutage */
   const shots = chrono.flatMap(v => data[v.id].moments.map(m => ({ media: m.id, alt: m.alts[0] || m.alt || '', href: 'videos/' + v.id + '.html#moments', title: v.nom + (m.t !== null ? ', ' + mmss(m.t) : ''), sub: m.items.slice(0, 2).map(it => it.label).join(', '), time: m.t !== null ? mmss(m.t) : null })));
@@ -504,7 +527,7 @@ ${zone([
 /* v7.92 : briques communes aux trois pages de la section (vitrine.cjs) */
 /* les dates à venir en pastilles, sous le titre : jour, mois, ce qui arrive, et le compte à rebours (vitrine.js) */
 function datesRow(A, label) {
-  return '<ol class="ac-dates vt-in" data-lk-reveal aria-label="' + esc(label) + '">' + A.aVenir.map((x, i) => { const d = new Date(x.iso + 'T12:00:00Z');
+  return '<ol class="ac-dates vt-in" data-lk-reveal aria-label="' + esc(label) + '">' + A.aVenir.filter(x => !x.contexte) /* v8.04 : sans les rendez-vous de contexte (résultats, soirées) */.map((x, i) => { const d = new Date(x.iso + 'T12:00:00Z');
     return '<li class="ac-date" style="--i:' + i + '"><time datetime="' + esc(x.iso) + '"><b>' + d.getUTCDate() + '</b><span>' + esc(new Intl.DateTimeFormat('fr-FR', { month: 'long', timeZone: 'UTC' }).format(d)) + '</span></time><span class="ac-date-t">' + nb(esc(x.titre)) + '</span>' + VT.cd(x.iso) + '</li>'; }).join('') + '</ol>';
 }
 /* encart « Une autre question ? » à côté des questions fréquentes : Léo répond, ou le formulaire de contact */
@@ -573,7 +596,7 @@ ${zone([
     { id: 'en-pratique', k: UI.pratique.k, t: UI.pratique.t, icon: 'boussole', tone: 'night', nav: UI.pratique.nav, fam: 'combat', body: '<div class="ed-cols ac-cols">' + col('boite', 'kit', E.boiteTitre, E.boite) + col('prechargement', 'sablier', E.prechargementTitre, E.prechargement, E.prechargementLien) + col('regions', 'carte', E.regionsTitre, E.regions) + '</div>' },
     require('./monetisation.cjs').zoneEditions() /* v7.88 : liens affiliés, rien tant que outils/monetisation.json ne les active pas */,
     faqSec(E.faq, leoAside(E.leo, 'cover-art-sea-sparrow', 'Hélicoptère bleu à flotteurs sur une illustration de la jaquette officielle GTA VI')),
-    srcSec(ctx, uniq([src, T.src, B1.src, 't2-prix'].filter(Boolean)) /* v7.93 : les prix officiels (Take-Two) */, '', '<p class="ac-more"><a href="verification.html">Ce qui est confirmé sur GTA 6, et comment on le vérifie</a></p><p class="ac-more"><a href="prix.html">Les prix et le coffret collector</a></p>')
+    srcSec(ctx, uniq([src, T.src, B1.src, 't2-prix', 'ms-store-fr', 'rs-support-precommande', 'rs-support-achat'].filter(Boolean)) /* v7.93 : les prix officiels (Take-Two) ; v8.04 : le Microsoft Store (amélioration Ultimate à 20 €), deux articles de l’assistance (boîte sur la boutique Rockstar, disponibilité) */, '', '<p class="ac-more"><a href="verification.html">Ce qui est confirmé sur GTA 6, et comment on le vérifie</a></p><p class="ac-more"><a href="prix.html">Les prix et le coffret collector</a></p>')
   ])}`;
   const og = imgOf(MED, E.pile[0].media);
   const ld = '<script type="application/ld+json">' + JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: E.title, description: metaDesc(E.desc), url: SITE + '/editions.html', inLanguage: 'fr', dateModified: ctx.SRC[T.src].consultedAt > ctx.SRC[src].consultedAt ? ctx.SRC[T.src].consultedAt : ctx.SRC[src].consultedAt, about: { '@type': 'VideoGame', name: 'Grand Theft Auto VI' }, isPartOf: { '@type': 'WebSite', name: 'Leonidakit', url: SITE + '/' } }) + '</script>' + faqLD(E.faq);
@@ -604,15 +627,29 @@ function prixPage(ctx) {
     + '<div class="px-ed-b"><h3>' + esc(x.nom) + '</h3><ul class="ac-checks">' + x.points.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>' + stLine(x.st) + '</div></article>').join('') + '</div>'
     + '<ul class="px-autres">' + J.autres.map(x => '<li class="lk-reveal"><h3>' + esc(x.t) + '</h3><p>' + esc(x.d) + '</p></li>').join('') + '</ul>'
     + '<p class="ac-more"><a href="' + esc(J.lien.href) + '">' + esc(J.lien.label) + '</a></p>';
-  /* le coffret : le texte et ses deux prix à gauche, la boîte qui s’ouvre au défilement à droite ; la bande des objets qui
-     glisse avec la page ; les onze objets (chaque photo s’ouvre en grand, visionneuse du site) ; les conditions */
-  const C = X.collector;
+  /* le coffret : le texte et ses deux prix à gauche, la boîte qui s’ouvre au défilement à droite. v8.04 (refonte A) :
+     - le tapis de caisse remplace la bande de mots (texte coupé aux bords) : les onze objets en vignettes, leur photo officielle
+       et leur nom, défilent en boucle (deux copies, bords en fondu, arrêt au survol ; immobile et à faire glisser au doigt en
+       « réduire les animations ») ; chaque vignette mène à son objet. Raccourci pour la souris et le doigt : la bande est
+       cachée aux lecteurs d’écran et hors du parcours au clavier, la galerie dessous dit tout ;
+     - « Ce qu’il y a dans la boîte » : la galerie (les objets sortent du coffret l’un après l’autre, actus.css) ou, au choix,
+       la liste : une ligne par objet, qui s’ouvre en fiche (grande photo, statut, source). Le choix se fait avec le script
+       (actus.js) ; sans script, la galerie seule. Rien n’est enregistré sur l’appareil ;
+     - les conditions. */
+  const C = X.collector, V = C.vue;
+  const belt = '<div class="px-belt" aria-hidden="true"><div class="px-belt-win"><div class="px-belt-track">' + [0, 1].map(k => '<ul class="px-belt-l' + (k ? ' px-belt-l--copie' : '') + '">' + C.objets.map((o, i) => '<li style="--i:' + i + '"><a class="px-belt-i" href="#obj-' + esc(o.media) + '" tabindex="-1"><span class="px-belt-fig">' + VT.img(o.media, '', { sizes: '64px' }) + '</span><span class="px-belt-t">' + esc(C.defile[i]) + '</span></a></li>').join('') + '</ul>').join('') + '</div></div></div>';
+  const ICON_GAL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>';
+  const ICON_LIST = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="4" width="5" height="5" rx="1.2"/><rect x="3.5" y="15" width="5" height="5" rx="1.2"/><path d="M12 6.5h8.5M12 17.5h8.5"/></svg>';
+  const vue = '<div class="px-vue" role="group" aria-label="' + esc(V.label) + '" data-px-vue hidden><button type="button" class="px-vue-b" aria-pressed="true" data-px-pick="galerie">' + ICON_GAL + '<span>' + esc(V.galerie) + '</span></button><button type="button" class="px-vue-b" aria-pressed="false" data-px-pick="liste">' + ICON_LIST + '<span>' + esc(V.liste) + '</span></button></div>';
+  const gal = '<ul class="px-gal px-unbox vt-in" data-lk-reveal data-px-pane="galerie">' + C.objets.map((o, i) => '<li id="obj-' + esc(o.media) + '" style="--i:' + i + '"><a class="px-obj" href="' + esc(VT.bigSrc(o.media)) + '"><span class="px-obj-fig">' + VT.img(o.media, o.alt, { sizes: '(max-width:599px) 46vw, (max-width:1099px) 30vw, 300px' }) + '<span class="vt-zoom" aria-hidden="true">' + VT.SVG.zoom + '</span></span><span class="px-obj-b"><span class="px-obj-t">' + esc(o.t) + '</span><span class="px-obj-d">' + esc(o.d) + '</span></span></a></li>').join('') + '</ul>';
+  const liste = '<div class="px-list" data-px-pane="liste" hidden>' + C.objets.map((o, i) => '<details class="px-row" id="objl-' + esc(o.media) + '" style="--i:' + i + '"><summary><span class="px-row-fig">' + VT.img(o.media, '', { sizes: '64px' }) + '</span><div class="px-row-b"><div class="px-row-t">' + esc(o.t) + '</div><div class="px-row-d">' + esc(o.d) + '</div></div><span class="px-row-i" aria-hidden="true"></span></summary>'
+    + '<div class="px-row-f"><a class="px-row-big" href="' + esc(VT.bigSrc(o.media)) + '">' + VT.img(o.media, o.alt, { sizes: '(max-width:819px) 86vw, 300px' }) + '<span class="vt-zoom" aria-hidden="true">' + VT.SVG.zoom + '</span></a>' + stLine([{ statut: 'officiel', src: V.src, t: V.st }]) + '</div></details>').join('') + '</div>';
   const coffret = '<div class="vt-split px-co"><div class="px-co-t"><p class="px-co-nom" translate="no">' + esc(C.nom) + '</p>' + C.intro.map(t => '<p>' + esc(t) + '</p>').join('') + stLine(C.st)
     + '<p class="px-co-go"><a class="lkx-btn" href="https://store.rockstargames.com/merchandise/gtavi-goodtime-state-vice-city-collection" target="_blank" rel="noopener nofollow">' + esc(C.boutique) + '</a></p></div>'
     + '<div class="px-co-v" aria-hidden="true">' + box('px-box--scroll', false).replace(/ alt="[^"]*"/g, ' alt=""') + '</div></div>'
-    + '<div class="vt-marquee px-defile" aria-hidden="true"><ul class="vt-marquee-l">' + [...C.defile, ...C.defile].map(t => '<li>' + esc(t) + '</li>').join('') + '</ul></div>'
-    + '<h3 class="ac-h3">' + esc(C.objetsT) + '</h3><p class="px-lede">' + esc(C.objetsLede) + '</p>'
-    + '<ul class="px-gal vt-in vt-in--deal" data-lk-reveal>' + C.objets.map((o, i) => '<li style="--i:' + i + '"><a class="px-obj" href="' + esc(VT.bigSrc(o.media)) + '"><span class="px-obj-fig">' + VT.img(o.media, o.alt, { sizes: '(max-width:599px) 46vw, (max-width:1099px) 30vw, 300px' }) + '<span class="vt-zoom" aria-hidden="true">' + VT.SVG.zoom + '</span></span><span class="px-obj-b"><span class="px-obj-t">' + esc(o.t) + '</span><span class="px-obj-d">' + esc(o.d) + '</span></span></a></li>').join('') + '</ul>'
+    + belt
+    + '<div class="px-objhead"><div class="px-objhead-t"><h3 class="ac-h3">' + esc(C.objetsT) + '</h3><p class="px-lede">' + esc(C.objetsLede) + '</p></div>' + vue + '</div>'
+    + gal + liste
     + '<h3 class="ac-h3">' + esc(C.detailsT) + ' ' + srcRefs(C.detailsSrc) + '</h3>' + dl(C.details);
   /* les manettes : la photo et son prix, les conditions de PlayStation */
   const M = X.manettes;
@@ -666,8 +703,11 @@ function rss(html, lang = 'fr') {
 }
 
 /* ---------- accueil : la dernière annonce, sous le compte à rebours (index.html, entre les jalons et la fin du bandeau) ---------- */
+/* v8.04 (refonte A) : « Dernière annonce » (accueil, « À la une ») : la plus récente des annonces officielles ; un dossier de
+   presse du même jour ou plus récent ne passe pas devant */
+const derniere = A => A.evenements.find(e => e.statut === 'officiel') || A.evenements[0];
 function homeLine(ctx) {
-  const e = ctx.A.evenements[0];
+  const e = derniere(ctx.A);
   return '<p class="clock-news" id="derniere-annonce"><span class="clock-news-k">' + esc(ctx.A.actus.derniere) + '</span> <a href="actus.html#ev-' + esc(e.id) + '"><time datetime="' + esc(e.iso) + '">' + esc(frLong(e.iso)) + '</time> : ' + esc(e.titre) + '</a> <a class="clock-news-all" href="actus.html#frise">' + esc(ctx.A.actus.toutes) + '</a></p>';
 }
 function injectHome(ctx, root) {

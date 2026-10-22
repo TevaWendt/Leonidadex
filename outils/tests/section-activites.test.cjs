@@ -1,5 +1,5 @@
 /* Section « Activités annexes » (section activites) : données (statuts, sources, valeurs publiées), page principale, fiches,
-   pont avec le calculateur (décrit, jamais écrit), menu, recherche, plan du site, Léo, langues, filtre de la liste, mouvement.
+   pont avec le calculateur (v8.02 : écrit seulement ce qui est publié), menu, recherche, plan du site, Léo, langues, filtre de la liste, mouvement.
    NODE_PATH=<dépendances>/node_modules node --test outils/tests/section-activites.test.cjs */
 'use strict';
 const test = require('node:test'), assert = require('node:assert/strict'), fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
@@ -21,14 +21,18 @@ test('données : sept fiches sourcées, chaque ligne avec statut et sources, auc
   assert.deepEqual(A.activites.map(a => a.id), ['braquages-commerces', 'vol-de-voitures', 'peche', 'chasse', 'activites-nautiques', 'salle-de-sport', 'courses']);
   for (const a of A.activites) {
     assert.deepEqual(G.checkActivite(a, ctx), [], a.id);
-    assert.equal(a.rapporte.gain, null, a.id + ' : aucun gain publié au 4 octobre 2026');
-    assert.equal(a.rapporte.duree, null, a.id + ' : aucune durée publiée');
-    assert.ok(a.montre.some(x => x.statut === 'officiel'), a.id + ' : au moins une phrase officielle');
+    /* v8.04 (jour J) : gain et durée inconnus (null) avant la sortie, ou publiés au format */
+    assert.ok(a.rapporte.gain === null || (typeof a.rapporte.gain === 'object' && G.checkValue(a.rapporte.gain, a.id, '$').length === 0), a.id + ' : gain inconnu ou publié au format');
+    assert.ok(a.rapporte.duree === null || (typeof a.rapporte.duree === 'object' && G.checkValue(a.rapporte.duree, a.id, 'min').length === 0), a.id + ' : durée inconnue ou publiée au format');
+    /* v8.04 (refonte F) : au moins une phrase appuyée sur une source officielle (texte, image ou vidéo de Rockstar) */
+    assert.ok(a.montre.some(x => x.statut === 'officiel' || x.sources.some(s => H.sources[s].statut === 'officiel')), a.id + ' : au moins une phrase appuyée sur une source officielle');
+    /* une phrase « officiel » a au moins une source officielle ; les propos rapportés par la presse sont « vu dans un média » */
+    for (const b of [...a.montre, a.ou, ...a.besoin, a.rapporte]) if (b.statut === 'officiel') assert.ok(b.sources.some(s => H.sources[s].statut === 'officiel'), a.id + ' : phrase officielle sans source officielle : ' + b.texte.slice(0, 50));
   }
   const bad = (f, re) => { const a = JSON.parse(JSON.stringify(A.activites[0])); f(a); const e = G.checkActivite(a, ctx); assert.ok(e.some(x => re.test(x)), e.join(' | ')); };
   bad(a => { a.famille = 'sport'; }, /famille inconnue/);
   bad(a => { a.montre[0].sources = ['inventee']; }, /source inconnue/);
-  bad(a => { a.montre = a.montre.map(x => ({ ...x, statut: 'vu' })); }, /aucune phrase officielle/);
+  bad(a => { a.montre = a.montre.map(x => ({ ...x, statut: 'vu', sources: ['gamesradar-live'] })); }, /aucune phrase appuyée sur une source officielle/);
   bad(a => { a.rapporte.gain = { value: 5000, status: 'official', unit: '$' }; }, /exige source/);
   bad(a => { a.rapporte.duree = { value: 10, status: 'verified', source: 'x', verifiedAt: '2026-10-04', unit: 'h' }; }, /unité/);
   bad(a => { a.besoin[0].vehicules = ['voiture-inventee']; }, /véhicule inconnu/);
@@ -37,14 +41,17 @@ test('données : sept fiches sourcées, chaque ligne avec statut et sources, auc
   /* chaque ligne de la liste : statut connu, sources connues ; une fiche est toujours listée */
   const all = H.liste.familles.flatMap(f => f.items);
   assert.ok(all.length >= 25);
-  for (const x of all) { assert.ok(['officiel', 'vu', 'comm', 'conf'].includes(x.statut), x.nom); for (const s of x.sources) assert.ok(H.sources[s], x.nom + ' : ' + s); }
-  for (const s of Object.values(H.sources)) { assert.match(s.url, /^https:\/\//); assert.equal(s.consultedAt, '2026-10-04'); }
+  for (const x of all) { assert.ok(['officiel', 'vu', 'comm', 'conf'].includes(x.statut), x.nom); for (const s of x.sources) assert.ok(H.sources[s], x.nom + ' : ' + s); if (x.statut === 'officiel') assert.ok(x.sources.some(s => H.sources[s].statut === 'officiel'), x.nom + ' : ligne officielle sans source officielle'); }
+  /* v8.04 (refonte F) : le billet du 24 juin 2026 (textes des éditions) est ajouté le 21 octobre */
+  for (const s of Object.values(H.sources)) { assert.match(s.url, /^https:\/\//); assert.ok(['2026-10-04', '2026-10-21'].includes(s.consultedAt), s.url); }
   /* rien des fuites : aucune source écartée n’est citée */
   for (const s of Object.values(H.sources)) assert.doesNotMatch(s.url + ' ' + s.title, /leak|fuite|geleakt/i);
 });
 
-test('pont avec le calculateur : décrit, jamais écrit ; une activité au gain et à la durée publiés aurait le format de « Mes activités »', () => {
-  assert.deepEqual(G.activitesCalculateur(A.activites), [], 'aucune activité chiffrée au 4 octobre 2026');
+test('pont avec le calculateur : n’écrit qu’une activité au gain et à la durée publiés (v8.02), au format de « Mes activités »', () => {
+  /* v8.04 (jour J) : une activité du calculateur par activité au gain et à la durée publiés (aucune au 4 octobre 2026), chacune bien formée */
+  const kv = v => v && typeof v.value === 'number' && v.status !== 'unknown', chiffrees = A.activites.filter(x => x.rapporte && kv(x.rapporte.gain) && kv(x.rapporte.duree) && x.rapporte.duree.value > 0);
+  { const acts0 = G.activitesCalculateur(A.activites); assert.equal(acts0.length, chiffrees.length, 'aucune activité chiffrée au 4 octobre 2026'); acts0.forEach((a, i) => assert.deepEqual(DP.verifierActivite(a, i), [], a.id)); }
   const fictive = { ...JSON.parse(JSON.stringify(A.activites[0])), id: 'test-fictive', nom: 'Activité fictive de test' };
   fictive.rapporte.gain = { value: 1500, status: 'official', source: 'https://www.rockstargames.com/VI', verifiedAt: '2026-12-01', unit: '$' };
   fictive.rapporte.duree = { value: 5, status: 'verified', source: 'Relevé de test', verifiedAt: '2026-12-02', unit: 'min' };
@@ -53,11 +60,11 @@ test('pont avec le calculateur : décrit, jamais écrit ; une activité au gain 
   assert.deepEqual(DP.verifierActivite(acts[0], 0), [], 'activité bien formée pour donnees-publiees.cjs');
   const ctx = { window: { LK_ACTIVITIES: acts } }; vm.createContext(ctx); vm.runInContext(read('calculateurs-data.js'), ctx);
   const n = ctx.window.LKCalcData.activities(); assert.equal(n.length, 1); assert.equal(n[0].reward, 1500); assert.equal(n[0].duration, 5);
-  assert.doesNotMatch(read('calculateurs-activites.js'), /activite-/, 'calculateurs-activites.js n’est pas modifié par la section');
+  { const c = { window: {} }; vm.runInNewContext(read('calculateurs-activites.js'), c); assert.equal(c.window.LK_ACTIVITIES.filter(x => /^activite-/.test(x.id)).length, chiffrees.length, 'v8.02 : le pont écrit dans calculateurs-activites.js, mais seulement une activité au gain et à la durée publiés : aucune aujourd’hui'); }
   /* la fiche affiche « Pas encore publié » tant que rien n’est publié, la valeur avec son statut sinon */
   const html = G.fichePage(G.context(root), fictive), d = new JSDOM(html).window.document;
   assert.match(d.querySelector('.activites-chiffres').textContent.replace(/[  ]/g, ' '), /1 500 \$, Officiel/);
-  assert.match(doc('activites/peche.html').querySelector('.activites-chiffres').textContent, /Pas encore publié/);
+  { const vide = [A.activites.find(x => x.id === 'peche'), ...A.activites].find(x => x && !Object.values(x.rapporte || {}).some(kv)); /* v8.04 (jour J) : une fiche sans aucun chiffre publié */ if (vide) assert.match(doc('activites/' + vide.id + '.html').querySelector('.activites-chiffres').textContent, /Pas encore publié/); }
 });
 
 test('activites.html : fiches, liste complète par famille, ce que ça rapporte, zone éditoriale, encart du calculateur, données structurées', () => {

@@ -1,0 +1,22 @@
+{
+ "_note": "v8.04 (chiffres du site et géolocalisation, chantier E) : phrases nouvelles des pages par élément (lieux de la carte, quartiers, marques).",
+ "_motifs": {
+  "Lieu réel qui semble l’avoir inspiré (repérage de la communauté, rapprochement incertain) : {1}.": "Lugar real que parece tê-lo inspirado (identificação da comunidade, correspondência incerta): {r1}.",
+  "La communauté y voit, sans en être sûre, une version de {1}, un lieu réel qui semble l’avoir inspiré.": "A comunidade vê nele, sem ter certeza, uma versão de {r1}, um lugar real que parece tê-lo inspirado.",
+  "{1} <1>(repérage de la communauté, rapprochement incertain)</1> <2>Voir sur Google Maps ↗</2>": "{r1} <1>(identificação da comunidade, correspondência incerta)</1> <2>Ver no Google Maps ↗</2>",
+  "{1} <1>(repérage de la communauté, rapprochement incertain)</1>": "{r1} <1>(identificação da comunidade, correspondência incerta)</1>",
+  "{n1} véhicules de marque connue": "{1} veículos de marca conhecida",
+  "{n1} marques de véhicules ont leur page : {n2} sont portées par au moins un des {n3} véhicules du site dont la marque est connue, « {4} » n’a encore aucun véhicule repéré.": "{1} marcas de veículos têm sua página: {2} estão em pelo menos um dos {3} veículos do site cuja marca é conhecida; “{r4}” ainda não tem nenhum veículo identificado.",
+  "{n1} marques de véhicules ont leur page : {n2} sont portées par au moins un des {n3} véhicules du site dont la marque est connue, {n4} n’ont encore aucun véhicule repéré ({5}).": "{1} marcas de veículos têm sua página: {2} estão em pelo menos um dos {3} veículos do site cuja marca é conhecida; {4} ainda não têm nenhum veículo identificado ({r5}).",
+  "{n1} marques de véhicules ont leur page : {n2} sont portées par au moins un des {n3} véhicules du site dont la marque est connue.": "{1} marcas de veículos têm sua página: {2} estão em pelo menos um dos {3} veículos do site cuja marca é conhecida.",
+  "La carte de Leonida compte {n1} lieux : les {n2} régions, villes, quartiers et comtés, et {n3} autres lieux, dont {n4} rattachés directement à l’un d’eux.": "O mapa de Leonida conta {1} lugares: as {2} regiões, cidades, bairros e condados, e outros {3} lugares, dos quais {4} estão vinculados diretamente a um deles.",
+  "La carte de Leonida compte {n1} lieux : les {n2} régions, villes, quartiers et comtés ont leur page (voir <1>les quartiers, villes et comtés</1>), les {n3} autres ont la leur ici : {4}.": "O mapa de Leonida conta {1} lugares: as {2} regiões, cidades, bairros e condados têm sua página (veja <1>os bairros, cidades e condados</1>), e os outros {3} têm a sua aqui: {4}.",
+  "Les {n1} bâtiments, transports, espaces naturels et lieux notables de la carte de GTA VI, une page chacun, classés par quartier, ville et comté.": "Os {1} edifícios, transportes, espaços naturais e lugares notáveis do mapa de GTA VI, uma página cada, classificados por bairro, cidade e condado.",
+  "Lieu réel qui semble l’avoir inspiré (repérage de la communauté sur GTA Wiki) : {1}.": "Lugar real que parece tê-lo inspirado (identificação da comunidade no GTA Wiki): {r1}.",
+  "Sur GTA Wiki, la communauté y voit une version de {1}, un lieu réel qui semble l’avoir inspiré.": "No GTA Wiki, a comunidade vê nele uma versão de {r1}, um lugar real que parece tê-lo inspirado.",
+  "{1} <1>(repérage de la communauté sur GTA Wiki)</1>": "{r1} <1>(identificação da comunidade no GTA Wiki)</1>",
+  "{1} <1>(repérage de la communauté sur GTA Wiki)</1> <2>Voir sur Google Maps ↗</2>": "{r1} <1>(identificação da comunidade no GTA Wiki)</1> <2>Ver no Google Maps ↗</2>"
+ },
+ "2 bâtiments": "2 edifícios",
+ "1 bâtiment": "1 edifício"
+}

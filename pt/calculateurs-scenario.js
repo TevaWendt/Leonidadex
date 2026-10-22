@@ -10,16 +10,18 @@ const assetTemplate={key:'free-1',itemId:'',name:'Minha compra livre',price:1000
 const compareTemplate={keys:[],criterion:'value',hours:10};
 const planTemplateV4={kind:'purchase',key:'',target:null,usePrerequisites:true,upkeepPerSession:0,priority:'balanced',activity:'',details:false,strategy:'auto',deadlineDays:null,countDoneBoost:true,done:[],log:[],playedMinutes:0};
 const planGoalTemplate={kind:'purchase',name:'',itemId:'',referencePrice:null,price:null,boostHourly:0,target:null,unitLabel:'points',targetUnits:null,currentUnits:0,alsoPrice:0,meaning:'available'};
-const planSituationTemplate={capital:null,reserve:0,hourly:null,unitsHourly:0,dailyMinutes:null,daysPerWeek:7,upkeepPerSession:0,players:1};
-const planMissionTemplate={id:'m-1',name:'Minha missão',reward:null,cost:0,duration:null,prep:0,cooldown:0,share:100,investment:0,owned:false,units:0,requires:[],once:false,done:false,started:false,requiresMissions:[],players:1};
-const planPrereqTemplate={id:'p-1',name:'Minha compra anterior',itemId:'',referencePrice:null,price:null,boostHourly:0,owned:false,started:false,minutes:null,requires:[],usagePerSession:null};
+const planSituationTemplate={capital:null,reserve:0,hourly:null,unitsHourly:0,dailyMinutes:null,daysPerWeek:7,upkeepPerSession:0,players:1,rank:null};
+const planMissionTemplate={id:'m-1',name:'Minha missão',reward:null,cost:0,duration:null,prep:0,cooldown:0,share:100,investment:0,owned:false,units:0,requires:[],once:false,done:false,started:false,requiresMissions:[],players:1,minCash:null,minRank:null,order:null,sourceId:'',who:''};
+const planPrereqTemplate={id:'p-1',name:'Minha compra anterior',itemId:'',referencePrice:null,price:null,boostHourly:0,owned:false,started:false,minutes:null,requires:[],usagePerSession:null,resale:null};
 const planLogTemplate={id:'',at:'',capital:0,minutes:0,forecast:null,note:'',units:null,unitsGain:null,gain:null,plannedGain:null,sessionMinutes:0,runs:{},purchases:[]};
-const planTemplate={goal:copy(planGoalTemplate),situation:copy(planSituationTemplate),source:'hourly',missions:[],prerequisites:[],priority:'balanced',strategy:'auto',variant:'auto',maxRepeat:100,deadlineDays:null,details:false,log:[],playedMinutes:0,sessionsPlayed:0,locked:[],variants:[]};
+const planTemplate={goal:copy(planGoalTemplate),situation:copy(planSituationTemplate),source:'hourly',missions:[],prerequisites:[],priority:'balanced',strategy:'auto',variant:'auto',maxRepeat:100,deadlineDays:null,details:false,log:[],playedMinutes:0,sessionsPlayed:0,locked:[],variants:[],
+ useHypotheses:false,offline:{on:false,cap:null},includeFailure:false,resaleAfterGoal:false};
 const planVariantTemplate={id:'v-1',label:'Minha variante',at:'',goal:copy(planGoalTemplate),situation:copy(planSituationTemplate),source:'hourly',missions:[],prerequisites:[],priority:'balanced',strategy:'auto',maxRepeat:100,deadlineDays:null};
-const MECHANICS=['carburant','entretien','reparation','assurance','revente','munitions','soin','revenu-passif','echec','bonus'];
+const MECHANICS=['carburant','entretien','reparation','assurance','revente','munitions','soin','revenu-passif','echec','bonus','amendes','mort','arrestation'];
 const analysisTemplate={horizon:{sessions:null,uses:null,hours:null},need:{usage:'',passengers:null,terrain:'',cargo:false},priority:'fast',
  simulations:Object.fromEntries(MECHANICS.map(m=>[m,false])),
- sim:{carburant:{distance:null,consommation:null,prixUnitaire:null},entretien:{parPartie:null},reparation:{parPartie:null},assurance:{parPartie:null},revente:{valeur:null},munitions:{parTentative:null},soin:{points:null},'revenu-passif':{parHeure:null,plafond:null},echec:{tentativesRatees:null},bonus:{pourcentage:null}}};
+ sim:{carburant:{distance:null,consommation:null,prixUnitaire:null},entretien:{parPartie:null},reparation:{parPartie:null},assurance:{parPartie:null},revente:{valeur:null},munitions:{parTentative:null},soin:{points:null,vieParPartie:null,prixUnitaire:null},'revenu-passif':{parHeure:null,plafond:null},echec:{tentativesRatees:null},bonus:{pourcentage:null},amendes:{parPartie:null,prix:null},mort:{parPartie:null,perte:null},arrestation:{parPartie:null,perte:null}},
+ money:{split:'commun',perso:'jason'},shareAuto:false};
 const ROLES=['unknown','income','unlock','improve','replace','comfort','pleasure'],GOAL_MEANINGS=['held','available','cumulative'],PRIORITIES=['fast','cheapStart','cheapTotal','reserve'],TERRAINS=['','route','tout-terrain','eau','air'];
 const STRATEGIES=['auto','asIs','byPayback','cheapFirst','skipNoBoost','direct','useReserve'];
 const PLAN_KINDS=['purchase','amount','unlock'],PLAN_SOURCES=['hourly','missions'];
@@ -118,22 +120,57 @@ function validate(raw,initial){
  s.compare.keys=s.compare.keys.filter(k=>asset(s,k)).slice(0,6);
  s.assets.forEach(a=>{if(a.utility!==null&&(!Number.isInteger(a.utility)||a.utility<1||a.utility>5))a.utility=null;if(!ROLES.includes(a.role))a.role='unknown';if(!TERRAINS.includes(a.capabilities.terrain))a.capabilities.terrain='';for(const k of ['perSession','perUse','uses'])if(a.usage[k]!==null&&a.usage[k]<0)a.usage[k]=null;if(a.usage.uses!==null&&!Number.isInteger(a.usage.uses))a.usage.uses=Math.round(a.usage.uses);a.requires=a.requires.filter(k=>k!==a.key);});
  if(!GOAL_MEANINGS.includes(s.plan.goal.meaning))s.plan.goal.meaning='available';if(!GOAL_MEANINGS.includes(s.goal.meaning))s.goal.meaning='available';if(!OBJECTIVES.includes(s.order.objective))s.order.objective='all';if(s.goal.deadlineDays!==null&&(!Number.isInteger(s.goal.deadlineDays)||s.goal.deadlineDays<1||s.goal.deadlineDays>36500))s.goal.deadlineDays=null;if(!PRIORITIES.includes(s.analysis.priority))s.analysis.priority='fast';if(!TERRAINS.includes(s.analysis.need.terrain))s.analysis.need.terrain='';
+ if(!['commun','separe'].includes(s.analysis.money.split))s.analysis.money.split='commun';if(!['jason','lucia'].includes(s.analysis.money.perso))s.analysis.money.perso='jason';
+ [s.plan.missions,...s.plan.variants.map(v=>v.missions)].forEach(list=>list.forEach(m=>{if(!WHO.includes(m.who))m.who='';}));
+ if(s.plan.offline.cap!==null&&s.plan.offline.cap<0)s.plan.offline.cap=null;s.plan.prerequisites.forEach(a=>{if(a.resale!==null&&a.resale<0)a.resale=null;});
  {const pids=new Set(s.plan.prerequisites.map(a=>a.id)),mids=new Set(s.plan.missions.map(m=>m.id));s.plan.prerequisites.forEach(a=>{a.requires=a.requires.filter(id=>(pids.has(id)||mids.has(id))&&id!==a.id);});s.plan.missions.forEach(m=>{m.requiresMissions=m.requiresMissions.filter(id=>mids.has(id)&&id!==m.id);});s.plan.locked=s.plan.locked.filter(id=>id==='strategy'||id==='goal'||mids.has(id)||pids.has(id));}
  for(const t of [...tools,'plan'])if(!['quick','guided','advanced'].includes(s.views[t]))s.views[t]='quick';
  s.mode=s.views[s.tab];return s;
 }
 function ammoPerAttempt(s){const on=s.analysis&&s.analysis.simulations&&s.analysis.simulations.munitions,v=on?s.analysis.sim.munitions.parTentative:null;return typeof v==='number'&&Number.isFinite(v)&&v>0?v:0;}
-function activities(s,source=[]){const ammo=ammoPerAttempt(s);return [...s.activities.map(a=>({...a,status:'manual',investment:a.owned?0:a.investment,...(ammo&&typeof a.cost==='number'?{cost:a.cost+ammo,ammoSimulated:ammo}:{})})),...source.map(a=>ammo&&typeof a.cost==='number'?{...a,cost:a.cost+ammo,ammoSimulated:ammo}:a)];}
+function activities(s,source=[]){const ammo=ammoPerAttempt(s);return actExtras(s,[...s.activities.map(a=>({...a,status:'manual',investment:a.owned?0:a.investment,...(ammo&&typeof a.cost==='number'?{cost:a.cost+ammo,ammoSimulated:ammo}:{})})),...source.map(a=>ammo&&typeof a.cost==='number'?{...a,cost:a.cost+ammo,ammoSimulated:ammo}:a)]);}
+const WHO=['','jason','lucia','deux'],PERSO={jason:'Jason',lucia:'Lucia'};
+const xOn=(s,k)=>!!(s&&s.analysis&&s.analysis.simulations&&s.analysis.simulations[k]===true);
+const nonNeg=v=>typeof v==='number'&&Number.isFinite(v)&&v>=0;
+function simCosts(s){
+ const out={total:0,lines:[],missing:[]};if(!s||!s.analysis||!s.analysis.sim)return out;const sim=s.analysis.sim;
+ if(xOn(s,'soin')){const f=sim.soin||{};if(nonNeg(f.vieParPartie)&&typeof f.points==='number'&&f.points>0&&nonNeg(f.prixUnitaire)){const v=f.vieParPartie/f.points*f.prixUnitaire;out.total+=v;out.lines.push({key:'soin',label:'Curas (simulação)',value:v,field:'sim-soin-vieParPartie'});}else out.missing.push({key:'soin',text:'Curas: escreva a vida perdida por sessão, a vida que uma cura recupera e o preço de uma cura.',field:'sim-soin-vieParPartie'});}
+ for(const [k,label,n,m,miss] of [['amendes','Multas (simulação)','parPartie','prix','Multas: escreva quantas por sessão e o valor de uma multa.'],['mort','Dinheiro perdido ao morrer (simulação)','parPartie','perte','Morte: escreva quantas vezes por sessão e o dinheiro perdido a cada vez.'],['arrestation','Dinheiro perdido ao ser preso (simulação)','parPartie','perte','Prisão: escreva quantas vezes por sessão e o dinheiro perdido a cada vez.']]){
+  if(!xOn(s,k))continue;const f=sim[k]||{};if(nonNeg(f[n])&&nonNeg(f[m])){const v=f[n]*f[m];out.total+=v;out.lines.push({key:k,label,value:v,field:'sim-'+k+'-'+n});}else out.missing.push({key:k,text:miss,field:'sim-'+k+'-'+n});}
+ return out;}
+function simUpkeep(s){const t=simCosts(s).total;return t>0?t:0;}
+function upkeepOf(s){const g=s.goal,up=typeof g.upkeepPerSession==='number'&&g.upkeepPerSession>0?g.upkeepPerSession:0,x=simUpkeep(s);return x>0?up+x:up;}
+function simPassive(s,minutes){if(!xOn(s,'revenu-passif'))return null;const f=s.analysis.sim['revenu-passif']||{};if(!(typeof f.parHeure==='number'&&f.parHeure>0))return {rate:0,raw:0,cap:null,incomplete:true};
+ const cap=nonNeg(f.plafond)?f.plafond:null,d=typeof minutes==='number'&&minutes>0?minutes:null,rate=cap!==null&&d!==null?Math.min(f.parHeure,cap*60/d):f.parHeure;
+ return {rate,raw:f.parHeure,cap,capped:rate<f.parHeure-1e-9,noSessions:cap!==null&&d===null};}
+function simBonus(s){if(!xOn(s,'bonus'))return null;const p=s.analysis.sim.bonus&&s.analysis.sim.bonus.pourcentage;return typeof p==='number'&&Number.isFinite(p)&&p>0?p:null;}
+const shareAutoOn=s=>!!(s&&s.analysis&&s.analysis.shareAuto===true);
+function moneySplit(s){const m=s&&s.analysis&&s.analysis.money;return m&&m.split==='separe'?(m.perso==='lucia'?'lucia':'jason'):null;}
+const sharePublished=a=>!!(a&&a.fieldMeta&&a.fieldMeta.share&&['official','verified'].includes(a.fieldMeta.share.status));
+function actExtras(s,list){const bonus=simBonus(s),auto=shareAutoOn(s),who=moneySplit(s);if(bonus===null&&!auto&&!who)return list;
+ return list.map(a=>{let o=a;
+  if(bonus!==null&&typeof a.reward==='number')o={...o,reward:a.reward*(1+bonus/100),bonusSimulated:bonus};
+  if(auto&&Number.isInteger(a.players)&&a.players>1&&!sharePublished(a))o={...o,share:100/a.players,shareAuto:a.players};
+  if(who&&Array.isArray(a.characters)&&a.characters.length&&!a.characters.includes(who))o={...o,otherCharacter:a.characters.slice()};
+  return o;});}
+const otherReason=(a,s)=>'jogada com '+(a.otherCharacter||[]).map(c=>PERSO[c]||c).join(' e ')+': você só conta o dinheiro de '+PERSO[moneySplit(s)];
+function resaleOwnedTotal(s){return (s.assets||[]).filter(a=>a&&a.owned&&typeof a.resale==='number'&&Number.isFinite(a.resale)&&a.resale>0).reduce((t,a)=>t+a.resale,0);}
+function withResale(s){if(!s||!s.goal||s.goal.resaleOwned!==true)return s;const t=resaleOwnedTotal(s);return {...s,goal:{...s.goal,resaleOwned:false,capital:typeof s.goal.capital==='number'&&t>0?s.goal.capital+t:s.goal.capital}};}
+const onceOnly=a=>!!a&&a.once===true;
+const ONCE_REASON='missão para fazer uma única vez: ela entra no plano de negócios';
 function eligible(s,source=[]){
  const owned=s.assets.filter(a=>a.owned).map(a=>a.itemId).filter(Boolean);
- return activities(s,source).filter(a=>s.session.enabled.includes(a.id)&&a.players<=s.goal.players&&(a.requiresPurchaseIds||[]).every(id=>owned.includes(id)));
+ return activities(s,source).filter(a=>s.session.enabled.includes(a.id)&&a.players<=s.goal.players&&(a.requiresPurchaseIds||[]).every(id=>owned.includes(id))&&!onceOnly(a)&&!a.otherCharacter);
 }
 function purchase(s,source=[]){const a=asset(s,s.purchase.key)||{...assetTemplate,price:null};let boost=a.incomeMode==='personal'?a.boostHourly:0;if(a.incomeMode==='roi'){const r=roi(s,source);boost=s.roi.key===a.key&&['new','improve'].includes(roiMode(s))&&r.valid&&Number.isFinite(r.netHourly)?Math.max(0,r.netHourly):null;}return {...a,extras:a.extras===null||a.fees===null?null:a.extras+a.fees,capital:s.goal.capital,reserve:s.goal.reserve,target:s.goal.target,hourly:s.goal.hourly,boostHourly:boost};}
-function hourlyNet(s){const g=s.goal,hourly=typeof g.hourly==='number'&&Number.isFinite(g.hourly)?g.hourly:null,daily=typeof g.dailyMinutes==='number'&&g.dailyMinutes>0?g.dailyMinutes:null,up=typeof g.upkeepPerSession==='number'&&g.upkeepPerSession>0?g.upkeepPerSession:0;
+function hourlyNet(s){const g=s.goal,hourly=typeof g.hourly==='number'&&Number.isFinite(g.hourly)?g.hourly:null,daily=typeof g.dailyMinutes==='number'&&g.dailyMinutes>0?g.dailyMinutes:null,up=upkeepOf(s);
  const upkeepHourly=up>0&&daily?up*60/daily:0,known=!(up>0&&!daily);
- return {hourly,net:hourly===null?null:hourly-upkeepHourly,upkeepHourly,known,reason:known?null:'Não escrito: seus gastos por sessão não são descontados do ganho por hora na espera.'};}
-function goal(s,source=[]){
- const g=s.goal,target=goalTarget(s),daily=typeof g.dailyMinutes==='number'&&g.dailyMinutes>0?g.dailyMinutes:null,up=typeof g.upkeepPerSession==='number'&&g.upkeepPerSession>0?g.upkeepPerSession:0;
+ const ps=simPassive(s,daily),pr=ps&&ps.rate>0?ps.rate:0;
+ const out={hourly,net:hourly===null?null:pr>0?hourly-upkeepHourly+pr:hourly-upkeepHourly,upkeepHourly,known,reason:known?null:'Não escrito: seus gastos por sessão não são descontados do ganho por hora na espera.'};
+ if(pr>0)out.passive=pr;return out;}
+function goal(s,source=[]){if(s&&s.goal&&s.goal.resaleOwned===true){const t=resaleOwnedTotal(s),r=goalBase(withResale(s),source);return r&&r.valid&&t>0?{...r,resaleOwned:t}:r;}return goalBase(s,source);}
+function goalBase(s,source=[]){
+ const g=s.goal,target=goalTarget(s),daily=typeof g.dailyMinutes==='number'&&g.dailyMinutes>0?g.dailyMinutes:null,up=upkeepOf(s);
  if(s.model==='continuous'){
   const hn=hourlyNet(s);
   if(up>0){if(!hn.known)return{valid:false,reason:'Seus gastos por sessão precisam do seu tempo de jogo por dia: escreva essa informação.'};}
@@ -143,10 +180,10 @@ function goal(s,source=[]){
   if(!r.valid)return r;const done=settle(r,plannedOf(g));if(r.totalMinutes>0)done.curve=curveOf(g,done,plannedOf(g));
   return up>0?{...done,upkeepHourly:up*60/daily}:done;}
  if(!Number.isInteger(g.players)||g.players<1||g.players>100)return{valid:false,reason:'Escreva um número de jogadores entre 1 e 100.'};
- const all=activities(s,source), compatible=all.filter(a=>a.players<=g.players&&(a.requiresPurchaseIds||[]).every(id=>s.assets.some(x=>x.itemId===id&&x.owned)));
+ const all=activities(s,source), compatible=all.filter(a=>a.players<=g.players&&(a.requiresPurchaseIds||[]).every(id=>s.assets.some(x=>x.itemId===id&&x.owned))&&!onceOnly(a)&&!a.otherCharacter);
  const run=extra=>{const t=target===null?null:target+g.reserve+extra;
   if(g.selected==='mixed')return E.goalMixed({...g,target:t,activities:compatible.filter(a=>s.activities.some(x=>x.id===a.id))});
-  const a=compatible.find(a=>a.id===g.selected);if(!a){const excluded=all.find(a=>a.id===g.selected);return{valid:false,reason:excluded&&excluded.players>g.players?'Este cenário é para '+excluded.players+' jogadores; vocês são '+g.players+'.':'Escolha uma atividade compatível com o seu grupo e com as compras que você já tem.'};}
+  const a=compatible.find(a=>a.id===g.selected);if(!a){const excluded=all.find(a=>a.id===g.selected);return{valid:false,reason:excluded&&excluded.players>g.players?'Este cenário é para '+excluded.players+' jogadores; vocês são '+g.players+'.':onceOnly(excluded)?'“'+excluded.name+'” se faz uma única vez: ela não se repete até o seu objetivo. Coloque-a no plano de negócios, com as missões que se repetem.':excluded&&excluded.otherCharacter?'“'+excluded.name+'” é '+otherReason(excluded,s)+' (Minhas hipóteses extras).':'Escolha uma atividade compatível com o seu grupo e com as compras que você já tem.'};}
   return E.goal({...g,target:t,activity:a});};
  if(!up)return settle(run(0),plannedOf(g));
  let extra=0,r=run(0);for(let i=0;i<24&&r.valid;i+=1){const need=up*r.sessions;if(need===extra)break;extra=need;r=run(extra);}
@@ -165,11 +202,12 @@ function session(s,source=[]){
 }
 function projection(s,source=[],r=session(s,source)){
  if(!r.valid)return r;
- const up=typeof s.goal.upkeepPerSession==='number'&&s.goal.upkeepPerSession>0?s.goal.upkeepPerSession:0;
+ const up=upkeepOf(s);
  const repeat=copy(s),left=r.finalCapital-up;repeat.goal.capital=left;repeat.session.minutes=s.session.usualMinutes;
  const paid=new Set(r.breakdown.filter(a=>a.runs).map(a=>a.id));repeat.activities.forEach(a=>{if(paid.has(a.id))a.owned=true;});
  const next=repeat.session.minutes===s.session.minutes?{valid:true,profit:r.profit+r.investment}:left<(s.goal.reserve||0)?{valid:true,profit:0}:session(repeat,source);
- return E.sessionProjection({capital:s.goal.capital,reserve:s.goal.reserve,target:goalTarget(s),upkeepPerSession:up,session:r,repeatProfit:next.valid?next.profit:null,repeatReason:next.valid?null:next.reason,daysPerWeek:s.session.daysPerWeek});
+ const sx=withResale(s);
+ return E.sessionProjection({capital:sx.goal.capital,reserve:s.goal.reserve,target:goalTarget(sx),upkeepPerSession:up,session:r,repeatProfit:next.valid?next.profit:null,repeatReason:next.valid?null:next.reason,daysPerWeek:s.session.daysPerWeek});
 }
 function roiMode(s){const a=asset(s,s.roi.key);return a&&(a.role==='pleasure'||a.role==='comfort')?'estimate':s.roi.mode;}
 function roi(s,source=[],ctx={}){
@@ -231,15 +269,30 @@ function dependencyOrder(list){const ids=new Set(list.map(x=>x.id)),out=[],place
  while(out.length<list.length&&guard++<list.length*list.length+5){const next=list.find(x=>!placed.has(x.id)&&(x.requires||[]).every(r=>!ids.has(r)||placed.has(r)));if(!next){list.filter(x=>!placed.has(x.id)).forEach(x=>{placed.add(x.id);out.push(x);});break;}placed.add(next.id);out.push(next);}
  return out;}
 function planGoalName(s){const g=s.plan.goal;return g.kind==='amount'?'ter '+E.dollars(String(g.target),' ')+'':g.kind==='unlock'?'desbloquear '+(g.name||'meu objetivo'):(g.name||'minha compra');}
-function planInput(s,strategy=s.plan.strategy){const p=s.plan,g=p.goal,si=p.situation;
+function planInput(s,strategy=s.plan.strategy){return planExtras(s,planInputBase(s,strategy));}
+function planExtras(s,inp){const p=s.plan,useH=p.useHypotheses===true,off=!!(p.offline&&p.offline.on===true),fail=p.includeFailure===true;if(!useH&&!off&&!fail)return inp;
+ const o={...inp},d=typeof inp.sessionMinutes==='number'&&inp.sessionMinutes>0?inp.sessionMinutes:null,byId=Object.fromEntries(p.missions.map(m=>[m.id,m]));let ps=null;
+ if(useH){
+  const sc=simCosts(s);if(sc.total>0)o.upkeepPerSession=(o.upkeepPerSession||0)+sc.total;
+  ps=simPassive(s,d);if(ps&&ps.rate>0){o.hourly=(o.hourly||0)+ps.rate;o.passiveSim=ps.rate;}
+  const bonus=simBonus(s),auto=shareAutoOn(s),who=moneySplit(s);
+  if(o.activities.length&&(bonus!==null||auto||who)){const kept=[],out=[];
+   o.activities.forEach(a=>{const m=byId[a.id];if(who&&m&&(m.who==='jason'||m.who==='lucia')&&m.who!==who){out.push({id:a.id,name:a.name,who:m.who});return;}
+    let x=a;if(bonus!==null&&typeof x.reward==='number')x={...x,reward:x.reward*(1+bonus/100)};if(auto&&m&&Number.isInteger(m.players)&&m.players>1)x={...x,share:100/m.players};kept.push(x);});
+   o.activities=kept;if(out.length)o.excludedByCharacter=out;}
+ }
+ if(fail&&o.activities.length){const k=failureShare(s);if(k!==null&&k>0&&k<1)o.activities=o.activities.map(a=>a.once?{...a,cost:typeof a.cost==='number'?a.cost/(1-k):a.cost,duration:typeof a.duration==='number'?a.duration/(1-k):a.duration,prep:typeof a.prep==='number'?a.prep/(1-k):a.prep}:{...a,reward:typeof a.reward==='number'?a.reward*(1-k):a.reward,units:typeof a.units==='number'?a.units*(1-k):a.units});}
+ if(off)o.offline={cap:p.offline.cap,passiveHourly:ps&&ps.raw>0?ps.raw:0,passiveCap:ps&&ps.raw>0?ps.cap:null};
+ return o;}
+function planInputBase(s,strategy=s.plan.strategy){const p=s.plan,g=p.goal,si=p.situation;
  const group=Number.isInteger(si.players)&&si.players>0?si.players:1,ammo=ammoPerAttempt(s),excludedMissions=p.source==='missions'?p.missions.filter(m=>(m.players||1)>group).map(m=>({id:m.id,name:m.name,players:m.players})):[];
  return {capital:si.capital,reserve:planReserve(s,strategy),sessionMinutes:si.dailyMinutes,excludedMissions,ammoPerAttempt:ammo,players:group,daysPerWeek:si.daysPerWeek??7,upkeepPerSession:si.upkeepPerSession??0,maxRepeat:p.maxRepeat,goalMeaning:g.kind==='amount'?g.meaning:'available',
   hourly:p.source==='hourly'?si.hourly:0,unitsHourly:p.source==='hourly'&&g.kind==='unlock'?(si.unitsHourly??0):0,
   goalPrice:g.kind==='purchase'?g.price:g.kind==='unlock'?(g.alsoPrice??0):null,target:g.kind==='amount'?g.target:null,targetUnits:g.kind==='unlock'?g.targetUnits:null,currentUnits:g.kind==='unlock'?(g.currentUnits??0):0,
-  activities:p.source==='missions'?p.missions.filter(m=>(m.players||1)<=group).map(m=>({id:m.id,name:m.name,reward:m.reward,cost:typeof m.cost==='number'&&ammo&&!m.once?m.cost+ammo:m.cost,duration:m.duration,prep:m.prep,cooldown:m.cooldown,share:m.share,investment:m.investment,owned:m.owned,units:g.kind==='unlock'?m.units:0,requiresPurchaseIds:m.requires,requiresMissions:m.requiresMissions||[],once:m.once===true,done:m.done===true,players:1,ammoSimulated:ammo||0})):[],
+  activities:p.source==='missions'?p.missions.filter(m=>(m.players||1)<=group).map(m=>({id:m.id,name:m.name,reward:m.reward,cost:typeof m.cost==='number'&&ammo&&!m.once?m.cost+ammo:m.cost,duration:m.duration,prep:m.prep,cooldown:m.cooldown,share:m.share,investment:m.investment,owned:m.owned,units:g.kind==='unlock'?m.units:0,requiresPurchaseIds:m.requires,requiresMissions:m.requiresMissions||[],once:m.once===true,done:m.done===true,players:1,ammoSimulated:ammo||0,...(m.minCash!=null?{minCash:m.minCash}:{}),...(m.minRank!=null?{minRank:m.minRank}:{}),...(m.order!=null?{order:m.order}:{})})):[],
   purchases:planPurchases(s,strategy),goalName:planGoalName(s),goalIncomeHourly:g.kind==='purchase'?(g.boostHourly||0):0,
   knownNames:Object.fromEntries([...p.prerequisites.map((x,i)=>[x.id,(typeof x.name==='string'&&x.name.trim())||'Compra '+(i+1)]),...p.missions.map((m,i)=>[m.id,(typeof m.name==='string'&&m.name.trim())||'Missão '+(i+1)])]),
-  knownMissions:p.missions.map(m=>m.id)};}
+  knownMissions:p.missions.map(m=>m.id),...(si.rank!=null?{rank:si.rank}:{})};}
 function planMissing(s){const p=s.plan,g=p.goal,si=p.situation;
  if(g.kind==='purchase'&&(g.price===null||!Number.isFinite(g.price)))return 'Escreva o preço da sua meta, nem que seja o preço que você imagina.';
  if(g.kind==='amount'&&(g.target===null||!Number.isFinite(g.target)))return 'Escreva o valor que você quer ter.';
@@ -250,8 +303,10 @@ function planMissing(s){const p=s.plan,g=p.goal,si=p.situation;
  {const todo=p.prerequisites.filter(x=>!x.owned&&(x.price===null||!Number.isFinite(x.price)));if(todo.length)return 'Percurso a completar: escreva o preço de '+todo.map(x=>'“'+x.name+'”').join(', ')+' (nem que seja o preço que você imagina), ou marque “Já tenho”.';}
  if(p.source==='hourly'&&(si.hourly===null||!Number.isFinite(si.hourly)))return 'Escreva o que você ganha por hora, ou escolha suas missões.';
  if(p.source==='missions'&&!p.missions.length)return 'Adicione pelo menos uma missão que você consiga fazer.';
+ {const m=p.source==='missions'?p.missions.find(x=>x.minRank!=null&&!(x.once&&x.done)):null;if(m&&(si.rank===null||si.rank===undefined||!Number.isFinite(si.rank)))return 'Escreva seu nível em “Em que ponto você está?”: “'+m.name+'” exige o nível '+new Intl.NumberFormat('pt-BR').format(m.minRank)+'.';}
+ if(p.includeFailure===true&&p.source==='missions'&&p.missions.some(m=>!(m.once&&m.done))){const k=failureShare(s);if(k!==null&&k>=1)return 'Com 10 tentativas fracassadas a cada 10, nenhuma missão dá certo: o plano não pode ser feito. Diminua “Tentativas fracassadas a cada 10” em Minhas hipóteses, ou desmarque “Contar as tentativas fracassadas” no plano.';}
  return null;}
-const RULE_WORDS={R1:'um momento ilegível',R2:'um gasto feito antes de ter o dinheiro',R3:'uma etapa feita antes do que ela exige',R4:'uma compra paga duas vezes',R5:'duas ações ao mesmo tempo',R6:'um total diferente do registro',R7:'um objetivo anunciado na hora errada',R8:'uma ação que não cabe na sessão dela',R9:'um ganho por hora que não bate com o tempo jogado',R10:'gastos por sessão que não batem'};
+const RULE_WORDS={R1:'um momento ilegível',R2:'um gasto feito antes de ter o dinheiro',R3:'uma etapa feita antes do que ela exige',R4:'uma compra paga duas vezes',R5:'duas ações ao mesmo tempo',R6:'um total diferente do registro',R7:'um objetivo anunciado na hora errada',R8:'uma ação que não cabe na sessão dela',R9:'um ganho por hora que não bate com o tempo jogado',R10:'gastos por sessão que não batem',R11:'uma missão iniciada sem o dinheiro que ela exige ter no bolso',R12:'uma missão iniciada sem o nível que ela exige',R13:'uma renda off-line que não corresponde à pausa entre duas sessões'};
 function verifyText(v){const rules=[...new Set((v&&v.violations||[]).map(x=>x.rule))].map(k=>RULE_WORDS[k]||k);return 'Este programa não passa na verificação independente ('+rules.join(', ')+'): ele não é proposto. Mude um número para refazer o cálculo.';}
 const unitsText=n=>new Intl.NumberFormat('pt-BR',{maximumFractionDigits:2}).format(Math.round(n*100)/100);
 function unreachedNote(r,s){const when=r.continuous?'Depois de '+E.durationText(r.totalMinutes/60)+' de jogo':'Depois de '+r.totalSessions+(E.plural(r.totalSessions)?' sessões':' sessão');
@@ -452,8 +507,8 @@ function budgetAnalysis(s,source,ctx){
  const usageRows=rows.filter(r=>r.usage&&!r.owned),unconfirmedUsage=usageRows.filter(r=>r.usage.perSession&&r.usage.perSession.s==='unconfirmed').map(r=>r.label);
  const perSession=M.total(usageRows.map(r=>({label:'Uso de '+r.label,value:r.usage.perSession})).filter(p=>p.value.s!=='unconfirmed'));
  if(unconfirmedUsage.length)perSession.complete=false;perSession.unconfirmed=unconfirmedUsage;
- const sessions=horizonSessions(s),d=sessionMinutesOf(s),earn=num(s.goal.hourly)&&d?s.goal.hourly*d/60:null;
- const up=num(s.goal.upkeepPerSession)&&s.goal.upkeepPerSession>0?s.goal.upkeepPerSession:0;
+ const sessions=horizonSessions(s),d=sessionMinutesOf(s),psB=simPassive(s,d),earn=num(s.goal.hourly)&&d?(psB&&psB.rate>0?(s.goal.hourly+psB.rate)*d/60:s.goal.hourly*d/60):null;
+ const up=upkeepOf(s);
  let flow=null;
  if(sessions!==null&&num(s.goal.capital)){const events=[{t:0,type:'spend',amount:spend.value,label:'Compras (subtotal conhecido)'}];for(let i=1;i<=Math.min(sessions,400);i+=1){if(earn!==null)events.push({t:i,type:'receive',amount:earn,label:'Ganho da sessão '+i});if(up>0)events.push({t:i,type:'spend',amount:up,label:'Gastos por sessão (sessão {i})'.replace('{i}',i)});if(perSession.value>0)events.push({t:i,type:'spend',amount:perSession.value,label:'Uso (sessão '+i+')'});}flow={sessions,earn,upkeep:up,usage:perSession.value,usageComplete:perSession.complete,ledger:M.ledger(s.goal.capital,events,s.goal.reserve||0)};}
  return {tool:'budget',spend,perSession,flow,rows,sessions};
@@ -474,7 +529,7 @@ function goalAnalysis(s,source,ctx,r){
 function failureShare(s){return s.analysis.simulations.echec&&num(s.analysis.sim.echec.tentativesRatees)?Math.min(10,Math.max(0,s.analysis.sim.echec.tentativesRatees))/10:null;}
 function activitiesAnalysis(s,source,ctx){
  const minutes=s.inverse.minutes,rank=[];
- activities(s,source).forEach(a=>{const reasons=[];if(a.players>s.goal.players)reasons.push('é para '+a.players+' jogadores, vocês são '+s.goal.players);const miss=(a.requiresPurchaseIds||[]).filter(id=>!s.assets.some(x=>x.itemId===id&&x.owned));if(miss.length)reasons.push('antes é preciso '+miss.map(id=>(ctx&&ctx.catalogue&&ctx.catalogue.find(c=>c.id===id)?.name)||id).join(', '));
+ activities(s,source).forEach(a=>{const reasons=[];if(onceOnly(a))reasons.push(ONCE_REASON);if(a.otherCharacter)reasons.push(otherReason(a,s));if(a.players>s.goal.players)reasons.push('é para '+a.players+' jogadores, vocês são '+s.goal.players);const miss=(a.requiresPurchaseIds||[]).filter(id=>!s.assets.some(x=>x.itemId===id&&x.owned));if(miss.length)reasons.push('antes é preciso '+miss.map(id=>(ctx&&ctx.catalogue&&ctx.catalogue.find(c=>c.id===id)?.name)||id).join(', '));
   const one=E.activity(a);if(!one.valid){rank.push({id:a.id,name:a.name,valid:false,reason:one.reason,excluded:reasons});return;}
   const r=num(minutes)?E.inverse({minutes,capital:s.goal.capital,reserve:s.goal.reserve,activity:a}):null;
   let fail=null;const k=failureShare(s);if(k!==null&&r&&r.valid&&r.runs){const reward=(a.reward||0)*(a.share??100)/100,cost=a.cost||0,okRuns=Math.round(r.runs*(1-k)),badRuns=r.runs-okRuns;fail={share:k,okRuns,badRuns,profit:okRuns*reward-r.runs*cost-(a.investment&&!a.owned?a.investment:0)};}
@@ -485,7 +540,7 @@ function activitiesAnalysis(s,source,ctx){
  return {tool:'activities',rank,accessible:ok,excludedList:rank.filter(x=>x.excluded.length),best:ok[0]||null,mix,failureShare:failureShare(s)};
 }
 function sessionAnalysis(s,source,ctx){
- const out=[];activities(s,source).forEach(a=>{const reasons=[];if(!s.session.enabled.includes(a.id))reasons.push('não marcada');if(a.players>s.goal.players)reasons.push('é para '+a.players+' jogadores');const miss=(a.requiresPurchaseIds||[]).filter(id=>!s.assets.some(x=>x.itemId===id&&x.owned));if(miss.length)reasons.push('compra faltando');const one=E.activity(a);if(!one.valid)reasons.push('números a completar');else{if(num(s.session.minutes)&&one.activeMinutes>s.session.minutes)reasons.push('não cabe em '+s.session.minutes+' min');if(one.net<=0)reasons.push('não rende mais do que seus gastos');}out.push({id:a.id,name:a.name,reasons});});
+ const out=[];activities(s,source).forEach(a=>{const reasons=[];if(onceOnly(a))reasons.push(ONCE_REASON);if(a.otherCharacter)reasons.push(otherReason(a,s));if(!s.session.enabled.includes(a.id))reasons.push('não marcada');if(a.players>s.goal.players)reasons.push('é para '+a.players+' jogadores');const miss=(a.requiresPurchaseIds||[]).filter(id=>!s.assets.some(x=>x.itemId===id&&x.owned));if(miss.length)reasons.push('compra faltando');const one=E.activity(a);if(!one.valid)reasons.push('números a completar');else{if(num(s.session.minutes)&&one.activeMinutes>s.session.minutes)reasons.push('não cabe em '+s.session.minutes+' min');if(one.net<=0)reasons.push('não rende mais do que seus gastos');}out.push({id:a.id,name:a.name,reasons});});
  return {tool:'session',activities:out,excluded:out.filter(x=>x.reasons.length),kept:out.filter(x=>!x.reasons.length)};
 }
 function roiAnalysis(s,source,ctx){
@@ -654,7 +709,7 @@ function explainPlan(s,source,r,x){
  if(missions){used.push('gain-net','temps-actif','attente','versement','ressource-exclusive','variete','joueurs');if(ex.length)changes.push((lkPluriel(ex.length)?'Descartadas':'Descartada')+' do plano: '+ex.map(m=>'“'+m.name+'” (é para '+m.players+', vocês são '+(input.players||1)+')').join(', ')+'. Mude “Jogamos em” para contar essas missões.');}
  else{excluded['gain-net']='Você ganha “aos poucos”: seu ganho por hora já conta os gastos.';excluded['temps-actif']='Sem missões: não há tempo de missão separado.';excluded.attente='Sem missões: não há espera.';excluded.versement='Ganho contínuo: não há recompensa no fim da missão.';excluded['ressource-exclusive']='Não há missões para encadear.';excluded.variete='Não há missões para variar.';excluded.joueurs='Não há missões em grupo.';}
  if(missions&&any(m=>(m.requires||[]).length)||anyP(a=>(a.requires||[]).length))used.push('possession-requise');else excluded['possession-requise']='Nenhuma missão nem compra exige outra.';
- if(any(m=>m.once))used.push('deblocage');else excluded.deblocage='Nenhuma missão de desbloqueio (feita uma única vez).';
+ if(any(m=>m.once||m.minRank!=null))used.push('deblocage');else excluded.deblocage='Nenhuma missão de desbloqueio (feita uma única vez).';
  if(p.situation.dailyMinutes){used.push('temps-partie','horizon');}else{excluded['temps-partie']='Sem duração da sessão: percurso contínuo, sem calendário.';excluded.horizon='Sem sessões, não há datas: só o tempo de jogo.';}
  if((p.situation.upkeepPerSession||0)>0||anyP(a=>(a.usagePerSession||0)>0))used.push('cout-usage');else excluded['cout-usage']='Nenhum gasto por sessão anotado.';
  if(ammoPerAttempt(s)){used.push('mecanique-simulee');changes.push('Munição simulada: '+E.dollars(fmt(ammoPerAttempt(s)),' ')+' somados aos gastos de cada tentativa de missão, como em Minhas atividades. Desmarque a simulação para tirar esses valores.');}else excluded['mecanique-simulee']='Nenhuma mecânica simulada no plano.';
@@ -663,6 +718,9 @@ function explainPlan(s,source,r,x){
   if(r.lowPoint)drivers.push({label:'Ponto mais baixo',text:E.dollars(fmt(r.lowPoint.cash),' ')+' ('+(r.lowPoint.at||'início')+'), '+((r.input&&r.input.reserve||0)>0?'nunca abaixo dos '+E.dollars(fmt(r.input.reserve),' ')+' guardados.':(r.keptReserve||0)>0?'usando seus '+E.dollars(fmt(r.keptReserve),' ')+' guardados (você escolheu ir o mais rápido possível).':'sem dinheiro guardado.')});
   if(x.chain&&x.chain.steps.length)drivers.push({label:'Preparação',text:x.chain.steps.filter(st=>st.kind!=='activity').map(st=>st.name).join(', depois ')||'Nada a preparar.'});}
  else missing.push({label:missingLabel(r.reason),text:r.reason,decisive:true});
+ if(missions){const hold=p.missions.filter(m=>m.minCash!=null&&!(m.once&&m.done)),rk=p.missions.filter(m=>m.minRank!=null&&!(m.once&&m.done));
+  if(hold.length)drivers.push({label:'Dinheiro que é preciso ter no bolso',text:hold.map(m=>'“'+m.name+'”: '+E.dollars(fmt(m.minCash),' ')).join(', ')+'. Esse dinheiro não é gasto: o plano espera até você tê-lo antes de iniciar a missão.'});
+  if(rk.length)drivers.push({label:'Nível exigido',text:rk.map(m=>'“'+m.name+'”: nível '+fmt(m.minRank)).join(', ')+(num(p.situation.rank)?'; você escreveu o nível '+fmt(p.situation.rank)+'.':'.')});}
  if(afterGoal&&anyP(a=>!a.owned&&a.boostHourly>0))drivers.push({label:'O que o objetivo rende',text:afterGoal});
  if(missions&&anyP(a=>a.boostHourly>0))drivers.push({label:'Ganho por hora de uma compra',text:'Contado durante toda a sessão, ao mesmo tempo que suas missões, exceto durante o tempo para obter outra compra.'});
  {const v=r.verification;if(v&&v.skipped==='journal')missing.push({label:'Verificação',text:'Registro longo demais para ser reproduzido (mais de 60.000 eventos): o plano é mostrado sem esta verificação.',decisive:false});
@@ -672,7 +730,70 @@ function explainPlan(s,source,r,x){
  if(x.chain&&!x.chain.ok&&x.chain.reason&&r.reason!==x.chain.reason&&!sameCycle)missing.push({label:'Pré-requisitos',text:x.chain.reason,decisive:true});
  return M.explain({tool:'plan',aim:g.kind==='amount'?'Ter '+E.dollars(fmt(g.target),' ')+': '+MEANING[g.meaning]+'.':g.kind==='unlock'?'Desbloquear '+(g.name||'sua meta')+'.':'Comprar '+(g.name||'sua meta')+'.',horizon:p.situation.dailyMinutes?'Sessão após sessão ('+p.situation.dailyMinutes+' min, '+(p.situation.daysPerWeek||7)+' dias por semana)':'Uma etapa após a outra, sem calendário',conditions:[],used,excluded,values:[{label:'Já tenho',value:vPers(p.situation.capital),unit:'$',field:'plan-capital'},{label:'Guardado',value:vPers(p.situation.reserve),unit:'$',field:'plan-reserve'},...(missions?[{label:'Jogamos em',value:vPers(p.situation.players??1),unit:lkPluriel((p.situation.players??1))?'jogadores':'jogador',field:'plan-players'}]:[]),...(ammoPerAttempt(s)?[{label:'Munição simulada, por tentativa',value:V.simulated(ammoPerAttempt(s)),unit:'$',field:null,origin:'simulation'}]:[])],drivers,missing,changes});
 }
-function explainTool(tool,s,source,ctx,r,x){
+function planResale(s,r){const fin=new Map((r.purchases||[]).filter(x=>x.owned).map(x=>[x.id,x]));
+ const items=s.plan.prerequisites.filter(x=>typeof x.resale==='number'&&x.resale>0&&fin.has(x.id)).map(x=>({id:x.id,name:x.name,resale:x.resale}));
+ const total=items.reduce((t,x)=>t+x.resale,0),spent=[...fin.values()].filter(x=>!(s.plan.prerequisites.find(y=>y.id===x.id)||{}).owned).reduce((t,x)=>t+(x.price||0),0);
+ return {total,items,finalCashAfter:r.finalCash+total,spent,netCost:spent-total};}
+const SIM_SHORT={soin:'gastos com curas',amendes:'multas a pagar',mort:'dinheiro perdido ao morrer',arrestation:'dinheiro perdido ao ser preso'};
+function extrasExplain(tool,s,source,r,x,e){
+ if(!e||!M||!s||!s.analysis)return e;
+ const P=s.plan,isPlan=tool==='plan',useH=!isPlan||P.useHypotheses===true,costsOn=['soin','amendes','mort','arrestation'].some(k=>xOn(s,k));
+ const anyHyp=costsOn||xOn(s,'revenu-passif')||xOn(s,'bonus')||shareAutoOn(s)||!!moneySplit(s);
+ const resale=(tool==='goal'||tool==='session')&&s.goal.resaleOwned===true,off=isPlan&&!!(P.offline&&P.offline.on===true),fail=isPlan&&P.includeFailure===true,resPlan=isPlan&&P.resaleAfterGoal===true;
+ if(!(useH&&anyHyp)&&!resale&&!off&&!fail&&!resPlan&&!(isPlan&&anyHyp))return e;
+ const values=[],drivers=[],missing=[],changes=[],usedAdd=[],drop=new Set(),why={},cycles=s.model==='cycles';
+ const money=n=>E.dollars(fmt(n),' '),use=(...ids)=>ids.forEach(id=>{usedAdd.push(id);drop.add(id);});
+ if(isPlan&&!useH&&anyHyp)changes.push('Suas hipóteses extras (Minhas hipóteses extras, modo Avançado) não contam no plano: marque “Contar também minhas hipóteses extras” em “O que importa para você” para incluí-las.');
+ const missions=isPlan?P.missions:[],planMissions=isPlan&&P.source==='missions';
+ if(useH&&anyHyp){
+  if(costsOn){const sc=simCosts(s),counted=['goal','session','order','plan'].includes(tool)||(tool==='budget'&&!!(x&&x.flow));
+   sc.missing.forEach(m=>missing.push({label:'A escrever',text:m.text,field:m.field,decisive:false}));
+   if(sc.total>0){
+    if(counted){sc.lines.forEach(l=>values.push({label:l.label,value:V.simulated(l.value),unit:'$/partie',field:l.field}));use('cout-usage','mecanique-simulee');
+     const userUp=isPlan?(P.situation.upkeepPerSession||0):(num(s.goal.upkeepPerSession)&&s.goal.upkeepPerSession>0?s.goal.upkeepPerSession:0);
+     const names=sc.lines.map(l=>SIM_SHORT[l.key]).join(', ');
+     drivers.push({label:'Gastos simulados',text:money(sc.total)+' por sessão ('+names+') '+(userUp>0?'somados aos seus '+money(userUp)+' de gastos por sessão.':'contados como gastos por sessão.')+(tool==='goal'&&r&&r.valid&&!userUp?(cycles&&num(r.upkeepTotal)?' Elas somam '+money(r.upkeepTotal)+' a ganhar em todo o percurso.':!cycles&&num(r.hourly)?' Elas baixam seu ganho para '+money(r.hourly)+' por hora.':''):'')});}
+    else if(tool==='activities')why['cout-usage']='Seus gastos por sessão, gastos simulados incluídos ('+money(upkeepOf(s))+') não são descontados aqui: esse tempo não é contado em sessões, e eles seriam os mesmos para cada atividade. Meu objetivo e Meu plano de negócios os descontam.';
+    else if(tool==='budget')why['cout-usage']='Escreva com quantas sessões você conta (modo Avançado) para ver seus gastos, simulados incluídos, ao longo do tempo.';
+    else why['mecanique-simulee']='Seus gastos simulados por sessão (curas, multas…) contam em Meu objetivo, Meu tempo de jogo, O que comprar primeiro?, Meu orçamento e no plano de negócios; aqui, só conta o custo de uso da compra.';}}
+  if(xOn(s,'revenu-passif')){const d=isPlan?P.situation.dailyMinutes:sessionMinutesOf(s),ps=simPassive(s,d),counted=(tool==='goal'&&!cycles)||tool==='order'||(tool==='budget'&&!!(x&&x.flow))||isPlan;
+   if(ps.incomplete)missing.push({label:'A escrever',text:'Renda passiva: escreva quanto ela rende por hora.',field:'sim-revenu-passif-parHeure',decisive:false});
+   else if(counted){values.push({label:'Renda passiva (simulação)',value:V.simulated(ps.rate),unit:'$/h',field:'sim-revenu-passif-parHeure',text:ps.capped?'No máximo '+money(ps.cap)+' por sessão (estoque máximo): '+money(ps.raw)+' por hora reduzidos a '+money(ps.rate)+'.':ps.noSessions?'Sem duração de sessão, o estoque máximo não se aplica.':null});use('mecanique-simulee');
+    drivers.push({label:'Renda passiva',text:'+'+money(ps.rate)+(isPlan&&P.source==='missions'?' por hora de jogo, somados ao que suas missões rendem (simulação).':' por hora de jogo, somados ao seu ganho por hora (simulação).')});}
+   else changes.push(tool==='goal'?'Sua renda passiva simulada conta no modo “aos poucos”: aqui, cada missão conta por si só.':'Sua renda passiva simulada não é contada aqui: ela conta em Meu objetivo (“aos poucos”), O que comprar primeiro?, Meu orçamento e no plano de negócios.');}
+  if(xOn(s,'bonus')){const b=simBonus(s),counted=(tool==='goal'&&cycles)||tool==='session'||tool==='activities'||(tool==='roi'&&['new','improve'].includes(roiMode(s)))||planMissions;
+   if(b===null)missing.push({label:'A escrever',text:'Bônus: escreva a porcentagem extra sobre as recompensas.',field:'sim-bonus-pourcentage',decisive:false});
+   else if(counted){values.push({label:'Bônus sobre as recompensas (simulação)',value:V.simulated(b),unit:'%',field:'sim-bonus-pourcentage'});use('mecanique-simulee');drivers.push({label:'Bônus simulado',text:'Cada recompensa de missão conta '+fmt(b)+'%'+' a mais (simulação).'});}
+   else if(tool==='goal')changes.push('O bônus simulado conta sobre as recompensas das missões: o ganho por hora que você escreveu não muda.');}
+  const acts=isPlan?[]:(tool==='goal'&&cycles)||tool==='session'||tool==='activities'||tool==='roi'?activities(s,source):[];
+  if(shareAutoOn(s)){const list=isPlan?(planMissions?missions.filter(m=>Number.isInteger(m.players)&&m.players>1):[]).map(m=>'“'+m.name+'” '+fmt(100/m.players)+'%'):acts.filter(a=>a.shareAuto).map(a=>'“'+a.name+'” '+fmt(a.share)+'%');
+   if(list.length){use('joueurs');drivers.push({label:'Divisão entre parceiros',text:list.join(', ')+': parte igual para cada jogador, em vez da parte escrita.'});}
+   else if(acts.length||planMissions)changes.push('Divisão automática: nenhuma missão em grupo aqui, nada muda.');}
+  const who=moneySplit(s);
+  if(who&&(acts.length||planMissions)){const out=isPlan?((r&&r.input&&r.input.excludedByCharacter)||[]).map(m=>'“'+m.name+'”'):acts.filter(a=>a.otherCharacter).map(a=>'“'+a.name+'”');
+   const both=isPlan?missions.filter(m=>m.who==='deux').map(m=>'“'+m.name+'”'):acts.filter(a=>Array.isArray(a.characters)&&a.characters.length>1).map(a=>'“'+a.name+'”');
+   drivers.push({label:'Dinheiro contado: '+PERSO[who],text:'Você só conta o dinheiro de '+PERSO[who]+(out.length?': '+out.join(', ')+(out.length>1?' ficam descartadas':' fica descartada')+' (jogada com o outro personagem).':': aqui nenhuma missão é só do outro personagem.')+' A Rockstar ainda não disse se o dinheiro de Jason e o de Lucia são separados (a confirmar).'});
+   if(both.length)changes.push('Missão a dois ('+both.join(', ')+'): escreva em “Minha parte” quanto recebe '+PERSO[who]+'.');}
+ }
+ if(resale){const t=resaleOwnedTotal(s);
+  if(t>0){values.push({label:'Revenda do que você possui (simulação)',value:V.simulated(t),unit:'$'});use('revente-prevue');drivers.push({label:'Revenda',text:'+'+money(t)+' somados ao seu dinheiro inicial: os preços de revenda escritos em Minhas compras para o que você já possui. A revenda não está confirmada em GTA VI.'+(s.goal.meaning==='cumulative'?' Em “o que vou ganhar”, ela não conta como ganho.':'')});}
+  else missing.push({label:'A escrever',text:'Revenda: nenhuma compra que você possui tem preço de revenda escrito (Minhas compras, “Poderia revendê-lo por”).',decisive:false});}
+ if(isPlan){
+  if(off){if(!P.situation.dailyMinutes)changes.push('Renda off-line: ela é ganha durante as pausas entre duas sessões; num percurso sem sessões, ela não é contada.');
+   else if(r&&r.valid){const t=num(r.offlineTotal)?r.offlineTotal:0;use('gain-en-plus');values.push({label:'Renda off-line, teto por pausa',value:num(P.offline.cap)?V.simulated(P.offline.cap):V.blank(),unit:'$',field:'plan-offline-cap'});
+    drivers.push({label:'Renda off-line (simulação)',text:t>0?'+'+money(t)+' no total, ganhos durante as pausas entre suas sessões: o que suas compras rendem por hora'+(xOn(s,'revenu-passif')&&useH?' e sua renda passiva simulada':'')+(num(P.offline.cap)?', no máximo '+money(P.offline.cap)+' por pausa':'')+'. Nada está confirmado em GTA VI.':'Nada a contar: nenhuma compra sua rende por hora'+(useH?' e nenhuma renda passiva simulada':'')+'.'});}}
+  if(fail){const k=failureShare(s);
+   if(k===null)missing.push({label:'A escrever',text:'Tentativas fracassadas: marque e preencha “Tentativas fracassadas” em Minhas hipóteses para contá-las no plano.',decisive:false});
+   else if(planMissions){use('scenario-echec');drivers.push({label:'Tentativas fracassadas (simulação)',text:k<=0?'Nenhuma tentativa fracassada escrita: nada muda.':'Com '+Math.round(k*10)+' tentativas fracassadas a cada 10: uma missão que se repete rende em média '+fmt(Math.round((1-k)*100))+'%'+' da recompensa; uma missão feita uma única vez custa e dura em média '+unitsText(1/(1-k))+' vezes mais (tentativas até dar certo).'});}}
+  if(resPlan){const rs=r&&r.valid?r.resaleAfterGoal:null;
+   if(rs&&rs.total>0){use('revente-prevue');drivers.push({label:'Revenda depois do objetivo (simulação)',text:'+'+money(rs.total)+' revendendo '+rs.items.map(i=>'“'+i.name+'”').join(', ')+' depois do objetivo: '+money(rs.finalCashAfter)+' no fim, e suas compras prévias custam a você '+money(rs.netCost)+' no total. O tempo para alcançar o objetivo não muda.'});}
+   else if(r&&r.valid)missing.push({label:'A escrever',text:'Revenda depois do objetivo: escreva “Revendo depois do meu objetivo” numa compra prévia que você terá.',decisive:false});}}
+ if(!values.length&&!drivers.length&&!missing.length&&!changes.length&&!usedAdd.length&&!Object.keys(why).length)return e;
+ const add=M.explain({tool,used:[],excluded:{},values,drivers,missing,changes:[]});
+ return {...e,used:[...new Set([...e.used,...usedAdd])],excluded:e.excluded.filter(c=>!drop.has(c.id)).map(c=>why[c.id]?{...c,why:why[c.id]}:c),values:e.values.concat(add.values),drivers:e.drivers.concat(add.drivers),missing:e.missing.concat(add.missing),changes:e.changes.concat(changes),unaccounted:e.unaccounted.filter(id=>!usedAdd.includes(id))};
+}
+function explainTool(tool,s,source,ctx,r,x){return extrasExplain(tool,s,source,r,x,explainToolBase(tool,s,source,ctx,r,x));}
+function explainToolBase(tool,s,source,ctx,r,x){
  if(tool==='goal')return explainGoal(s,source,r,x);if(tool==='session')return explainSession(s,source,r,x);if(tool==='activities')return explainActivities(s,source,r,x);
  if(tool==='budget')return explainBudget(s,source,r,x);if(tool==='order')return explainOrder(s,source,r,x);if(tool==='roi')return explainRoi(s,source,r,x,ctx);
  if(tool==='compare')return explainCompare(s,source,r,x);if(tool==='plan')return explainPlan(s,source,r,x);return x.explain||null;
@@ -691,6 +812,7 @@ function goalJournal(g,r,o={}){
  return events;}
 const paidIn=events=>[...new Set(events.filter(e=>e.unlocks).map(e=>e.unlocks))];
 function goalPurchase(s,source=[],ctx={},key=s.purchase.key){
+ if(s&&s.goal&&s.goal.resaleOwned===true)s=withResale(s);
  const g=s.goal,a=asset(s,key),p=purchase(key===s.purchase.key?s:{...s,purchase:{...s.purchase,key}},source);
  const price=a&&num(p.price)&&num(p.extras)?p.price+p.extras:null,item=a?itemOf(a,ctx):null,use=a&&M?usageOf(s,a,item):null,daily=sessionMinutesOf(s);
  const usageV=use&&V.usable(use.perSession)?use.perSession.v:null,usageUnknown=!!use&&!V.usable(use.perSession)&&use.source!=='na';
@@ -706,7 +828,7 @@ function goalPurchase(s,source=[],ctx={},key=s.purchase.key){
  const verify=(name,events,claim)=>{const v=E.cashJournalVerify({capital:g.capital,reserve:g.reserve,events,claim});out.checks.push({strategy:name,ok:v.valid&&v.ok,violations:v.violations||[]});if(!(v.valid&&v.ok))out.rejected.push(name);return v.valid&&v.ok;};
  if(base.valid){const ev=goalJournal(g,base);verify('sans-achat',ev,{finalCash:base.finalCapital,target:T-ps,after:paidIn(ev),reachedAt:base.totalMinutes});}
  if(s.model==='continuous'){
-  const up=num(g.upkeepPerSession)&&g.upkeepPerSession>0?g.upkeepPerSession:0,hNet=num(g.hourly)?g.hourly-(up&&daily?up*60/daily:0):null;
+  const up=upkeepOf(s),hNet=num(g.hourly)?hourlyNet(s).net:null;
   const noIncome=!base.valid&&hNet!==null&&hNet<=0&&goal({...s,goal:{...g,hourly:(up&&daily?up*60/daily:0)+1}},source).valid;
   if(!base.valid&&!noIncome)return{...out,valid:false,reason:base.reason};
   if(hNet===null)return{...out,valid:false,reason:base.reason||'Escreva o que você ganha por hora.'};
@@ -775,6 +897,7 @@ function evaluate(tool,s,source=[],ctx={}){
   const meta={strategy,strategies:st,variant,input,keptReserve:s.plan.situation.reserve??0};
   if(r.valid&&!r.reached)return Object.assign({valid:false,unreached:true,limited:true,reason:(r.note?r.note+' ':'')+unreachedNote(r,s),finalCash:r.finalCash,missing:r.missing},meta);
   if(r.valid){r.verification=E.missionVerify(r);if(r.verification.ok===false)return Object.assign({valid:false,reason:verifyText(r.verification),verification:r.verification},meta);}
+  if(r.valid&&s.plan.resaleAfterGoal===true)r.resaleAfterGoal=planResale(s,r);
   return Object.assign(r,meta);}
  if(tool==='goal')return goal(s,source);if(tool==='session')return session(s,source);if(tool==='roi')return roi(s,source,ctx);if(tool==='order'){if(!M){const r0=E.order(orderInput(s,source));return !r0.valid&&r0.blockedIndex!==undefined&&upkeepEats(s)?{...r0,reason:UPKEEP_EATS}:r0;}const x=orderAnalysis(s,source,ctx);if(x.best&&x.best.valid)return {...x.best.result,order:x.best.order,objective:x.objective,method:x.search&&x.search.method};return {valid:false,reason:x.reason,incomplete:!!x.incomplete,steps:[],totalHours:null,finalCapital:null,finalHourly:null};}
  if(tool==='budget'){const input=budgetInput(s),unknown=input.allocations.filter(v=>v===null).length;if(!unknown)return E.budget(input);
@@ -816,6 +939,8 @@ function hypActs(tool,c,src){const all=[...c.activities,...src],byId=id=>all.fil
 function hypAssets(tool,c){const keys=tool==='purchase'?[c.purchase.key]:tool==='roi'?[c.roi.key]:tool==='order'?c.order.keys:tool==='compare'?c.compare.keys:tool==='budget'&&c.budget.source==='basket'?c.order.keys:[];return keys.map(k=>asset(c,k)).filter(Boolean);}
 function hypApply(tool,c,src,lever,f){const g=c.goal,p=c.plan,acts=hypActs(tool,c,src),assets=hypAssets(tool,c),m=tool==='roi'?roiMode(c):null;
  const sc=(o,k,ff=f)=>{if(o)o[k]=hypScale(o[k],ff);};
+ const simLever=()=>{const sim=c.analysis&&c.analysis.sim;if(!sim)return;if(lever==='costs'){sc(sim.soin,'prixUnitaire');sc(sim.amendes,'prix');sc(sim.mort,'perte');sc(sim.arrestation,'perte');}if(lever==='gains')sc(sim['revenu-passif'],'parHeure');};
+ if(tool==='plan'&&p.useHypotheses===true)simLever();else if(tool==='goal'||tool==='order'||(tool==='session'&&lever==='costs'))simLever();
  if(tool==='plan'){const si=p.situation;
   if(lever==='gains'){if(p.source==='hourly')sc(si,'hourly');else p.missions.forEach(x=>sc(x,'reward'));p.prerequisites.forEach(x=>sc(x,'boostHourly'));sc(p.goal,'boostHourly');}
   if(lever==='prices'){if(p.goal.kind==='purchase')sc(p.goal,'price');if(p.goal.kind==='unlock')sc(p.goal,'alsoPrice');p.prerequisites.forEach(x=>{if(!x.owned)sc(x,'price');});if(p.source==='missions')p.missions.forEach(x=>{if(!x.owned)sc(x,'investment');});}
@@ -880,6 +1005,6 @@ function hypotheses(tool,s,source=[],ctx={}){
 }
 function signature(s){const c=copy(s);delete c.name;delete c.mode;delete c.views;delete c.tab;delete c.catalogue;delete c.completed;delete c.modelVersion;delete c.modelUpgradedFrom;return JSON.stringify(c);}
 function referenceWarnings(s,catalogue){const out=[];s.assets.forEach(a=>{if(!a.itemId)return;const item=catalogue.find(x=>x.id===a.itemId);if(!item)out.push(a.name+': esta ficha não existe mais, seu preço foi mantido.');else if(a.referencePrice!==item.price)out.push(item.name+': o preço do site mudou; confira o seu número.');});return out;}
-function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Meu primeiro milhão',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a',meaning:'available',plannedSpend:null,upkeepPerSession:null,deadlineDays:null},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
+function initial(dataVersion,presets){return defaults({version:2,dataVersion,mode:'quick',model:'continuous',name:'Meu primeiro milhão',tab:'goal',goal:{capital:200000,target:1000000,hourly:100000,reserve:0,dailyMinutes:60,players:1,selected:'scenario-a',meaning:'available',plannedSpend:null,upkeepPerSession:null,deadlineDays:null,resaleOwned:false},activities:presets.map(a=>({id:a.id,name:a.name,reward:a.reward,cost:a.cost,duration:a.duration,prep:a.prep,cooldown:a.cooldown,share:a.share,investment:a.investment,players:a.players,owned:false})),session:{minutes:60,maxRepeat:100,enabled:['scenario-a','scenario-b','scenario-c']},inverse:{minutes:60,selected:'scenario-a'},purchase:{itemId:'',price:100000,hourly:50000,boostHourly:0,capital:200000,target:1000000,reserve:0,extras:0},catalogue:{query:'',type:'all',status:'all',maxPrice:null,sort:'name',favorites:[],compareIds:[],favoritesOnly:false}});}
 return Object.freeze({MODEL_VERSION,roiMode,hourlyNet,compareNames,compareChanges,roiChanges,planLogId,analysis,goalTarget,goalPurchase,usageOf,terrainFits,OBJECTIVES,dependencyOrder,copy,tools,names,defaults,initial,validate,migrate,asset,addAsset,activities,eligible,purchase,goal,session,projection,roi,investment,decision,blank,orderInput,budgetInput,chooseInput,planInput,planMissing,planPurchases,planReserve,planGoalName,planStrategies,planAlternatives,planObserved,planNextSession,planDeadline,planCurve,planTemplate,planMissionTemplate,planPrereqTemplate,planLogTemplate,planVariantTemplate,analysisTemplate,assetTemplate,MECHANICS,ROLES,GOAL_MEANINGS,PRIORITIES,TERRAINS,STRATEGIES,STRATEGY_LABEL,PLAN_KINDS,PLAN_SOURCES,evaluate,metrics,metric,sensitivity,hypotheses,signature,referenceWarnings});
 });

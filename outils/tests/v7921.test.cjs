@@ -162,7 +162,9 @@ test('Vidéos : quatre vidéos, la bande-annonce de lancement avec sa musique en
   /* questions : l’encart de Léo à côté, trois questions posées par bouton */
   for (const id of A.videos.liste.map(x => x.id)) assert.equal(doc('videos/' + id + '.html').querySelectorAll('#faq .vt-aside button[data-vt-leo]').length, 3, id);
   /* ni photogrammes, ni fiches, ni modèles inventés pour une vidéo que personne n’a encore relevée */
-  for (const id of ['moments', 'fiches', 'vehicules', 'armes']) assert.equal(v.getElementById(id), null, id);
+  for (const id of ['moments', 'vehicules', 'armes']) assert.equal(v.getElementById(id), null, id);
+  /* v8.04 : ce que la presse a relevé (personnages) : chaque fiche dit « Vu dans un média », aucune n’est inventée */
+  const fi = v.getElementById('fiches'); if (fi) { const t = N(fi.textContent); assert.ok(/Vu dans un média/.test(t) && !/Officiel/.test(t), 'fiches de la bande-annonce de lancement : presse seulement'); }
   /* les autres vidéos : trois cartes, toute la largeur */
   assert.equal(v.querySelectorAll('#autres .ac-vcard').length, 3);
 });
@@ -203,30 +205,30 @@ test('Presse : carte de presse, trois phrases à copier d’un coup, lettre avec
 
 test('« Ce qui est confirmé » : douze points, chacun avec sa source officielle ; relevé du jour en tête ; trois règles', () => {
   const V = JSON.parse(read('outils/informations-editorial.json')).verification;
-  assert.equal(V.checkedAt, '2026-10-17');
+  assert.equal(V.checkedAt, '2026-10-20'); /* v8.04 : tout recontrôlé le 20 octobre 2026 */
   const d = doc('verification.html');
-  const cards = [...d.querySelectorAll('#confirme .vf-card')];
-  assert.equal(cards.length, 12); assert.equal(V.confirme.items.length, 12);
+  const cards = [...d.querySelectorAll('#confirme .vfx-card')];
+  assert.equal(cards.length, 13); assert.equal(V.confirme.items.length, 13); /* v8.04 : treizième point, l’âge conseillé (PEGI 18, ESRB M) */
   for (const c of cards) {
     const src = [...c.querySelectorAll('a[target="_blank"]')].map(a => a.href);
-    assert.ok(src.length === 1 && /^https:\/\/(?:(?:www|support)\.rockstargames\.com|www\.playstation\.com|blog\.playstation\.com)\//.test(src[0]), src.join());
+    assert.ok(src.length >= 1 && src.length <= 2 && /^https:\/\/(?:(?:www|support)\.rockstargames\.com|www\.playstation\.com|blog\.playstation\.com)\//.test(src[0]) && src.slice(1).every(u => /^https:\/\/www\.esrb\.org\//.test(u)), src.join()); /* v8.04 : l’âge conseillé cite aussi la fiche de l’ESRB, organisme officiel de classification */
     const href = c.querySelector('.vf-links a:not([target])').getAttribute('href').split('#'), page = href[0];
     assert.ok(exists(page), page); if (href[1]) assert.ok(doc(page).getElementById(href[1]), href.join('#'));
   }
   /* un point sans photo montre ses prix en étiquettes, aussi écrits dans le texte de la carte */
   const prix = cards.find(c => c.querySelector('.vf-card-prices'));
   assert.ok(prix && prix.querySelector('.vf-card-prices').getAttribute('aria-hidden') === 'true');
-  for (const b of prix.querySelectorAll('.vt-price')) assert.ok(N(prix.querySelector('.vf-card-b').textContent).includes(N(b.textContent)), N(b.textContent));
+  for (const b of prix.querySelectorAll('.vt-price')) assert.ok(N(prix.querySelector('.vfx-card-b').textContent).includes(N(b.textContent)), N(b.textContent));
   /* le relevé du jour : une image (aria-hidden) ; la date est celle de la relecture ; points et questions existent */
   const dos = d.querySelector('.page-head .vf-dos');
   assert.equal(dos.getAttribute('aria-hidden'), 'true');
-  assert.equal(N(dos.querySelector('.vf-dos-k b').textContent), '17 octobre 2026');
+  assert.equal(N(dos.querySelector('.vf-dos-k b').textContent), '20 octobre 2026');
   assert.equal(dos.querySelectorAll('.vf-dos-i--ok').length, V.hero.dossier.ok.length);
   assert.equal(dos.querySelectorAll('.vf-dos-i--wait').length, V.hero.dossier.wait.length);
   assert.ok(dos.querySelector('img[fetchpriority="high"]'));
   /* les modèles réels : trois règles titrées, côte à côte */
   assert.equal(d.querySelectorAll('#modeles .vt-point').length, 3);
-  for (const dir of ALL) assert.equal(doc(dir + 'verification.html').querySelectorAll('#confirme .vf-card').length, 12, dir);
+  for (const dir of ALL) assert.equal(doc(dir + 'verification.html').querySelectorAll('#confirme .vfx-card').length, 13, dir);
 });
 
 test('textes à jour : quatre vidéos, la dernière annonce, plus de « Trailer 3 » attendu ni de « deux trailers »', () => {

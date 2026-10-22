@@ -29,6 +29,11 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   const PAGE_SIZE = 12;
   const searchIndex = new Map(items.map(item => [item.id, norm([item.name, categoryName(item), item.subcategory, item.region, item.zone, item.place, item.summary, item.description, ...(Array.isArray(item.keywords) ? item.keywords : [])].filter(Boolean).join(' '))]));
   const setText = (id, value) => { if ($(id)) $(id).textContent = value; };
+  const CHEV = '<svg class="lk-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+  const calm = () => !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let justFound = null, lastFound = null;
+  const bump = node => { if (!node || calm() || typeof node.animate !== 'function') return; node.animate([{transform: 'translate3d(0,-8px,0)', opacity: .35}, {transform: 'none', opacity: 1}], {duration: 320, easing: 'cubic-bezier(.34,1.56,.64,1)'}); };
+  if (window.LKMotion && window.LKMotion.painted) document.querySelectorAll('.col-dash').forEach(node => node.classList.add('col-dash--still'));
   function feedback(message) {
     const warning = core.getStorageStatus().message;
     const text = message + (warning && !message.includes(warning) ? ' ' + warning : '');
@@ -108,7 +113,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       button.disabled = !core.isTrackable(item);
       button.setAttribute('aria-pressed', String(found && core.isTrackable(item)));
       const label = button.querySelector('[data-col-label]') || button;
-      label.textContent = !core.isTrackable(item) ? 'Suivi indisponible' : found ? '✓ Trouvé' : 'Marquer trouvé';
+      label.textContent = !core.isTrackable(item) ? 'Suivi indisponible' : found ? 'Trouvé' : 'Marquer trouvé';
       button.setAttribute('aria-label', (found ? 'Marquer non trouvé : ' : 'Marquer trouvé : ') + (item?.name || 'collectible'));
     });
     document.querySelectorAll('[data-col-favorite]').forEach(button => {
@@ -131,8 +136,10 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     setText('col-located', items.filter(item => core.mapUrl(item)).length);
     document.querySelectorAll('.col-dash').forEach(function (d) { d.toggleAttribute('data-vide', !items.length); });
     setText('col-found-count', found);
-    setText('col-trackable-label', trackable.length ? '/ ' + trackable.length + (lkPluriel(trackable.length)?' trouvés':' trouvé') : 'objet suivi');
-    setText('col-percent', percent === null ? '—' : percent + ' %');
+    if (lastFound !== null && found !== lastFound) bump($('col-found-count'));
+    lastFound = found;
+    setText('col-trackable-label', trackable.length ? 'sur ' + trackable.length + (lkPluriel(trackable.length)?' objets suivis':' objet suivi') : 'objet suivi');
+    setText('col-percent', percent === null ? '?' : percent + ' %');
     if ($('col-progress-fill')) $('col-progress-fill').style.width = (percent || 0) + '%';
     document.querySelectorAll('.col-ring-fg').forEach(function (r) { r.style.setProperty('--p', String(percent || 0)); });
     if ($('col-progress-meter')) {
@@ -161,13 +168,14 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     const image = safeImage(item.image?.src), url = core.itemUrl(item), map = core.mapUrl(item), noteId = 'col-note-' + item.id;
     const location = [item.zone, item.place].filter(Boolean).join(', ');
     const spoilers = location || item.reward || map;
-    return '<article class="col-card" data-col-item="' + esc(item.id) + '">' +
+    const isFound = !!state.found[item.id] && core.isTrackable(item);
+    return '<article class="col-card' + (isFound ? ' is-found' : '') + '" data-col-item="' + esc(item.id) + '">' + (isFound ? '<span class="col-card-stamp" aria-hidden="true">Trouvé</span>' : '') +
       '<div class="col-card-media">' + (image ? '<img src="' + esc(image) + '" alt="' + esc(item.image.alt || item.name) + '" width="' + (Number(item.image.width) || 480) + '" height="' + (Number(item.image.height) || 270) + '" loading="lazy" decoding="async">' : '<span class="col-no-image">Visuel GTA VI non documenté</span>') + '</div>' +
       '<div class="col-card-body"><div class="col-tags"><span class="col-tag col-tag-' + esc(item.status) + '">' + esc(statusLabels[item.status] || 'Statut à préciser') + '</span></div>' +
       '<h3>' + (url ? '<a href="' + esc(url) + '">' + esc(item.name) + '</a>' : esc(item.name)) + '</h3>' +
       '<p class="col-card-location">' + esc([categoryName(item), item.region].filter(Boolean).join(', ')) + '</p>' +
       (item.summary ? '<p class="col-card-summary">' + esc(item.summary) + '</p>' : '') +
-      (spoilers ? '<details class="col-card-spoilers" data-col-spoiler' + (prefs.spoilers ? ' open' : '') + '><summary>Emplacement &amp; récompense</summary>' + (location ? '<p>' + esc(location) + '</p>' : '') + (item.reward ? '<p>Récompense : ' + esc(item.reward) + '</p>' : '') + (map ? '<a href="' + esc(map) + '">Voir sur la carte ↗</a>' : '') + '</details>' : '') +
+      (spoilers ? '<details class="col-card-spoilers" data-col-spoiler' + (prefs.spoilers ? ' open' : '') + '><summary>Emplacement &amp; récompense</summary>' + (location ? '<p>' + esc(location) + '</p>' : '') + (item.reward ? '<p>Récompense : ' + esc(item.reward) + '</p>' : '') + (map ? '<a href="' + esc(map) + '">Voir sur la carte ' + CHEV + '</a>' : '') + '</details>' : '') +
       '<div class="col-card-actions"><button type="button" data-col-found="' + esc(item.id) + '" aria-pressed="false">Marquer trouvé</button><button type="button" data-col-favorite="' + esc(item.id) + '" aria-pressed="false">☆ Favori</button><button type="button" data-col-plan="' + esc(item.id) + '" aria-pressed="false">Ajouter à ma sortie</button></div>' +
       '<details class="col-card-note"><summary>Note personnelle' + (state.notes[item.id] ? ' (enregistrée)' : '') + '</summary><label for="' + esc(noteId) + '">Ta note (2 000 caractères maximum)</label><textarea id="' + esc(noteId) + '" data-col-note="' + esc(item.id) + '" maxlength="2000" rows="3" placeholder="Tes repères pour la prochaine visite…">' + esc(state.notes[item.id] || '') + '</textarea></details></div></article>';
   }
@@ -195,6 +203,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     results.innerHTML = list.slice((filters.page - 1) * PAGE_SIZE, filters.page * PAGE_SIZE).map(card).join('');
     results.querySelectorAll('.col-card-note').forEach(node => { node.open = openNotes.has(node.querySelector('[data-col-note]')?.dataset.colNote); });
     results.classList.toggle('is-list', filters.view === 'list');
+    if (justFound) { const done = [...results.children].find(node => node.dataset.colItem === justFound); if (done) done.classList.add('col-just-found'); justFound = null; }
     const activeFilters = ['q', ...fields].filter(key => filters[key]);
     setText('col-result-count', items.length ? list.length + (lkPluriel(list.length)?' résultats':' résultat') + ' sur ' + items.length + (lkPluriel(items.length)?' fiches':' fiche') : 'Aucune fiche documentée');
     if ($('col-empty')) $('col-empty').hidden = list.length > 0;
@@ -212,6 +221,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     }
     updateFacets(); syncControls(); updateProgress(); updateActions();
     if (options.url !== false) writeURL();
+    if (options.enter && window.LKMotion) window.LKMotion.enter([$('col-result-count'), ...results.children], {stagger: 40, cap: 240});
     if (focusKey) {
       const replacement = [...results.querySelectorAll('[data-col-' + focusKey[0] + ']')].find(button => button.getAttribute('data-col-' + focusKey[0]) === focusKey[1]);
       (replacement || results).focus({preventScroll: true});
@@ -220,7 +230,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     viewSubscribers.forEach(fn => { try { fn(view); } catch (_) {  } });
     window.dispatchEvent(new CustomEvent('lk:collectibles-view-change', {detail: view}));
   }
-  function resetFilters() { clearTimeout(searchTimer); filters = {...defaults, view: filters.view}; render(); $('col-search')?.focus(); }
+  function resetFilters() { clearTimeout(searchTimer); filters = {...defaults, view: filters.view}; render({enter: true}); $('col-search')?.focus(); }
   document.querySelectorAll('[data-col-controls]').forEach(node => { node.hidden = false; });
   if (!items.length) {
     if ($('col-filters')) $('col-filters').hidden = true;
@@ -232,18 +242,19 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if (!target) return;
     if (target.hasAttribute('data-col-found')) {
       const id = target.dataset.colFound, found = !state.found[id];
+      justFound = found ? id : null;
       if (core.setFound(id, found)) feedback(found ? 'Collectible marqué comme trouvé.' : 'Collectible remis dans les objets à trouver.');
     } else if (target.hasAttribute('data-col-favorite')) {
       const id = target.dataset.colFavorite, favorite = !state.favorites[id];
       if (core.setFavorite(id, favorite)) feedback(favorite ? 'Collectible ajouté aux favoris.' : 'Collectible retiré des favoris.');
     } else if (target.dataset.colView) {
-      filters.view = target.dataset.colView === 'list' ? 'list' : 'grid'; prefs.view = filters.view; savePrefs(); render();
+      filters.view = target.dataset.colView === 'list' ? 'list' : 'grid'; prefs.view = filters.view; savePrefs(); render({enter: true});
     } else if (target.dataset.colPage) {
-      filters.page = Math.max(1, Number(target.dataset.colPage)); render(); results?.focus({preventScroll: true}); results?.scrollIntoView({block: 'start', behavior: 'instant'});
+      filters.page = Math.max(1, Number(target.dataset.colPage)); render({enter: true}); results?.focus({preventScroll: true}); results?.scrollIntoView({block: 'start', behavior: 'instant'});
     } else if (target.dataset.colRemove) {
-      filters[target.dataset.colRemove] = ''; filters.page = 1; render(); $('col-search')?.focus();
+      filters[target.dataset.colRemove] = ''; filters.page = 1; render({enter: true}); $('col-search')?.focus();
     } else if (target.dataset.colGroup) {
-      filters = {...defaults, view: filters.view, [target.dataset.colGroup]: target.dataset.colValue}; render(); $('catalogue')?.scrollIntoView({block: 'start'}); $('col-' + target.dataset.colGroup)?.focus({preventScroll: true});
+      filters = {...defaults, view: filters.view, [target.dataset.colGroup]: target.dataset.colValue}; render({enter: true}); $('catalogue')?.scrollIntoView({block: 'start'}); $('col-' + target.dataset.colGroup)?.focus({preventScroll: true});
     } else if (target.hasAttribute('data-col-share')) {
       event.preventDefault();
       const item = core.getItem(target.dataset.colShare);
@@ -281,14 +292,14 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       applyFilters: value => {
         const query = typeof value === 'string' ? value : new URLSearchParams(Object.entries(value || {}).filter(([,entry]) => entry !== '' && entry !== null && entry !== undefined).map(([key,entry]) => [key,String(entry)])).toString();
         const valid = core.validateQuery(query);
-        clearTimeout(searchTimer); readParams(new URLSearchParams(valid)); render();
+        clearTimeout(searchTimer); readParams(new URLSearchParams(valid)); render({enter: true});
       },
       subscribe: fn => { if (typeof fn !== 'function') return () => {}; viewSubscribers.add(fn); return () => viewSubscribers.delete(fn); }
     });
     readURL(); render();
-    $('col-filters')?.addEventListener('submit', event => { event.preventDefault(); clearTimeout(searchTimer); filters.q = $('col-search').value; filters.page = 1; render(); });
-    $('col-search')?.addEventListener('input', event => { clearTimeout(searchTimer); filters.q = event.target.value; filters.page = 1; searchTimer = setTimeout(render, 100); });
-    [...fields, 'sort'].forEach(field => $('col-' + field)?.addEventListener('change', event => { filters[field] = event.target.value; filters.page = 1; render(); }));
+    $('col-filters')?.addEventListener('submit', event => { event.preventDefault(); clearTimeout(searchTimer); filters.q = $('col-search').value; filters.page = 1; render({enter: true}); });
+    $('col-search')?.addEventListener('input', event => { clearTimeout(searchTimer); filters.q = event.target.value; filters.page = 1; searchTimer = setTimeout(() => render({enter: true}), 100); });
+    [...fields, 'sort'].forEach(field => $('col-' + field)?.addEventListener('change', event => { filters[field] = event.target.value; filters.page = 1; render({enter: true}); }));
     $('col-reset')?.addEventListener('click', resetFilters);
     $('col-empty-reset')?.addEventListener('click', resetFilters);
     window.addEventListener('popstate', () => { clearTimeout(searchTimer); readURL(); render({url: false}); });

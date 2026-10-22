@@ -1,0 +1,11 @@
+{
+ "_note": "v8.04 (référencement, chantier G) : pages par élément. Motif « {1} dans GTA VI. » (première phrase des nouvelles descriptions des catalogues, déjà en anglais et en allemand) et descriptions plus courtes pour les moteurs (« @meta:: », balise description seulement) quand la traduction dépassait 160 signes.",
+ "_motifs": {
+  "{1} dans GTA VI.": "{1} in GTA VI."
+ },
+ "@meta::Mount Kalaga National Park 02, image officielle de GTA VI. Hélicoptère Maverick rouge et blanc en vol devant les collines, avec un passager à la porte ouverte.": "Mount Kalaga National Park 02, immagine ufficiale di GTA VI. Elicottero Maverick rosso e bianco in volo davanti ai colli, con un passeggero alla porta aperta.",
+ "@meta::Canon fileté (vu) dans GTA VI. Le Girardi ES9 gravé de la capture officielle a un canon fileté et un rail sous le canon : ce que ça permet n’est pas dit.": "Canna filettata (vista) in GTA VI. La Girardi ES9 incisa dello screenshot ufficiale ha canna filettata e slitta sotto la canna: non si dice a cosa servano.",
+ "@meta::Crosse rabattable (vue) dans GTA VI. Le PM de la capture du Pack Vintage a une crosse rabattue sur le côté : la fiche « PM à crosse rabattable » le recense.": "Calcio pieghevole (visto) in GTA VI. Nello screenshot del Pack Vintage la mitraglietta ha il calcio piegato di lato: è nella scheda della mitraglietta.",
+ "@meta::Peinture pailletée dorée (vue) dans GTA VI. L’Albany de la capture Rideout Customs porte une peinture dorée à paillettes : une finition vue, sans nom ni prix.": "Vernice oro glitterata (vista) in GTA VI. L’Albany dello screenshot di Rideout Customs ne è verniciata: una finitura vista, senza nome né prezzo.",
+ "@meta::Pneus pare-balles dans GTA VI. Dans GTA V et GTA Online, les pneus pare-balles ne crèvent ni sous les balles, ni au feu, ni sur les herses.": "Pneumatici antiproiettile in GTA VI. In GTA V e GTA Online non si bucano né con i proiettili, né con il fuoco, né sulle strisce chiodate."
+}

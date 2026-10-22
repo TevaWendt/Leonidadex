@@ -1,0 +1,77 @@
+LEONIDAKIT v8.03 : calculateur, lot 2 du prompt « Corriger le calculateur avant la sortie » (les réglages en plus)
+
+Base : v8.02. Uniquement des ajouts ; chaque réglage est NOUVEAU, en mode Expert (et dans les réglages du business plan),
+DÉSACTIVÉ par défaut. Désactivés, tous les résultats restent ceux de la v8.01, calculs et plans enregistrés compris (preuve § 4).
+Tout ce que Rockstar n’a pas publié est dit « simulation » ou « à confirmer », comme carburant, entretien et munitions.
+
+1. CE QUI CHANGE POUR LE JOUEUR (mode Expert)
+   « Mes hypothèses en plus » (un nouveau bloc replié, juste sous « Mes hypothèses ») :
+   - Soins : vie perdue par partie ÷ vie rendue par un soin × prix d’un soin = coût par partie.
+   - Amendes, argent perdu à la mort, argent perdu à l’arrestation : nombre par partie × montant.
+     Ces dépenses s’ajoutent aux dépenses par partie de Mon objectif, Mon temps de jeu, Quoi acheter d’abord ? et Mon budget.
+   - Revenu passif : un montant par heure de jeu et un stock maximum ; en parties, il rapporte au plus son stock par partie ;
+     sans durée de partie, il n’a pas de plafond, et c’est écrit.
+   - Bonus (%) : appliqué aux récompenses des missions et des activités ; ton gain par heure écrit ne change pas, et c’est écrit.
+   - Partage à parts égales : une mission à plusieurs compte 100 ÷ nombre de joueurs (une part publiée par Rockstar n’est jamais
+     remplacée).
+   - Argent de Jason et de Lucia : un seul argent pour les deux (comme avant), ou l’argent d’un seul personnage : une mission
+     jouée seulement avec l’autre est alors écartée, avec sa raison ; une mission à deux reste comptée.
+   - Quand Rockstar publiera ces règles ou un revenu passif, une ligne « Déjà connu » et la liste « Revenus publiés » (bouton
+     « Utiliser ce revenu ») s’afficheront ; rien n’est publié aujourd’hui.
+   Mon objectif : « Je revends ce que je possède déjà » (les prix de revente écrits dans Mes achats s’ajoutent à ton argent de
+   départ ; en « ce que je vais gagner », la revente ne compte pas comme un gain).
+   Business plan, « Ce qui compte pour toi » :
+   - « Compter aussi mes hypothèses en plus » ;
+   - « Compter les tentatives ratées » (Tentatives ratées sur 10, de Mes hypothèses : une mission qui se refait rapporte en
+     moyenne × (10 − k) ÷ 10 ; une mission faite une seule fois coûte et dure × 10 ÷ (10 − k) ; 10 sur 10 est refusé, avec la
+     raison) ;
+   - « Revenu hors ligne entre deux parties » (plafond par pause facultatif) : ce que rapportent par heure tes achats possédés
+     et ton revenu passif simulé continue pendant la pause entre deux parties, crédité au début de la partie suivante ;
+   - « Revendre mes achats d’avant après mon but », avec la case « Je le revends après mon but » sur chaque achat d’avant :
+     l’argent à la fin et le coût net en tiennent compte, le temps pour atteindre le but ne change pas ;
+   - « Jouée par » sur chaque mission, visible seulement quand tu comptes l’argent d’un seul personnage.
+   Les modes Simple et Pas à pas ne changent pas. Le Tuto (8 paragraphes) et Léo (7 sujets) expliquent chaque réglage, avec des
+   exemples chiffrés qui sont des exemples, pas des chiffres du jeu.
+
+2. FICHIERS SOURCES MODIFIÉS OU AJOUTÉS
+   - outils/sources/calculateurs-engine.js : revenu hors ligne (pause du calendrier, plafonds), part simulée du gain par heure
+     (affichage), règle R13 du vérificateur indépendant (montant hors ligne = pause × taux, plafonds compris).
+   - outils/sources/calculateurs-scenario.js : gabarits (réglages éteints par défaut ; sauvegardes anciennes complétées), calculs
+     des réglages (soins, amendes, mort, arrestation, revenu passif, bonus, partage, argent par personnage, revente, tentatives
+     ratées, hors ligne), explications « Ce qui compte » (un réglage actif est dit ; éteint, rien n’est ajouté).
+   - outils/sources/calculateurs-workspace.js, outils/sources/calculateurs-plan.js, outils/sources/calculateurs.js : le nouveau
+     bloc et les options du plan, avec les composants existants.
+   - calculateurs-data.js : personnages d’une mission (characters), seulement s’ils sont publiés.
+   - outils/modele-donnees.json : mécaniques amendes, mort, arrestation (non confirmées) ; soin : vie perdue par partie, prix.
+   - outils/gen-missions.cjs, outils/missions/missions.json (_schema), outils/donnees-publiees.cjs : personnages transmis et
+     contrôlés.
+   - outils/sources/informations.css : treize postes de coûts sur verification.html, sans carte seule en fin de rangée.
+   - outils/tuto.json, outils/leo-knowledge.json, outils/langues/{en,es,it,de,pt}/v803-calculateur.json (nouveaux).
+   - outils/QUAND-ROCKSTAR-PUBLIE.md, CALCULATEURS-MOTEUR.md, CALCULATEURS-DONNEES.md, CALCULATEUR-INVENTAIRE.md.
+   - Tests : outils/tests/calculateurs-v803.test.cjs (nouveau), outils/tests/cadre-ajouts.cjs (nouveau),
+     outils/tests/calculateurs-cadre.test.cjs (n’accepte que des lignes AJOUTÉES en mode Expert ; toute ligne existante changée
+     ou retirée échoue), outils/tests/reference-v801.cjs et sa fixture (étendus : 851 résultats de la v8.01),
+     outils/tests/leo-questions-v803-{fr,en,es,it,de,pt}.json (nouveaux).
+   Fichiers régénérés par la chaîne habituelle : pages (empreinte de common.js), verification.html, tuto.html, leo/*, etc.
+
+3. LE JOUR J
+   outils/QUAND-ROCKSTAR-PUBLIE.md : où écrire les personnages d’une mission, les règles d’argent, un revenu passif publié.
+
+4. VÉRIFICATIONS
+   Régénération complète (outils/regenerer.cjs), puis :
+   - outils/verifier.js : 0 erreur, 3 987 577 références vérifiées dans 26 641 pages ;
+   - outils/referencement.cjs : 0 défaut bloquant (mêmes 28 avertissements qu’en v8.01) ; couverture : 0 page manquante ;
+   - outils/langues.cjs --verifier en, es, it, de, pt : 0 texte sans traduction, 0 repère cassé, 0 conflit (212 à 217 textes
+     nouveaux par langue, Tuto et Léo compris) ;
+   - outils/tests/reference-v801.cjs : 851 résultats de la v8.01 (huit calculs, deux modèles, exemples A, B, C, business plan,
+     plans de secours, vérification, explications, Et si…) rejoués réglages éteints : 0 écart ;
+   - captures au pixel près (Chromium, v8.01 contre v8.03) : les 36 vues des modes Simple et Pas à pas (téléphone 390 px et
+     ordinateur 1 366 px, 9 outils) identiques ; en Expert, seuls apparaissent le bloc « Mes hypothèses en plus » (juste sous
+     « Mes hypothèses », ce qui descend d’autant le panneau de l’outil) et les nouvelles options de Mon objectif et du plan ;
+   - outils/tests/calculateurs-cadre.test.cjs : cadre de l’interface dans les six langues, seulement des lignes ajoutées en
+     mode Expert (aucune ligne existante changée ni retirée) ;
+   - verification.html : les 13 postes de coûts tiennent en rangées sans carte seule (2 + 3 + 3 + 3 + 2 ; 3 + 4 + 4 + 2) ;
+   - Léo : gen-leo --check ; outils/tests/leo-eval.cjs : 512 sur 512, hors sujet refusés 39 sur 39 ;
+   - outils/tests/*.test.cjs, un fichier à la fois : 95 fichiers, 1 259 tests réussis, 0 échec (dont calculateurs-v803 : 17
+     tests, chaque réglage éteint = v8.01, allumé = valeurs calculées à la main, règle R13, 10 sur 10 refusé, sauvegarde v8.01
+     relue sans « non enregistré »).

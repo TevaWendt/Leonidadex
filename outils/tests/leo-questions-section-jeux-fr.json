@@ -1,0 +1,87 @@
+{
+ "_note": "v8.04 (lot L) : questions de test de Léo en français sur les jeux du site (la page des jeux, la progression, La frise des annonces, Devine la station). Rejoué par outils/tests/v804-jeux.test.cjs (leo-eval.cjs --questions=outils/tests/leo-questions-section-jeux-fr.json), avec celles de Devine le lieu pour vérifier qu’aucun sujet ne prend la place d’un autre.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "c’est quoi les jeux du site ?",
+   "expect": {
+    "topic": "jeux-du-site"
+   },
+   "tags": [
+    "section-jeux"
+   ]
+  },
+  {
+   "q": "quels jeux y a-t-il sur leonidakit ?",
+   "expect": {
+    "topic": "jeux-du-site"
+   },
+   "tags": [
+    "section-jeux"
+   ]
+  },
+  {
+   "q": "comment gagner des points aux jeux ?",
+   "expect": {
+    "topic": "jeux-progression"
+   },
+   "tags": [
+    "section-jeux"
+   ]
+  },
+  {
+   "q": "comment réussir le défi du jour ?",
+   "expect": {
+    "topic": "jeux-progression"
+   },
+   "tags": [
+    "section-jeux"
+   ]
+  },
+  {
+   "q": "comment avoir un badge ?",
+   "expect": {
+    "topic": "jeux-progression"
+   },
+   "tags": [
+    "section-jeux"
+   ]
+  },
+  {
+   "q": "c’est quoi la frise des annonces ?",
+   "expect": {
+    "topic": "frise-des-annonces"
+   },
+   "tags": [
+    "section-jeux"
+   ]
+  },
+  {
+   "q": "un jeu pour remettre les annonces dans l’ordre ?",
+   "expect": {
+    "topic": "frise-des-annonces"
+   },
+   "tags": [
+    "section-jeux"
+   ]
+  },
+  {
+   "q": "c’est quoi devine la station ?",
+   "expect": {
+    "topic": "devine-la-station"
+   },
+   "tags": [
+    "section-jeux"
+   ]
+  },
+  {
+   "q": "un quiz sur les radios de gta 6 ?",
+   "expect": {
+    "topic": "devine-la-station"
+   },
+   "tags": [
+    "section-jeux"
+   ]
+  }
+ ]
+}

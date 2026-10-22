@@ -43,7 +43,7 @@
       "id": "cafe-du-matin",
       "nom": "Café du matin",
       "categorie": "boissons",
-      "statut": "officiel",
+      "statut": "vu",
       "personnage": "jason-lucia",
       "description": "Rob Nelson cite le café du matin de Jason et Lucia parmi les moments du quotidien montrés dans le jeu.",
       "effet": {
@@ -79,7 +79,7 @@
       "id": "shake-proteine",
       "nom": "Shake protéiné",
       "categorie": "boissons",
-      "statut": "officiel",
+      "statut": "vu",
       "personnage": "jason-lucia",
       "description": "Boisson prise après l’entraînement, citée par Rob Nelson avec la barre protéinée.",
       "effet": {
@@ -109,7 +109,7 @@
       "id": "barre-proteinee",
       "nom": "Barre protéinée",
       "categorie": "snacks",
-      "statut": "officiel",
+      "statut": "vu",
       "personnage": "jason-lucia",
       "description": "Barre prise après l’entraînement, citée par Rob Nelson avec le shake protéiné.",
       "effet": {

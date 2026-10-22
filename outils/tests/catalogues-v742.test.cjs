@@ -11,6 +11,7 @@ const doc=f=>new JSDOM(read(f)).window.document;
 const C=require(path.join(root,'outils/catalogues.cjs'));
 const S=require(path.join(root,'outils/sections.cjs'));
 const D=C.load();
+const J4=require('./jour-j-helper.cjs'); /* v8.04 (jour J) : « aucun chiffre inventé » plutôt que « aucun chiffre » */
 const PAGES={consommables:'nourriture.html',coiffures:'style.html',tatouages:'style.html',tenues:'style.html'};
 /* v7.43 (lot 6) : les familles perso-vehicules et perso-armes s'ajoutent ; ce fichier garde les vérifications du lot 5 sur ses quatre familles, catalogues-v743.test.cjs couvre les deux nouvelles. */
 const LOT5=['consommables','coiffures','tatouages','tenues'];
@@ -69,10 +70,10 @@ test('rendu : la boîte dépliable écrit toute la liste (lisible sans JavaScrip
 test('aucune valeur de la série dans une colonne GTA VI : toutes les cellules GTA VI disent « à confirmer », tout repère nomme son jeu',()=>{
   for(const file of ['nourriture.html','style.html']){const d=doc(file);
     const p6=[...d.querySelectorAll('td.cat-c-p6')];assert.ok(p6.length>=24,file);
-    for(const td of p6){/* v7.50 : « Prix à venir » et « Achat à confirmer » dits séparément ; un bonus « ne s’achète pas » */assert.match(td.textContent.replace(/\s+/g,' ').trim(),/^(Prix à venir\s?Achat à confirmer|Ne s’achète pas\s?.+)$/);assert.doesNotMatch(td.textContent,/\d|\$/);}
+    for(const td of p6){if(J4.prixAffiche(td.textContent))continue; /* v8.04 (jour J) : un prix GTA VI publié s’affiche à sa place */ /* v7.50 : « Prix à venir » et « Achat à confirmer » dits séparément ; un bonus « ne s’achète pas » */assert.match(td.textContent.replace(/\s+/g,' ').trim(),/^(Prix à venir\s?Achat à confirmer|Ne s’achète pas\s?.+)$/);assert.doesNotMatch(td.textContent,/\d|\$/);}
     for(const b of d.querySelectorAll('.cat-repere'))assert.match(b.textContent.replace(/[  ]/g,' '),/^GTA (V|Online|IV|San Andreas)\s?: /);
     for(const b of d.querySelectorAll('.cat-eff-n'))assert.match(b.textContent,/\((GTA V|GTA Online|GTA IV|GTA San Andreas)\)/);}
-  for(const fam of LOT5)for(const it of D.families[fam].items){assert.equal(it.prix_gta6.valeur,null,it.id);assert.equal(it.prix_gta6.statut,'conf');if(it.effet.valeur!==null)assert.ok(it.effet.jeu,it.id);}
+  for(const fam of LOT5)for(const it of D.families[fam].items){assert.ok(J4.prixGta6Ok(it.prix_gta6),it.id+' : prix GTA VI vide (« conf ») ou publié au format');if(it.effet.valeur!==null)assert.ok(it.effet.jeu,it.id);}
 });
 
 test('pages Consommables et Vêtements et style : gabarit (bandeau, sous-navigation, sections numérotées, listes centrales, encart, puces), ancres attendues, JSON-LD, sources ancrées',()=>{
@@ -112,12 +113,15 @@ test('navigateur : recherche, filtres par catégorie et statut, tri, réinitiali
   assert.ok(visible().length>=1&&visible().every(r=>/sprunk/.test(r.dataset.q)));assert.match(tools.querySelector('[data-cat-count]').textContent,/ligne/);
   q.value='';fire(q,'input');a.flush();assert.equal(visible().length,rows().length);
   const cat=tools.querySelector('[data-cat-f="cat"]');cat.value='protection';fire(cat,'change');assert.ok(visible().length>=5&&visible().every(r=>r.dataset.cat==='protection'));
-  const st=tools.querySelector('[data-cat-f="st"]');st.value='officiel';fire(st,'change');assert.ok(visible().every(r=>r.dataset.st==='officiel'&&r.dataset.cat==='protection'));
+  /* v8.04 (refonte F) : les consommables cités par Rob Nelson dans Famitsu sont « vu dans un média » ; la liste n’a plus de ligne
+     « officiel », le filtre se teste sur « vu » (statut présent) */
+  const st=tools.querySelector('[data-cat-f="st"]');st.value='vu';fire(st,'change');assert.ok(visible().every(r=>r.dataset.st==='vu'&&r.dataset.cat==='protection'));
   assert.equal(box.querySelector('[data-cat-empty]').hidden,visible().length>0);
   tools.querySelector('.cat-reset').click();assert.equal(visible().length,rows().length);assert.equal(cat.value,'');assert.equal(st.value,'');
   const sort=tools.querySelector('[data-cat-sort]');sort.value='nom';fire(sort,'change');const noms=rows().map(r=>r.dataset.nom);assert.deepEqual(noms,[...noms].sort((x,y)=>x.localeCompare(y,'fr')));
   sort.value='prix';fire(sort,'change');const prix=rows().filter(r=>'prix' in r.dataset).map(r=>Number(r.dataset.prix));assert.deepEqual(prix,[...prix].sort((x,y)=>x-y));
-  sort.value='statut';fire(sort,'change');assert.equal(rows()[0].dataset.st,'officiel');
+  /* v8.04 (refonte F) : le tri par statut met en tête le statut le plus sûr présent dans la liste (plus d’« officiel » ici) */
+  sort.value='statut';fire(sort,'change');assert.equal(rows()[0].dataset.st,['officiel','vu','comm','conf','serie'].find(s=>rows().some(r=>r.dataset.st===s)));
 }));
 
 test('navigateur : « Je l’ai » sur une ligne remplit la clé lk_own_consommables, la barre de la liste et compte dans progression.html',withPage('nourriture.html',a=>{
@@ -174,7 +178,7 @@ test('recherche interne, Léo et sitemap : chaque ligne indexée (type élément
     for(const it of d.items){const e=idx.find(x=>x.u===cible(fam,it,d));assert.ok(e,it.id+' indexé');assert.equal(e.t,'element');assert.equal(e.k,C.KIND[fam]);assert.ok(e.s.includes(it.nom.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/’/g,"'").toLowerCase().split(' ')[0]));}}
   assert.ok(idx.some(e=>e.u==='/style.html#accessoires'));assert.ok(idx.some(e=>e.u==='/style.html#tatouages'&&e.l==='Tatouages'));assert.ok(idx.some(e=>e.u==='/nourriture.html'));
   const leo=JSON.parse(read('leo-index.json')),core=require(path.join(root,'outils/tests/leo-complet.cjs')).fullCore(root)/* v7.45 : noyau + morceaux */;
-  for(const fam of LOT5){const rows=core.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){const it=D.families[fam].items.find(x=>'catalogue:'+x.id===r.key);assert.ok(r.url===(it?cible(fam,it,D.families[fam]):'')||r.url.startsWith(D.families[fam].page+'#'),r.name);assert.equal(r.price,undefined);}}
+  for(const fam of LOT5){const rows=core.items.filter(x=>x.kind==='catalogue-'+fam);assert.equal(rows.length,D.families[fam].items.length,fam+' dans Léo');for(const r of rows){const it=D.families[fam].items.find(x=>'catalogue:'+x.id===r.key);assert.ok(r.url===(it?cible(fam,it,D.families[fam]):'')||r.url.startsWith(D.families[fam].page+'#'),r.name);if(it&&it.prix_gta6&&typeof it.prix_gta6.valeur==='number'){assert.equal(r.price,it.prix_gta6.valeur,r.name);assert.ok(r.priceStatus,r.name);}else assert.equal(r.price,undefined);}} /* v8.04 (jour J) : un prix GTA VI publié passe dans Léo avec son statut ; sinon aucun prix */
   const faq=leo.knowledge.filter(x=>/^acq-(nourriture|style)-/.test(x.id));assert.equal(faq.length,10);for(const t of faq)assert.match(t.links[0].url,/^\/(nourriture|style)\.html#faq$/);
   for(const [q,re,url] of [['peut-on manger dans gta 6 ?',/Rob Nelson/,'/nourriture.html#faq'],['est-ce qu’on grossit dans gta 6 ?',/grossir/,'/nourriture.html#faq'],['peut-on changer de coiffure dans gta 6 ?',/salon/,'/style.html#faq'],['peut-on se faire tatouer ?',/FAILE/,'/style.html#faq'],['y a-t-il des gilets pare-balles dans gta 6 ?',/Ammu-Nation/,'/nourriture.html#faq'],['combien de tenues dans gta 6 ?',/milliers/,'/style.html#faq']]){const a=core.answer(q);assert.equal(a.kind,'answer',q);assert.match(a.text,re,q);/* v7.45 : la réponse rédigée peut viser une ancre plus précise de la même page */assert.ok(a.links[0].url.startsWith(url.split('#')[0]),q+' → '+a.links[0].url);}
   const r=core.answer('trouve sprunk');assert.equal(r.kind,'results');assert.ok(r.results.some(x=>x.url==='/nourriture.html#consommables-sprunk'||x.url===cible('consommables',{id:'sprunk'},D.families.consommables)));

@@ -48,7 +48,7 @@
 .d-card>.d-card-body{display:flex;flex-direction:column;flex:1 1 auto;min-width:0}
 .d-card>.d-card-body>.d-actions{margin-top:auto;padding-top:14px}
 .d-card>.d-card-body>.d-actions~*{flex:none}
-.d-card .d-label--note{margin:10px 0 0;font-size:.68rem;letter-spacing:.1em;color:var(--ink-soft)}
+.d-card .d-label--note{margin:10px 0 0;font-size:max(11px,.68rem);letter-spacing:.1em;color:var(--ink-soft)}
 
 /* ============================================================================
    v7.42 : lot 5 — gabarit « vrai site » des pages de section et listes dépliables des catalogues
@@ -377,7 +377,7 @@
 
 /* ---------- UI-02 : badges de statut — mêmes couleurs sur les trois pages, un pictogramme par statut (jamais la couleur seule) ---------- */
 .ed-zone--acq .ed-status,.cat-dlg .ed-status{--st-bg:var(--paper);--st-fg:var(--ink);--st-bd:var(--ink);--st-dash:solid;display:inline-flex;align-items:center;gap:7px;min-height:26px;padding:3px 10px 3px 7px;border:2px var(--st-dash) var(--st-bd);border-radius:999px;background:var(--st-bg);color:var(--st-fg);box-shadow:2px 2px 0 rgba(26,26,30,.14);vertical-align:middle;max-width:100%;}
-.ed-zone--acq .ed-status .ed-st,.cat-dlg .ed-status .ed-st{color:inherit;font-weight:800;font-size:.68rem;line-height:1.15;letter-spacing:.05em;}
+.ed-zone--acq .ed-status .ed-st,.cat-dlg .ed-status .ed-st{color:inherit;font-weight:800;font-size:max(11px,.68rem);line-height:1.15;letter-spacing:.05em;}
 .ed-zone--acq .ed-status .pip,.cat-dlg .ed-status .pip{width:15px;height:15px;flex:none;border:0;border-radius:0;background:var(--st-fg)!important;-webkit-mask:var(--st-ico) center/contain no-repeat;mask:var(--st-ico) center/contain no-repeat;}
 .ed-zone--acq .ed-status--officiel,.cat-dlg .ed-status--officiel{--st-bg:#1A1A1E;--st-fg:#FDFBF7;--st-bd:#1A1A1E;--st-ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1.8l2.6 2.1 3.3-.2 1 3.2 2.9 1.6-1.1 3.1 1.1 3.1-2.9 1.6-1 3.2-3.3-.2L12 22.2l-2.6-2.1-3.3.2-1-3.2-2.9-1.6 1.1-3.1-1.1-3.1 2.9-1.6 1-3.2 3.3.2z' fill='%23000'/%3E%3Cpath d='M7.6 12.2l2.9 2.9 5.9-6' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");}
 .ed-zone--acq .ed-status--vu,.cat-dlg .ed-status--vu{--st-bg:#F5A524;--st-fg:#1A1A1E;--st-bd:#1A1A1E;--st-ico:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4.5c5.5 0 9.6 4.4 11 7.5-1.4 3.1-5.5 7.5-11 7.5S2.4 15.1 1 12c1.4-3.1 5.5-7.5 11-7.5z' fill='%23000'/%3E%3Ccircle cx='12' cy='12' r='4.2' fill='%23fff'/%3E%3Ccircle cx='12' cy='12' r='2' fill='%23000'/%3E%3C/svg%3E");}
@@ -790,8 +790,13 @@
 
 /* ---------- v7.70 : Personnalisations, « Les ateliers et les armureries » : le tableau des ateliers ---------- */
 .ed-at-board{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:22px;align-items:start;margin-top:6px;}
-.ed-at-map{position:sticky;top:calc(var(--lk-head-h,62px) + 60px);margin:0;padding:12px 12px 10px;border:2px solid var(--ink);border-radius:16px;background:linear-gradient(180deg,#e9f3f4,#f4f0e7);box-shadow:5px 5px 0 var(--ink);}
-.ed-at-map .lk-loc-svg{max-height:none;}
+/* v8.04 (lot H, Téva : « la légende de droite déborde trop ») : la carte suit le défilement à côté de la longue liste, sous
+   l’en-tête et la sous-navigation collants, comme la colonne de contact.html (position: sticky, haut calé, colonne alignée en
+   haut, rien de collant sous 900 px). Le rideau d’apparition du moteur commun (lk-reveal--clip) posait position: relative et
+   annulait le collage : la règle est reprise avec la même force. La carte tient dans la hauteur de l’écran. */
+.ed-at-map,.js .ed-at-board>.ed-at-map.lk-reveal--clip{position:sticky;top:calc(var(--lk-head-h,62px) + 76px);}
+.ed-at-map{margin:0;padding:12px 12px 10px;border:2px solid var(--ink);border-radius:16px;background:linear-gradient(180deg,#e9f3f4,#f4f0e7);box-shadow:5px 5px 0 var(--ink);}
+.ed-at-map .lk-loc-svg{max-height:max(300px,calc(100vh - var(--lk-head-h,62px) - 190px));}
 .ed-at-map figcaption{margin-top:10px;font-size:.8rem;line-height:1.45;color:var(--ink-soft);}
 .ed-at-side{display:flex;flex-direction:column;gap:18px;min-width:0;}
 .ed-at-group .ed-h3{display:flex;align-items:center;gap:8px;margin:0 0 10px;}
@@ -808,7 +813,7 @@
 .ed-at-body p{margin:0;}
 .ed-at-name{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;}
 .ed-at-name b{font:900 1.02rem/1.2 'Archivo',sans-serif;letter-spacing:-.01em;}
-.ed-at-where{font:700 .68rem/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+.ed-at-where{font:700 max(11px,.68rem)/1.4 var(--font-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
 .ed-at-fait{font-size:.88rem;line-height:1.45;color:var(--ink-soft);}
 .ed-at-links{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:4px!important;}
 .ed-at-links .veh-go{font-size:.8rem;font-weight:800;color:var(--coral-text);display:inline-flex;align-items:center;gap:5px;}
@@ -822,7 +827,8 @@
 .ed-at-map .lk-loc-pin.is-hot .lk-loc-dot{fill:var(--coral);}
 .ed-at-map .lk-loc-pin.is-hot .lk-loc-lab{fill:var(--coral-text);}
 .ed-at-map .lk-loc-pin.is-hot .lk-loc-halo{fill:rgba(232,69,44,.35);}
-@media(max-width:900px){.ed-at-board{grid-template-columns:1fr;}.ed-at-map{position:static;}}
+@media(max-width:900px){.ed-at-board{grid-template-columns:1fr;}.ed-at-map,.js .ed-at-board>.ed-at-map.lk-reveal--clip{position:relative;top:auto;}.ed-at-map .lk-loc-svg{max-height:min(560px,72vh);}}
+@media(max-height:520px){.ed-at-map,.js .ed-at-board>.ed-at-map.lk-reveal--clip{position:relative;top:auto;}}
 @media(max-width:600px){.ed-at{grid-template-columns:auto minmax(0,1fr);}.ed-at-visual{display:none;}}
 @media(prefers-reduced-motion:reduce){.ed-at,.ed-at-visual img,.ed-at-links .veh-go::after{transition:none;}}
 
@@ -1051,3 +1057,6 @@
 /* v7.82 (latence) : rangées des catalogues mises en page seulement à l'approche de l'écran (voir style.css) */
 .cat-row{content-visibility:auto;contain-intrinsic-size:auto 320px;}
 @media (max-width:700px){.cat-row{contain-intrinsic-size:auto 620px;}}
+/* v8.04 : l’Atelier 3D est en construction (même étiquette que le menu et les fiches) */
+.cat-pick-wip{display:inline-flex;align-items:center;align-self:center;min-height:24px;padding:3px 10px;border:2px solid var(--ink);border-radius:999px;background:var(--amber);color:var(--ink);font:800 max(11px,.7rem)/1.2 'Archivo',sans-serif;white-space:nowrap}
+@media print{.cat-pick-wip{display:none}}

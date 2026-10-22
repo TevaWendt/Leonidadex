@@ -19,6 +19,12 @@ const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const t = s => T.texte(String(s));
 const nf = n => new Intl.NumberFormat('fr-FR').format(n).replace(/[\s  ]/g, ' ');
 const plural = (n, one, many) => n + ' ' + (n > 1 ? many : one);
+/* v8.04 (chiffres du site) : nombre d’éléments que le site liste pour les familles dont une partie ne se coche pas dans le carnet
+   (un service comme le retrait d’un tatouage, une mécanique, un contenu suivi dans un autre carnet pour ne pas le compter deux
+   fois, les grenades du lance-grenades) : le carnet dit alors « N … à cocher », sans contredire le nombre de la liste. */
+const LISTES = (() => { const C = require('./catalogues.cjs'), out = {}; for (const f of C.FAMILIES) out[f] = C.counts(f).n;
+  const ctx = { window: {} }; require('node:vm').runInNewContext(fs.readFileSync(path.join(root, 'armes-data.js'), 'utf8'), ctx);
+  out.munitions = new Set((ctx.window.LK_ARMES || []).map(a => a.mun).filter(Boolean)).size; return out; })();
 /* JSON dans une balise script : aucune séquence ne peut fermer la balise. */
 const jsonScript = o => JSON.stringify(o).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 
@@ -137,7 +143,7 @@ function page(k, footer) {
   const doc = k.nature === 'document';
   const total = counted.length, cats = catsOf(counted);
   const vars = { total: nf(total), cats: cats.length };
-  for (const f of k.familles) vars[f] = plural(nf(counted.filter(x => x.f === f).length), S.FAM[f].one, S.FAM[f].many);
+  for (const f of k.familles) { const n = counted.filter(x => x.f === f).length; vars[f] = plural(nf(n), S.FAM[f].one, S.FAM[f].many) + (LISTES[f] > n ? ' à cocher' : ''); }
   const st = stackOf(k.id, prefix);
   const url = SITE + k.url;
   const crumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [

@@ -26,7 +26,7 @@ test('section radios : données complètes, statuts et sources connus, six stati
   assert.doesNotThrow(() => G.check(D, MED, root));
   assert.equal(D.videos.length, 5) /* v7.92.1 : la bande-annonce de lancement s’ajoute aux sources de musique */;
   for (const v of D.videos) for (const m of v.morceaux) { assert.ok(['officiel', 'vu', 'comm', 'conf'].includes(m.statut), m.titre); assert.ok(m.sources.length >= 1, m.titre); for (const s of m.sources) assert.ok(D.sources[s], s); }
-  for (const s of Object.values(D.sources)) { assert.match(s.consultedAt, /^2026-10-(04|12|16)$/); assert.match(s.url, /^https:\/\//); }
+  for (const s of Object.values(D.sources)) { assert.match(s.consultedAt, /^2026-10-(04|12|16|20|21)$/); /* v8.04 (refonte D) : relectures du 20 et du 21 octobre 2026 */ assert.match(s.url, /^https:\/\//); }
   assert.ok(D.zone.sources.some(id => D.sources[id].url.startsWith('https://www.rockstargames.com/')), 'au moins une page Rockstar');
   assert.ok(D.zone.sources.some(id => D.sources[id].statut === 'comm'), 'au moins une source communautaire');
   /* les stations sont à part (D.stations) : six, chacune avec l’annonce de Rockstar du 8 octobre 2026 parmi ses sources */

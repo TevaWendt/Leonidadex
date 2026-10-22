@@ -353,7 +353,7 @@ function updateHub(hub, items, data) {
   inner('col-review-summary', count ? count + ' fiche' + (count > 1 ? 's' : '') + ' publiée' + (count > 1 ? 's' : '') + ' avec ses sources et son statut de vérification. Les fiches non confirmées restent hors de la progression. Le total des collectibles du jeu reste distinct de ce catalogue.' : 'Aucune collection suffisamment documentée n’a été identifiée au cours de cette revue. Ce constat ne signifie pas que le jeu ne proposera aucun collectible.');
   opening('col-empty', tag => tag.replace(/\shidden(?:="[^"]*")?/g, '').replace(/>$/, count ? ' hidden>' : '>'));
   inner('col-trackable-label', eligible ? 'sur ' + eligible + ' objet' + (eligible > 1 ? 's' : '') + ' suivi' + (eligible > 1 ? 's' : '') : 'objet suivi');
-  inner('col-percent', eligible ? '0 %' : '—');
+  inner('col-percent', eligible ? '0 %' : '?'); /* v8.04 : progression inconnue tant qu’aucune fiche n’est suivie (ni tiret ni 0) */
   inner('col-progress-caption', eligible ? 'Le suivi porte sur ' + eligible + ' fiche' + (eligible > 1 ? 's' : '') + ' éligible' + (eligible > 1 ? 's' : '') + ' de ce catalogue. Il ne représente pas le total du jeu.' : 'Le suivi commencera avec les premières fiches éligibles. Le total du jeu est inconnu.');
   opening('col-progress-meter', tag => tag.replace(/aria-valuetext="[^"]*"/, 'aria-valuetext="' + (eligible ? '0 objet trouvé sur ' + eligible + ' fiches éligibles' : 'Progression indisponible : aucun collectible suivi') + '"'));
   return hub;

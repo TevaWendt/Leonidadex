@@ -22,7 +22,7 @@
     return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}(?:T[\d:.+-]+Z?)?$/.test(value) && Number.isFinite(Date.parse(value)) ? value : null;
   }
   function status(value, fallback) {
-    var statuses = { officiel: 'official', official: 'official', vu: 'observed', observed: 'observed', comm: 'community', community: 'community', manual: 'manual', hypothetical: 'manual', verified: 'verified', confirmed: 'verified', estimated: 'estimated', unverified: 'unverified', 'source-listed': 'source-listed', unknown: 'unknown' };
+    var statuses = { officiel: 'official', official: 'official', vu: 'observed', observed: 'observed', comm: 'community', community: 'community', media: 'media', presse: 'media' /* v8.04 (jour J) : chiffre rapporté par des médias */, manual: 'manual', hypothetical: 'manual', verified: 'verified', confirmed: 'verified', estimated: 'estimated', unverified: 'unverified', 'source-listed': 'source-listed', unknown: 'unknown' };
     return statuses[value] || fallback || 'unknown';
   }
   var assets = Array.isArray(global.LK_ASSETS) ? new Set(global.LK_ASSETS) : null;
@@ -49,7 +49,7 @@
     var meta = Object.assign({}, object(object(economy.fieldMeta)[name]), object(economy[name + 'Meta']), object(object(entry.fieldMeta)[name]), object(entry[name + 'Meta']), object(wrapped.meta));
     for (var k of ['status', 'source', 'verifiedAt', 'unit']) if (owns(wrapped, k)) meta[k] = wrapped[k];
     if (value !== null && status(meta.status, 'unverified') === 'unknown') value = null; // v7.59 : un chiffre marqué « inconnu » n'est pas une valeur (même règle que calculateurs-modele.js et donnees-publiees.cjs)
-    return {
+    var out = {
       value: value,
       meta: {
         status: value === null ? 'unknown' : status(meta.status, 'unverified'),
@@ -58,6 +58,16 @@
         unit: text(meta.unit, 40)
       }
     };
+    /* v8.04 (jour J, prompt 2) : fourchette (min, max : la valeur reste celle du calcul), note et liste de sources, posées seulement
+       quand la source les donne et qu'elles sont bien formées : sans elles, rien ne change (ni les fiches ni l'empreinte des données). */
+    if (value !== null) {
+      var mn = number(owns(wrapped, 'min') ? wrapped.min : meta.min), mx = number(owns(wrapped, 'max') ? wrapped.max : meta.max);
+      if (mn !== null && mx !== null && mn < mx && mn <= value && value <= mx) { out.meta.min = mn; out.meta.max = mx; }
+      var nt = text(owns(wrapped, 'note') ? wrapped.note : meta.note, 300); if (nt) out.meta.note = nt;
+      var ss = Array.isArray(wrapped.sources) ? wrapped.sources : Array.isArray(meta.sources) ? meta.sources : null;
+      if (ss) { ss = ss.map(function (x) { return text(x, 1000); }).filter(Boolean).slice(0, 10); if (ss.length) out.meta.sources = ss; }
+    }
+    return out;
   }
   function normalize(entry, type, fallbackImage, fallbackSchema) {
     if (!entry || !/^[a-z0-9][a-z0-9-]*$/i.test(entry.id || '')) return null;
@@ -76,7 +86,8 @@
     var media = mediaFor(entry, type, fallbackImage);
     var schemaImage = typeof fallbackSchema === 'string' && fallbackSchema.indexOf('<svg ') === 0 ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(fallbackSchema) : null;
     if (seats.value === 0) { seats.value = null; seats.meta.status = 'unknown'; }
-    return {
+    var income = incomeOf(entry);
+    var row = {
       id: entry.id, type: type,
       name: text(entry.name || entry.nom, 200) || entry.id,
       brand: text(entry.marque, 100),
@@ -98,6 +109,21 @@
       fieldMeta: { price: price.meta, speed: speed.meta, acceleration: acceleration.meta, seats: seats.meta },
       provenance: text(entry.provenance, 300) || (type === 'vehicle' ? 'vehicules-data.js#' : type === 'weapon' ? 'armes-data.js#' : 'outils/editorial.json#') + entry.id
     };
+    // v8.02 (lot 1) : clé ajoutée seulement quand la source publie un revenu (l’empreinte des données ne change pas sans lui).
+    if (income) row.income = income;
+    return row;
+  }
+  /* v8.02 (lot 1) : revenu passif publié (outils/editorial.json → « revenu » : montant en $, frequence en minutes de jeu,
+     plafond en $ = stock maximum avant de devoir récupérer l’argent, conditions en mots). Chaque chiffre suit le schéma
+     { value, status, source, verifiedAt, unit } ; null = inconnu. Rend null quand rien n’est publié. Ses métadonnées restent
+     dans income.meta (jamais dans fieldMeta, qui entre dans l’empreinte des données). */
+  function incomeOf(entry) {
+    var src = object(entry.revenu || entry.income);
+    var amount = numericField(src, 'montant', ['montant', 'amount']), every = numericField(src, 'frequence', ['frequence', 'everyMinutes']), cap = numericField(src, 'plafond', ['plafond', 'cap']);
+    var conditions = text(src.conditions, 300);
+    if (amount.value === null && every.value === null && cap.value === null && !conditions) return null;
+    if (every.value === 0) { every.value = null; every.meta.status = 'unknown'; }
+    return { amount: amount.value, everyMinutes: every.value, cap: cap.value, conditions: conditions, meta: { amount: amount.meta, everyMinutes: every.meta, cap: cap.meta } };
   }
   /* v7.53 : libellés lus dans les tables du site (armes-data.js, vehicules-data.js) : aucun libellé recopié ici. */
   function catLabel(type, id) { var t = type === 'weapon' ? global.LK_ARMES_CATS : type === 'vehicle' ? global.LK_VEHICULES_CATS : null; var v = t && id ? t[id] : null; return typeof v === 'string' ? v : v && typeof v === 'object' ? (v.nom || v.label || v.titre || null) : null; }
@@ -125,6 +151,14 @@
   // Relations économiques : identifiants canoniques uniquement, jamais déduits des catégories.
   // catalogue.activityIds / activité.purchaseIds : association documentée (effet non présumé).
   // activité.requiresPurchaseIds : achats devant être marqués possédés pour jouer l’activité.
+  // v8.02 (lot 1) : activité.requiresMissions : missions à avoir faites avant (identifiants d’activités « mission-<id> ») ;
+  // once : mission faite une seule fois (elle débloque la suite) ; done : déjà faite ; units : points gagnés (XP, rang,
+  // réputation…) ; order, chapter, chapterTitle : place dans l’histoire ; kind : type de mission (outils/missions/missions.json) ;
+  // unlockText : ce qui la débloque, en mots ; minCash : argent à avoir en poche pour la lancer, sans le dépenser ;
+  // minRank : rang (ou niveau) demandé. Ces champs viennent des ponts outils/gen-missions.cjs et outils/gen-activites.cjs ;
+  // absents, ils valent [], false ou null (inconnu) : le moteur ne s’en sert que lorsqu’ils existent.
+  var strings = function (value) { return Array.isArray(value) ? value.filter(function (v) { return typeof v === 'string'; }) : []; };
+  var finite = function (value) { return typeof value === 'number' && Number.isFinite(value) ? value : null; };
   function activities() {
     // Absence de table publiée et sourcée : aucun gain fictif ne devient une activité GTA VI.
     return (Array.isArray(global.LK_ACTIVITIES) ? global.LK_ACTIVITIES : []).map(function (entry) {
@@ -134,6 +168,14 @@
         requiresPurchaseIds: Array.isArray(entry.requiresPurchaseIds) ? entry.requiresPurchaseIds.filter(function(v){return typeof v==='string';}) : [],
         purchaseIds: Array.isArray(entry.purchaseIds) ? entry.purchaseIds.filter(function(v){return typeof v==='string';}) : [],
         prepOnce: entry.prepOnce === true,
+        requiresMissions: strings(entry.requiresMissions),
+        once: entry.once === true,
+        done: entry.done === true,
+        order: finite(entry.order),
+        chapter: finite(entry.chapter),
+        chapterTitle: text(entry.chapterTitle, 160),
+        kind: text(entry.kind, 40),
+        unlockText: text(entry.unlockText, 300),
         beginner: typeof entry.beginner === 'boolean' ? entry.beginner : null,
         source: text(entry.source, 1000), status: status(entry.status, 'unverified'),
         verifiedAt: date(entry.verifiedAt), fieldMeta: {}
@@ -143,8 +185,32 @@
         if ((key === 'share' && field.value > 100) || (key === 'players' && field.value === 0)) { field.value = null; field.meta.status = 'unknown'; }
         out[key] = field.value; out.fieldMeta[key] = field.meta;
       });
+      // v8.02 (lot 1) : champs facultatifs, posés seulement quand ils sont publiés (absents = « non demandé » pour le moteur :
+      // des points vides ne deviennent jamais une erreur de saisie, ni un 0 inventé).
+      ['units', 'minCash', 'minRank'].forEach(function (key) {
+        var field = numericField(entry, key, [key]);
+        if (field.value !== null) out[key] = field.value;
+        out.fieldMeta[key] = field.meta;
+      });
+      // v8.03 (lot 2) : characters = personnage(s) avec qui se fait la mission (« jason », « lucia »), posé seulement s’il est publié
+      // (pont outils/gen-missions.cjs → personnageJoue) ; il ne sert que si le joueur sépare l’argent de Jason et de Lucia.
+      var who = strings(entry.characters).filter(function (v, i, all) { return (v === 'jason' || v === 'lucia') && all.indexOf(v) === i; });
+      if (who.length) out.characters = who;
       return out;
     }).filter(Boolean);
+  }
+  /* v8.02 (lot 1) : règles d’argent du jeu (window.LK_CALC_REGLES, déclarées dans calculateurs-activites.js) : argent de Jason
+     et de Lucia (« commun » ou « separe »), amende, argent perdu à la mort et à l’arrestation. Même schéma que les autres
+     valeurs publiées ({ value, status, source, verifiedAt, unit }) ; une règle inconnue vaut null. Au 20 octobre 2026, rien n’est
+     publié : le calculateur ne s’en sert que comme simulation choisie par le joueur, et le dit. */
+  function rules() {
+    var r = object(global.LK_CALC_REGLES), split = object(r.argentPersonnages);
+    var splitStatus = status(split.status, 'unverified'), splitValue = ['commun', 'separe'].indexOf(split.value) >= 0 && splitStatus !== 'unknown' ? split.value : null;
+    var field = function (key) { var f = numericField(r, key, [key]); return { value: f.value, meta: f.meta }; };
+    return {
+      money: { value: splitValue, meta: { status: splitValue === null ? 'unknown' : splitStatus, source: text(split.source, 1000), verifiedAt: date(split.verifiedAt), unit: null } },
+      fine: field('amende'), death: field('perteMort'), arrest: field('perteArrestation')
+    };
   }
   var presets = [
     { id: 'scenario-a', example: { capital: 200000, minutes: 60 }, name: 'Example A: short missions', reward: 25000, cost: 2500, duration: 12, prep: 3, cooldown: 5, share: 100, investment: 0, players: 1, beginner: true },
@@ -154,7 +220,7 @@
     return Object.freeze(Object.assign(entry, { status: 'manual', source: null, verifiedAt: null, hypothetical: true, note: 'Example assumptions you can change. No GTA VI amount or pace is confirmed.' }));
   });
   global.LKCalcData = Object.freeze({
-    catalogue: catalogue, activities: activities, presets: Object.freeze(presets),
+    catalogue: catalogue, activities: activities, rules: rules, presets: Object.freeze(presets),
     meta: Object.freeze({ schemaVersion: 1, currency: '$', durationUnit: 'minute', shareUnit: 'percent', unknown: null, activitiesSource: 'window.LK_ACTIVITIES', presetsAreHypothetical: true, catalogueIsRuntime: true })
   });
 })(window);

@@ -1,0 +1,9 @@
+{
+ "_note": "v8.04 (référencement, chantier G) : pages par élément. Motif « {1} dans GTA VI. » (première phrase des nouvelles descriptions des catalogues, déjà en anglais et en allemand) et descriptions plus courtes pour les moteurs (« @meta:: », balise description seulement) quand la traduction dépassait 160 signes.",
+ "_motifs": {
+  "{1} dans GTA VI.": "{1} en GTA VI."
+ },
+ "@meta::Mount Kalaga National Park 02, image officielle de GTA VI. Hélicoptère Maverick rouge et blanc en vol devant les collines, avec un passager à la porte ouverte.": "Mount Kalaga National Park 02, imagen oficial de GTA VI. Helicóptero Maverick rojo y blanco volando ante las colinas, con un pasajero en la puerta abierta.",
+ "@meta::Crosse rabattable (vue) dans GTA VI. Le PM de la capture du Pack Vintage a une crosse rabattue sur le côté : la fiche « PM à crosse rabattable » le recense.": "Culata plegable (vista) en GTA VI. El subfusil de la captura del Pack Vintage la lleva plegada de lado: la ficha “Subfusil de culata plegable” lo registra.",
+ "@meta::Peinture pailletée dorée (vue) dans GTA VI. L’Albany de la capture Rideout Customs porte une peinture dorée à paillettes : une finition vue, sans nom ni prix.": "Pintura dorada con purpurina (vista) en GTA VI. El Albany de la captura de Rideout Customs la lleva: un acabado visto, sin nombre ni precio."
+}

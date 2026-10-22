@@ -141,7 +141,7 @@
    "date": "2026-08-27",
    "dateTexte": "27 août 2026",
    "statut": "vu",
-   "resume": "Quatorze morceaux sous licence entendus au fil des 26 minutes, relevés avec leurs minutages par plusieurs médias. Rockstar n’en a pas publié la liste.",
+   "resume": "Quatorze morceaux sous licence entendus au fil de la vidéo, relevés avec leurs minutages par plusieurs médias. Rockstar n’en a pas publié la liste.",
    "lien": "https://www.rockstargames.com/newswire/article/4k138k8okkk483/grand-theft-auto-vi-an-extended-look-now-playing",
    "youtube": "tJbzMqJGH4k",
    "morceaux": [
@@ -301,7 +301,7 @@
    "date": "2026-09-17",
    "dateTexte": "17 septembre 2026",
    "statut": "officiel",
-   "resume": "Les six premiers titres de l’album officiel, sortis le jour de son annonce. Les 34 titres arrivent le 19 novembre 2026, avec le jeu.",
+   "resume": "Les titres de l’album officiel déjà sortis : six le jour de son annonce, deux le 9 octobre 2026. Les 34 titres arrivent le 19 novembre 2026, avec le jeu.",
    "lien": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19",
    "lienLabel": "Lire l’annonce officielle",
    "fiche": "gta-vi-the-album",
@@ -385,6 +385,26 @@
       "rs-album",
       "mbw-album"
      ]
+    },
+    {
+     "titre": "Don’t Chart",
+     "artiste": "Cardi B",
+     "moment": "Single",
+     "statut": "officiel",
+     "sources": [
+      "rs-music",
+      "complex-album"
+     ]
+    },
+    {
+     "titre": "Suzuki",
+     "artiste": "Fuerza Regida",
+     "moment": "Single",
+     "statut": "officiel",
+     "sources": [
+      "rs-music",
+      "complex-album"
+     ]
     }
    ]
   },
@@ -420,20 +440,20 @@
    "name": "Grand Theft Auto VI: The Album",
    "kind": "Album officiel",
    "tagline": "34 titres originaux, le 19 novembre 2026.",
-   "description": "L’album officiel de GTA VI, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, six sortis dès l’annonce, d’autres depuis.",
+   "description": "Grand Theft Auto VI: The Album, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, six sortis dès l’annonce, d’autres depuis.",
    "media": [
     "dre-quan-priest-04"
    ],
    "imageAlt": "Dre’Quan Priest près d’une console de mixage dans un studio d’enregistrement, capture officielle Rockstar Games (aucune pochette n’est reprise ici)",
    "source": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19",
-   "texte": "Rockstar Games et Atlantic Records ont annoncé l’album le 17 septembre 2026. Il réunit 34 titres originaux, écrits pour le jeu, qui doivent « capturer l’énergie électrique de Vice City et de Leonida », selon le message officiel. Il sort le 19 novembre 2026, le même jour que GTA VI, en écoute en ligne, en CD et en vinyle. Six titres sont sortis dès l’annonce, de Yung Lean à Keith Richards. D’autres singles ont suivi, dont « Flower in a Hurricane » de Justice, le 15 octobre.",
-   "contexte": "Le même jour, Rockstar a promis d’en dire plus sur la musique du jeu : une partition dynamique et « la prochaine évolution de la radio en jeu ». L’album n’en dit pas plus : ses titres ne sont rattachés à aucune station, et rien ne dit encore dans quelles situations on les entendra en jouant. Trois éditions physiques sont réservées au site d’Atlantic Records ; le vinyle en édition limitée a été épuisé en quelques minutes, selon TechRadar.",
+   "texte": "Rockstar Games et Atlantic Records ont annoncé l’album le 17 septembre 2026. Il réunit 34 titres originaux, écrits pour le jeu, qui doivent « capturer l’énergie électrique de Vice City et de Leonida », selon le message officiel. Il sort le 19 novembre 2026, le même jour que GTA VI, en écoute en ligne, en CD et en vinyle. Six titres sont sortis dès l’annonce, de Yung Lean à Keith Richards. D’autres singles ont suivi : « Don’t Chart » de Cardi B et « Suzuki » de Fuerza Regida le 9 octobre, puis « Flower in a Hurricane » de Justice le 15 octobre.",
+   "contexte": "Le même jour, Rockstar a promis d’en dire plus sur la musique du jeu : une partition dynamique et « la prochaine évolution de la radio en jeu ». L’album n’en dit pas plus : ses titres ne sont rattachés à aucune station, et rien ne dit encore dans quelles situations on les entendra en jouant. Le site officiel de l’album, tenu par Atlantic Records, propose le CD à 19,98 $, le vinyle à 49,98 $ et un vinyle en édition limitée à 124,98 $, épuisé en quelques minutes selon TechRadar.",
    "pratique": "Pour l’instant, c’est un album à écouter en dehors du jeu. Rockstar a présenté six stations le 8 octobre 2026 sans dire lesquelles diffuseront ces titres ; Morgan Wallen, dont un titre figure sur l’album, anime Back Country Radio. Les autres morceaux connus, ceux des trailers et de l’Extended Look, sont dans le poste de la page Radios et musique.",
    "facts": [
     "Annoncé le 17 septembre 2026 par Rockstar Games et Atlantic Records.",
     "34 titres originaux, à paraître le 19 novembre 2026, le jour du jeu.",
     "Six titres sortis dès l’annonce : Yung Lean, Travis Scott, CA7RIEL & Paco Amoroso, Morgan Wallen, Rauw Alejandro et Keith Richards.",
-    "D’autres singles ont suivi, dont « Flower in a Hurricane » de Justice, le 15 octobre 2026.",
+    "D’autres singles ont suivi : « Don’t Chart » (Cardi B) et « Suzuki » (Fuerza Regida) le 9 octobre 2026, « Flower in a Hurricane » (Justice) le 15 octobre.",
     "Aucun de ces titres n’est encore rattaché à l’une des six stations présentées."
    ],
    "characters": [
@@ -456,7 +476,10 @@
     "billboard-album",
     "techradar-album",
     "gamespot-radio-evolution",
-    "rs-launch"
+    "rs-launch",
+    "rs-music",
+    "complex-album",
+    "gtavi-thealbum"
    ],
    "aliases": [
     "gta 6 the album",
@@ -568,10 +591,10 @@
      "alt": "Une rappeuse de Real Dimez assise dans un studio, un casque à la main, devant une console, capture officielle"
     },
     {
-     "date": "Automne 2026",
+     "date": "Fin août 2026",
      "titre": "Dazed",
-     "statut": "officiel",
-     "texte": "Rupert Humphries, de la narration de Rockstar, résume l’esprit musical : « We love Miami music, particularly Miami bass ». Il cite Kodak Black et Sexyy Red.",
+     "statut": "vu",
+     "texte": "Dans le dossier de Dazed, Rockstar résume l’esprit musical : « We love Miami music, particularly Miami bass ». Il cite Kodak Black et Sexyy Red.",
      "media": "dre-quan-priest-03",
      "alt": "Dre’Quan Priest au milieu d’un club baigné de lumière violette, visuel officiel Rockstar Games"
     },
@@ -640,11 +663,11 @@
    "items": [
     {
      "q": "La liste complète des stations",
-     "etat": "Six stations présentées le 8 octobre 2026 ; Rockstar n’a pas dit s’il y en aura d’autres."
+     "etat": "Six stations présentées le 8 octobre 2026 ; la page Musique de Rockstar annonce la plus large sélection de la série, « du rock classique à la radio parlée », sans dire combien de stations en tout."
     },
     {
      "q": "La programmation",
-     "etat": "Aucune liste de morceaux n’est publiée, pour aucune des six stations."
+     "etat": "Rockstar n’a publié la programmation d’aucune station ; dans les aperçus officiels, Game Informer a reconnu quelques morceaux par station (8 octobre 2026)."
     },
     {
      "q": "Les podcasts",
@@ -660,7 +683,7 @@
     },
     {
      "q": "Le compositeur",
-     "etat": "Aucun nom n’est donné pour la musique originale entendue dans l’Extended Look."
+     "etat": "Depuis le 15 octobre 2026, Rockstar présente Justice comme compositeur de la musique originale du jeu ; rien ne dit encore si c’est celle entendue dans l’Extended Look."
     },
     {
      "q": "Sa propre musique",
@@ -706,7 +729,7 @@
   "faq": [
    {
     "q": "Quelles radios y aura-t-il dans GTA 6 ?",
-    "a": "Rockstar a présenté six stations le 8 octobre 2026 : Flash FM (pop), Cocoteo FM (musiques latines), Back Country Radio (country), AfroBank FM (musiques africaines), The Chamber 106.6 (metal) et Dirty South Classics (rap du Sud). Il n’a pas dit si la liste est complète. Les autres noms de stations qui circulent viennent de vidéos volées en août 2026 : on ne les reprend pas.",
+    "a": "Rockstar a présenté six stations le 8 octobre 2026 : Flash FM (pop), Cocoteo FM (musiques latines), Back Country Radio (country), AfroBank FM (musiques africaines), The Chamber 106.6 (metal) et Dirty South Classics (rap du Sud). Sa page Musique annonce la plus large sélection de la série, « du rock classique à la radio parlée », sans dire combien de stations en tout. Les autres noms de stations qui circulent viennent de vidéos volées en août 2026 : on ne les reprend pas.",
     "k": [
      "radios gta 6",
      "stations de radio",
@@ -794,8 +817,10 @@
    },
    {
     "q": "C’est quoi « Grand Theft Auto VI: The Album » ?",
-    "a": "L’album officiel du jeu, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, à paraître le 19 novembre 2026 avec le jeu. Six titres sont sortis dès l’annonce, dont ceux de Travis Scott, Yung Lean et Keith Richards ; d’autres ont suivi, comme « Flower in a Hurricane » de Justice le 15 octobre.",
+    "a": "L’album officiel du jeu, annoncé par Rockstar et Atlantic Records le 17 septembre 2026 : 34 titres originaux, à paraître le 19 novembre 2026 avec le jeu. Six titres sont sortis dès l’annonce, dont ceux de Travis Scott, Yung Lean et Keith Richards ; d’autres ont suivi : « Don’t Chart » de Cardi B et « Suzuki » de Fuerza Regida le 9 octobre, « Flower in a Hurricane » de Justice le 15 octobre. La page Musique de Rockstar en liste neuf.",
     "k": [
+     "cardi b",
+     "fuerza regida",
      "album gta 6",
      "the album",
      "atlantic records",
@@ -804,6 +829,9 @@
      "album officiel"
     ],
     "f": [
+     "cardi b gta 6",
+     "fuerza regida gta 6",
+     "les singles de l album",
      "c est quoi gta vi the album",
      "album officiel",
      "la bande originale",
@@ -812,7 +840,7 @@
     ]
    }
   ],
-  "sourcesLede": "Chaque morceau et chaque phrase de cette page renvoie à une source datée. Les pages ont été relevées le 4 octobre 2026 par moteur de recherche ; celles des stations ont été ouvertes le 12 octobre 2026, et la page Musique de Rockstar, qui s’affiche par script, a été lue au travers des médias qui la citent.",
+  "sourcesLede": "Chaque morceau et chaque phrase de cette page renvoie à une source datée. Les pages ont été relevées le 4 octobre 2026 par moteur de recherche ; celles des stations ont été ouvertes le 12 octobre 2026, et la page Musique de Rockstar, qui s’affiche par script, a été lue au travers des médias qui la citent. Les ajouts du 21 octobre 2026 (titres de l’album, morceaux des aperçus, éditions physiques) ont été vérifiés ce jour-là.",
   "sources": [
    "rs-radios",
    "rs-music",
@@ -842,7 +870,10 @@
    "gtafandom-vrock",
    "postmode-24things",
    "gamespot-khaled",
-   "rs-launch"
+   "rs-launch",
+    "gi-radio-morceaux",
+    "complex-album",
+    "gtavi-thealbum"
   ]
  },
  "sources": {
@@ -860,7 +891,7 @@
    "publishedAt": "2026-08-27",
    "consultedAt": "2026-10-04",
    "statut": "officiel",
-   "claim": "Annonce de la présentation d’environ 26 minutes, d’abord sur Netflix puis sur YouTube."
+   "claim": "Annonce de la présentation, capturée en jeu sur PlayStation 5, d’abord sur Netflix puis sur YouTube."
   },
   "rs-album": {
    "url": "https://www.rockstargames.com/newswire/article/7599a881942544/announcing-grand-theft-auto-vi-the-album-coming-november-19",
@@ -878,7 +909,7 @@
    "publisher": "Music Business Worldwide",
    "publishedAt": null,
    "consultedAt": "2026-10-04",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "Reprend l’annonce : les six singles, leurs artistes et les éditions CD et vinyle."
   },
   "billboard-album": {
@@ -888,7 +919,7 @@
    "publisher": "Billboard",
    "publishedAt": "2026-09-17",
    "consultedAt": "2026-10-04",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "Reprend l’annonce officielle : 34 titres originaux, sortie avec le jeu."
   },
   "techradar-album": {
@@ -898,7 +929,7 @@
    "publisher": "TechRadar",
    "publishedAt": "2026-09-17",
    "consultedAt": "2026-10-04",
-   "statut": "comm",
+   "statut": "vu",
    "claim": "Le vinyle en édition limitée épuisé en quelques minutes : un constat de la presse, pas une annonce de Rockstar."
   },
   "gamespot-radio-evolution": {
@@ -908,7 +939,7 @@
    "publisher": "GameSpot",
    "publishedAt": null,
    "consultedAt": "2026-10-04",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "Reprend la phrase du Newswire sur la partition dynamique et la radio en jeu."
   },
   "louder-petty": {
@@ -918,7 +949,7 @@
    "publisher": "Louder",
    "publishedAt": null,
    "consultedAt": "2026-10-04",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "« Love Is a Long Road » (Full Moon Fever, 1989) dans le Trailer 1 ; message des ayants droit de Tom Petty."
   },
   "gamespot-t2-song": {
@@ -928,7 +959,7 @@
    "publisher": "GameSpot",
    "publishedAt": null,
    "consultedAt": "2026-10-04",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "« Hot Together » des Pointer Sisters, morceau principal du Trailer 2."
   },
   "nme-t2": {
@@ -1008,8 +1039,8 @@
    "publisher": "Dazed",
    "publishedAt": null,
    "consultedAt": "2026-10-04",
-   "statut": "officiel",
-   "claim": "Entretien avec Rupert Humphries (Rockstar) : la musique de Miami, en particulier la Miami bass, Kodak Black et Sexyy Red."
+   "statut": "vu",
+   "claim": "Dossier de Dazed avec l’équipe de Rockstar : la musique de Miami, en particulier la Miami bass, Kodak Black et Sexyy Red (propos attribués à Rockstar par la presse)."
   },
   "rockstarintel-spotify": {
    "url": "https://rockstarintel.com/new-gta-6-billboards-appear-as-rockstar-teams-up-with-spotify/",
@@ -1018,7 +1049,7 @@
    "publisher": "RockstarINTEL",
    "publishedAt": null,
    "consultedAt": "2026-10-04",
-   "statut": "vu",
+   "statut": "comm",
    "claim": "Panneaux GTA VI aux couleurs de Spotify à Los Angeles, New York et Miami ; aucune intégration dans le jeu n’est annoncée."
   },
   "consequence-every-song": {
@@ -1028,7 +1059,7 @@
    "publisher": "Consequence",
    "publishedAt": null,
    "consultedAt": "2026-10-04",
-   "statut": "comm",
+   "statut": "vu",
    "claim": "Sépare les morceaux des vidéos officielles de ceux des fuites ; les noms de stations ne viennent que des fuites."
   },
   "gtafandom-vrock": {
@@ -1073,9 +1104,9 @@
    "lang": "en",
    "publisher": "Rockstar Games",
    "publishedAt": "2026-10-08",
-   "consultedAt": "2026-10-12",
+   "consultedAt": "2026-10-20",
    "statut": "officiel",
-   "claim": "La page officielle des stations, avec le style, les animateurs et un aperçu de chacune."
+   "claim": "La page officielle des stations, avec le style, les animateurs et un aperçu de chacune ; elle liste neuf titres de l’album au 20 octobre 2026."
   },
   "forbes-radios": {
    "url": "https://www.forbes.com/sites/brianmazique/2026/10/08/lana-del-rey-learned-las-roads-from-gta---now-shes-a-radio-dj-in-gta-vi-alongside-bad-bunny-and-morgan-wallen/",
@@ -1084,7 +1115,7 @@
    "publisher": "Forbes",
    "publishedAt": "2026-10-08",
    "consultedAt": "2026-10-12",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "Reprend la page Musique de Rockstar : chaque station, son style et ses animateurs, avec leur nom à l’antenne."
   },
   "pushsquare-radios": {
@@ -1094,7 +1125,7 @@
    "publisher": "Push Square",
    "publishedAt": "2026-10-08",
    "consultedAt": "2026-10-12",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "Cite l’article de Rockstar : noms d’antenne des animateurs, reporter Mud Dog Mike, podcasts à la demande et écoute à pied."
   },
   "dexerto-radios": {
@@ -1104,7 +1135,7 @@
    "publisher": "Dexerto",
    "publishedAt": "2026-10-08",
    "consultedAt": "2026-10-12",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "Détaille le style de chaque station : bachata, merengue, dembow et reggaeton pour Cocoteo FM ; des classiques du XXᵉ siècle à l’amapiano et au 3-step pour AfroBank FM ; le metal depuis les années 1980 pour The Chamber 106.6."
   },
   "djmag-radios": {
@@ -1114,7 +1145,7 @@
    "publisher": "DJ Mag",
    "publishedAt": "2026-10-09",
    "consultedAt": "2026-10-12",
-   "statut": "officiel",
+   "statut": "vu",
    "claim": "Liste les six stations et leurs animateurs, et renvoie aux aperçus de la page Musique officielle."
   },
   "rs-launch": {
@@ -1125,6 +1156,36 @@
    "consultedAt": "2026-10-16",
    "statut": "officiel",
    "claim": "La bande-annonce de lancement se joue sur « Flower in a Hurricane », nouveau single de Justice avec Tame Impala, SZA et King Gizzard & The Lizard Wizard, aussi sur GTA VI: The Album ; Justice compose la musique originale du jeu."
+  },
+  "gi-radio-morceaux": {
+   "url": "https://gameinformer.com/2026/10/08/grand-theft-auto-vi-here-are-all-the-songs-we-heard-in-rockstars-in-game-radio-preview",
+   "title": "Grand Theft Auto VI: Here Are All The Songs We Heard In Rockstar’s In-Game Radio Preview",
+   "lang": "en",
+   "publisher": "Game Informer",
+   "publishedAt": "2026-10-08",
+   "consultedAt": "2026-10-21",
+   "statut": "vu",
+   "claim": "Les morceaux reconnus avec Shazam dans les aperçus des six stations de la page Musique officielle : un relevé de la presse, pas une liste de Rockstar."
+  },
+  "complex-album": {
+   "url": "https://www.complex.com/music/a/tracewilliamcowen/grand-theft-auto-vi-cardi-b-fuerza-regida",
+   "title": "Cardi B and Fuerza Regida on Grand Theft Auto VI: The Album",
+   "lang": "en",
+   "publisher": "Complex",
+   "publishedAt": "2026-10-09",
+   "consultedAt": "2026-10-21",
+   "statut": "vu",
+   "claim": "Rockstar et Atlantic Records sortent « Don’t Chart » de Cardi B et « Suzuki » de Fuerza Regida, deux titres de l’album."
+  },
+  "gtavi-thealbum": {
+   "url": "https://www.gtavi-thealbum.com/",
+   "title": "Grand Theft Auto VI: The Album, site officiel (Atlantic Records)",
+   "lang": "en",
+   "publisher": "Atlantic Records",
+   "publishedAt": null,
+   "consultedAt": "2026-10-21",
+   "statut": "officiel",
+   "claim": "CD à 19,98 $, vinyle à 49,98 $, vinyle en édition limitée à 124,98 $ (épuisé), en précommande."
   }
  },
  "leo": {
@@ -1173,7 +1234,8 @@
     "Style : pop.",
     "À l’antenne : Robyn et Alex Consani (Alex).",
     "Présentée par Rockstar le 8 octobre 2026.",
-    "Déjà présente dans GTA Vice City (2002) : repère de la série."
+    "Déjà présente dans GTA Vice City (2002) : repère de la série.",
+    "Entendus dans l’aperçu officiel, d’après Game Informer : « Good Ones » (Charli XCX), « Electric Feel » (MGMT) et « Midnight Sun (Girls Trip) » (Zara Larsson et PinkPantheress)."
    ],
    "aliases": [
     "flash fm gta 6",
@@ -1191,7 +1253,8 @@
     "forbes-radios",
     "pushsquare-radios",
     "dexerto-radios",
-    "djmag-radios"
+    "djmag-radios",
+    "gi-radio-morceaux"
    ],
    "seo": "pop"
   },
@@ -1217,7 +1280,8 @@
    "facts": [
     "Style : musiques latines d’aujourd’hui (bachata, merengue, dembow, reggaeton).",
     "À l’antenne : Bad Bunny (El Martillo) et RaiNao (La Gata).",
-    "Présentée par Rockstar le 8 octobre 2026."
+    "Présentée par Rockstar le 8 octobre 2026.",
+    "Entendus dans l’aperçu officiel, d’après Game Informer : « EoO » (Bad Bunny), « Si Es Trucho Es Trucho (Remix) » (Axel Rulay avec Farruko et El Alfa) et « Canalla » (Romeo Santos et El Chaval de la Bachata)."
    ],
    "aliases": [
     "cocoteo fm gta 6",
@@ -1237,7 +1301,8 @@
     "forbes-radios",
     "pushsquare-radios",
     "dexerto-radios",
-    "djmag-radios"
+    "djmag-radios",
+    "gi-radio-morceaux"
    ],
    "seo": "latino"
   },
@@ -1269,7 +1334,8 @@
     "Style : country, outlaw country comprise.",
     "À l’antenne : Morgan Wallen (MW) et Lana Del Rey (Delta Dawne).",
     "Reporter : Mud Dog Mike, incarné par Jeremy Dufrene.",
-    "Présentée par Rockstar le 8 octobre 2026."
+    "Présentée par Rockstar le 8 octobre 2026.",
+    "Entendus dans l’aperçu officiel, d’après Game Informer : « Need a Little Time Off for Bad Behavior » (David Allan Coe), « Don’t Come Home a Drinkin’ » (Loretta Lynn) et « The Conversation » (Hank Williams Jr. et Waylon Jennings)."
    ],
    "aliases": [
     "back country radio gta 6",
@@ -1289,7 +1355,8 @@
     "forbes-radios",
     "pushsquare-radios",
     "dexerto-radios",
-    "djmag-radios"
+    "djmag-radios",
+    "gi-radio-morceaux"
    ],
    "seo": "country"
   },
@@ -1315,7 +1382,8 @@
    "facts": [
     "Style : musiques africaines, des classiques du XXᵉ siècle à l’amapiano et au 3-step.",
     "À l’antenne : Burna Boy (Burna) et Palms Trax (Palmsy).",
-    "Présentée par Rockstar le 8 octobre 2026."
+    "Présentée par Rockstar le 8 octobre 2026.",
+    "Entendus dans l’aperçu officiel, d’après Game Informer : « Joha » (Asake), « Gye Wani » (Pat Thomas avec Ebo Taylor) et « Shay’sana » (DJ Lag et Robot Boii avec Kamo Mphela)."
    ],
    "aliases": [
     "afrobank fm gta 6",
@@ -1334,7 +1402,8 @@
     "forbes-radios",
     "pushsquare-radios",
     "dexerto-radios",
-    "djmag-radios"
+    "djmag-radios",
+    "gi-radio-morceaux"
    ],
    "seo": "afro"
   },
@@ -1360,7 +1429,8 @@
    "facts": [
     "Style : metal, des années 1980 à aujourd’hui.",
     "À l’antenne : Kerry King (DJ Kerry) et Tom Araya (DJ Tom), de Slayer.",
-    "Présentée par Rockstar le 8 octobre 2026."
+    "Présentée par Rockstar le 8 octobre 2026.",
+    "Entendus dans l’aperçu officiel, d’après Game Informer : « I » (Black Sabbath), « I’m Broken » (Pantera) et « Raining Blood » (Slayer)."
    ],
    "aliases": [
     "the chamber gta 6",
@@ -1381,7 +1451,8 @@
     "forbes-radios",
     "pushsquare-radios",
     "dexerto-radios",
-    "djmag-radios"
+    "djmag-radios",
+    "gi-radio-morceaux"
    ],
    "seo": "metal"
   },
@@ -1407,7 +1478,8 @@
    "facts": [
     "Style : classiques du rap et du hip-hop du Sud des États-Unis.",
     "À l’antenne : Trick Daddy (Trick) et Trina.",
-    "Présentée par Rockstar le 8 octobre 2026."
+    "Présentée par Rockstar le 8 octobre 2026.",
+    "Entendus dans l’aperçu officiel, d’après Game Informer : « Who Dat » (JT Money) et « Born-N-Raised » (DJ Khaled avec Trick Daddy, Rick Ross et Pitbull)."
    ],
    "aliases": [
     "dirty south classics gta 6",
@@ -1427,12 +1499,13 @@
     "pushsquare-radios",
     "dexerto-radios",
     "djmag-radios",
-    "dazed-deepdive"
+    "dazed-deepdive",
+    "gi-radio-morceaux"
    ],
    "seo": "rap du Sud"
   }
  ],
  "stationsTitre": "Les six stations",
- "stationsLede": "Présentées par Rockstar le 8 octobre 2026, chacune avec ses animateurs. Rockstar n’a pas dit si la liste est complète, ni publié la programmation des stations.",
+ "stationsLede": "Présentées par Rockstar le 8 octobre 2026, chacune avec ses animateurs. Rockstar n’a publié la programmation d’aucune station, ni dit combien il y en aura en tout.",
  "stationsKicker": "Annoncées le 8 octobre 2026"
 }

@@ -30,7 +30,8 @@ function repereText(r) {
 /* v7.86 : une ligne de la fiche (dt/dd), commune à la fiche complète et à la forme courte des fiches véhicules et armes */
 function rowHtml(ch, seen) {
     const cls = STATE[ch.value.s] || 'is-wait';
-    const shown = ch.known ? valueText(ch.value.v, ch.unite) : cap(ch.text);
+    /* v8.04 (jour J) : une valeur publiée avec sa fourchette (le calcul garde la valeur) */
+    const shown = ch.known ? valueText(ch.value.v, ch.unite) + (typeof ch.value.min === 'number' && typeof ch.value.max === 'number' ? ' (de ' + nf.format(ch.value.min) + ' à ' + valueText(ch.value.max, ch.unite) + ')' : '') : cap(ch.text);
     const badge = ch.known ? '<span class="doc-st">' + esc(V.statusLabel(ch.value)) + '</span>' : '';
     const ctx = ch.value.ctx ? '<small class="doc-ctx">' + esc(ch.value.ctx) + '</small>' : '';
     const rep = ch.repere ? '<small class="doc-rep"><b>Repère de la série :</b> ' + esc(repereText(ch.repere)) + '</small>' : '';
@@ -40,7 +41,12 @@ function rowHtml(ch, seen) {
     if (noteText && seen) { if (seen.has(noteText)) noteText = ''; else seen.add(noteText); }
     const note = noteText ? '<small class="doc-ctx">' + esc(noteText) + '</small>' : '';
     /* v7.59 (check ultime, CALC-13) : une valeur publiée porte sa source et sa date de vérification (schéma unique, V.published). */
-    const prov = ch.known && (ch.value.source || ch.value.verifiedAt) ? '<small class="doc-ctx doc-prov">' + [ch.value.source ? 'Source : ' + (/^https?:\/\//.test(ch.value.source) ? '<a href="' + esc(ch.value.source) + '" target="_blank" rel="noopener nofollow">' + esc(ch.value.source.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')) + '</a>' : esc(ch.value.source)) : '', ch.value.verifiedAt ? 'vérifié le ' + esc(DP.texteDate(ch.value.verifiedAt)) : ''].filter(Boolean).join(', ') + '</small>' : '';
+    /* v8.04 (jour J) : plusieurs sources (liste sources) et la note d’une valeur publiée, seulement quand la source les donne ;
+       avec une seule source et sans note, la ligne reste celle de la v7.59 */
+    const lien = s => /^https?:\/\//.test(s) ? '<a href="' + esc(s) + '" target="_blank" rel="noopener nofollow">' + esc(s.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')) + '</a>' : esc(s);
+    const srcs = ch.known ? [...new Set([ch.value.source].concat(Array.isArray(ch.value.sources) ? ch.value.sources : []).filter(Boolean))] : [];
+    const pubNote = ch.known && ch.value.note && (srcs.length || ch.value.verifiedAt) ? ch.value.note : '';
+    const prov = ch.known && (srcs.length || ch.value.verifiedAt) ? '<small class="doc-ctx doc-prov">' + [srcs.length ? (srcs.length > 1 ? 'Sources : ' : 'Source : ') + srcs.map(lien).join(' ; ') : '', ch.value.verifiedAt ? 'vérifié le ' + esc(DP.texteDate(ch.value.verifiedAt)) : ''].filter(Boolean).join(', ') + (pubNote ? '. Note : ' + esc(pubNote) : '') + '</small>' : '';
     return '<div class="doc-row ' + cls + '"><dt>' + esc(ch.label) + '</dt><dd><span class="doc-v">' + esc(shown) + '</span>' + badge + ctx + prov + rep + note + '</dd></div>';
 }
 function render(categoryId, known, opts = {}) {
@@ -112,13 +118,15 @@ function accessCell(it) {
   if (notBought(it)) return { price: 'Ne s’achète pas', buy: it.ou_le_trouver.map(o => o.type).join(', ') };
   /* v7.59 (check ultime, CALC-13) : un prix GTA VI publié (prix_gta6, schéma unique) s'affiche avec son statut ; sinon « Prix à venir ». */
   const p = publishedRow(it);
-  if (p) return { price: nf.format(p.v) + ' $, ' + V.statusLabel(p), buy: p.verifiedAt ? 'vérifié le ' + DP.texteDate(p.verifiedAt) : M.modele.vides.achat, known: true };
+  if (p) return { price: nf.format(p.v) + ' $' + DP.fourchette(p, '$') + ', ' + V.statusLabel(p), buy: p.verifiedAt ? 'vérifié le ' + DP.texteDate(p.verifiedAt) : M.modele.vides.achat, known: true, pip: PRICE_PIP[p.s] || 'conf' };
   return { price: M.modele.vides.prix, buy: M.modele.vides.achat };
 }
+/* v8.04 (jour J) : pastille d’un prix publié : officiel (publié ou relevé en jeu), vu dans un média, communauté ; sinon à confirmer */
+const PRICE_PIP = { official: 'officiel', measured: 'officiel', media: 'vu', community: 'comm' };
 function publishedRow(it) {
   const r = it && it.prix_gta6;
   if (!r || typeof r.valeur !== 'number') return null;
-  const v = V.published({ value: r.valeur, status: r.statut === 'officiel' || r.statut === 'vu' ? 'official' : r.statut === 'serie' ? 'unverified' : r.statut || 'unverified', source: r.source, verifiedAt: r.verifiedAt });
+  const v = V.published({ value: r.valeur, status: r.statut === 'officiel' || r.statut === 'vu' ? 'official' : r.statut === 'serie' ? 'unverified' : r.statut || 'unverified', source: r.source, verifiedAt: r.verifiedAt, min: r.min, max: r.max, note: r.note, sources: r.sources /* v8.04 (jour J) */ });
   return V.usable(v) ? v : null;
 }
 /* v7.86 (référencement) : forme courte des fiches véhicules et armes. Seules les valeurs connues s’affichent (avec leur statut,

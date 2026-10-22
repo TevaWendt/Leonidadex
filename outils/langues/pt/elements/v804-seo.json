@@ -1,0 +1,8 @@
+{
+ "_note": "v8.04 (référencement, chantier G) : pages par élément. Motif « {1} dans GTA VI. » (première phrase des nouvelles descriptions des catalogues, déjà en anglais et en allemand) et descriptions plus courtes pour les moteurs (« @meta:: », balise description seulement) quand la traduction dépassait 160 signes.",
+ "_motifs": {
+  "{1} dans GTA VI.": "{1} em GTA VI."
+ },
+ "@meta::Crosse rabattable (vue) dans GTA VI. Le PM de la capture du Pack Vintage a une crosse rabattue sur le côté : la fiche « PM à crosse rabattable » le recense.": "Coronha dobrável (vista) em GTA VI. Na captura do Pacote Vintage, a submetralhadora tem a coronha dobrada de lado: está na ficha dessa submetralhadora.",
+ "@meta::Peinture pailletée dorée (vue) dans GTA VI. L’Albany de la capture Rideout Customs porte une peinture dorée à paillettes : une finition vue, sans nom ni prix.": "Pintura com flocos dourados (vista) em GTA VI. O Albany da captura da Rideout Customs a usa: um acabamento visto, sem nome nem preço."
+}

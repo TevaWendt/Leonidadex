@@ -16,6 +16,9 @@
    de la page (cartes postales, règles, images, questions), plus longue depuis l’album. fetchpriority="high" : un script
    async part en priorité basse, derrière les feuilles et les images ; c’est lui qui pose l’image de la partie (le plus
    grand élément de l’écran), il passe donc devant.
+   v8.04 (lot L) : sous le jeu, le bandeau de progression commun aux jeux du site (outils/gen-jeux.cjs, strip() ; points,
+   niveau, parties du jour des trois jeux, lien vers jeux.html), rempli par jeux-core.js ; devine.js annonce chaque réponse
+   (événement « lk-jeux ») sans rien changer à sa sauvegarde ni à ses scores.
    Usage : node outils/gen-devine.cjs   (appelé par outils/regenerer.cjs, après gen-actus.cjs) */
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
@@ -27,6 +30,7 @@ const { REGIONS } = require('./monde-cartes.cjs');
 const VT = require('./vitrine.cjs');
 const VTX = JSON.parse(fs.readFileSync(path.join(__dirname, 'vitrine.json'), 'utf8'));
 const IL = require('./devine-illus.cjs');
+const GJ = require('./gen-jeux.cjs');
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', PAGE = 'devine-le-lieu.html', DATA_FILE = 'outils/devine/devine.json';
 const SCREENS = 'https://www.rockstargames.com/VI/media/screenshots';
@@ -254,6 +258,8 @@ ${resultPanel(L, R)}
 ${templates(L)}
 </section>
 <script src="devine.js" async fetchpriority="high"></script>
+<script src="jeux-core.js" defer></script>
+${GJ.strip(L.root)}
 <div class="ed-zone ed-zone--devine">
 ${nav}
 ${regionsSection(L, R)}
@@ -284,6 +290,7 @@ ${ld}
 <link rel="stylesheet" href="lk-sections.css">
 <link rel="stylesheet" href="vitrine.css">
 <link rel="stylesheet" href="devine.css">
+<link rel="stylesheet" href="jeux.css">
 <meta property="og:image" content="${SITE}${og}">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="${SITE}${canonical}">

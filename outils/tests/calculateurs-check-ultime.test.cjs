@@ -6,6 +6,8 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const H=require('./check-ultime-helper.cjs'),root=H.root,{load}=require('./runtime-helper.cjs');
 const B=require(path.join(root,'calculateurs-scenario.js')),E=require(path.join(root,'calculateurs-engine.js'));
+/* v8.04 (jour J) : prix attendu d’une fiche ouverte depuis le site : son prix publié (null tant que rien n’est publié) */
+const PUB=(()=>{let cat=null;return id=>{cat=cat||H.siteData().catalogue;const r=cat.find(x=>x.id===id);return r&&typeof r.price==='number'?r.price:null;};})();
 const {D,catalogue,sourceActivities,presets}=H.siteData(),DV=H.dataVersion(D,catalogue,sourceActivities),initial=B.initial(DV,presets);
 const TOOLS=['goal','purchase','session','budget','order','roi','activities','compare','plan'];
 const fire=(p,n,t='click')=>n.dispatchEvent(new p.w.Event(t,{bubbles:true,cancelable:true}));
@@ -144,12 +146,12 @@ test('CALC-07 : chaque point d’entrée ouvre le bon outil avec les bonnes vale
   ['calculateurs.html?tool=goal&target=1000000&from=home#atelier',s=>{assert.equal(s.tab,'goal');assert.equal(s.goal.target,1000000);}],
   ['calculateurs.html?tool=goal&capital=200000&target=1500000&hourly=80000&from=home#atelier',s=>{assert.equal(s.goal.capital,200000);assert.equal(s.goal.target,1500000);assert.equal(s.goal.hourly,80000);assert.equal(s.model,'continuous');}],
   ['calculateurs.html?tool=session&minutes=30&from=home#atelier',s=>{assert.equal(s.tab,'session');assert.equal(s.session.minutes,30);assert.equal(s.goal.dailyMinutes,initial.goal.dailyMinutes,'minutes ne touche que Mon temps de jeu');}],
-  ['calculateurs.html?tool=purchase&type=vehicules&id='+veh+'&from=fiche#atelier',s=>{assert.equal(s.tab,'purchase');const a=B.asset(s,s.purchase.key);assert.equal(a.itemId,veh);assert.equal(a.price,null,'prix inconnu : reste inconnu, jamais 0');}],
+  ['calculateurs.html?tool=purchase&type=vehicules&id='+veh+'&from=fiche#atelier',s=>{assert.equal(s.tab,'purchase');const a=B.asset(s,s.purchase.key);assert.equal(a.itemId,veh);assert.equal(a.price,PUB(veh),'prix inconnu : reste inconnu, jamais 0 (prix publié : celui de la fiche)');}],
   ['calculateurs.html?tool=purchase&type=vehicules&ids='+H.VEHICLES.join(',')+'&from=catalogue#atelier',s=>{assert.deepEqual(s.catalogue.compareIds,H.VEHICLES);}],
   ['calculateurs.html?tool=compare&ids='+H.VEHICLES.join(',')+'&from=comparateur#atelier',s=>{assert.equal(s.tab,'compare');assert.equal(s.compare.keys.length,2);}],
-  ['calculateurs.html?tool=order&type=vehicle&ids='+H.VEHICLES.join(',')+'&from=carnet#atelier',s=>{assert.equal(s.tab,'order');assert.equal(s.order.keys.length,2);assert.ok(s.order.keys.every(k=>B.asset(s,k).price===null),'prix inconnus');}],
+  ['calculateurs.html?tool=order&type=vehicle&ids='+H.VEHICLES.join(',')+'&from=carnet#atelier',s=>{assert.equal(s.tab,'order');assert.equal(s.order.keys.length,2);assert.ok(s.order.keys.every(k=>B.asset(s,k).price===PUB(B.asset(s,k).itemId)),'prix inconnus ou publiés');}],
   ['calculateurs.html?tool=budget&achats=Tenue%20noire%7CCasquette&from=carnet#atelier',s=>{assert.equal(s.tab,'budget');assert.equal(s.budget.source,'basket');assert.equal(s.order.keys.length,2);assert.ok(s.order.keys.every(k=>B.asset(s,k).price===null&&!B.asset(s,k).itemId));}],
-  ['calculateurs.html?tool=roi&type=business&id='+biz.id+'&from=fiche#atelier',s=>{assert.equal(s.tab,'roi');assert.equal(B.asset(s,s.roi.key).itemId,biz.id);assert.equal(s.roi.mode,'estimate','une entreprise importée n’est pas présumée exploitable');assert.equal(B.asset(s,s.roi.key).price,null);}],
+  ['calculateurs.html?tool=roi&type=business&id='+biz.id+'&from=fiche#atelier',s=>{assert.equal(s.tab,'roi');assert.equal(B.asset(s,s.roi.key).itemId,biz.id);assert.equal(s.roi.mode,'estimate','une entreprise importée n’est pas présumée exploitable');assert.equal(B.asset(s,s.roi.key).price,PUB(biz.id));}],
   ['calculateurs.html?tool=plan&from=home#atelier',s=>{assert.equal(s.tab,'plan');}],
   ['calculateurs.html?tool=plan&capital=50000&target=400000&minutes=45',s=>{assert.equal(s.plan.situation.capital,50000);assert.equal(s.plan.goal.target,400000);assert.equal(s.plan.goal.kind,'amount');assert.equal(s.plan.situation.dailyMinutes,45);assert.equal(s.goal.capital,initial.goal.capital,'le plan ne touche pas aux huit calculs');}],
   ['calculateurs.html?tool=goal&mode=expert&from=tuto&chapter=modes#atelier',s=>{assert.equal(s.views.goal,'advanced');}],

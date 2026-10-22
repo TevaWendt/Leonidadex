@@ -273,7 +273,8 @@ test('une partie en allemand : textes de la langue, nombres et pluriels de la la
 
 test('liens : menu « Jouer », pied de page, page Lieux, fiches des régions, recherche, plan du site, Léo et Mentions', () => {
   const shell = require(path.join(root, 'outils/site-shell.cjs'));
-  assert.deepEqual(shell.play[shell.play.length - 1], [PAGE, 'Devine le lieu']);
+  /* v8.04 (lot L) : Devine le lieu, puis la page des trois jeux et de la progression, à la fin du groupe « Jouer » */
+  assert.deepEqual(shell.play.slice(-2), [[PAGE, 'Devine le lieu'], ['jeux.html', 'Les jeux du site']]);
   assert.ok(shell.sectionPages.has(PAGE));
   assert.ok(shell.nav('index.html', '').includes('href="' + PAGE + '"') && shell.footer('', '').includes('href="' + PAGE + '"'));
   assert.match(read(PAGE), new RegExp('<a href="' + PAGE.replace('.', '\\.') + '" class="here" aria-current="page">Devine le lieu</a>'));

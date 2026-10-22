@@ -432,7 +432,28 @@
    "l": "La bande-annonce de lancement",
    "k": "Grand moment",
    "u": "/moments/bande-annonce-lancement.html",
-   "s": "la bande-annonce de lancement une bande-annonce sur « flower in a hurricane », nouveau single de justice avec tame impala, sza et king gizzard & the lizard wizard. rockstar presente justice comme le compositeur de la musique originale du jeu. annonce trailer actualite moment",
+   "s": "la bande-annonce de lancement une bande-annonce capturee entierement en jeu sur playstation 5, sur « flower in a hurricane », nouveau single de justice avec tame impala, sza et king gizzard & the lizard wizard. rockstar presente justice comme le compositeur de la musique originale du jeu. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "La campagne de lancement, de Miami à Paris",
+   "k": "Grand moment",
+   "u": "/moments/campagne-lancement.html",
+   "s": "la campagne de lancement, de miami a paris a miami, une enseigne « welcome to vice city » sur le toit du kaseya center, un dirigeable aux couleurs de vice city et des fresques d’artistes presents dans le jeu au wynwood walls ; pres de paris, une tour de la porte de bagnolet habillee de la jaquette, au bord du peripherique. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "L’enquête de Bloomberg sur la fabrication du jeu",
+   "k": "Grand moment",
+   "u": "/moments/enquete-bloomberg.html",
+   "s": "l’enquete de bloomberg sur la fabrication du jeu apres une journee chez rockstar north, bloomberg raconte environ huit ans de travail, un projet d’abord appele « project americas » et 4 711 personnes dans 12 bureaux en aout 2026. rockstar y dement la rumeur d’un cout de plus de 1,5 milliard de dollars, sans donner de chiffre. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Deux nouveaux titres de l’album",
+   "k": "Grand moment",
+   "u": "/moments/titres-album.html",
+   "s": "deux nouveaux titres de l’album rockstar et atlantic records sortent « don’t chart » de cardi b et « suzuki » de fuerza regida. la page musique de gta vi affiche desormais neuf titres de gta vi: the album. annonce trailer actualite moment",
    "w": 0
   },
   {
@@ -446,21 +467,49 @@
    "l": "Les six stations de radio",
    "k": "Grand moment",
    "u": "/moments/stations-radio.html",
-   "s": "les six stations de radio rockstar presente flash fm, cocoteo fm, back country radio, afrobank fm, the chamber 106.6 et dirty south classics, leurs animateurs, des podcasts a la demande, et une radio qu’on ecoute aussi a pied. annonce trailer actualite moment",
+   "s": "les six stations de radio rockstar presente flash fm, cocoteo fm, back country radio, afrobank fm, the chamber 106.6 et dirty south classics, leurs animateurs, des podcasts a la demande, et une radio qu’on ecoute aussi a pied. il annonce la plus large selection de radios et de podcasts de la serie. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Xbox : pas de diffusion en nuage vers le PC",
+   "k": "Grand moment",
+   "u": "/moments/xbox-nuage.html",
+   "s": "xbox : pas de diffusion en nuage vers le pc apres un article de the verge, matthew ball, directeur de la strategie de xbox, ecrit que gta vi sort sur xbox le 19 novembre et qu’il ne sera diffuse en nuage ni en exclusivite, ni vers le pc. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "L’entretien complet de Rob Nelson à IGN",
+   "k": "Grand moment",
+   "u": "/moments/entretien-ign.html",
+   "s": "l’entretien complet de rob nelson a ign ign publie un long entretien avec rob nelson, de rockstar north : un mode « focus » qui signale les policiers proches, l’ecran « busted » a chaque arrestation, un scanner de vehicules dans le telephone, des braquages possibles dans presque tous les commerces, et un jeu pense pour etre rejoue. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Le magazine LOVE",
+   "k": "Grand moment",
+   "u": "/moments/magazine-love.html",
+   "s": "le magazine love le numero 27 de love publie une nouvelle illustration de couverture signee rockstar, quatre nouvelles images de jason et lucia et des entretiens avec l’equipe : le reve americain modeste du couple, une satire qui vise les travers durables plutot que les modes du moment. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Les classifications par âge",
+   "k": "Grand moment",
+   "u": "/moments/classifications.html",
+   "s": "les classifications par age aux etats-unis, le playstation store et le microsoft store affichent la classification esrb mature 17+. en france, les deux boutiques affichent pegi 18 ; playstation affiche r18+ en australie et cero z au japon. annonce trailer actualite moment",
    "w": 0
   },
   {
    "l": "Le dossier de Game Informer",
    "k": "Grand moment",
    "u": "/moments/game-informer.html",
-   "s": "le dossier de game informer game informer revele sa couverture consacree a gta vi, puis, le 29 septembre, plus de 170 especes animales, selon michael kane, de rockstar. annonce trailer actualite moment",
+   "s": "le dossier de game informer game informer consacre sa couverture a gta vi. ses articles, faits avec l’equipe de rockstar : plus de 170 especes animales, une meteo qui change d’un endroit a l’autre, des tempetes tropicales et des ouragans, et une appli de vtc, ryde me, pour se deplacer. annonce trailer actualite moment",
    "w": 0
   },
   {
    "l": "Le coffret collector « The Goodtime State »",
    "k": "Grand moment",
    "u": "/moments/coffret-collector.html",
-   "s": "le coffret collector « the goodtime state » un coffret en edition limitee, sans le jeu : onze objets inspires de l’emission macca the gator, de la figurine aux lunettes oakley, a precommander jusqu’a epuisement des stocks pour une arrivee le 19 novembre. annonce trailer actualite moment",
+   "s": "le coffret collector « the goodtime state » un coffret en edition limitee, sans le jeu : onze objets inspires de l’emission macca the gator, de la figurine aux lunettes oakley, a precommander jusqu’a epuisement des stocks, expedie a partir du 19 novembre. annonce trailer actualite moment",
    "w": 0
   },
   {
@@ -468,6 +517,13 @@
    "k": "Grand moment",
    "u": "/moments/album.html",
    "s": "l’album officiel grand theft auto vi: the album : 34 titres originaux avec atlantic records, qui sortent avec le jeu ; six sont disponibles le jour de l’annonce. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "L’assemblée des actionnaires de Take-Two",
+   "k": "Grand moment",
+   "u": "/moments/assemblee-take-two.html",
+   "s": "l’assemblee des actionnaires de take-two strauss zelnick, patron de take-two, y repete que gta vi sort en solo sur deux grandes plateformes, et que gta online reste soutenu apres la sortie. annonce trailer actualite moment",
    "w": 0
   },
   {
@@ -488,7 +544,7 @@
    "l": "An Extended Look",
    "k": "Grand moment",
    "u": "/moments/extended-look.html",
-   "s": "an extended look une presentation d’environ 26 minutes, d’abord sur netflix puis sur youtube, capturee sur ps5 : missions, vol de voitures, braquages, police et vie quotidienne de jason et lucia. rockstar ajoute ensuite de nouvelles captures a son site. annonce trailer actualite moment",
+   "s": "an extended look une presentation de 26 minutes 48, d’abord sur netflix puis sur youtube, capturee entierement en jeu sur ps5 : missions, vol de voitures, braquages, police et vie quotidienne de jason et lucia. rockstar ajoute ensuite de nouvelles captures a son site. annonce trailer actualite moment",
    "w": 0
   },
   {
@@ -510,6 +566,13 @@
    "k": "Grand moment",
    "u": "/moments/date-extended-look.html",
    "s": "la date d’an extended look rockstar annonce an extended look : en avant-premiere sur netflix le jeudi 27 aout a 15 h, heure de new york (21 h en france), puis sur youtube et sur le site du jeu a 21 h, heure de new york. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Les résultats de Take-Two",
+   "k": "Grand moment",
+   "u": "/moments/resultats-take-two.html",
+   "s": "les resultats de take-two take-two confirme la sortie du 19 novembre 2026 et maintient sa prevision annuelle : de 8,0 a 8,2 milliards de dollars de reservations nettes. annonce trailer actualite moment",
    "w": 0
   },
   {
@@ -541,10 +604,31 @@
    "w": 0
   },
   {
+   "l": "Le premier report : le 26 mai 2026",
+   "k": "Grand moment",
+   "u": "/moments/premier-report.html",
+   "s": "le premier report : le 26 mai 2026 rockstar annonce la sortie pour le 26 mai 2026, plus tard que prevu, et s’en excuse aupres des joueurs. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
    "l": "Le Trailer 1",
    "k": "Grand moment",
    "u": "/moments/trailer-1.html",
    "s": "le trailer 1 la premiere video presente lucia, l’etat de leonida et vice city, sur « love is a long road » de tom petty. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Le premier trailer annoncé",
+   "k": "Grand moment",
+   "u": "/moments/annonce-trailer-1.html",
+   "s": "le premier trailer annonce sam houser, cofondateur de rockstar, annonce la premiere bande-annonce du prochain grand theft auto pour debut decembre. le 1er decembre, rockstar la fixe au mardi 5 decembre ; elle sort finalement le 4. annonce trailer actualite moment",
+   "w": 0
+  },
+  {
+   "l": "Le développement confirmé",
+   "k": "Grand moment",
+   "u": "/moments/developpement-confirme.html",
+   "s": "le developpement confirme dans un message a la communaute, rockstar confirme que le developpement du prochain grand theft auto est bien avance. annonce trailer actualite moment",
    "w": 0
   },
   {
@@ -1119,6 +1203,36 @@
    "url": "/moments/bande-annonce-lancement.html"
   },
   {
+   "key": "moment:campagne-lancement",
+   "id": "campagne-lancement",
+   "kind": "moment",
+   "name": "La campagne de lancement, de Miami à Paris",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; vu dans un média officiel.",
+   "url": "/moments/campagne-lancement.html"
+  },
+  {
+   "key": "moment:enquete-bloomberg",
+   "id": "enquete-bloomberg",
+   "kind": "moment",
+   "name": "L’enquête de Bloomberg sur la fabrication du jeu",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; vu dans un média officiel.",
+   "url": "/moments/enquete-bloomberg.html"
+  },
+  {
+   "key": "moment:titres-album",
+   "id": "titres-album",
+   "kind": "moment",
+   "name": "Deux nouveaux titres de l’album",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/titres-album.html"
+  },
+  {
    "key": "moment:collection-boutique",
    "id": "collection-boutique",
    "kind": "moment",
@@ -1139,13 +1253,53 @@
    "url": "/moments/stations-radio.html"
   },
   {
+   "key": "moment:xbox-nuage",
+   "id": "xbox-nuage",
+   "kind": "moment",
+   "name": "Xbox : pas de diffusion en nuage vers le PC",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; vu dans un média officiel.",
+   "url": "/moments/xbox-nuage.html"
+  },
+  {
+   "key": "moment:entretien-ign",
+   "id": "entretien-ign",
+   "kind": "moment",
+   "name": "L’entretien complet de Rob Nelson à IGN",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; vu dans un média officiel.",
+   "url": "/moments/entretien-ign.html"
+  },
+  {
+   "key": "moment:magazine-love",
+   "id": "magazine-love",
+   "kind": "moment",
+   "name": "Le magazine LOVE",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; vu dans un média officiel.",
+   "url": "/moments/magazine-love.html"
+  },
+  {
+   "key": "moment:classifications",
+   "id": "classifications",
+   "kind": "moment",
+   "name": "Les classifications par âge",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/classifications.html"
+  },
+  {
    "key": "moment:game-informer",
    "id": "game-informer",
    "kind": "moment",
    "name": "Le dossier de Game Informer",
    "aliases": [],
    "category": "Grand moment",
-   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "proof": "Annonce datée de la frise des Actualités ; vu dans un média officiel.",
    "url": "/moments/game-informer.html"
   },
   {
@@ -1169,6 +1323,16 @@
    "url": "/moments/album.html"
   },
   {
+   "key": "moment:assemblee-take-two",
+   "id": "assemblee-take-two",
+   "kind": "moment",
+   "name": "L’assemblée des actionnaires de Take-Two",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; vu dans un média officiel.",
+   "url": "/moments/assemblee-take-two.html"
+  },
+  {
    "key": "moment:manettes-dualsense",
    "id": "manettes-dualsense",
    "kind": "moment",
@@ -1185,7 +1349,7 @@
    "name": "L’entretien de Rob Nelson à Famitsu",
    "aliases": [],
    "category": "Grand moment",
-   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "proof": "Annonce datée de la frise des Actualités ; vu dans un média officiel.",
    "url": "/moments/entretien-famitsu.html"
   },
   {
@@ -1205,7 +1369,7 @@
    "name": "Les aperçus de la presse",
    "aliases": [],
    "category": "Grand moment",
-   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "proof": "Annonce datée de la frise des Actualités ; vu dans un média officiel.",
    "url": "/moments/apercus-presse.html"
   },
   {
@@ -1229,6 +1393,16 @@
    "url": "/moments/date-extended-look.html"
   },
   {
+   "key": "moment:resultats-take-two",
+   "id": "resultats-take-two",
+   "kind": "moment",
+   "name": "Les résultats de Take-Two",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/resultats-take-two.html"
+  },
+  {
    "key": "moment:precommandes-date",
    "id": "precommandes-date",
    "kind": "moment",
@@ -1247,6 +1421,36 @@
    "category": "Grand moment",
    "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
    "url": "/moments/date-sortie.html"
+  },
+  {
+   "key": "moment:premier-report",
+   "id": "premier-report",
+   "kind": "moment",
+   "name": "Le premier report : le 26 mai 2026",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/premier-report.html"
+  },
+  {
+   "key": "moment:annonce-trailer-1",
+   "id": "annonce-trailer-1",
+   "kind": "moment",
+   "name": "Le premier trailer annoncé",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/annonce-trailer-1.html"
+  },
+  {
+   "key": "moment:developpement-confirme",
+   "id": "developpement-confirme",
+   "kind": "moment",
+   "name": "Le développement confirmé",
+   "aliases": [],
+   "category": "Grand moment",
+   "proof": "Annonce datée de la frise des Actualités ; nommé ou décrit par Rockstar.",
+   "url": "/moments/developpement-confirme.html"
   },
   {
    "key": "moment:site",

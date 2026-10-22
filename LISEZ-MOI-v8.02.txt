@@ -1,0 +1,25 @@
+LEONIDAKIT v8.02 : calculateur, lot 1 (les ponts de données et deux conditions de lancement)
+
+À appliquer sur la v8.01 (commit 21b210d4, main) : décompresse les parties de l’archive à la racine du dépôt, dans n’importe
+quel ordre, puis pousse depuis GitHub Desktop. Aucun fichier à supprimer. Rien à faire dans Vercel. Rien n’a été poussé.
+
+CE QUI CHANGE POUR LE JOUEUR
+  Aujourd’hui, rien à l’écran : sans mission chiffrée publiée par Rockstar, chaque résultat reste celui de la v8.01, calculs
+  et plans enregistrés compris. Le jour où les missions seront publiées, le business plan saura qu’une mission demande d’avoir
+  une somme en poche (sans la dépenser) ou un rang, et dira ce qui manque (« Il te faut encore 12 000 $ avant de pouvoir lancer
+  cette mission… ») ; les missions de l’histoire passeront dans l’ordre ; une mission faite une seule fois ira dans le business
+  plan, pas dans les huit calculs ; reprendre une mission du site copiera aussi ce qu’elle demande. Le Tuto le dit en une
+  phrase (chapitre « Mon business plan »).
+
+POURQUOI PRESQUE TOUTES LES PAGES SONT DANS L’ARCHIVE
+  Le moteur du calculateur a changé ; la version des fichiers de Léo suit le moteur, et common.js porte cette version : chaque
+  page change donc d’une seule empreinte (« common.js?v=… »), comme en v8.00 et v8.01. Aucun autre contenu de ces pages ne
+  change.
+
+VÉRIFIÉ (détail : outils/CHANGEMENTS-v8.02.txt § 4 ; grille : outils/MATRICE-v8.02.md)
+  0 lien cassé sur 26 641 pages ; 0 texte sans traduction dans les cinq langues ; 206 résultats de la v8.01 identiques ;
+  captures du calculateur avant / après identiques au pixel près (54 vues : téléphone et ordinateur, 9 outils, 3 modes) ;
+  cadre de l’interface identique dans les six langues ; 94 fichiers de tests, 1 242 tests réussis, 0 échec ; Léo 512 sur 512.
+
+ENSUITE
+  Le lot 2 (les réglages en plus, tous désactivés par défaut) suit dans sa propre archive, à appliquer après celle-ci.

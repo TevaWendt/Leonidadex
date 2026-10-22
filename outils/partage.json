@@ -159,10 +159,10 @@
   },
   "vehicules-rares.html": {
    "fr": {
-    "title": "Véhicules rares et exclusifs de GTA 6 : éditions et modèles uniques",
+    "title": "Véhicules rares et exclusifs de GTA 6 : éditions, modèles uniques",
     "img": "/img/partage/fr/vehicules-rares.jpg",
     "media": "classic-car-collection-01",
-    "key": "d3e7fc969429"
+    "key": "d69b17b53dc6"
    },
    "en": {
     "title": "Rare and exclusive GTA 6 vehicles: editions and one-off models",
@@ -1181,6 +1181,120 @@
     "img": "/img/partage/pt/devine-le-lieu.jpg",
     "media": "vice-city-09",
     "key": "e56ab759f01b"
+   }
+  },
+  "jeux.html": {
+   "fr": {
+    "title": "Jeux GTA 6 : trois jeux du jour, tes points et tes badges",
+    "img": "/img/partage/fr/jeux.jpg",
+    "media": "cover-art-officielle",
+    "key": "9b3987b3f5da"
+   },
+   "en": {
+    "title": "GTA 6 games: three daily games, your points and your badges",
+    "img": "/img/partage/en/jeux.jpg",
+    "media": "cover-art-officielle",
+    "key": "a133e85dd309"
+   },
+   "es": {
+    "title": "Juegos de GTA 6: tres juegos diarios, tus puntos y tus insignias",
+    "img": "/img/partage/es/jeux.jpg",
+    "media": "cover-art-officielle",
+    "key": "1b87cdd6a43f"
+   },
+   "it": {
+    "title": "Giochi su GTA 6: tre giochi del giorno, i tuoi punti e i tuoi badge",
+    "img": "/img/partage/it/jeux.jpg",
+    "media": "cover-art-officielle",
+    "key": "7bc2a9ec8e0e"
+   },
+   "de": {
+    "title": "GTA-6-Spiele: drei Tagesspiele, deine Punkte und deine Abzeichen",
+    "img": "/img/partage/de/jeux.jpg",
+    "media": "cover-art-officielle",
+    "key": "52915fd7c1a1"
+   },
+   "pt": {
+    "title": "Jogos de GTA 6: três jogos diários, seus pontos e suas medalhas",
+    "img": "/img/partage/pt/jeux.jpg",
+    "media": "cover-art-officielle",
+    "key": "9f4dd3f812d9"
+   }
+  },
+  "frise-des-annonces.html": {
+   "fr": {
+    "title": "La frise des annonces : remets l’histoire de GTA 6 dans l’ordre",
+    "img": "/img/partage/fr/frise-des-annonces.jpg",
+    "media": "annonce-extended-look",
+    "key": "71a3238090f5"
+   },
+   "en": {
+    "title": "The Announcement Timeline: put the story of GTA 6 back in order",
+    "img": "/img/partage/en/frise-des-annonces.jpg",
+    "media": "annonce-extended-look",
+    "key": "b824f61178aa"
+   },
+   "es": {
+    "title": "La cronología de los anuncios: ordena la historia de GTA 6",
+    "img": "/img/partage/es/frise-des-annonces.jpg",
+    "media": "annonce-extended-look",
+    "key": "6c45da7d89bb"
+   },
+   "it": {
+    "title": "La linea del tempo degli annunci: rimetti in ordine la storia di GTA 6",
+    "img": "/img/partage/it/frise-des-annonces.jpg",
+    "media": "annonce-extended-look",
+    "key": "3357a225f3b1"
+   },
+   "de": {
+    "title": "Die Zeitleiste der Ankündigungen: Bring die Geschichte von GTA 6 in die richtige Reihenfolge",
+    "img": "/img/partage/de/frise-des-annonces.jpg",
+    "media": "annonce-extended-look",
+    "key": "e2d01bce5e39"
+   },
+   "pt": {
+    "title": "A linha do tempo dos anúncios: coloque a história de GTA 6 em ordem",
+    "img": "/img/partage/pt/frise-des-annonces.jpg",
+    "media": "annonce-extended-look",
+    "key": "9f97e6180a38"
+   }
+  },
+  "devine-la-station.html": {
+   "fr": {
+    "title": "Devine la station : le jeu des radios de GTA 6",
+    "img": "/img/partage/fr/devine-la-station.jpg",
+    "media": "dre-quan-priest-04",
+    "key": "f2748397b242"
+   },
+   "en": {
+    "title": "Guess the Station: the GTA 6 radio game",
+    "img": "/img/partage/en/devine-la-station.jpg",
+    "media": "dre-quan-priest-04",
+    "key": "d4f7f58a11ca"
+   },
+   "es": {
+    "title": "Adivina la emisora: el juego de las radios de GTA 6",
+    "img": "/img/partage/es/devine-la-station.jpg",
+    "media": "dre-quan-priest-04",
+    "key": "34f996c3e48d"
+   },
+   "it": {
+    "title": "Indovina la stazione: il gioco delle radio di GTA 6",
+    "img": "/img/partage/it/devine-la-station.jpg",
+    "media": "dre-quan-priest-04",
+    "key": "7b9acf60b692"
+   },
+   "de": {
+    "title": "Errate den Sender: das Radiospiel zu GTA 6",
+    "img": "/img/partage/de/devine-la-station.jpg",
+    "media": "dre-quan-priest-04",
+    "key": "cf561787ca46"
+   },
+   "pt": {
+    "title": "Adivinhe a estação: o jogo das rádios de GTA 6",
+    "img": "/img/partage/pt/devine-la-station.jpg",
+    "media": "dre-quan-priest-04",
+    "key": "b99ae48f7879"
    }
   },
   "prechargement.html": {

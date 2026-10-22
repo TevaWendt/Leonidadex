@@ -74,7 +74,8 @@ test('presse : page en six sections, chiffres posés par la synchronisation, kit
      et écrits au format de la langue (« 2 547 », « 2,547 », « 2.547 ») */
   const digits = b => b ? +b.textContent.replace(/\D/g, '') : null;
   const stat = (x, k) => digits(x.querySelector('.fig-n[data-stat="' + k + '"]')), statAb = k => +ab.querySelector('.fig-n[data-stat="' + k + '"]').dataset.count;
-  for (const k of ['pages', 'vehicules', 'armes', 'lieux', 'visuels']) { assert.ok(stat(d, k) > 0, k); assert.equal(stat(d, k), statAb(k), k); }
+  /* v8.04 (chiffres du site) : « pagestotal », pages de toutes les langues publiées */
+  for (const k of ['pagestotal', 'vehicules', 'armes', 'lieux', 'visuels']) { assert.ok(stat(d, k) > 0, k); assert.equal(stat(d, k), statAb(k), k); }
   assert.equal(stat(d, 'langues'), LANGS.length + 1);
   for (const b of d.querySelectorAll('.fig-n')) { assert.ok(!b.hasAttribute('data-count'), 'chiffre fixe : ' + b.dataset.stat); assert.equal(b.textContent, new Intl.NumberFormat('fr-FR').format(digits(b)).replace(/\u00a0/g, '\u202f')); }
   for (const l of LANGS) for (const b of doc(l.dossier + '/presse.html').querySelectorAll('.fig-n')) assert.equal(digits(b), stat(d, b.dataset.stat), l.code + ' : ' + b.dataset.stat);

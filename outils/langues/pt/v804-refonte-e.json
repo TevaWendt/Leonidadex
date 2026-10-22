@@ -1,0 +1,20 @@
+{
+ "_note": "v8.04 (chiffres du site et géolocalisation, chantier E) : textes nouveaux ou changés par le relevé des chiffres que le site affiche sur lui-même.",
+ "Dont 47 zones (régions, villes, quartiers, comtés) et 3 244 autres lieux ; chacun a sa page.": "Entre eles, 47 zonas (regiões, cidades, bairros, condados) e outros 3.244 lugares; cada um tem sua página.",
+ "Les 9 véhicules des éditions nommés par Rockstar (édition Ultimate et Vintage Vice City Pack), et les modèles repérés une seule fois dans le kit média.": "Os 9 veículos das edições nomeados pela Rockstar (edição Ultimate e Pacote Vintage Vice City), e os modelos vistos uma única vez no kit de imprensa.",
+ "Véhicules nommés par Rockstar sur la page produit de l’édition Ultimate. Avec celui du Vintage Vice City Pack, ce sont les 9 véhicules des éditions. Rockstar en a nommé 10 en tout à ce jour, Speedophile Seashark compris : son nom est écrit sur la coque dans le second trailer.": "Veículos nomeados pela Rockstar na página do produto da edição Ultimate. Junto com o do Pacote Vintage Vice City, são os 9 veículos das edições. A Rockstar nomeou 10 no total até agora, incluindo o Speedophile Seashark: o nome dele está escrito no casco no segundo trailer.",
+ "Les armes (27 armes), les équipements (16 équipements) et les types de munitions (5 types de munitions à cocher). Le filtre « Famille » n’affiche que l’une d’elles.": "As armas (27 armas), os equipamentos (16 equipamentos) e os tipos de munição (5 tipos de munição para marcar). O filtro “Família” mostra só uma delas.",
+ "Les tenues et accessoires (30 tenues et accessoires), les coiffures (55 coiffures) et les tatouages (23 tatouages à cocher). Chacune garde son mot : une tenue portée, une coiffure essayée, un tatouage fait.": "Os trajes e acessórios (30 trajes e acessórios), os cortes de cabelo (55 cortes de cabelo) e as tatuagens (23 tatuagens para marcar). Cada família tem seu verbo: um traje usado, um corte de cabelo experimentado, uma tatuagem feita.",
+ "Les modifs de véhicule (57 modifs de véhicule à cocher) et les modifs d’arme (39 modifs d’arme à cocher). Le filtre « Famille » n’affiche que l’une des deux.": "As modificações de veículo (57 modificações de veículo para marcar) e as modificações de arma (39 modificações de arma para marcar). O filtro “Família” mostra só uma das duas.",
+ "<1>26574</1><2>pages en ligne, toutes langues comprises</2>": "<1>26.574</1><2>páginas no ar, todos os idiomas incluídos</2>",
+ "<1>26 574</1><2>pages, toutes langues comprises</2>": "<1>26.574</1><2>páginas, todos os idiomas incluídos</2>",
+ "Watson Bay accueille le garage Paradise de l’Édition Ultimate ; Shore Court est « à deux pas d’Ocean Beach » selon le texte du Pack Vintage. Faute d’adresse de Rockstar, seul un « Paradise Garage » repéré par la communauté est placé, à Watson Bay.": "Em Watson Bay fica a garagem Paradise da edição Ultimate; Shore Court fica “a dois passos de Ocean Beach”, segundo o texto do Pacote Vintage. Sem endereço dado pela Rockstar, só está marcada uma “Paradise Garage” identificada pela comunidade, em Watson Bay.",
+ "Paradise Garage placé, Shore Court non : Rockstar donne le quartier, pas l’adresse.": "Paradise Garage marcada, Shore Court não: a Rockstar dá o bairro, não o endereço.",
+ "re:^Regroupe 1 lieu repéré\\.$": "Agrupa 1 lugar identificado.",
+ "re:^Regroupe (\\d+) lieux repérés\\.$": "Agrupa {1} lugares identificados.",
+ "re:^Équivalent réel \\(incertain\\) : (.+)\\.$": "Equivalente real (incerto): {t1}.",
+ "_motifs": {
+  "Regroupe {1} lieux repérés.": "Agrupa {1} lugares identificados.",
+  "Équivalent réel (incertain) : {1}.": "Equivalente real (incerto): {1}."
+ }
+}

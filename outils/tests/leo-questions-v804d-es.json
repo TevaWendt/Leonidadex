@@ -1,0 +1,85 @@
+{
+ "_note": "v8.04 (refonte D) : huit questions en espagnol sur les faits vérifiés le 21 octobre 2026 (classification PEGI et ESRB, pas de jeu en nuage sur PC, images par seconde, singles de l’album, compositeur, nombre de lieux de la carte, chapitres du Tuto). Rejoué par node outils/tests/leo-eval.cjs --lang es --questions=outils/tests/leo-questions-v804d-es.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "gta 6 es para mayores de 18",
+   "expect": {
+    "topic": "pegi"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "clasificación esrb de gta 6",
+   "expect": {
+    "topic": "pegi"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "gta 6 en xbox cloud gaming en pc",
+   "expect": {
+    "topic": "pc"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "a cuántos fps va gta 6",
+   "expect": {
+    "topic": "ps5pro"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "canción de cardi b gta 6",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-4"
+     }
+    ]
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "quién compone la música de gta 6",
+   "expect": {
+    "topic": "bande-annonce-lancement"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "cuántos lugares hay en el mapa de gta 6",
+   "expect": {
+    "topic": "carte-lieux-nombre"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "cuántos capítulos tiene el tutorial",
+   "expect": {
+    "topic": "tuto-quoi"
+   },
+   "tags": [
+    "v804d"
+   ]
+  }
+ ]
+}

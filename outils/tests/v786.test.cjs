@@ -84,13 +84,13 @@ test('verification.html : confirmé, pas encore annoncé, ce que les fiches atte
   assert.equal(d.querySelectorAll('h1').length, 1);
   /* v7.92 : tableau de bord en tête ; les confirmations sont des cartes illustrées (.vf-card), chacune avec sa source */
   assert.deepEqual([...d.querySelectorAll('.ed-zone section.ed')].map(s => s.id), ['tableau', 'confirme', 'pas-encore', 'a-venir', 'modeles', 'jamais', 'signaler']);
-  const items = d.querySelectorAll('#confirme .vf-card'); assert.equal(items.length, E.confirme.items.length);
+  const items = d.querySelectorAll('#confirme .vfx-card'); /* v8.04 (refonte B) : cartes tamponnées */ assert.equal(items.length, E.confirme.items.length);
   /* v7.92.1 : le prix du jeu et les manettes ont pour source officielle PlayStation (Sony), pas Rockstar */
-  for (const it of items) { const src = [...it.querySelectorAll('a[target="_blank"]')].map(a => a.href); assert.ok(src.length === 1 && /^https:\/\/(?:(?:www|support)\.rockstargames\.com|www\.playstation\.com|blog\.playstation\.com)\//.test(src[0]), src.join()); }
+  for (const it of items) { const src = [...it.querySelectorAll('a[target="_blank"]')].map(a => a.href); assert.ok(src.length >= 1 && src.length <= 2 && /^https:\/\/(?:(?:www|support)\.rockstargames\.com|www\.playstation\.com|blog\.playstation\.com)\//.test(src[0]) && src.slice(1).every(u => /^https:\/\/www\.esrb\.org\//.test(u)), src.join()); /* v8.04 : l’âge conseillé cite aussi la fiche de l’ESRB, organisme officiel de classification */ }
   const n = { 'veh-officiel': data.LK_VEHICULES.filter(v => v.st === 'officiel').length, 'arm-officiel': data.LK_ARMES.filter(a => a.st === 'officiel').length };
   const figs = [...d.querySelectorAll('#confirme .vt-fig b')].map(b => Number(b.textContent));
   assert.equal(figs[0], n['veh-officiel']); assert.equal(figs[2], n['arm-officiel']);
-  assert.ok(d.querySelector('#a-venir .vf-notes--2') && d.querySelectorAll('#a-venir .vf-notes--2 .vf-note--cost').length >= 5, 'coûts d’usage, poste par poste'); /* v7.94 : liste de définitions à deux colonnes */
+  assert.ok(d.querySelectorAll('#a-venir .vfx-pump-r').length >= 5, 'coûts d’usage, poste par poste'); /* v8.04 (refonte B) : panneau de prix à volets, une ligne par poste */ /* v7.94 : liste de définitions à deux colonnes */
   assert.ok(inSitemap('verification.html'));
   for (const f of ['index.html', 'vehicules.html', 'armes/carabine.html']) assert.ok(doc(f).querySelector('footer a[href$="verification.html"]'), f + ' : pied de page');
   for (const l of LANGS) { assert.ok(exists(l + '/verification.html'), l); assert.equal(doc(l + '/verification.html').documentElement.lang.slice(0, 2), l); }

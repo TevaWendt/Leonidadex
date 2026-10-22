@@ -46,7 +46,7 @@ const regions = JSON.parse(fs.readFileSync(path.join(root, 'outils/editorial.jso
 const ast = A.reduce((m, a) => (m[a.st] = (m[a.st] || 0) + 1, m), {});
 const EXPECT = {
   'vehicules.html': [V.length, new Set(V.map(v => v.cat)).size, new Set(V.map(v => v.marque).filter(x => x && x !== 'Marque inconnue')).size, V.filter(v => v.insp).length],
-  'carte.html': [allPoints.length, allPoints.filter(p => p.s === 'officiel').length, regions, Object.keys(CATS).length],
+  'carte.html': [allPoints.length, allPoints.filter(p => p.s === 'officiel').length, regions, new Set(allPoints.map(p => p.c)).size], /* v8.04 (refonte E) : catégories qui ont au moins un point, comme sync-site */
   'armes.html': [A.length, new Set(A.map(a => a.cat)).size, ast.officiel, 2],
   'index.html': [regions, 2, V.length]
 };

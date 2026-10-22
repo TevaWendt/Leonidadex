@@ -7,13 +7,19 @@
    (outils/sections.cjs), sources datées en bas.
    Pont avec le calculateur : une mission dont le gain (recompenses.argent) ET la durée (duree) sont publiés, au schéma des
    valeurs publiées (outils/donnees-publiees.cjs), devient une activité de calculateurs-activites.js (« mission-<id> ») ; tant
-   qu’aucune mission n’a ces deux valeurs, le fichier n’est pas touché. Le moteur du calculateur ne change pas.
+   qu’aucune mission n’a ces deux valeurs, le fichier n’est pas touché. v8.02 (lot 1) : le pont transmet aussi tout ce que le
+   business plan sait utiliser : frais pour la lancer (cout), préparation, attente avant de la refaire, part du butin,
+   achat de départ (investissement), joueurs, missions et achats demandés avant (deblocage.missions, deblocage.achats), argent à
+   avoir en poche (deblocage.argentMinimum), rang demandé (deblocage.rang), place dans l’histoire (ordre, chapitre), texte du
+   déblocage et « une seule fois » (repetable, sinon le type de la mission). v8.03 (lot 2) : et, s’il est publié, le personnage avec
+   qui se fait la mission (personnageJoue → characters : « jason », « lucia » ou les deux), lu quand le joueur sépare l’argent de
+   Jason et de Lucia dans le calculateur.
    leo() rend à outils/gen-leo.cjs les fiches (missions documentées) et les questions de la section (morceau leo/missions.json).
    Usage : node outils/gen-missions.cjs   (appelé par outils/regenerer.cjs, juste après lore-gen.js) */
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const ROOT = path.resolve(__dirname, '..');
 const S = require('./sections.cjs');
-const LKX = require('./lk-sections.cjs'); /* fiches plein écran, puces, mini-carte, entrées animées (lk-sections.css, lk-sections.js) */
+const LKX = require('./lk-sections.cjs'), EL = require('./en-lien.cjs'); /* fiches plein écran, puces, mini-carte, entrées animées (lk-sections.css, lk-sections.js) */
 const DP = require('./donnees-publiees.cjs');
 const esc = S.esc;
 const SITE = 'https://www.leonidakit.com', HUB = 'missions';
@@ -27,7 +33,7 @@ function load(root = ROOT) {
 }
 
 /* ---------- valeurs publiées (schéma de outils/donnees-publiees.cjs) ---------- */
-const VAL_ST = ['official', 'officiel', 'verified', 'estimated', 'unverified', 'unknown'];
+const VAL_ST = ['official', 'officiel', 'verified', 'media', 'presse', 'estimated', 'community', 'comm', 'unverified', 'unknown']; /* v8.04 (jour J) : media (presse) et community (comm), voir outils/donnees-publiees.cjs */
 function checkValue(v, label, unit) {
   const err = [];
   if (v === null || v === undefined) return err;
@@ -35,11 +41,18 @@ function checkValue(v, label, unit) {
   if (!VAL_ST.includes(v.status)) err.push(label + ' : status attendu parmi ' + VAL_ST.join(', '));
   if (v.value !== null && (typeof v.value !== 'number' || !Number.isFinite(v.value) || v.value < 0)) err.push(label + ' : value doit être un nombre positif ou null');
   if (v.value === null && v.status !== 'unknown') err.push(label + ' : une valeur inconnue a le statut « unknown »');
-  if (['official', 'officiel', 'verified'].includes(v.status) && (!v.source || !/^\d{4}-\d\d-\d\d$/.test(v.verifiedAt || ''))) err.push(label + ' : une valeur « ' + v.status + ' » exige source et verifiedAt (AAAA-MM-JJ)');
+  if (DP.AVEC_SOURCE.includes(DP.statutCanon(v.status)) && (!v.source || !/^\d{4}-\d\d-\d\d$/.test(v.verifiedAt || ''))) err.push(label + ' : une valeur « ' + v.status + ' » exige source et verifiedAt (AAAA-MM-JJ)');
   if (unit && v.unit !== unit) err.push(label + ' : unité attendue « ' + unit + ' »');
+  err.push(...DP.verifierExtras(v, label, v.value)); /* v8.04 (jour J) : fourchette, note, sources ; « media » demande deux sources */
   return err;
 }
 const known = v => v && typeof v.value === 'number' && v.status !== 'unknown';
+/* v8.02 (lot 1) : valeurs chiffrées facultatives d’une mission (clé, unité, libellé), et leur nom dans le calculateur */
+const VALEURS = [['cout', '$', 'frais pour la lancer'], ['preparation', 'min', 'préparation'], ['attente', 'min', 'attente avant de la refaire'], ['part', '%', 'part du butin'], ['investissement', '$', 'achat de départ']];
+const CALC_KEY = { cout: 'cost', preparation: 'prep', attente: 'cooldown', part: 'share', investissement: 'investment' };
+/* types de mission faits une seule fois quand repetable n’est pas publié (une étape de l’histoire ne se refait pas pour de l’argent) */
+const UNE_FOIS = ['histoire', 'secondaire', 'braquage', 'rencontre'];
+function achatsConnus(root, ED) { const w = vehiclesAndWeapons(root); return new Set([...w.v, ...w.a, ...['businesses', 'residences', 'hideouts'].flatMap(g => ((ED || {})[g] || []).map(x => x.id))]); }
 
 /* ---------- contrôles : une donnée mal formée arrête la génération ---------- */
 function checkMission(m, ctx, label = 'mission') {
@@ -55,9 +68,22 @@ function checkMission(m, ctx, label = 'mission') {
   for (const id of m.lieux || []) if (!(ED.regions || []).some(x => x.id === id)) err.push(L + ' : région inconnue ' + id);
   for (const id of m.gangs || []) if (!(ED.factions || []).some(x => x.id === id)) err.push(L + ' : gang inconnu ' + id);
   for (const id of m.media || []) if (!ctx.MED[id]) err.push(L + ' : visuel inconnu ' + id);
-  for (const b of [m.chapitre, m.deblocage, m.manquable, m.recompenses, ...(m.medailles || [])].filter(Boolean)) { if (b.statut && !ST.includes(b.statut)) err.push(L + ' : statut inconnu dans un bloc'); (b.sources || []).forEach(src); }
+  for (const b of [m.chapitre, m.deblocage, m.manquable, m.recompenses, m.repetable, m.personnageJoue, ...(m.medailles || [])].filter(Boolean)) { if (b.statut && !ST.includes(b.statut)) err.push(L + ' : statut inconnu dans un bloc'); (b.sources || []).forEach(src); }
   (m.sources || []).forEach(src);
   err.push(...checkValue(m.recompenses && m.recompenses.argent, L + ' récompense', '$'), ...checkValue(m.duree, L + ' durée', 'min'));
+  /* v8.02 (lot 1) : champs lus par le business plan ; chacun est facultatif et suit le schéma des valeurs publiées. */
+  for (const [k, unit, what] of VALEURS) err.push(...checkValue(m[k], L + ' ' + what, unit));
+  const D = m.deblocage || {};
+  err.push(...checkValue(D.argentMinimum, L + ' argent à avoir en poche', '$'), ...checkValue(D.rang, L + ' rang demandé', 'rang'));
+  if (m.repetable && (typeof m.repetable !== 'object' || ![true, false, null].includes(m.repetable.value))) err.push(L + ' : repetable attendu { value: true | false | null, statut, sources }');
+  /* v8.03 (lot 2) : personnage avec qui se fait la mission : liste de « jason » et « lucia » (sans doublon), ou null tant que rien n’est publié. */
+  if (m.personnageJoue && (typeof m.personnageJoue !== 'object' || !(m.personnageJoue.value === null || (Array.isArray(m.personnageJoue.value) && m.personnageJoue.value.length && m.personnageJoue.value.every((v, i, a) => ['jason', 'lucia'].includes(v) && a.indexOf(v) === i))))) err.push(L + ' : personnageJoue attendu { value: ["jason"] | ["lucia"] | ["jason", "lucia"] | null, statut, sources }');
+  if (m.ordre !== null && m.ordre !== undefined && (typeof m.ordre !== 'number' || !Number.isFinite(m.ordre))) err.push(L + ' : ordre doit être un nombre (ou null)');
+  if (m.chapitre && m.chapitre.numero !== null && m.chapitre.numero !== undefined && (typeof m.chapitre.numero !== 'number' || !Number.isFinite(m.chapitre.numero))) err.push(L + ' : chapitre.numero doit être un nombre (ou null)');
+  if (m.joueurs !== null && m.joueurs !== undefined && !(Number.isInteger(m.joueurs) && m.joueurs >= 1 && m.joueurs <= 100)) err.push(L + ' : joueurs doit être un entier de 1 à 100');
+  for (const k of ['missions', 'achats']) if (D[k] !== undefined && (!Array.isArray(D[k]) || D[k].some(x => typeof x !== 'string'))) err.push(L + ' : deblocage.' + k + ' doit être une liste d’identifiants');
+  for (const id of D.missions || []) { const r = (M.missions || []).find(x => x.id === id); if (id === m.id) err.push(L + ' : une mission ne peut pas se demander elle-même'); else if (!r) err.push(L + ' : mission demandée inconnue ' + id); else if (r.repetable && r.repetable.value === true) err.push(L + ' : « ' + id + ' » se rejoue ; seule une mission faite une seule fois peut en débloquer une autre'); }
+  if (root && (D.achats || []).length) { const known2 = achatsConnus(root, ctx.ED); for (const id of D.achats) if (!known2.has(id)) err.push(L + ' : achat demandé inconnu ' + id + ' (véhicule, arme, entreprise, demeure ou planque du site)'); }
   if (m.calc && !TOOLS.includes(m.calc.tool)) err.push(L + ' : outil du calculateur inconnu');
   if (root) {
     const w = vehiclesAndWeapons(root);
@@ -84,6 +110,10 @@ function check(ctx) {
   }
   const ids = new Set();
   for (const m of M.missions) { if (ids.has(m.id)) err.push('mission en double : ' + m.id); ids.add(m.id); if (m.id === 'modele') err.push('« modele » est réservé à la page de démonstration'); err.push(...checkMission(m, ctx)); }
+  /* v8.02 (lot 1) : les missions demandées avant ne tournent jamais en rond (le business plan refuserait le plan) */
+  { const by = Object.fromEntries(M.missions.map(m => [m.id, m])), state = {};
+    const visit = (id, path) => { if (state[id] === 'ok' || !by[id]) return; if (state[id] === 'en cours') { err.push('missions demandées en boucle : ' + path.slice(path.indexOf(id)).concat(id).join(' → ')); return; } state[id] = 'en cours'; for (const r of (by[id].deblocage || {}).missions || []) visit(r, path.concat(id)); state[id] = 'ok'; };
+    M.missions.forEach(m => visit(m.id, [])); }
   err.push(...checkMission(MO.mission, { ...ctx, H: { ...H, sources: H.sources } }, 'page modèle'));
   for (const x of H.sequences.items) { if (!ST.includes(x.statut) || !x.titre || !x.texte || !x.sources.length) err.push('séquence mal formée : ' + x.titre); x.sources.forEach(s => { if (!H.sources[s]) err.push('séquence ' + x.titre + ' : source inconnue ' + s); }); if (x.media && (!MED[x.media] || !x.alt)) err.push('séquence ' + x.titre + ' : visuel ou texte alternatif'); }
   for (const x of H.histoire.mecaniques) x.sources.forEach(s => { if (!H.sources[s]) err.push('mécanique : source inconnue ' + s); });
@@ -189,9 +219,13 @@ const FOLDER = { characters: 'personnages', regions: 'lieux', factions: 'gangs' 
 const chips = (ED, group, ids, pre) => (ids || []).map(id => '<a class="missions-chip" href="' + pre + FOLDER[group] + '/' + esc(id) + '.html">' + esc(nameOf(ED, group, id)) + '</a>').join('');
 const valText = (v, unknownText) => {
   if (!known(v)) return unknownText;
-  const p = { value: v.value, unit: v.unit || '$', label: DP.STATUS_LABEL[({ officiel: 'official' })[v.status] || v.status] || 'Non confirmé' };
-  return (p.unit === '$' ? DP.fmt(p.value) + ' $' : DP.fmt(p.value) + ' ' + p.unit) + ', ' + p.label;
+  const p = { value: v.value, unit: v.unit || '$', label: DP.STATUS_LABEL[DP.statutCanon(v.status) || v.status] || 'Non confirmé' }, x = DP.extrasValeur(v, v.value);
+  /* v8.04 (jour J) : fourchette et note, seulement quand la source les donne */
+  return (p.unit === '$' ? DP.fmt(p.value) + ' $' : DP.fmt(p.value) + ' ' + p.unit) + DP.fourchette(x, p.unit) + ', ' + p.label + (x.note ? ' (' + x.note + ')' : '');
 };
+/* v8.04 (jour J) : la ou les sources d’un chiffre publié (source, puis la liste sources), sans doublon */
+const srcList = v => known(v) ? [...new Set([v.source].concat(Array.isArray(v.sources) ? v.sources : []).filter(s => typeof s === 'string' && s.trim()).map(s => s.trim()))] : [];
+const srcCell = v => { const l = srcList(v); return l.length ? '<span class="missions-src-txt">' + esc(l.join(' ; ')) + '</span>' : ''; };
 
 /* ---------- hub ---------- */
 function hubPage(ctx) {
@@ -293,6 +327,25 @@ function calcBridge(M, m, p) {
   const d = money && time ? 'Gain et durée publiés : le calculateur les propose avec leur source. Ajoute tes frais et ta part.' : 'Gain ou durée pas encore publiés. Écris ce que tu imagines : le calculateur compare la mission à tes autres activités, à l’heure de jeu.';
   return '<section class="shell" aria-labelledby="lore-calculator-title"><div class="lk-entry-card"><div><p class="lk-entry-eyebrow">LE CALCULATEUR</p><h2 id="lore-calculator-title">' + esc(c.t) + '</h2><p>' + esc(d) + '</p></div><a class="lk-entry-button" href="' + p + 'calculateurs.html?tool=' + tool + '&amp;from=missions#atelier">' + esc(c.cta) + ' <span aria-hidden="true">↗</span></a></div></section>';
 }
+/* v8.02 (lot 1) : ce que le business plan utilise, dit sur la fiche quand c’est publié : frais, préparation, attente, part, achat de
+   départ, argent à avoir en poche, rang, missions et achats demandés avant, mission qui se rejoue ou non. */
+function conditionsRows(m, p, W, ctx) {
+  const rows = [], D = m.deblocage || {}, ED = ctx.ED || {};
+  const LABEL = { cout: 'Pour la lancer', preparation: 'Préparation', attente: 'Attente avant de la refaire', part: 'Part du butin', investissement: 'Achat de départ' };
+  for (const [k] of VALEURS) if (known(m[k])) rows.push([LABEL[k], esc(valText(m[k], '')), srcCell(m[k])]);
+  if (known(D.argentMinimum)) rows.push(['Argent à avoir', esc(valText(D.argentMinimum, '') + ', en poche, sans le dépenser'), srcCell(D.argentMinimum)]);
+  if (known(D.rang)) rows.push(['Rang demandé', esc(DP.fmt(D.rang.value) + ', ' + (DP.STATUS_LABEL[DP.statutCanon(D.rang.status) || D.rang.status] || 'Non confirmé')), srcCell(D.rang)]);
+  const ms = (D.missions || []).map(id => (ctx.M && ctx.M.missions || []).find(x => x.id === id)).filter(Boolean);
+  if (ms.length) rows.push(['Après la mission', ms.map(x => '<a class="missions-chip" href="' + p + HUB + '/' + esc(x.id) + '.html">' + esc(x.nom) + '</a>').join(''), '']);
+  const name = id => W.vn[id] ? [W.vn[id], 'vehicules'] : W.an[id] ? [W.an[id], 'armes'] : (() => { for (const [g, f] of [['businesses', 'entreprises'], ['residences', 'demeures'], ['hideouts', 'planques']]) { const x = (ED[g] || []).find(y => y.id === id); if (x) return [x.name, f]; } return null; })();
+  const as = (D.achats || []).map(id => [id, name(id)]).filter(([, n]) => n);
+  if (as.length) rows.push(['Il faut avoir', as.map(([id, [n, f]]) => '<a class="missions-chip" href="' + p + f + '/' + esc(id) + '.html">' + esc(n) + '</a>').join(''), '']);
+  if (m.repetable && (m.repetable.value === true || m.repetable.value === false)) rows.push(['Se rejoue', m.repetable.value ? 'Oui' : 'Non, une seule fois', st0(m.repetable)]);
+  /* v8.03 (lot 2) : avec qui se fait la mission, seulement s’il est publié */
+  if (m.personnageJoue && Array.isArray(m.personnageJoue.value) && m.personnageJoue.value.length) rows.push(['Jouée avec', m.personnageJoue.value.length > 1 ? 'Jason et Lucia' : m.personnageJoue.value[0] === 'lucia' ? 'Lucia' : 'Jason', st0(m.personnageJoue)]);
+  return rows;
+}
+const st0 = b => b && b.statut ? S.pip(b.statut, true) + srcLinks(b.sources || []) : '';
 function fichePage(ctx, m, opts = {}) {
   const { H, M, MED, ED, SUBC, root } = ctx, p = '../', W = vehiclesAndWeapons(root || ROOT);
   const type = M.types.find(t => t.id === m.type) || { label: m.type };
@@ -304,9 +357,11 @@ function fichePage(ctx, m, opts = {}) {
     ['Personnages', chips(ED, 'characters', m.personnages, p) || 'Pas encore publiés', ''],
     ['Lieux', (chips(ED, 'regions', m.lieux, p) + (m.carte || []).map(c => '<a class="missions-chip missions-chip--carte" href="' + p + 'carte.html#lieu=' + esc(c.id) + '">' + esc(c.nom) + '</a>').join('')) || 'Pas encore publiés', ''],
     ['Déblocage', esc(m.deblocage && m.deblocage.texte || 'Pas encore publié'), st(m.deblocage)],
-    ['Récompense', esc(valText(R.argent, 'Récompense publiée à la sortie')), R.argent && known(R.argent) && R.argent.source ? '<span class="missions-src-txt">' + esc(R.argent.source) + '</span>' : ''],
-    ['Durée', esc(valText(m.duree, 'Durée publiée à la sortie')), ''],
-    ['Manquable', esc(m.manquable && m.manquable.value === true ? 'Oui' : m.manquable && m.manquable.value === false ? 'Non' : 'À confirmer'), st(m.manquable)]
+    ['Récompense', esc(valText(R.argent, 'Récompense publiée à la sortie')), srcCell(R.argent)],
+    ['Durée', esc(valText(m.duree, 'Durée publiée à la sortie')), srcCell(m.duree)],
+    ['Manquable', esc(m.manquable && m.manquable.value === true ? 'Oui' : m.manquable && m.manquable.value === false ? 'Non' : 'À confirmer'), st(m.manquable)],
+    /* v8.02 (lot 1) : lignes affichées seulement quand la donnée est publiée (aucune au 20 octobre 2026) */
+    ...conditionsRows(m, p, W, ctx)
   ];
   const fact = '<dl class="missions-bref">' + rows.map(([k, v, s]) => '<div><dt>' + k + '</dt><dd>' + v + (s ? ' <span class="missions-st">' + s + '</span>' : '') + '</dd></div>').join('') + '</dl>';
   const objectifs = (m.objectifs || []).length ? '<div class="lore-texte reveal"><h2>Objectifs</h2><ol class="missions-obj">' + m.objectifs.map(o => '<li' + (o.facultatif ? ' class="missions-obj--fac"' : '') + '>' + esc(o.texte) + (o.facultatif ? ' <span class="missions-fac">Facultatif</span>' : '') + '</li>').join('') + '</ol></div>' : '';
@@ -315,9 +370,9 @@ function fichePage(ctx, m, opts = {}) {
   const astuces = (m.astuces || []).length ? '<div class="lore-facts"><h2>Astuces</h2><ul>' + m.astuces.map(a => '<li class="rise">' + esc(a) + '</li>').join('') + '</ul></div>' : '';
   const rec = [...(R.vehicules || []).map(id => '<li><a href="' + p + 'vehicules/' + esc(id) + '.html">' + esc(W.vn[id] || id) + '</a></li>'), ...(R.armes || []).map(id => '<li><a href="' + p + 'armes/' + esc(id) + '.html">' + esc(W.an[id] || id) + '</a></li>'), ...(R.proprietes || []).map(t => '<li>' + esc(t) + '</li>'), ...(R.deblocages || []).map(t => '<li>' + esc(t) + '</li>')];
   const recompenses = rec.length ? '<div class="lore-texte reveal"><h2>Ce que la mission débloque</h2><ul class="lore-chips">' + rec.join('') + '</ul>' + (R.statut ? '<p class="missions-st">' + st(R) + '</p>' : '') + '</div>' : '';
-  const rel = (group, ids, label) => { const l = (ids || []).map(id => (ED[group] || []).find(y => y.id === id)).filter(Boolean); if (!l.length) return '';
-    return '<div class="lore-rel-group"><h3>' + label + '</h3><div class="lore-mini">' + l.map(y => { const mm = (y.media || []).map(id => MED[id]).filter(Boolean)[0]; return '<a class="lore-minicard" href="../' + FOLDER[group] + '/' + y.id + '.html">' + (mm ? '<img src="' + mm.variants[0].src + '" width="' + mm.variants[0].w + '" height="' + mm.variants[0].h + '" alt="" loading="lazy" decoding="async">' : '<i class="lore-minivide"></i>') + '<span><b>' + esc(y.name) + '</b><i>' + esc(label) + '</i></span></a>'; }).join('') + '</div></div>'; };
-  const relBlocks = rel('characters', m.personnages, 'Personnages') + rel('regions', m.lieux, 'Régions') + rel('factions', m.gangs, 'Gangs et factions');
+  /* v8.04 (lot I) : « En lien » par le moteur commun (outils/en-lien.cjs) : une grille de cartes avec vignette */
+  const ONE = { characters: 'Personnage', regions: 'Région', factions: 'Faction' };
+  const related = EL.block({ items: [['characters', m.personnages], ['regions', m.lieux], ['factions', m.gangs]].flatMap(([g, ids]) => (ids || []).map(id => (ED[g] || []).find(y => y.id === id)).filter(Boolean).map(y => EL.entity(y, { href: '../' + FOLDER[g] + '/' + y.id + '.html', kind: y.kind || ONE[g], rel: g }))) });
   /* case « mission terminée » : gardée sur l’appareil (missions.js, clé lk-missions-terminees-v1) ; sur la page de démonstration, rien n’est enregistré */
   const done = '<div class="missions-fait" data-missions-fait="' + esc(m.id) + '"' + (opts.banner ? ' data-missions-demo' : '') + ' hidden><input type="checkbox" id="missions-fait-' + esc(m.id) + '"><label for="missions-fait-' + esc(m.id) + '">J’ai terminé cette mission</label><span class="missions-fait-note">' + (opts.banner ? 'Démonstration : rien n’est enregistré.' : 'Gardé sur cet appareil seulement.') + '</span></div>';
   const img = (m.media || [])[0];
@@ -340,7 +395,7 @@ ${calcBridge(M, m, p)}
 <section class="shell lore-body missions-fiche">
   <div class="lore-texte reveal"><h2>La mission en bref</h2>${fact}</div>
   ${objectifs}${medailles}${recompenses}${solution}${astuces}
-  ${relBlocks ? `<div class="lore-related"><h2>En lien</h2>${relBlocks}</div>` : ''}
+  ${related}
 </section>
 ${srcs}`;
   const og = img ? imgOf(MED, img) : null;
@@ -348,15 +403,43 @@ ${srcs}`;
 }
 
 /* ---------- pont avec le calculateur (calculateurs-activites.js) ---------- */
-const ACT_ST = { officiel: 'official', official: 'official', verified: 'verified', estimated: 'estimated', unverified: 'unverified' };
-const RANK = ['unknown', 'unverified', 'estimated', 'verified', 'official'];
+const ACT_ST = { officiel: 'official', official: 'official', verified: 'verified', media: 'media', presse: 'media', estimated: 'estimated', community: 'community', comm: 'community', unverified: 'unverified' };
+/* v8.04 (jour J) : un chiffre de médias ou de la communauté n’est jamais confirmé ; la mission prend le statut le plus faible de son gain et de sa durée */
+const RANK = ['unknown', 'unverified', 'community', 'estimated', 'media', 'verified', 'official'];
 function activitesDe(missions) {
-  return missions.filter(m => known(m.recompenses && m.recompenses.argent) && known(m.duree) && m.duree.value > 0).map(m => {
+  const bridged = missions.filter(m => known(m.recompenses && m.recompenses.argent) && known(m.duree) && m.duree.value > 0), ids = new Set(bridged.map(m => m.id));
+  return bridged.map(m => {
     const r = m.recompenses.argent, d = m.duree, rs = ACT_ST[r.status] || 'unverified', ds = ACT_ST[d.status] || 'unverified';
     const status = RANK[Math.min(RANK.indexOf(rs), RANK.indexOf(ds))];
-    const meta = v => ({ status: ACT_ST[v.status] || 'unverified', source: v.source || null, verifiedAt: v.verifiedAt || null, unit: v.unit });
-    return { id: 'mission-' + m.id, name: m.nom, reward: { value: r.value, ...meta(r) }, duration: { value: d.value, ...meta(d) }, players: Number.isInteger(m.joueurs) && m.joueurs > 0 ? m.joueurs : null, source: r.source || d.source || null, status, verifiedAt: [r.verifiedAt, d.verifiedAt].filter(Boolean).sort()[0] || null, beginner: null };
+    const meta = v => ({ status: ACT_ST[v.status] || 'unverified', source: v.source || null, verifiedAt: v.verifiedAt || null, unit: v.unit, ...DP.extrasValeur(v, v.value) /* v8.04 (jour J) : fourchette, note, sources, seulement si publiées */ });
+    const out = { id: 'mission-' + m.id, name: m.nom, reward: { value: r.value, ...meta(r) }, duration: { value: d.value, ...meta(d) } };
+    /* v8.02 (lot 1) : tout ce que la source publie, et seulement ça (une valeur inconnue n’est pas transmise : elle reste null). */
+    for (const [k] of VALEURS) if (known(m[k])) out[CALC_KEY[k]] = { value: m[k].value, ...meta(m[k]) };
+    out.players = Number.isInteger(m.joueurs) && m.joueurs > 0 ? m.joueurs : null;
+    const D = m.deblocage || {};
+    if (known(D.argentMinimum)) out.minCash = { value: D.argentMinimum.value, ...meta(D.argentMinimum) };
+    if (known(D.rang)) out.minRank = { value: D.rang.value, ...meta(D.rang) };
+    /* une mission demandée qui n’a pas encore de gain ni de durée publiés n’entre pas dans le calculateur : elle n’est pas imposée,
+       et le texte du déblocage la nomme (outils/QUAND-ROCKSTAR-PUBLIE.md) */
+    const req = (D.missions || []).filter(id => ids.has(id)).map(id => 'mission-' + id);
+    if (req.length) out.requiresMissions = req;
+    if ((D.achats || []).length) out.requiresPurchaseIds = D.achats.slice();
+    out.once = m.repetable && m.repetable.value === true ? false : m.repetable && m.repetable.value === false ? true : UNE_FOIS.includes(m.type);
+    if (typeof m.ordre === 'number' && Number.isFinite(m.ordre)) out.order = m.ordre;
+    if (m.chapitre && typeof m.chapitre.numero === 'number' && Number.isFinite(m.chapitre.numero)) out.chapter = m.chapitre.numero;
+    if (m.chapitre && m.chapitre.titre) out.chapterTitle = m.chapitre.titre;
+    out.kind = m.type;
+    if (D.texte) out.unlockText = D.texte;
+    /* v8.03 (lot 2) : avec qui se fait la mission, seulement s’il est publié */
+    if (m.personnageJoue && Array.isArray(m.personnageJoue.value) && m.personnageJoue.value.length) out.characters = m.personnageJoue.value.slice();
+    Object.assign(out, { source: r.source || d.source || null, status, verifiedAt: [r.verifiedAt, d.verifiedAt].filter(Boolean).sort()[0] || null, beginner: null });
+    return out;
   });
+}
+/* v8.02 (lot 1) : missions demandées avant qui n’ont pas encore de gain ni de durée publiés (le calculateur ne peut pas les imposer). */
+function prerequisNonCalcules(missions) {
+  const ids = new Set(activitesDe(missions).map(a => a.id.slice('mission-'.length)));
+  return missions.filter(m => ids.has(m.id)).flatMap(m => ((m.deblocage || {}).missions || []).filter(id => !ids.has(id)).map(id => m.id + ' demande ' + id));
 }
 /* Écrit les activités « mission-* » dans calculateurs-activites.js ; garde les autres entrées ; ne touche pas au fichier s’il n’y a rien à changer. */
 function pont(root, missions) {
@@ -400,8 +483,9 @@ function generate(root = ROOT) {
   fs.writeFileSync(path.join(root, HUB, 'modele.html'), fichePage(ctx, L.MO.mission, { noindex: true, banner: L.MO.bandeau }));
   fs.writeFileSync(path.join(root, 'outils/missions-index.json'), JSON.stringify(indexEntries(L.H, L.M)));
   const b = pont(root, L.M.missions);
+  for (const w of prerequisNonCalcules(L.M.missions)) console.warn('missions : ' + w + ', qui n’a pas encore de gain ni de durée publiés : le calculateur ne peut pas l’imposer avant.');
   console.log('missions : ' + L.M.missions.length + ' mission(s) documentée(s), ' + L.H.sequences.items.length + ' séquences montrées, page modèle (noindex), ' + L.H.zone.faq.length + ' questions, ' + L.H.zone.sources.length + ' sources ; calculateur : ' + b.activites + ' activité(s) de mission' + (b.ecrit ? ' (calculateurs-activites.js mis à jour)' : ''));
 }
 
-module.exports = { generate, context, leo, load, check, checkMission, checkValue, fichePage, hubPage, activitesDe, pont, indexEntries, toolOf, FILES };
+module.exports = { generate, context, leo, load, check, checkMission, checkValue, fichePage, hubPage, activitesDe, prerequisNonCalcules, pont, indexEntries, toolOf, FILES, VALEURS, UNE_FOIS };
 if (require.main === module) generate();

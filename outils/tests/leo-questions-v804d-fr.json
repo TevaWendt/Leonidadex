@@ -1,0 +1,85 @@
+{
+ "_note": "v8.04 (refonte D) : huit questions en français sur les faits vérifiés le 21 octobre 2026 (classification PEGI et ESRB, pas de jeu en nuage sur PC, images par seconde, singles de l’album, compositeur, nombre de lieux de la carte, chapitres du Tuto). Rejoué par node outils/tests/leo-eval.cjs --questions=outils/tests/leo-questions-v804d-fr.json.",
+ "schemaVersion": 1,
+ "questions": [
+  {
+   "q": "gta 6 est interdit aux moins de 18 ans",
+   "expect": {
+    "topic": "pegi"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "classification esrb de gta 6",
+   "expect": {
+    "topic": "pegi"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "gta 6 sur xbox cloud gaming",
+   "expect": {
+    "topic": "pc"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "combien d images par seconde sur ps5",
+   "expect": {
+    "topic": "ps5pro"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "cardi b gta 6",
+   "expect": {
+    "any": [
+     {
+      "entity": "album:gta-vi-the-album"
+     },
+     {
+      "topic": "radios-faq-4"
+     }
+    ]
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "qui compose la musique de gta 6",
+   "expect": {
+    "topic": "bande-annonce-lancement"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "combien de lieux sur la carte de gta 6",
+   "expect": {
+    "topic": "carte-lieux-nombre"
+   },
+   "tags": [
+    "v804d"
+   ]
+  },
+  {
+   "q": "combien de chapitres dans le tuto",
+   "expect": {
+    "topic": "tuto-quoi"
+   },
+   "tags": [
+    "v804d"
+   ]
+  }
+ ]
+}

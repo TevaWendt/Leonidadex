@@ -54,17 +54,23 @@ function nomCarte(id, lab, reel) {
   const r = reel && !/^\?/.test(reel) ? reel.split(', ')[0] : null;
   return r ? enc(r) + ' (nom réel)' : 'Bâtiment ' + id;
 }
-function description(lab, reel, tags) {
+function description(lab, reel, tags, incert) {
   const ty = typesDe(tags), rem = remarquesDe(tags);
   return [lab.jeu ? 'Bâtiment repéré dans les trailers et captures officielles.' : 'Nom en jeu inconnu à ce jour.',
-    reel ? 'Équivalent réel' + NB + ': ' + enc(reel) + '.' : 'Équivalent réel non identifié.',
+    reel ? 'Équivalent réel' + (incert ? ' (incertain)' : '') + NB + ': ' + enc(reel) + '.' : 'Équivalent réel non identifié.',
     ty.length ? 'Type' + NB + ': ' + ty.join(', ') + '.' : '',
     rem.length ? 'Remarque' + NB + ': ' + rem.join(', ') + '.' : ''].filter(Boolean).join(' ');
 }
 /* adresse réelle telle que la base l’écrit, coquille de ponctuation corrigée (« FL 33139. USA ») : la phrase de la page la
    couperait en deux */
-const adresse = r => r ? String(r).replace(/\.\s+USA$/, ', USA') : null;
-const repere = (k, lab, g, reel, ll, tags) => ({ id: k, nom: lab.nom, quartier: lab.quartier, comte: lab.comte, x: round2(g[0]), y: round2(g[1]), reel, lat: ll && ll.length ? ll[0] : null, lng: ll && ll.length ? ll[1] : null, categories: [...new Set(tags.map(t => CAT_R[t]).filter(Boolean))], statuts: [...new Set(tags.map(t => STAT_R[t]).filter(Boolean))], identifie: !!reel, nomme: !!lab.nom, px: round1(16500 + g[0]), py: round1(12000 - g[1]) });
+/* v8.04 (géolocalisation) : dans gtadb, « ? » seul veut dire « inconnu » : ce n’est pas une adresse (26 lieux affichaient « ? »
+   comme lieu réel) ; un « ? » en fin d’adresse ou « ?, » au début marque un rapprochement incertain : l’adresse est gardée sans
+   le point d’interrogation, dite « incertaine » (description, statut equivalent_incertain du repère). Le nom affiché sur la carte
+   suit toujours l’ancienne règle (nomReel), pour qu’aucune page ne change d’adresse. */
+const nomReel = r => r ? String(r).replace(/\.\s+USA$/, ', USA') : null;
+const incertaine = r => { const s = String(r || '').trim(); return s !== '?' && (/^\?\s*,/.test(s) || /\?$/.test(s)); };
+const adresse = r => { let s = String(r || '').trim(); if (!s || s === '?') return null; s = s.replace(/^\?\s*,\s*/, '').replace(/\s*\?$/, '').trim(); return s ? s.replace(/\.\s+USA$/, ', USA') : null; };
+const repere = (k, lab, g, reel, ll, tags, incert) => ({ id: k, nom: lab.nom, quartier: lab.quartier, comte: lab.comte, x: round2(g[0]), y: round2(g[1]), reel, lat: ll && ll.length ? ll[0] : null, lng: ll && ll.length ? ll[1] : null, categories: [...new Set(tags.map(t => CAT_R[t]).filter(Boolean))], statuts: [...new Set([...tags.map(t => STAT_R[t]).filter(Boolean), ...(incert && reel ? ['equivalent_incertain'] : [])])], identifie: !!reel, nomme: !!lab.nom, px: round1(16500 + g[0]), py: round1(12000 - g[1]) });
 
 /* repères qui sont déjà des points du site (carte.js, avec leur description et leur capture officielle) : pas de doublon */
 const POINT_DU_SITE = { L186: 'galina-opera', L187: 'sahara-arena', L1006: 'tisha-wocka', L1113: 'autograph-flight', L1491: 'ptt-youngin' };
@@ -114,12 +120,12 @@ function photo(p, id, kind, dims0) {
 if (CONTROLE) {
   const diff = { nom: 0, c: 0, d: 0, s: 0, xy: 0, rep: 0 }, ex = {};
   for (const [k, p] of communs) {
-    const u = U[k], tags = u[6].filter(t => !DISCRET.test(t)), lab = parseLabel(u[0]), reel = adresse(u[3]), r0 = repParId0.get(k);
-    const R = repere(k, lab, u[1], reel, u[4], tags);
+    const u = U[k], tags = u[6].filter(t => !DISCRET.test(t)), lab = parseLabel(u[0]), reel = adresse(u[3]), rn = nomReel(u[3]), incert = incertaine(u[3]), r0 = repParId0.get(k);
+    const R = repere(k, lab, u[1], reel, u[4], tags, incert);
     const same = r0 && ['nom', 'quartier', 'comte', 'reel'].every(f => r0[f] === R[f]) && JSON.stringify(r0.statuts) === JSON.stringify(R.statuts);
     if (!same) { diff.rep++; continue; } /* la base a changé ce repère : hors contrôle */
-    const t = { nom: nomCarte(k, lab, reel) === p.n || /…/.test(p.n), c: C_SITE(tags) === p.c || p.c === 'planque', d: description(lab, reel, tags) === p.d, s: statut(tags) === p.s, xy: Math.hypot(u[1][0] - r0.x, u[1][1] - r0.y) > 0.01 || Math.hypot(...proj(u[1]).map((v, i) => v - [p.x, p.y][i])) <= 1 };
-    for (const f of Object.keys(t)) if (!t[f]) { diff[f]++; (ex[f] = ex[f] || []).length < 3 && ex[f].push(k + ' : ' + JSON.stringify(f === 'nom' ? [p.n, nomCarte(k, lab, reel)] : f === 'd' ? [p.d, description(lab, reel, tags)] : f === 'c' ? [p.c, C_SITE(tags), tags] : f === 's' ? [p.s, tags] : [p.x, p.y, proj(u[1])])); }
+    const t = { nom: nomCarte(k, lab, rn) === p.n || /…/.test(p.n), c: C_SITE(tags) === p.c || p.c === 'planque', d: description(lab, reel, tags, incert) === p.d, s: statut(tags) === p.s, xy: Math.hypot(u[1][0] - r0.x, u[1][1] - r0.y) > 0.01 || Math.hypot(...proj(u[1]).map((v, i) => v - [p.x, p.y][i])) <= 1 };
+    for (const f of Object.keys(t)) if (!t[f]) { diff[f]++; (ex[f] = ex[f] || []).length < 3 && ex[f].push(k + ' : ' + JSON.stringify(f === 'nom' ? [p.n, nomCarte(k, lab, rn)] : f === 'd' ? [p.d, description(lab, reel, tags, incert)] : f === 'c' ? [p.c, C_SITE(tags), tags] : f === 's' ? [p.s, tags] : [p.x, p.y, proj(u[1])])); }
   }
   console.log('Contrôle des règles sur ' + communs.length + ' repères communs (' + diff.rep + ' changés par la base, hors contrôle) : écarts nom ' + diff.nom + ', catégorie ' + diff.c + ', description ' + diff.d + ', statut ' + diff.s + ', position ' + diff.xy);
   for (const [f, l] of Object.entries(ex)) console.log('  ' + f + ' : ' + l.join(' | '));
@@ -129,20 +135,20 @@ const bilan = { pointsSite: 0, nouveaux: 0, horsCarte: 0, nommes: 0, renommes: 0
 const repParId = new Map(rep.reperes.map(r => [r.id, r]));
 const majRepere = R => { if (repParId.has(R.id)) Object.assign(repParId.get(R.id), R); else { rep.reperes.push(R); repParId.set(R.id, R); } };
 for (const [k, u] of Object.entries(U)) {
-  const [label, g, dimIg, reel0, ll, dimRl, tags0] = u, tags = tags0.filter(t => !DISCRET.test(t)), lab = parseLabel(label), reel = adresse(reel0);
+  const [label, g, dimIg, reel0, ll, dimRl, tags0] = u, tags = tags0.filter(t => !DISCRET.test(t)), lab = parseLabel(label), reel = adresse(reel0), rn = nomReel(reel0), incert = incertaine(reel0);
   const p = parId.get(k);
   if (POINT_DU_SITE[k] && !p) { bilan.pointsSite++; continue; }
   if (!aPosition(u)) {
     /* pas de position en jeu dans la base : hors carte ; un lieu déjà placé passe en « position non confirmée » */
     if (!p) { bilan.horsCarte++; continue; }
-    if (p.s !== 'spec') { p.s = 'spec'; p.d = description(lab, reel, [...new Set([...tags, 'unconfirmed'])]); bilan.retires++; }
+    if (p.s !== 'spec') { p.s = 'spec'; p.d = description(lab, reel, [...new Set([...tags, 'unconfirmed'])], incert); bilan.retires++; }
     if (!photoLocale(k, 'ig') && photo(p, k, 'ig', dimIg)) bilan.photos++;
     if (!photoLocale(k, 'rl') && photo(p, k, 'rl', dimRl)) bilan.photos++;
     continue;
   }
-  const R = repere(k, lab, g, reel, ll, tags);
+  const R = repere(k, lab, g, reel, ll, tags, incert);
   if (!p) {
-    const [x, y] = proj(g), np = { id: 'g-' + k, n: nomCarte(k, lab, reel), c: C_SITE(tags), x, y, s: statut(tags), src: 'GTADB', z: 2, d: description(lab, reel, tags) };
+    const [x, y] = proj(g), np = { id: 'g-' + k, n: nomCarte(k, lab, rn), c: C_SITE(tags), x, y, s: statut(tags), src: 'GTADB', z: 2, d: description(lab, reel, tags, incert) };
     photo(np, k, 'ig', dimIg); photo(np, k, 'rl', dimRl);
     np.p = groupeDe(lab, x, y);
     if (R.lat !== null) np.sv = R.lat + ',' + R.lng;
@@ -157,9 +163,10 @@ for (const [k, u] of Object.entries(U)) {
   const norm = s => String(s || '').replace(/&quot;|["“”]/g, '');
   /* nom : un nom en jeu sûr remplace un nom provisoire ou un nom changé par la base ; un nom supposé ne remplace qu’un bâtiment
      numéroté ou un nom réel */
-  const nouveau = nomCarte(k, lab, reel), provisoire = /^Bâtiment L\d+$|\(nom réel\)$/.test(p.n);
+  const nouveau = nomCarte(k, lab, rn), provisoire = /^Bâtiment L\d+$|\(nom réel\)$/.test(p.n);
   if (lab.jeu && nouveau !== p.n && norm(r0.nom) !== norm(lab.nom) && (!lab.suppose || provisoire)) { if (generique) bilan.nommes++; else bilan.renommes++; p.n = nouveau; change = true; }
-  if (reel && reel !== r0.reel) { p.r = enc(reel.split(', ')[0]); if (!lab.jeu && /^Bâtiment L\d+$|\(nom réel\)$/.test(p.n)) p.n = nomCarte(k, lab, reel); change = true; bilan.reels++; }
+  if (reel && reel !== r0.reel) { p.r = enc(reel.split(', ')[0]); if (!lab.jeu && /^Bâtiment L\d+$|\(nom réel\)$/.test(p.n)) p.n = nomCarte(k, lab, rn); change = true; bilan.reels++; }
+  if (!reel && p.r === '?') { delete p.r; change = true; } /* v8.04 : un « ? » d’un ancien import n’est pas un lieu réel */
   if (R.lat !== null && p.sv !== R.lat + ',' + R.lng) { p.sv = R.lat + ',' + R.lng; change = true; }
   const s = statut(tags); if (s !== p.s) { p.s = s; change = true; bilan.statuts++; }
   if (JSON.stringify(R.statuts) !== JSON.stringify(r0.statuts || []) || JSON.stringify(R.categories) !== JSON.stringify(r0.categories || [])) change = true;
@@ -168,13 +175,14 @@ for (const [k, u] of Object.entries(U)) {
   /* position : la base l’a déplacée de plus de 3 pixels de la carte du site depuis l’import */
   if (typeof r0.x === 'number' && Math.hypot((g[0] - r0.x) * ax, (g[1] - r0.y) * ay) > 3) { [p.x, p.y] = proj(g); change = true; bilan.positions++; }
   if (typeof r0.x === 'number' && (g[0] !== r0.x || g[1] !== r0.y)) change = true;
-  if (change) { if (['batiment', 'transport', 'nature', 'lieu'].includes(p.c)) p.c = C_SITE(tags); p.d = description(lab, reel, tags); majRepere(R); }
+  if (change) { if (['batiment', 'transport', 'nature', 'lieu'].includes(p.c)) p.c = C_SITE(tags); p.d = description(lab, reel, tags, incert); majRepere(R); }
 }
-/* « Regroupe N bâtiments repérés. » dans la description d’un groupe (fenêtre de la carte) : le compte des lieux rattachés */
+/* « Regroupe N lieux repérés. » dans la description d’un groupe (fenêtre de la carte) : le compte des lieux rattachés (v8.04 :
+   « lieux » et non plus « bâtiments » : le compte inclut transports, nature et lieux notables) */
 let groupesRecomptes = 0;
 for (const g of carte.groupes) {
-  const n = lieux.filter(p => p.p === g.id).length, m = /Regroupe (\d+) bâtiments? repérés?\./.exec(g.d || '');
-  if (m && +m[1] !== n && n > 0) { g.d = g.d.replace(m[0], 'Regroupe ' + n + (n > 1 ? ' bâtiments repérés.' : ' bâtiment repéré.')); groupesRecomptes++; }
+  const n = lieux.filter(p => p.p === g.id).length, m = /Regroupe (\d+) (?:bâtiments?|lieux|lieu) repérés?\./.exec(g.d || '');
+  if (m && (+m[1] !== n || !/ lieux? repérés?\./.test(m[0])) && n > 0) { g.d = g.d.replace(m[0], 'Regroupe ' + n + (n > 1 ? ' lieux repérés.' : ' lieu repéré.')); groupesRecomptes++; }
 }
 console.log('Projection : x = ' + ax.toFixed(6) + ' gx + ' + bx.toFixed(3) + ', y = ' + ay.toFixed(6) + ' gy + ' + by.toFixed(3) + ' (écart médian ' + ecarts.sort((a, b) => a - b)[ecarts.length >> 1].toFixed(2) + ' px sur ' + calage.length + ' lieux calés)');
 console.log('Base gtadb : ' + Object.keys(U).length + ' repères ; carte du site : ' + lieux.length + ' lieux (' + bilan.nouveaux + ' nouveaux, ' + bilan.horsCarte + ' repères sans position en jeu laissés hors carte, ' + bilan.pointsSite + ' déjà points du site), ' + bilan.nommes + ' nom(s) en jeu devenu(s) connu(s), ' + bilan.renommes + ' renommé(s), ' + bilan.reels + ' équivalent(s) réel(s) ajouté(s) ou corrigé(s), ' + bilan.statuts + ' statut(s) changé(s), ' + bilan.retires + ' position(s) retirée(s) par la base (position non confirmée), ' + bilan.photos + ' photo(s) ajoutée(s) à des lieux en place, ' + bilan.positions + ' position(s) corrigée(s) ; ' + aConvertir.length + ' photo(s) à convertir ; ' + groupesRecomptes + ' groupe(s) recompté(s).');

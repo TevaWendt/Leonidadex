@@ -181,6 +181,7 @@
       ],
       "variantes": [],
       "sources": [
+        "xbox-ultimate",
         "vgc-editions",
         "sixthaxis-editions"
       ],
@@ -202,7 +203,7 @@
       "id": "plus-d-options",
       "nom": "Plus d’options que jamais (Rob Nelson)",
       "categorie": "variantes",
-      "statut": "officiel",
+      "statut": "vu",
       "description": "« There are also more weapon customization options than ever before » : Rob Nelson à Famitsu, sans détail ni liste.",
       "effet": {
         "texte": "Aucun détail publié",
@@ -1619,8 +1620,8 @@
       "id": "casier-ammunation",
       "nom": "Casier d’Ammu-Nation",
       "categorie": "armurerie",
-      "statut": "officiel",
-      "description": "Chaque Ammu-Nation a un casier : c’est là que tu gères et récupères tes armes longues, qui ne sont plus « invisibles » sur toi.",
+      "statut": "vu",
+      "description": "D’après Rob Nelson à Famitsu, chaque Ammu-Nation a un casier : c’est là que tu gères et récupères tes armes longues, qui ne sont plus « invisibles » sur toi.",
       "effet": {
         "texte": "Gestion des armes longues, d’après Rob Nelson",
         "valeur": null,
@@ -1660,8 +1661,8 @@
       "id": "armes-exclusives",
       "nom": "Armes exclusives à certains magasins",
       "categorie": "armurerie",
-      "statut": "officiel",
-      "description": "« Ammu-Nation also sells special guns exclusive to particular stores » : chaque magasin peut avoir ses armes.",
+      "statut": "vu",
+      "description": "« Ammu-Nation also sells special guns exclusive to particular stores », dit Rob Nelson à Famitsu : chaque magasin peut avoir ses armes.",
       "effet": {
         "texte": "Variété par magasin, d’après Rob Nelson",
         "valeur": null,
@@ -1686,6 +1687,7 @@
       ],
       "variantes": [],
       "sources": [
+        "famitsu-nelson",
         "gtavice-famitsu"
       ],
       "compat": {
@@ -1725,6 +1727,7 @@
       ],
       "variantes": [],
       "sources": [
+        "rs-preorder",
         "sixthaxis-editions",
         "vgc-editions"
       ],
