@@ -1,6 +1,6 @@
 # Couverture des pages : un élément, une page (v7.96)
 
-Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-22. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.
+Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-23. Chaque famille liste tous ses éléments ; une famille est couverte quand chacun a sa page ou une exclusion justifiée. « Indexables » estime, d’après les données, les pages qui atteindraient le seuil d’indexation (nom, catégorie, description propre, deux informations réelles ou un visuel officiel) ; les autres seraient créées en `noindex, follow`.
 
 ## Tableau des familles
 
@@ -51,7 +51,7 @@ Rapport écrit par `node outils/couverture-pages.cjs` le 2026-10-22. Chaque fami
 ## Limites d’hébergement (relevées le 17 octobre 2026)
 
 - Vercel (docs.vercel.com/docs/limits) : aucune limite au nombre de fichiers produits par un déploiement Git ; 15 000 fichiers et 100 Mo (Hobby) ou 1 Go (Pro) seulement pour un envoi par la ligne de commande ; 45 minutes de construction au plus ; 2 048 routes (redirections de vercel.json) par déploiement ; 100 déploiements par jour (Hobby). Le site est publié depuis GitHub sans construction : seul le temps de copie compte.
-- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 1025 Mo (fichiers suivis) et son historique compressé 280 Mo.
+- GitHub (docs.github.com, « About large files ») : dépôt idéalement sous 1 Go, 5 Go fortement recommandés au plus ; fichier bloqué au-dessus de 100 Mio, avertissement au-dessus de 50 Mio. Le dépôt pèse aujourd’hui 1025 Mo (fichiers suivis) et son historique compressé 415 Mo.
 
 ## Doublons (une seule page, l’autre source renvoie vers elle)
 

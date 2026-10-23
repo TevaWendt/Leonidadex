@@ -2,8 +2,8 @@
 'use strict';
 /* v8.04 (lot L, Téva : « ajouter d’autres jeux en rapport avec mon site, avec un système de progression pour les jeux ») :
    les jeux du site, depuis outils/jeux/jeux.json :
-   - jeux.html : les trois jeux du jour (Devine le lieu, La frise des annonces, Devine la station) et le tableau de
-     progression commun (points, niveau, séries, défi du jour, badges) ;
+   - jeux.html : les trois jeux du jour (Devine le lieu, La frise des annonces, Devine la station) en affiches, le défi du
+     jour et le tableau de progression commun (points, niveau, séries, badges, niveaux) ;
    - frise-des-annonces.html : les annonces datées de outils/actus/actus.json (même registre de sources que la page
      Actualités, outils/gen-actus.cjs), à remettre dans l’ordre ;
    - devine-la-station.html : les six stations présentées par Rockstar (outils/radios/radios.json) : animateurs, noms à
@@ -296,30 +296,56 @@ function stationSources(L, C) {
 }
 
 /* ---------- jeux.html ---------- */
+/* v8.05 (Téva : « faut que ça donne envie de cliquer et d’y jouer ») : les trois jeux d’abord, en affiches cliquables juste
+   sous le titre (un seul lien par affiche, l’état du jour lu dans la progression), le défi du jour en bandeau, puis le
+   tableau : carte de niveau et sa jauge, tableau des scores (une invitation à la première partie pour un nouveau
+   visiteur), badges en médailles, les huit niveaux en route de Leonida. Crochets lus par jeux-core.js inchangés
+   (data-lkj-today, -state, -defi, -defi-t, -defi-s, -badge, -badge-s, -lvl, -here, -min, -s-*, -pts, -meter…). */
 const BADGE_ICON = { 'premier-pas': 'boussole', 'sans-faute': 'motif', 'trois-du-jour': 'liste', 'serie-3': 'horloge', 'serie-7': 'sablier', 'tour-de-leonida': 'carte', album: 'film', archiviste: 'lire', 'oreille-d-or': 'note', defis: 'statuts' };
+const ICON_LOCK = '<svg class="lkj-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const ICON_STAR = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg>';
 function board(L) {
-  const { J } = L, X = J.hub.progression;
-  const tile = (k, attr, note) => '<div class="lkj-stat"><dt>' + esc(k) + '</dt><dd class="lkj-stat-n" ' + attr + '></dd>' + (note ? '<dd class="lkj-stat-d">' + esc(note) + '</dd>' : '') + '</div>';
-  const panel = '<div class="lkj-panel" data-lkj-on hidden><div class="lkj-panel-top"><span class="lkj-medal lkj-medal--big" aria-hidden="true"><b data-lkj-lvn></b></span><div><p class="lkj-panel-k" data-lkj-lvt></p><p class="lkj-panel-name" data-lkj-name></p></div></div>'
-    + '<p class="lkj-panel-pts" data-lkj-pts></p><span class="lkj-meter lkj-meter--big" aria-hidden="true"><i data-lkj-meter></i></span><p class="lkj-panel-next" data-lkj-next></p></div>';
-  const side = '<div class="lkj-side" data-lkj-on hidden><dl class="lkj-stats lkj-stats--board">' + tile(X.parties, 'data-lkj-s-parties') + tile(X.bonnes, 'data-lkj-s-ok') + tile(X.serie, 'data-lkj-s-serie', X.serieNote) + tile(X.serieMax, 'data-lkj-s-max') + tile(X.defis, 'data-lkj-s-defis') + tile(X.sansFaute, 'data-lkj-s-parfait') + '</dl>'
-    + '<div class="lkj-defi" data-lkj-defi><p class="lkj-defi-k">' + esc(X.defi) + '</p><p class="lkj-defi-t" data-lkj-defi-t></p><p class="lkj-defi-s" data-lkj-defi-s></p></div>'
-    + '<div class="lkj-today-box"><p class="lkj-strip-k">' + esc(X.aujourdhui) + '</p>' + todayList(L, '') + '</div></div>';
-  const badges = '<div class="lkj-badges-h"><h3 class="lkj-h3">' + esc(X.badges) + '</h3><p class="lkj-badges-n" data-lkj-on hidden data-lkj-badges-n></p></div><ul class="lkj-badges vt-in" data-lkj-badges data-lk-reveal role="list">' + J.badges.map((b, i) => '<li class="lkj-badge" data-lkj-badge="' + esc(b.id) + '" style="--i:' + i + '"><div class="lkj-badge-ico vt-stamp" aria-hidden="true">' + S.icon(BADGE_ICON[b.id]) + '</div><div class="lkj-badge-b"><div class="lkj-badge-t">' + esc(b.nom) + '</div><div class="lkj-badge-c">' + esc(b.cond) + '</div><div class="lkj-badge-s" data-lkj-badge-s></div></div></li>').join('') + '</ul>';
-  const levels = '<h3 class="lkj-h3">' + esc(X.niveaux) + '</h3><ol class="lkj-levels vt-in" data-lk-reveal>' + J.niveaux.map((n, i) => '<li class="lkj-lvl" data-lkj-lvl="' + i + '" style="--i:' + i + '"><div class="lkj-lvl-n" aria-hidden="true">' + (i + 1) + '</div><div class="lkj-lvl-b"><div class="lkj-lvl-t">' + esc(n.nom) + '</div><div class="lkj-lvl-p" data-lkj-min="' + n.min + '"></div></div><div class="lkj-lvl-here" data-lkj-here hidden></div></li>').join('') + '</ol>';
+  const { J } = L, X = J.hub.progression, F = X.premiere;
+  const tile = (k, attr, note) => '<div class="lkj-score"><dt>' + esc(k) + '</dt><dd class="lkj-score-n" data-lkj-tick ' + attr + '></dd>' + (note ? '<dd class="lkj-score-d">' + esc(note) + '</dd>' : '') + '</div>';
+  const panel = '<div class="lkj-panel"><div class="lkj-panel-top"><span class="lkj-medal lkj-medal--big" aria-hidden="true"><b data-lkj-lvn></b></span><div><p class="lkj-panel-k" data-lkj-lvt></p><p class="lkj-panel-name" data-lkj-name></p></div></div>'
+    + '<p class="lkj-panel-pts" data-lkj-tick data-lkj-pts></p><span class="lkj-meter lkj-meter--big" aria-hidden="true"><i data-lkj-meter></i></span><p class="lkj-panel-next" data-lkj-next></p></div>';
+  const first = '<div class="lkj-first" data-lkj-first hidden><span class="lkj-first-ico" aria-hidden="true">' + S.icon('manette') + '</span><div class="lkj-first-b"><p class="lkj-first-t">' + esc(F.titre) + '</p><p class="lkj-first-x">' + esc(F.texte) + '</p>'
+    + '<p class="lkj-first-a"><a class="lkx-btn" href="#jeux">' + esc(F.lien) + '</a></p></div></div>';
+  const scores = '<dl class="lkj-scores" data-lkj-played hidden>' + tile(X.parties, 'data-lkj-s-parties') + tile(X.bonnes, 'data-lkj-s-ok') + tile(X.serie, 'data-lkj-s-serie', X.serieNote) + tile(X.serieMax, 'data-lkj-s-max') + tile(X.defis, 'data-lkj-s-defis') + tile(X.sansFaute, 'data-lkj-s-parfait') + '</dl>';
+  const badges = '<div class="lkj-badges-h"><h3 class="lkj-h3">' + esc(X.badges) + '</h3><p class="lkj-badges-n" data-lkj-on hidden data-lkj-badges-n></p></div><ul class="lkj-badges" data-lkj-badges role="list">'
+    + J.badges.map(b => '<li class="lkj-badge" data-lkj-badge="' + esc(b.id) + '"><div class="lkj-badge-ico" aria-hidden="true">' + S.icon(BADGE_ICON[b.id]) + '<span class="lkj-badge-lock">' + ICON_LOCK + '</span></div><div class="lkj-badge-b"><div class="lkj-badge-t">' + esc(b.nom) + '</div><div class="lkj-badge-c">' + esc(b.cond) + '</div><div class="lkj-badge-s" data-lkj-badge-s></div></div></li>').join('') + '</ul>';
+  const levels = '<h3 class="lkj-h3">' + esc(X.niveaux) + '</h3><ol class="lkj-levels" role="list">' + J.niveaux.map((n, i) => '<li class="lkj-lvl" data-lkj-lvl="' + i + '"><div class="lkj-lvl-n" aria-hidden="true">' + (i + 1) + '</div><div class="lkj-lvl-b"><div class="lkj-lvl-t">' + esc(n.nom) + '</div><div class="lkj-lvl-p" data-lkj-min="' + n.min + '"></div><div class="lkj-lvl-here" data-lkj-here hidden></div></div></li>').join('') + '</ol>';
   return '<div class="lkj-board" data-lkj-board' + confAttrs(L) + '><div class="lkj-nojs" data-lkj-nojs><p>' + esc(J.bandeau.sansScript) + '</p></div>'
-    + '<div class="lkj-board-grid">' + panel + side + '</div>' + badges + levels
+    + '<div class="lkj-board-grid" data-lkj-on hidden>' + panel + '<div class="lkj-side">' + first + scores + '</div></div>' + badges + levels
     + '<p class="lkj-toast" data-lkj-toast role="status" hidden></p><p class="sr-only" data-lkj-plive aria-live="polite"></p>' + coreTemplate(L) + '</div>';
 }
+/* les affiches : l’image officielle remplit l’affiche, le titre et l’appel à jouer sur un dégradé de nuit ; une teinte par
+   jeu (jeux.css, .lkj-pl--<id>) ; nom accessible « Jouer, <jeu> », description : état du jour, phrase, pastilles */
 function hubGames(L) {
-  const X = L.J.hub.jeux;
-  return S.section({ id: 'jeux', num: 2, kicker: X.kicker, title: X.titre, icon: 'manette', tone: 'paper2', lede: esc(X.lede) },
-    VT.cards(L.J.jeux.map(g => ({ href: g.page, media: g.media, alt: g.alt, title: g.nom, text: g.texte, go: X.jouer, attrs: ' data-lkj-card="' + esc(g.id) + '"' })), { cols: 3, sizes: '(max-width:719px) 92vw, 400px' }));
+  const X = L.J.hub.jeux, per = { devine: L.D.parPartie, frise: L.J.frise.parPartie, station: L.J.station.parPartie };
+  const poster = (g, i) => {
+    const id = esc(g.id);
+    return '<li class="lkj-pl lkj-pl--' + id + '" data-lkj-today="' + id + '" style="--i:' + i + '">'
+      + '<a class="lkj-poster" href="' + esc(g.page) + '" data-lkj-card="' + id + '" aria-labelledby="lkj-go-' + id + ' lkj-pt-' + id + '" aria-describedby="lkj-ps-' + id + ' lkj-px-' + id + ' lkj-pc-' + id + '">'
+      + '<div class="lkj-poster-m">' + VT.img(g.media, g.alt, { sizes: '(max-width:899px) 92vw, 420px', eager: i === 0 ? 'normal' : undefined }) + '</div>'
+      + '<div class="lkj-poster-n" aria-hidden="true">0' + (i + 1) + '</div>'
+      + '<div class="lkj-poster-b"><div class="lkj-poster-s" id="lkj-ps-' + id + '" data-lkj-state></div>'
+      + '<h3 class="lkj-poster-t" id="lkj-pt-' + id + '">' + esc(g.nom) + '</h3><p class="lkj-poster-x" id="lkj-px-' + id + '">' + esc(g.texte) + '</p>'
+      + '<ul class="lkj-chips" id="lkj-pc-' + id + '" role="list"><li>' + esc(X.questions.replace('{n}', per[g.id])) + '</li><li>' + esc(X.jour) + '</li><li>' + esc(X.libre) + '</li></ul>'
+      + '<div class="lkj-poster-go" id="lkj-go-' + id + '"><span class="lkj-poster-ico" aria-hidden="true">' + LKX.ICO.play + '</span>' + esc(X.jouer) + '</div></div></a></li>';
+  };
+  const P = L.J.hub.progression;
+  const quest = '<div class="lkj-quest" data-lkj-defi data-lkj-on hidden><span class="lkj-quest-ico" aria-hidden="true">' + ICON_STAR + '</span>'
+    + '<div class="lkj-quest-b"><p class="lkj-quest-k">' + esc(P.defi) + '</p><p class="lkj-quest-t" data-lkj-defi-t></p>'
+    + '<span class="lkj-meter lkj-quest-bar" aria-hidden="true"><i data-lkj-defi-bar></i></span><p class="lkj-quest-s" data-lkj-defi-s></p></div>'
+    + '<p class="lkj-quest-pts" data-lkj-defi-pts aria-hidden="true"></p></div>';
+  return '<section class="shell lkj-deck" id="jeux" aria-labelledby="lkj-jeux-t"><h2 class="sr-only" id="lkj-jeux-t">' + esc(X.titre) + '</h2>'
+    + '<div class="lkj-deck-in"><ul class="lkj-posters vt-in vt-in--deal" data-lk-reveal role="list">' + L.J.jeux.map(poster).join('') + '</ul></div>' + quest + '</section>';
 }
 function hubPoints(L) {
   const X = L.J.hub.points, P = L.J.points;
   const fill = t => t.replace(/\{(bonne|sansFaute|defi)\}/g, (m, k) => P[k]);
-  return S.section({ id: 'points', num: 3, kicker: X.kicker, title: X.titre, icon: 'chiffres', tone: 'paper' }, VT.steps(X.etapes.map((e, i) => ({ title: e.titre, text: fill(e.texte), ill: IL.POINTS[i] })), { cls: 'lkj-steps' }));
+  return S.section({ id: 'points', num: 2, kicker: X.kicker, title: X.titre, icon: 'chiffres', tone: 'paper' }, VT.steps(X.etapes.map((e, i) => ({ title: e.titre, text: fill(e.texte), ill: IL.POINTS[i] })), { cls: 'lkj-steps' }));
 }
 
 /* ---------- pages ---------- */
@@ -395,7 +421,7 @@ function stationHtml(L, R) {
 function hubHtml(L, R) {
   const X = L.J.hub, nav = S.nav(Object.entries(X.nav).map(([id, label]) => ({ href: '#' + id, label })), X.label);
   const prog = S.section({ id: 'progression', num: 1, kicker: X.progression.kicker, title: X.progression.titre, icon: 'statuts', tone: 'paper', lede: esc(X.progression.lede) }, board(L));
-  const body = head({ ...X, title: X.title }) + '\n<div class="ed-zone ed-zone--jeux">\n' + nav + '\n' + prog + '\n<script src="jeux-core.js" defer></script>\n' + hubGames(L) + '\n' + hubPoints(L) + '\n' + faqSection(L, X, 4) + '\n</div>\n' + explore(X);
+  const body = head({ ...X, title: X.title }) + '\n' + hubGames(L) + '\n<script src="jeux-core.js" defer></script>\n<div class="ed-zone ed-zone--jeux">\n' + nav + '\n' + prog + '\n' + hubPoints(L) + '\n' + faqSection(L, X, 3) + '\n</div>\n' + explore(X);
   const modified = [R.E.map(e => e.iso).sort().pop(), L.SRC['gi-radio-morceaux'].consultedAt].sort().pop();
   return page(L, { file: PAGES.hub, key: 'hub', P: X, body, og: 'cover-art-officielle', modified });
 }

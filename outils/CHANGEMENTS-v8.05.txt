@@ -1,0 +1,49 @@
+LEONIDAKIT v8.05 : visuels du tableau GTA VI face à GTA V, vraie carte de GTA V, page des jeux refaite
+
+Base : v8.04 (commit f41159cb, poussé par Téva le 22 octobre 2026). Demande de Téva du 23 octobre 2026 (deux captures de
+gta-6-vs-gta-5.html) : des visuels au milieu de la liste VERSUS, la vraie carte de GTA V dans la superposition, et une page des
+jeux qui « donne envie de cliquer et d'y jouer ».
+
+1. gta-6-vs-gta-5.html, tableau « VERSUS »
+   Chaque sujet (le cadre, les personnages, la taille de la carte, les plateformes, les éditions, le prix, les dates, le jeu en
+   ligne, la musique) a son visuel officiel en tête de la colonne du milieu : il se découvre quand le duel entre à l'écran
+   (ouverture depuis le centre), l'icône se pose dessus, et toute la colonne mène à la page du site (un seul lien). Au
+   téléphone, le visuel passe en bandeau au-dessus du sujet. Mouvement réduit : visuels affichés tout de suite.
+   Fichiers : outils/informations-editorial.json (comparatif.tableau.rows : media, alt ; les neuf textes alternatifs existaient
+   déjà dans la mémoire de traduction), outils/gen-recherches.cjs, outils/sources/recherches.css.
+
+2. gta-6-vs-gta-5.html, superposition des cartes
+   Le carré GTA V porte la carte de GTA V telle qu'elle s'affiche dans le jeu (style « atlas » du menu de GTA V, Los Santos et
+   Blaine County), à la place de la trame hachurée ; posé sur GTA VI avec le curseur, il devient un peu transparent pour laisser
+   voir Leonida. Le bloc est plus large (deux cartes plus grandes). Le rapport des surfaces (moitié) et la légende restent ceux
+   rapportés par TGG ; la légende dit maintenant d'où vient chaque fond de carte.
+   Image : img/carte-gta-v-480.webp et img/carte-gta-v-960.webp, assemblées depuis les tuiles « atlas » du dépôt public
+   github.com/meesvrh/GTAV-Map-Tiles (niveau 3, 8 × 8 tuiles), recadrées en carré autour des terres.
+   Fichiers : outils/informations-editorial.json (carte.superpose : altV, caption), outils/gen-recherches.cjs,
+   outils/sources/recherches.css, outils/langues/<code>/v805-vs.json (2 textes).
+
+3. jeux.html
+   Les trois jeux d'abord, en grandes affiches cliquables (image officielle, titre, pastilles, état du jour, bouton « Jouer »,
+   une teinte par jeu) qui se distribuent en cascade à l'arrivée, se soulèvent au survol et s'enfoncent à l'appui ; le défi du
+   jour en bandeau (objectif, barre, +50 points) ; puis le tableau : jauge de niveau qui se remplit, chiffres qui défilent,
+   invitation « Ta première partie t'attend » pour un nouveau visiteur au lieu d'une grille de zéros, badges en médailles
+   (cadenas tant qu'ils ne sont pas gagnés), les huit niveaux en route. Plus de bordures pointillées. Progression inchangée
+   (clé lk_jeux_v1), aucun crochet des scripts renommé ; mouvement réduit : rien ne bouge.
+   Fichiers : outils/gen-jeux.cjs, outils/jeux/jeux.json, outils/sources/jeux.css, outils/sources/jeux-core.js,
+   outils/langues/<code>/v805-jeux.json (6 textes).
+
+4. VÉRIFICATIONS
+   Régénération ciblée (minifier, gen-informations, gen-jeux, gen-pages-elements, sync-site, gen-leo, sync-site), puis :
+   - outils/verifier.js : 0 erreur, 4 070 589 références vérifiées dans 26 731 pages ;
+   - outils/referencement.cjs --tout : 0 défaut bloquant, 0 avertissement ;
+   - outils/gen-pages-elements.cjs --verifier : 0 page à réécrire (les pages « visuels » citent les nouveaux emplois) ;
+   - outils/langues.cjs --verifier en, es, it, de, pt : 0 texte sans traduction, 0 repère cassé, 0 conflit ;
+   - gen-leo --check ; outils/tests/leo-eval.cjs : seuils tenus ; outils/tests/reference-v801.cjs : 851 résultats, 0 écart ;
+   - outils/tests/*.test.cjs, un fichier à la fois : 101 fichiers, 1 296 tests réussis, 0 échec ;
+   - navigateur (Chromium), jeux.html, gta-6-vs-gta-5.html, frise-des-annonces.html, devine-la-station.html et
+     devine-le-lieu.html : 16 largeurs de 320 à 2 560 px en français, allemand et portugais, 0 débordement, 0 mot coupé ;
+     mouvement normal et réduit : 0 bloc caché, 0 petite cible, 0 erreur ; accessibilité (noms, alt, contraste AA, focus) :
+     0 défaut ; mots étrangers visibles dans les cinq langues : 0 ;
+   - texte visible des 26 730 pages : 0 signe d'écriture automatique.
+   Corrigé pendant les contrôles : une classe de la nouvelle page des jeux (lkj-play) portait le nom du plateau des pages de
+   jeu et écrasait La frise des annonces et Devine la station ; renommée lkj-poster-ico avant toute livraison.

@@ -2446,6 +2446,8 @@
       "rows": [
         {
           "id": "cadre",
+          "media": "carte-postale-vice-city",
+          "alt": "Carte postale « Vice City » de Leonida : la baie, les tours et des bateaux, illustration officielle de GTA VI",
           "icon": "carte",
           "sujet": "Le cadre",
           "vi": {
@@ -2464,6 +2466,8 @@
         },
         {
           "id": "personnages",
+          "media": "jason-and-lucia-03",
+          "alt": "Jason et Lucia devant une voiture, les tours de Vice City derrière eux, visuel officiel Rockstar Games",
           "icon": "nommes",
           "sujet": "Les personnages jouables",
           "vi": {
@@ -2481,6 +2485,8 @@
         },
         {
           "id": "carte-row",
+          "media": "vice-city-11",
+          "alt": "Gratte-ciel du front de mer de Vice City au crépuscule, un hélicoptère en vol, capture officielle de GTA VI",
           "icon": "boussole",
           "sujet": "La taille de la carte",
           "vi": {
@@ -2499,6 +2505,8 @@
         },
         {
           "id": "plateformes",
+          "media": "manettes-dualsense-gta-vi",
+          "alt": "Les deux manettes DualSense en édition limitée Grand Theft Auto VI, une noire et une blanche, devant le logo du jeu, photo officielle PlayStation",
           "icon": "inventaire",
           "sujet": "Les plateformes à la sortie",
           "vi": {
@@ -2517,6 +2525,8 @@
         },
         {
           "id": "editions",
+          "media": "ultimate-edition-02",
+          "alt": "Jason et Lucia devant le coupé vert rapproché d’un Kellison J4 dans le visuel Ultimate Edition",
           "icon": "achats",
           "sujet": "Les éditions",
           "vi": {
@@ -2534,6 +2544,8 @@
         },
         {
           "id": "prix",
+          "media": "cover-art-officielle",
+          "alt": "La jaquette officielle de GTA VI : Jason et Lucia au centre, entourés de Boobie, de Raul, d’un alligator et de scènes de Leonida, illustration officielle",
           "icon": "argent",
           "sujet": "Le prix",
           "vi": {
@@ -2552,6 +2564,8 @@
         },
         {
           "id": "dates",
+          "media": "affiche-bande-annonce-lancement",
+          "alt": "Affiche officielle de la bande-annonce de lancement de GTA VI : Jason et Lucia devant une voiture rouge, sous les palmiers",
           "icon": "horloge",
           "sujet": "Les dates",
           "vi": {
@@ -2569,6 +2583,8 @@
         },
         {
           "id": "online",
+          "media": "vice-city-06",
+          "alt": "Buffalo STX de Vice Beach Police entourée de policiers et de passantes devant l’Ocean View Hotel, visuel officiel Rockstar Games",
           "icon": "serveur",
           "sujet": "Le jeu en ligne",
           "vi": {
@@ -2586,6 +2602,8 @@
         },
         {
           "id": "musique",
+          "media": "trailer-1-vehicles-025",
+          "alt": "Cabriolet rouge et sa passagère debout, de nuit devant les tours de Vice City, Trailer 1 de GTA VI à 0:25, visuel officiel Rockstar Games",
           "icon": "note",
           "sujet": "La musique",
           "vi": {
@@ -2633,9 +2651,10 @@
         "vi": "deux fois la surface, d’après les chiffres de Rob Nelson",
         "v": "la surface de référence",
         "alt": "Fond de carte de Leonida dessiné par Leonidakit d’après les supports officiels, une reconstruction communautaire et non une carte publiée par Rockstar",
+        "altV": "Carte de GTA V telle qu’elle s’affiche dans le jeu : Los Santos au sud, Blaine County au nord, carte de Rockstar Games",
         "curseur": "Superposer GTA V sur GTA VI",
         "moitie": "GTA V tient dans la moitié",
-        "caption": "Deux fois la carte de GTA V : c’est ce que rapporte TGG des propos de Rob Nelson, de Rockstar North. Les carrés montrent ce rapport de surfaces, pas une mesure ni la forme des cartes : Rockstar n’a publié aucune surface, pour aucun des deux jeux. Le fond du carré GTA VI est la carte du site, une reconstruction communautaire.",
+        "caption": "Deux fois la carte de GTA V : c’est ce que rapporte TGG des propos de Rob Nelson, de Rockstar North. Les carrés montrent ce rapport, pas une mesure : Rockstar n’a publié aucune surface, pour aucun des deux jeux. Le fond du carré GTA V est la carte du jeu, telle qu’elle s’affiche dans GTA V. Le fond du carré GTA VI est la carte du site, une reconstruction communautaire.",
         "statut": "vu"
       },
       "regions": {

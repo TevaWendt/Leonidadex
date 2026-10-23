@@ -204,6 +204,21 @@
     if (id === 'total-12') return all.reduce((a, x) => a + (x.finished && x.score !== null ? x.score : 0), 0) >= 12;
     return false;
   }
+  /* v8.05 : avancement du défi du jour, de 0 à 1 (barre du bandeau de jeux.html) ; 1 seulement s’il est réussi */
+  function defiProgress(id, T) {
+    if (!id || !T) return 0;
+    if (defiDone(id, T)) return 1;
+    const all = [T.devine, T.frise, T.station], part = x => (x.total ? Math.min(1, x.done / x.total) : 0);
+    const four = x => (x.finished ? (x.score === null ? 0 : Math.min(1, x.score / Math.max(1, x.total - 1))) : part(x));
+    let p = 0;
+    if (id === 'trois') p = all.filter(x => x.finished).length / 3;
+    else if (id === 'devine-4') p = four(T.devine);
+    else if (id === 'frise-4') p = four(T.frise);
+    else if (id === 'station-4') p = four(T.station);
+    else if (id === 'parfait') p = Math.max.apply(null, all.map(x => (x.finished || (x.score !== null && x.score < x.done) ? 0 : part(x))));
+    else if (id === 'total-12') p = all.reduce((a, x) => a + (x.score || 0), 0) / 12;
+    return Math.max(0, Math.min(0.95, p));
+  }
   /* conf : {pts: [bonne, sansFaute, defi], lv: [seuils], regions, defis: [ids], badges: [ids], pers: {frise, station}} */
   function summary(store, dvRaw, today, conf) {
     const s = clean(store, conf.pers), pers = conf.pers || {};
@@ -228,7 +243,7 @@
     return { pts, level, next: level + 1 < lv.length ? lv[level + 1] : null, floor: lv[level], ok, perfect, parties, serie: r.now, serieMax, dc, defi, defiOk, badges, games: G, today: T, store: s };
   }
   function shareText(head, ks, url) { return [head].concat(ks.map((v, i) => (i + 1) + ' ' + (v ? '✅' : '❌')), [url]).join('\n'); }
-  const API = { KEY, DEVINE, GAMES, MAXH, dayIndex, isoOfIndex, parisDate, nextParisMidnight, hash, prng, shuffle, rawCycle, cycle, draw, blankGame, cleanGame, blank, clean, answerGame, streak, devineInfo, gameInfo, runs, defiOf, defiDone, summary, shareText };
+  const API = { KEY, DEVINE, GAMES, MAXH, dayIndex, isoOfIndex, parisDate, nextParisMidnight, hash, prng, shuffle, rawCycle, cycle, draw, blankGame, cleanGame, blank, clean, answerGame, streak, devineInfo, gameInfo, runs, defiOf, defiDone, summary, shareText, defiProgress };
   root.LKJeux = API;
   if (typeof document === 'undefined' || !document.querySelector) return;
 
@@ -272,13 +287,14 @@
   /* bandeau (pages des jeux) et tableau (jeux.html) : remplis d’après le calcul ; ils restent tels quels sans script */
   function todayState(t) { return t.finished ? (t.score === null ? cf('lkj-fini', { score: '…', total: num(t.total) }) : cf('lkj-fini', { score: num(t.score), total: num(t.total) })) : t.done ? cf('lkj-en-cours', { done: num(t.done), total: num(t.total) }) : cf('lkj-a-jouer'); }
   function render(S) {
+    ticking++;
     doc.querySelectorAll('[data-lkj-nojs]').forEach(n => { if (n.closest('[data-lkj-strip],[data-lkj-board]')) n.hidden = true; });
     doc.querySelectorAll('[data-lkj-on]').forEach(n => { n.hidden = false; });
     const span = S.next === null ? 1 : (S.pts - S.floor) / (S.next - S.floor);
     doc.querySelectorAll('[data-lkj-lvn]').forEach(n => setText(n, num(S.level + 1)));
     doc.querySelectorAll('[data-lkj-lvt]').forEach(n => setText(n, cf('lkj-niveau', { n: num(S.level + 1), total: num(CONF.lv.length) })));
     doc.querySelectorAll('[data-lkj-name]').forEach(n => setText(n, LVNAME[S.level] || ''));
-    doc.querySelectorAll('[data-lkj-pts]').forEach(n => setText(n, ptsText(S.pts)));
+    doc.querySelectorAll('[data-lkj-pts]').forEach(n => put(n, S.pts, 'p'));
     doc.querySelectorAll('[data-lkj-next]').forEach(n => setText(n, S.next === null ? cf('lkj-max') : S.parties ? cf('lkj-prochain', { n: ptsText(S.next - S.pts), nom: LVNAME[S.level + 1] || '' }) : cf('lkj-vide')));
     doc.querySelectorAll('[data-lkj-meter]').forEach(n => setBar(n, span));
     doc.querySelectorAll('[data-lkj-min]').forEach(n => setText(n, ptsText(parseInt(n.getAttribute('data-lkj-min'), 10) || 0)));
@@ -289,13 +305,19 @@
     });
     /* tableau complet */
     const st = (a, v) => doc.querySelectorAll('[' + a + ']').forEach(n => setText(n, v));
-    st('data-lkj-s-parfait', num(S.perfect)); st('data-lkj-s-parties', num(S.parties)); st('data-lkj-s-ok', num(S.ok));
-    st('data-lkj-s-serie', daysText(S.serie)); st('data-lkj-s-max', daysText(S.serieMax)); st('data-lkj-s-defis', num(S.dc));
+    const pt = (a, v, k) => doc.querySelectorAll('[' + a + ']').forEach(n => put(n, v, k));
+    pt('data-lkj-s-parfait', S.perfect, 'n'); pt('data-lkj-s-parties', S.parties, 'n'); pt('data-lkj-s-ok', S.ok, 'n');
+    pt('data-lkj-s-serie', S.serie, 'd'); pt('data-lkj-s-max', S.serieMax, 'd'); pt('data-lkj-s-defis', S.dc, 'n');
+    /* v8.05 : un nouveau visiteur voit une invitation à sa première partie au lieu d’un tableau de zéros */
+    doc.querySelectorAll('[data-lkj-first]').forEach(n => { n.hidden = S.parties > 0; });
+    doc.querySelectorAll('[data-lkj-played]').forEach(n => { n.hidden = !(S.parties > 0); });
     doc.querySelectorAll('[data-lkj-defi]').forEach(box => {
       const id = S.defi;
       setText(box.querySelector('[data-lkj-defi-t]'), nameOf('[data-defi]', id));
       setText(box.querySelector('[data-lkj-defi-s]'), S.defiOk ? cf('lkj-defi-ok', { pts: ptsText(CONF.pts[2]) }) : cf('lkj-defi-ko', { pts: ptsText(CONF.pts[2]) }));
       box.classList.toggle('is-ok', S.defiOk);
+      setBar(box.querySelector('[data-lkj-defi-bar]'), defiProgress(id, S.today));
+      setText(box.querySelector('[data-lkj-defi-pts]'), '+' + ptsText(CONF.pts[2]));
     });
     doc.querySelectorAll('[data-lkj-badge]').forEach(li => {
       const on = S.badges.indexOf(li.getAttribute('data-lkj-badge')) >= 0;
@@ -308,6 +330,36 @@
       li.classList.toggle('is-past', i < S.level); li.classList.toggle('is-now', i === S.level);
       const here = li.querySelector('[data-lkj-here]'); if (here) { here.hidden = i !== S.level; setText(here, cf('lkj-ici')); }
     });
+  }
+  /* v8.05 : le tableau de jeux.html entre à l’écran : la jauge de niveau se remplit et les chiffres défilent jusqu’à leur
+     valeur, une seule fois (IntersectionObserver, aucun écouteur de défilement). « Réduire les animations », navigateur sans
+     observateur, impression : valeurs finales tout de suite. */
+  const FMT = { n: num, p: n => ptsText(n), d: n => daysText(n) };
+  let ticking = 0;
+  function put(el, v, k) { if (!el) return; el.lkjV = v; el.lkjK = k; setText(el, FMT[k](v)); }
+  function intro() {
+    const board = doc.querySelector('[data-lkj-board]'), IO = window.IntersectionObserver;
+    const panel = board && board.querySelector('.lkj-panel');
+    if (!panel || panel.offsetParent === null || still() || typeof IO !== 'function' || typeof window.requestAnimationFrame !== 'function') return;
+    const ticks = Array.from(board.querySelectorAll('[data-lkj-tick]')).filter(n => n.lkjV > 0);
+    board.classList.add('is-wait');
+    ticks.forEach(n => setText(n, FMT[n.lkjK](0)));
+    const finish = () => { obs.disconnect(); ticking++; board.classList.remove('is-wait'); ticks.forEach(n => setText(n, FMT[n.lkjK](n.lkjV))); };
+    const run = () => {
+      board.classList.remove('is-wait');
+      const id = ++ticking, t0 = performance.now(), list = ticks.map(n => [n, n.lkjV]);
+      const step = now => {
+        if (id !== ticking) return;
+        const p = Math.min(1, (now - t0) / 1100), e = 1 - Math.pow(1 - p, 3);
+        list.forEach(([n, v]) => setText(n, FMT[n.lkjK](p < 1 && n.lkjV === v ? Math.round(v * e) : n.lkjV)));
+        if (p < 1) window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+    };
+    const obs = new IO(en => { if (!en.some(x => x.isIntersecting)) return; obs.disconnect(); run(); }, { threshold: 0.35 });
+    obs.observe(panel);
+    window.addEventListener('beforeprint', finish, { once: true });
+    if (reduced.addEventListener) reduced.addEventListener('change', () => { if (reduced.matches) finish(); });
   }
   let toastTimer = 0;
   function toast(text) {
@@ -345,7 +397,7 @@
   /* Devine le lieu annonce chaque réponse (devine.js) ; un autre onglet peut aussi avoir joué */
   doc.addEventListener('lk-jeux', () => { touch(); });
   window.addEventListener('storage', e => { if (e.key === KEY || e.key === DEVINE) refresh(); });
-  if (hasCore) { const go = () => refresh(); if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', go, { once: true }); else go(); }
+  if (hasCore) { const go = () => { refresh(); intro(); }; if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', go, { once: true }); else go(); }
 
   /* ====================== moteur des parties (frise.js, station.js) ====================== */
   /* cfg : {id, q0 (questions posées d’avance, comme le point de départ de la frise), show(id, ctx), reset(ctx), reveal(id,

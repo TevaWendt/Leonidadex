@@ -1,0 +1,19 @@
+LEONIDAKIT v8.05 : visuels du tableau GTA VI face à GTA V, vraie carte de GTA V, page des jeux refaite
+
+À appliquer sur la v8.04 (déjà en ligne) : décompresse les parties de l'archive à la racine du dossier du site, en remplaçant
+les fichiers, puis dans GitHub Desktop : « Commit to main » et « Push origin ». Aucun fichier à supprimer. Rien à faire dans
+Vercel. Rien n'a été poussé.
+
+CE QUI CHANGE POUR LE VISITEUR
+  - gta-6-vs-gta-5.html : chaque sujet du tableau VERSUS a son visuel officiel au milieu, qui se découvre à l'arrivée ; toute
+    la colonne mène à la page du site. Le carré GTA V de la superposition porte la vraie carte de GTA V (celle du menu du
+    jeu) ; posé sur GTA VI, il laisse voir Leonida. Le bloc des deux cartes est plus grand.
+  - jeux.html : les trois jeux en premier, en grandes affiches cliquables avec un bouton « Jouer » ; le défi du jour en
+    bandeau ; la progression avec une jauge qui se remplit, des badges en médailles et les huit niveaux en route. Un nouveau
+    visiteur voit une invitation à jouer au lieu d'une grille de zéros.
+  - frise-des-annonces.html : titres des annonces un peu plus faciles à toucher au téléphone.
+
+VÉRIFIÉ (détail : outils/CHANGEMENTS-v8.05.txt)
+  0 lien cassé sur 26 731 pages ; référencement : 0 défaut, 0 avertissement ; 0 texte sans traduction dans les cinq langues ;
+  101 fichiers de tests, 1 296 tests réussis, 0 échec ; pages refaites contrôlées dans Chromium de 320 à 2 560 px, en
+  mouvement réduit et en accessibilité.

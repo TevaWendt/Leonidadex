@@ -184,7 +184,6 @@
   "note": "Ta progression reste sur cet appareil : aucun compte, aucun cookie, rien n’est envoyé.",
   "nav": {
    "progression": "Ta progression",
-   "jeux": "Les trois jeux",
    "points": "Les points",
    "faq": "Questions"
   },
@@ -202,12 +201,19 @@
    "sansFaute": "Sans-faute",
    "defi": "Le défi du jour",
    "badges": "Tes badges",
-   "aujourdhui": "Aujourd’hui"
+   "aujourdhui": "Aujourd’hui",
+   "premiere": {
+    "titre": "Ta première partie t’attend",
+    "texte": "Choisis un des trois jeux en haut de la page : cinq questions, et tes points, ta série et tes badges s’affichent ici.",
+    "lien": "Choisir un jeu"
+   }
   },
   "jeux": {
-   "kicker": "Au choix",
+   "_note": "v8.05 : les trois jeux en affiches juste sous le titre (outils/gen-jeux.cjs, hubGames) ; {n} = questions par partie",
    "titre": "Les trois jeux",
-   "lede": "Cinq questions par jour et par jeu, les mêmes pour tout le monde, puis une partie libre pour t’entraîner.",
+   "questions": "{n} questions",
+   "jour": "Partie du jour",
+   "libre": "Partie libre",
    "jouer": "Jouer"
   },
   "points": {

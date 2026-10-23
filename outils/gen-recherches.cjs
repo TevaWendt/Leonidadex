@@ -201,22 +201,25 @@ module.exports = function run(H) {
     const sec = (o, body) => S.section({ ...o, num: ++n }, body);
     /* 1. le tableau (v8.04) : un écran « VERSUS » : « VI » et « V » en très grand, le badge VS qui claque une fois ; chaque sujet est
        un duel (GTA VI d’un côté, GTA V de l’autre, le sujet, son icône et la page du site au centre). Dans la page, le sujet vient
-       d’abord (lecteurs d’écran), puis GTA VI, puis GTA V ; au téléphone, un choix « Les deux, GTA VI, GTA V » (CSS seul). */
+       d’abord (lecteurs d’écran), puis GTA VI, puis GTA V ; au téléphone, un choix « Les deux, GTA VI, GTA V » (CSS seul).
+       v8.05 (Téva : « manque de visuel » au milieu) : chaque sujet a son visuel officiel (media, alt), placé en tête de la
+       colonne du milieu par le CSS (après le titre dans la page) ; il se découvre quand le duel entre à l’écran, et toute
+       la colonne mène à la page du site (lien étiré, un seul lien). */
     const T = X.tableau;
     const side = (c, k, label) => '<div class="rc-vs-c rc-vs-c--' + k + '"><p class="rc-vs-v"><span class="rc-vs-tag">' + esc(label) + '<span class="sr-only"> : </span></span>' + gta(c.v) + '</p>' + (c.note ? '<p class="rc-vs-n">' + gta(c.note) + '</p>' : '') + '<p class="rc-vs-s">' + S.pip(c.statut, true) + (c.src ? srcRef(SRC, c.src) : '') + '</p></div>';
     const vs = '<div class="rc-vs"><div class="rc-vs-top" aria-hidden="true" data-lk-reveal><span class="rc-vs-big rc-vs-big--vi"></span><span class="rc-vs-badge"></span><span class="rc-vs-big rc-vs-big--v"></span></div>'
       + '<div class="rc-vs-heads" aria-hidden="true"><span class="rc-vs-h rc-vs-h--vi">' + esc(T.colVI) + '</span><span class="rc-vs-h rc-vs-h--v">' + esc(T.colV) + '</span></div>'
       + '<fieldset class="rc-vs-pick"><legend>' + esc(T.pick.label) + '</legend>' + [['deux', T.pick.deux], ['vi', T.pick.vi], ['v', T.pick.v]].map(([v, l], i) => '<label><input type="radio" name="rc-vs-pick" value="' + v + '"' + (i ? '' : ' checked') + '><span>' + esc(l) + '</span></label>').join('') + '</fieldset>'
-      + '<ol class="rc-vs-l">' + T.rows.map((r, i) => '<li class="rc-vs-r" id="' + esc(r.id) + '" style="--i:' + i + '" data-lk-reveal><div class="rc-vs-mid"><span class="rc-vs-ico" aria-hidden="true">' + S.icon(r.icon) + '</span><h3>' + gta(r.sujet) + '</h3><a class="rc-vs-link" href="' + esc(r.href) + '">' + esc(r.label) + '</a></div>' + side(r.vi, 'vi', T.colVI) + side(r.v, 'v', T.colV) + '</li>').join('') + '</ol></div>';
+      + '<ol class="rc-vs-l">' + T.rows.map((r, i) => '<li class="rc-vs-r" id="' + esc(r.id) + '" style="--i:' + i + '" data-lk-reveal><div class="rc-vs-mid' + (r.media ? ' rc-vs-mid--img' : '') + '"><span class="rc-vs-ico" aria-hidden="true">' + S.icon(r.icon) + '</span><h3>' + gta(r.sujet) + '</h3><a class="rc-vs-link" href="' + esc(r.href) + '">' + esc(r.label) + '</a>' + (r.media ? '<span class="rc-vs-fig">' + VT.img(r.media, r.alt, { sizes: '(max-width:759px) 92vw, 320px' }) + '</span>' : '') + '</div>' + side(r.vi, 'vi', T.colVI) + side(r.v, 'v', T.colV) + '</li>').join('') + '</ol></div>';
     parts.push(sec({ id: 'tableau', kicker: T.kicker, title: T.title, icon: 'balance', tone: 'paper2', lede: gta(T.lede) }, vs + '<ul class="rc-legend"><li>' + S.pip('officiel', true) + ' ' + esc(T.legOfficiel) + '</li><li>' + S.pip('vu', true) + ' ' + esc(T.legVu) + '</li><li>' + S.pip('serie', true) + ' ' + esc(T.legSerie) + '</li><li>' + S.pip('conf', true) + ' ' + esc(T.legConf) + '</li></ul>'));
     /* 2. la carte, mot pour mot (v8.04) : les deux citations, alignées ; puis la proportion rapportée en superposition : le carré
-       GTA VI porte le fond de carte du site (reconstruction communautaire, dite comme telle), le carré GTA V une trame de référence,
-       à la moitié de la surface ; un curseur fait glisser GTA V sur GTA VI (vitrine.js). Aucune image de la carte de GTA V : on
-       ne la dessine pas. */
+       GTA VI porte le fond de carte du site (reconstruction communautaire, dite comme telle), le carré GTA V, à la moitié de la
+       surface, la carte de GTA V telle qu’elle s’affiche dans le jeu (v8.05, demande de Téva : img/carte-gta-v-480|960.webp,
+       carte « atlas » du jeu, recadrée en carré autour des terres) ; un curseur fait glisser GTA V sur GTA VI (vitrine.js). */
     const M = X.carte, Ov = M.superpose;
     const ov = '<div class="rc-ov" data-rc-ov data-lk-reveal><div class="rc-ov-stage" style="--t:0">'
       + '<div class="rc-ov-vi"><img src="img/leonida-carte.svg" width="520" height="600" alt="' + esc(Ov.alt) + '" loading="lazy" decoding="async"><span class="rc-ov-l"><b translate="no">GTA VI</b><span>' + esc(Ov.vi) + '</span></span></div>'
-      + '<div class="rc-ov-v5"><span class="rc-ov-l"><b translate="no">GTA V</b><span>' + esc(Ov.v) + '</span></span><span class="rc-ov-half">' + esc(Ov.moitie) + '</span></div></div>'
+      + '<div class="rc-ov-v5"><img src="img/carte-gta-v-480.webp" srcset="img/carte-gta-v-480.webp 480w, img/carte-gta-v-960.webp 960w" sizes="(max-width:719px) 36vw, 240px" width="480" height="480" alt="' + esc(Ov.altV) + '" loading="lazy" decoding="async"><span class="rc-ov-l"><b translate="no">GTA V</b><span>' + esc(Ov.v) + '</span></span><span class="rc-ov-half">' + esc(Ov.moitie) + '</span></div></div>'
       + '<label class="rc-ov-ctl" hidden><span>' + esc(Ov.curseur) + '</span><input type="range" min="0" max="100" step="1" value="0" data-rc-ov-in></label>'
       + '<p class="rc-ov-cap">' + S.pip(Ov.statut, true) + ' ' + gta(Ov.caption) + '</p></div>';
     parts.push(sec({ id: 'carte', kicker: M.kicker, title: M.title, icon: 'carte', tone: 'paper', accent: 'coral', lede: gta(M.lede) },
