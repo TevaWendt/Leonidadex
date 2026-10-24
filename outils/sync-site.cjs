@@ -343,7 +343,7 @@ require('child_process').execFileSync(process.execPath,[path.join(__dirname,'gen
   if(/name="robots" content="[^"]*noindex/.test(html)||html.includes('http-equiv="refresh"'))continue;
   html=html.replace(/<script type="application\/ld\+json" data-lk="faq">[\s\S]*?<\/script>\n?/,'');
   const faq=html.match(/<div class="faq(?: [^"]*)?"[^>]*>([\s\S]*?)<\/div>\s*<\/div>\s*<\/section>/);
-  const qa=[];if(faq&&!/"@type":\s*"FAQPage"/.test(html.replace(/data-lk="faq"[\s\S]*?<\/script>/,'')))for(const m of faq[1].matchAll(/<details[^>]*>\s*<summary>([\s\S]*?)<\/summary>\s*<div class="ans"[^>]*>([\s\S]*?)<\/div>\s*<\/details>/g)){const q=strip(m[1]),a=strip(m[2]);if(q&&a)qa.push({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}});}
+  const qa=[];if(faq&&!/"@type":\s*"FAQPage"/.test(html.replace(/data-lk="faq"[\s\S]*?<\/script>/,'')))for(const m of faq[1].matchAll(/<details[^>]*>\s*<summary>([\s\S]*?)<\/summary>\s*<div class="ans"[^>]*>([\s\S]*?)<\/div>\s*<\/details>/g)){const q=strip(m[1]),a=strip(m[2].replace(/\s*<a\b[^>]*>[\s\S]*?<\/a>\s*$/,'')/* v8.06 (audit SEO-05) : un lien de navigation posé à la fin de la réponse (« GTA VI sur PC : ce qu’on sait ») n’entre pas dans le texte de la réponse structurée */);if(q&&a)qa.push({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}});}
   if(qa.length>=2){const ld='<script type="application/ld+json" data-lk="faq">'+JSON.stringify({'@context':'https://schema.org','@type':'FAQPage',mainEntity:qa})+'</script>\n';html=html.replace('</head>',ld+'</head>');}
   fs.writeFileSync(file,html);}}
 

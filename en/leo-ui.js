@@ -1,7 +1,7 @@
 /* Généré depuis outils/sources/leo-ui.js : modifie la source, pas ce fichier. */
 (function(){'use strict';
 const LEO_BASE=(document.currentScript&&document.currentScript.src||'').replace(/^https?:\/\/[^/]+/,'').replace(/[^/]*$/,'')||'/';
-const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=026d09836712',MAX_BYTES=1500000;
+const LANG_UI=(document.documentElement.lang||'fr').slice(0,2).toLowerCase(),C=window.LKLeoCore,L=window.LKLeoLink,launch=document.getElementById('leo-launch'),KEY='lk_leo_session_v2',TTL=30*60*1000,MAX_MESSAGES=32,V='?v=ce1a8e3241bf',MAX_BYTES=1500000;
 const names={capital:'I already have ($)',target:'I want to have ($)',hourly:'Estimated net gain ($ per hour)',price:'The price I imagine ($)',reserve:'Money to set aside ($)',minutes:'Session (min)',dailyMinutes:'Time per day (min)',players:'Players, including me'};
 const preferred={goal:['capital','target','hourly'],session:['minutes','capital','players'],activities:['capital','minutes','players'],purchase:['price','capital'],roi:['price','capital'],order:['capital','hourly'],budget:['capital','reserve'],plan:['capital','target','minutes']};
 const el=(tag,text,cls)=>{const node=document.createElement(tag);if(text!==undefined&&text!==null)node.textContent=text;if(cls)node.className=cls;return node;};

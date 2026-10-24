@@ -622,7 +622,7 @@
 .cg-filter label{position:relative;}
 .cg-f-ico{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--cg);border:1.5px solid var(--ink);}
 .cg-f-ico .ed-ico{width:20px;height:20px;}
-.cg-n{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--paper-2);border:1.5px solid var(--ink);font:800 .72rem/1 var(--font-mono,ui-monospace,monospace);}
+.cg-n{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--paper-2);border:1.5px solid var(--ink);color:var(--ink);/* v8.06 (audit A11Y-01) : couleur explicite du compteur */font:800 .72rem/1 var(--font-mono,ui-monospace,monospace);}
 .cg-filter label:hover{transform:translateY(-2px);box-shadow:3px 3px 0 var(--ink);}
 .cg-filter label:has(input:checked){background:var(--ink);color:var(--paper);box-shadow:4px 4px 0 var(--amber);}
 .cg-filter label:has(input:checked) .cg-n{background:var(--amber);color:var(--ink);border-color:var(--amber);}

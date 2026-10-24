@@ -136,6 +136,16 @@
       "source": "/:lang(en|es|it|de|pt)/armes/revolver-357.html",
       "destination": "/:lang/armes/mustang-357.html",
       "permanent": true
+    },
+    {
+      "source": "/:page(a-propos|achats|activites|actus|animaux|armes|atelier-3d|bateaux|calculateurs|carte|classement-vehicules|codes-de-triche|collectibles|compagnon|comparateur|contact|demeures|devine-la-station|devine-le-lieu|editions|entreprises|frise-des-annonces|gangs|gta-6-pc|gta-6-vs-gta-5|jeux|lieux|logements|medias|mentions-legales|missions|nourriture|online|personnages|personnalisations|planques|presse|prix|progression|radios|style|trophees|tuto|vehicules|vehicules-rares|videos|vraies-voitures)",
+      "destination": "/:page.html",
+      "permanent": true
+    },
+    {
+      "source": "/:lang(en|es|it|de|pt)/:page(a-propos|achats|activites|actus|animaux|armes|atelier-3d|bateaux|calculateurs|carte|classement-vehicules|codes-de-triche|collectibles|compagnon|comparateur|contact|demeures|devine-la-station|devine-le-lieu|editions|entreprises|frise-des-annonces|gangs|gta-6-pc|gta-6-vs-gta-5|jeux|lieux|logements|medias|mentions-legales|missions|nourriture|online|personnages|personnalisations|planques|presse|prix|progression|radios|style|trophees|tuto|vehicules|vehicules-rares|videos|vraies-voitures)",
+      "destination": "/:lang/:page.html",
+      "permanent": true
     }
   ],
   "headers": [

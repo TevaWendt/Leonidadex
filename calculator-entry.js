@@ -5,9 +5,10 @@
   if (!form) return;
   let E = window.LKCalcEngine || null;
   let loadingEngine = null;
+  let engineFailed = false;
   function ensureEngine() {
     if (E) return Promise.resolve();
-    if (!loadingEngine) loadingEngine = (window.LK && window.LK.lazyScript ? window.LK.lazyScript('calculateurs-engine.js') : Promise.reject(new Error('lazy'))).then(function () { E = window.LKCalcEngine || null; preview(); }).catch(function () { loadingEngine = null; });
+    if (!loadingEngine) loadingEngine = (window.LK && window.LK.lazyScript ? window.LK.lazyScript('calculateurs-engine.js') : Promise.reject(new Error('lazy'))).then(function () { E = window.LKCalcEngine || null; preview(); }).catch(function () { loadingEngine = null; engineFailed = true; preview(); });
     return loadingEngine;
   }
   const output = document.getElementById('lk-mini-answer');
@@ -16,6 +17,26 @@
   const labels = { capital: 'ce que tu as', target: 'ce que tu veux', hourly: 'ce que tu gagnes par heure' };
   const format = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 2 });
   let announceTimer;
+  function parseFallback(value) {
+    const text = String(value).trim();
+    if (!text) return null;
+    const sep = /[ \u00a0\u202f]/g;
+    if (pageLang === 'de') {
+      if (!/^\d+(?:[. \u00a0\u202f]\d{3})*(?:,\d+)?$/.test(text)) return null;
+      return Number(text.replace(/[. \u00a0\u202f]/g, '').replace(',', '.'));
+    }
+    if (pageLang === 'es' || pageLang === 'it' || pageLang === 'pt') {
+      if (/^\d+\.\d{1,2}$/.test(text)) return Number(text);
+      if (!/^\d+(?:[. \u00a0\u202f]\d{3})*(?:,\d+)?$/.test(text)) return null;
+      return Number(text.replace(/[. \u00a0\u202f]/g, '').replace(',', '.'));
+    }
+    if (pageLang !== 'fr') {
+      if (!/^\d+(?:[, \u00a0\u202f]\d{3})*(?:\.\d+)?$/.test(text)) return null;
+      return Number(text.replace(/[, \u00a0\u202f]/g, ''));
+    }
+    if (!/^\d+(?:[ \u00a0\u202f]\d{3})*(?:[,.]\d+)?$/.test(text)) return null;
+    return Number(text.replace(sep, '').replace(',', '.'));
+  }
   function parse(value) {
     let n;
     if (E && E.parseLocalizedNumber) {
@@ -23,19 +44,19 @@
       if (!parsed.valid) return null;
       n = parsed.value;
     } else {
-      const text = String(value).trim();
-      if (!/^\d+(?:[,.]\d+)?$/.test(text)) return null;
-      n = Number(text.replace(',', '.'));
+      n = parseFallback(value);
+      if (n === null) return null;
     }
     return Number.isFinite(n) && n >= 0 && n <= 1e12 ? n : null;
   }
+  let touched = false;
   function inputs(showErrors) {
     const values = {};
     let invalid;
     keys.forEach(key => {
       const field = form.elements.namedItem(key);
       const value = parse(field.value);
-      field.setAttribute('aria-invalid', value === null ? 'true' : 'false');
+      if (value === null && !(touched || showErrors)) field.removeAttribute('aria-invalid'); else field.setAttribute('aria-invalid', value === null ? 'true' : 'false');
       if (value === null && !invalid) invalid = field;
       values[key] = value;
     });
@@ -66,7 +87,7 @@
     const values = inputs(false);
     output.replaceChildren();
     if (!values) { output.textContent = 'Remplis les trois cases pour voir ta réponse.'; return; }
-    if (!E || !E.goalContinuous) { output.textContent = loadingEngine ? 'Un instant…' : 'Ouvre le calculateur complet pour voir ta réponse.'; return; }
+    if (!E || !E.goalContinuous) { output.textContent = loadingEngine || !engineFailed ? 'Un instant…' : 'Ouvre le calculateur complet pour voir ta réponse.'; return; }
     const result = E.goalContinuous(Object.assign({ dailyMinutes: 60, reserve: 0 }, values));
     if (!result.valid) { output.textContent = result.reason; return; }
     const main = document.createElement('div');
@@ -79,7 +100,13 @@
     output.append(main, detail);
   }
   form.addEventListener('focusin', () => { ensureEngine(); }, { once: true });
-  form.addEventListener('input', () => { ensureEngine(); clearTimeout(announceTimer); announceTimer = setTimeout(preview, 180); });
+  form.addEventListener('input', () => { touched = true; ensureEngine(); clearTimeout(announceTimer); announceTimer = setTimeout(preview, 180); });
+  function preloadEngine() {
+    if (E || (navigator.connection && navigator.connection.saveData)) return;
+    const idle = typeof window.requestIdleCallback === 'function' ? cb => window.requestIdleCallback(cb, { timeout: 2500 }) : cb => setTimeout(cb, 1500);
+    idle(() => { ensureEngine(); });
+  }
+  if (document.readyState === 'complete') preloadEngine(); else window.addEventListener('load', preloadEngine, { once: true });
   form.addEventListener('submit', event => {
     event.preventDefault();
     clearTimeout(announceTimer);

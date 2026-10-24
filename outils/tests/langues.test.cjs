@@ -113,7 +113,7 @@ for (const LG of LANGS) {
       if (!leo) { assert.ok(!/<script[^>]+src="[^"]*leo(?:-widget|-core|\.js)/.test(html), p + ' : aucun script de Léo'); assert.ok(!/leo-index\.json/.test(html), p + ' : index de Léo non chargé'); }
       if (/http-equiv="refresh"/i.test(html)) { assert.ok(!html.includes('data-lk-langbar'), p + ' : redirection sans barre'); continue; }
       assert.match(html, /<div class="lk-langbar" data-lk-langbar translate="no">/, p + ' : barre de langue');
-      assert.ok(html.includes('<a aria-current="true" hreflang="' + code + '" lang="' + code + '" data-lk-lang="' + code + '">' + LG.nom + '</a>'), p + ' : ' + LG.nom + ' coché');
+      assert.ok(new RegExp('<a href="[^"]*" aria-current="page" hreflang="' + code + '" lang="' + code + '" data-lk-lang="' + code + '">' + LG.nom.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '</a>').test(html), p + ' : ' + LG.nom + ' coché'); /* v8.06 (SEO-06) : lien vers la page elle-même */
     }
   });
 
@@ -236,7 +236,7 @@ test('pages françaises : barre « Changer la langue » en haut de chaque page (
     if (!/<body[\s>]/.test(html)) continue; // fichier de vérification (google….html) : pas une page
     if (html.includes('http-equiv="refresh"')) { assert.ok(!html.includes('data-lk-langbar'), p + ' : redirection sans barre'); continue; }
     if (!/<div class="lk-langbar" data-lk-langbar translate="no">/.test(html)) { missing.push(p); continue; }
-    assert.ok(/<a aria-current="true" hreflang="fr" lang="fr" data-lk-lang="fr">Français<\/a>/.test(html), p + ' : français coché');
+    assert.ok(/<a href="[^"]*" aria-current="page" hreflang="fr" lang="fr" data-lk-lang="fr">Français<\/a>/.test(html), p + ' : français coché'); /* v8.06 (SEO-06) */
     const depth = p.split('/').length - 1;
     for (const LG of LANGS) {
       const tr = LG.pages.includes(p), code = LG.code;

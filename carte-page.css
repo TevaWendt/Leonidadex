@@ -440,6 +440,11 @@ body.map-full-on{overflow:hidden;}
   font-size:.76rem; font-weight:700; color:var(--coral-text,#B93220);
   background:none; border:none; padding:0; text-decoration:underline; text-underline-offset:3px;
 }
+.mp-places{list-style:none; margin:10px 0 0; padding:0; border-top:1px solid var(--rule);}
+.mp-places li{border-bottom:1px solid var(--rule);}
+.mp-places .mp-place{display:flex; align-items:center; gap:8px; min-height:40px; margin:0; padding:7px 0; font-size:.84rem; text-decoration:none;}
+.mp-places .mp-place::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--coral); flex-shrink:0;}
+.mp-places .mp-place:hover, .mp-places .mp-place:focus-visible{text-decoration:underline; text-underline-offset:3px;}
 .map-pages{margin:18px 0 0; font-size:.95rem; color:var(--ink-soft); max-width:70ch;}
 .map-pages a{color:var(--coral-text,#B93220); text-decoration:underline; text-underline-offset:3px;}
 .mp-page{display:block; margin-top:10px; font-size:.84rem;}

@@ -1,0 +1,125 @@
+CHANGEMENTS v8.06 — corrections des deux audits du 23 octobre 2026 (base : dépôt GitHub TevaWendt/Leonidadex, commit 2a49067 = v8.05)
+
+Deux audits en lecture seule ont été faits sur la v8.05 : l’audit forensique intégral (31 anomalies : NAV-01, UX-01…, dossier
+AUDIT_LEONIDAKIT_2026-10-23) et l’audit du code et du site publié (12 anomalies : CALC-001…, rapport RAPPORT_AUDIT_LEONIDAKIT).
+Cette version applique les corrections prouvées des deux, dans les sources (outils/sources, générateurs, données), puis régénère.
+Rien n’a été poussé ni déployé. Le registre complet, identifiant par identifiant, est dans outils/RAPPORT-AUDITS-v8.06.md.
+
+CALCULATEUR
+- CALC-001 (majeure) : « Mon objectif » avec des dépenses par partie annonçait un objectif atteint trop tôt (211 parties au lieu de
+  900 avec 99 $ dépensés par partie pour 100 $ gagnés ; un succès avec 100 $ ou 101 $ de dépenses). La boucle de 24 tours de
+  outils/sources/calculateurs-scenario.js (goalBase) est remplacée par une recherche du point fixe (doublement puis dichotomie) :
+  le résultat est le plus petit nombre de parties qui tient, l’argent de la fin vaut exactement capital + parties × (gain − dépenses),
+  et un gain net nul ou négatif rend « inatteignable » (jamais un résultat non convergé présenté comme un succès). Table de recette
+  de l’audit vérifiée : 0/50/90/99 $ → 9/18/90/900 parties, 1 000 $ à la fin ; 100 et 101 $ → refus (test v806-audit).
+- CALC-004 (majeure) : les trois cartes « Avec quelle activité j’arrive le plus vite » appelaient le moteur avec objectif + réserve
+  seulement (9 h sur la carte, 18 h dans la réponse). outils/sources/calculateurs.js : calculation() passe par la couche scénario
+  (B.goal) en changeant seulement l’activité, sans toucher à l’état : sens du but, achats avant, dépenses par partie, hypothèses,
+  revente et achats possédés comptent comme dans « Ma réponse ».
+- CALC-003 (modérée) : contrat de minCash (argent à avoir en poche) écrit et appliqué partout : il se compare à l’argent détenu au
+  moment du lancement, avant de payer les frais et l’achat de départ de l’activité (goal, inverse, sessionPlan et missionPlan le
+  faisaient déjà ; goalMixed comparait après avoir payé tous les achats de départ). Une rotation d’une seule activité a maintenant
+  la même admissibilité que le calcul seul (160 combinaisons testées).
+- UX-02 / CALC-002 (modérée) : mini-calculateur de l’accueil. Avant l’arrivée du moteur, le parseur de repli refusait « 200 000 »
+  (espace de milliers) : les trois exemples étaient marqués aria-invalid et la page disait « Remplis les trois cases ». Le repli
+  lit maintenant les mêmes écritures que le moteur dans la langue de la page ; une case n’est annoncée invalide qu’après un geste
+  ou à l’envoi ; le moteur est chargé en tâche de fond après le chargement (requestIdleCallback, repli 1,5 s, jamais si Save-Data)
+  pour que la réponse de l’exemple (8 h) s’affiche sans geste.
+- VIS-03 (mineure) : les listes « Mon objectif, c’est » et « Comment gagnes-tu ton argent ? » ont des libellés courts (« En plus de
+  ma réserve », « Ce que j’aurai en tout », « Ce que je vais gagner » ; « Par heure de jeu », « À chaque mission ») lisibles en
+  entier dans la case à 360 px, et une ligne d’aide dessous qui dit le sens complet (selectField accepte un hint). Six langues.
+
+MOBILE ET VISUEL
+- NAV-01 (majeure) : menu mobile coupé (en-tête collant, panneau « Explorer » à hauteur fixe sous neuf entrées : jusqu’à 8 liens
+  inatteignables). style.css : le menu ouvert est borné à la hauteur qui reste sous la barre et défile lui-même (overscroll
+  contenu) ; app.js mesure cette hauteur à l’ouverture, au redimensionnement, au défilement et à l’ouverture du panneau
+  (--lk-nav-max). Le panneau « Explorer » n’a plus sa limite de 60vh. Vérifié dans Chromium à 360×640, 390×664, 390×844 et
+  412×915 avec le bandeau de langue : le dernier lien (« Le GTA Online actuel ») est atteignable au doigt et au clavier.
+- UX-01 (moyenne) : bouton Léo. leo-loader.js ne cherche plus une place libre en remontant jusqu’au milieu de l’écran ni en
+  changeant de côté : un seul coin (bas droite), un seul cran de 70 px permis quand un élément cliquable occupe le coin (résumé
+  collant du calculateur au téléphone). Le mode compact, l’effacement au défilement et le retour au focus ne changent pas.
+  style.css réserve 96 px sous les mentions du pied de page au téléphone.
+- UI-001 (mineure) : panneau multi-lieux de la carte (#pins=…) : liste <ul class="mp-places">, un lieu par ligne, cible de 40 px,
+  filet entre les lignes (carte.js, carte-page.css) ; .mp-link des autres usages inchangé.
+- VIS-02 : « 4 décembre 2023 , 1 morceau » sur Radios : la ligne de métadonnées est un bloc de texte (plus un flex à gap).
+- VIS-04 : le champ de recherche (accueil, page introuvable) apparaît après 0,25 s au lieu de 1,2 s.
+- UX-05 : au téléphone, le sommaire du Tuto est une barre collante repliée sous l’en-tête qui affiche « Chapitre N sur 16 » ; un
+  toucher l’ouvre, le choix d’un chapitre la referme (gen-tuto.cjs, tuto.js, tuto.css). Rien ne change sur grand écran.
+- A11Y-01 : liens de sources des listes (catalogues.cjs) et des pages de recherche (gen-recherches.cjs) : le titre de la source
+  passe en title (description) et le nom accessible redevient le texte visible « source 1 » (WCAG 2.5.3, label-content-name-
+  mismatch) ; contrastes relevés (onglets « à venir » du Classement 6,3:1, numéros d’étapes du Compagnon 3,6:1 en grand texte,
+  compteur .cg-n explicite) ; lien « Lire en français » du bandeau en cible de 36 px ; second <nav> de armes.html nommé
+  « Raccourcis de l’armurerie ».
+
+CONTACT
+- ARCH-01 (modérée) : 500 emoji dans la description faisaient lever « URI malformed » (coupure du lien mailto au milieu d’une
+  paire UTF-16) : compteur et brouillon bloqués. contact.js coupe sur des points de code entiers et construit le lien à part
+  (une erreur ne bloque plus le brouillon). Six langues : lien ≤ 1 800 caractères et décodable, brouillon écrit.
+- ARCH-02 (mineure) : le motif du brouillon est restauré par la valeur stable de l’option (celle que l’envoi attend), plus par
+  son libellé traduit ; un ancien brouillon qui portait un libellé est encore reconnu.
+
+LIENS, MAILLAGE, TEXTES
+- SEO-001 (modérée) : 258 pages (43 fiches × 6 langues) portaient « &amp;amp;t= » dans « Ouvrir la carte interactive » : la
+  sélection multi-lieux n’était pas lue. gen-pages-elements.cjs et gen-pages-elements-b.cjs gardent l’adresse brute et l’échappent
+  une seule fois à chaque insertion. 0 « &amp;amp; » sur les pages par élément régénérées.
+- SEO-003 (moyenne) : les sept sommaires de familles (coiffures, tatouages, tenues, perso-véhicules, perso-armes, options-véhicules,
+  options-armes) n’étaient reliés par aucun lien ordinaire depuis l’accueil. gen-acquisitions.cjs ajoute sous chaque liste
+  dépliable le renvoi vers son sommaire (et vers le sommaire des options pour les personnalisations), six langues.
+- CONTENT-001 (modérée) : Collectibles disait « Aucune collection documentée » alors que la page confirme la collection de voitures
+  classiques de Wyman. gen-collectibles.cjs : quand une famille confirmée est présente, les textes d’état vide parlent de fiches
+  individuelles non publiées et citent la collection de Wyman (état, aide, résumé de revue). Aucun objet inventé, compteurs à 0,
+  noindex et sitemap inchangés.
+- I18N-01 : les accueils italien, espagnol et portugais disent aussi que l’alerte e-mail est en français (mémoires it/es/pt).
+- RED-01 : « relação relação » corrigé dans la mémoire portugaise (pt/tuto.html).
+- RED-02 : l’À propos n’annonce plus des « emplacements publicitaires réservés » (contradiction avec les Mentions) : « Pas de
+  publicité aujourd’hui : si des emplacements arrivaient un jour…, ils seraient décrits dans les Mentions avant d’être remplis » ;
+  même sens dans la réponse de Léo (leo-knowledge.json).
+- RED-03 : « L’édition Standard » dans la FAQ de l’accueil (comme « L’édition Ultimate »). Le reste n’est pas touché : « l’édition
+  Ultimate » après un article est une forme correcte, pas une incohérence (voir le rapport).
+- SEO-04 : H1 « GTA VI » sur Actualités, Vidéos, Éditions et Prix (outils/actus/actus.json ; les <title> gardent « GTA 6 »).
+- SEO-05 : la FAQ structurée de l’accueil n’inclut plus le texte d’un lien de navigation posé en fin de réponse (sync-site.cjs).
+- SEO-06 : la langue courante de la barre de langue est un vrai lien vers la page elle-même (aria-current="page") : atteignable au
+  clavier, « crawlable » (Lighthouse SEO ne plafonne plus à 92). langues.cjs et langues-elements.cjs (pages par élément), test
+  langues adapté ; c’est ce changement, présent sur les 26 731 pages, qui fait que l’archive contient toutes les pages.
+- SEO-07 : vercel.json redirige (308) les adresses courtes des 47 pages de la racine et de leurs cinq traductions vers la page
+  .html (/calculateurs → /calculateurs.html, /en/carte → /en/carte.html…), sans cleanUrls.
+- SEO-08 : balise robots homogène (« max-image-preview:large ») sur calculateurs.html et collectibles.html.
+- SEO-03 / REC-SEO-01 : gabarits traduits des descriptions des 3 244 pages de lieux de la carte raccourcis (EN, DE, IT, ES, PT :
+  « Where X is on the GTA VI map (Vice City): marker status, nearby places, map link. » ; « X, building in GTA VI in Vice Beach:
+  status, real-world inspiration, nearby places and position on the Leonida map. »). Pages indexables avec une description de plus
+  de 160 signes : 751 → 126 ; titres de plus de 65 signes : 78, inchangés (relecture page par page, pas de coupe automatique).
+- regenerer.cjs : variable LK_TAS (Mo) pour le tas des trois grosses étapes quand la machine a moins de 8 Go (6 144 par défaut).
+- SEO-002 (diagnostic interne) : outils/couverture-pages.cjs lit la balise robots réellement émise par chaque page existante
+  (véhicules : 54 indexables sur 302, armes : 18 sur 27) ; « seuil » garde l’estimation éditoriale, « indexeEffectif » dit ce que
+  la page publie. Aucune page ni directive changée.
+- DATA-01 : la page de démonstration codes-de-triche/modele.html (codes fictifs, noindex) n’est plus listée sur les pages de visuels
+  (« Où ce visuel apparaît ») : plus aucun lien visible vers elle. Elle reste générée pour l’aperçu du gabarit.
+
+SERVEUR ET HÉBERGEMENT
+- SEC-01 : /api/ia et /api/contact exigent l’en-tête Origin (403 sans ; un navigateur l’envoie toujours) ; plus de joker
+  « *.vercel.app » : les origines de prévisualisation s’écrivent dans LK_ORIGINES (Vercel, séparées par des virgules) ;
+  localhost admis hors production seulement. Un e-mail (Brevo, variables du formulaire de Contact) part une seule fois par jour
+  quand le plafond IA du jour est atteint.
+- SEC-02 : le sel des empreintes d’adresse IP ne retombe plus sur la clé API Anthropic : définir LK_IA_SEL dans Vercel
+  (valeur aléatoire) ; sinon « leonidakit » (les compteurs de 12 h repartent une fois à zéro au déploiement).
+- ARCH-R01 : base des compteurs (Upstash) configurée mais injoignable : plus de compteur local de remplacement (il n’était plus
+  commun aux instances) : 503 « compteur », la page garde sa réponse locale pour cette question. Sans base configurée, le
+  compteur en mémoire reste (test seulement) et « etat » renvoie base:false.
+- ARCH-R02 : budget temporel partagé : appel amont arrêté par le serveur à 13 s (la page abandonne à 15 s), délai de 2,5 s sur
+  chaque appel à la base ; un appel arrêté rend les compteurs.
+- ARCH-R03 : api/indexnow.js refuse l’exécution sans CRON_SECRET en production (le seul User-Agent « vercel-cron » n’est pas
+  une autorisation) et l’écrit dans le journal ; hors production, l’ancien repli reste.
+- TECH-02 : README : commande de tests complète (acorn, NODE_OPTIONS=--max-old-space-size=4096, mémoire et durée des tests lourds).
+
+NON RETENU OU LAISSÉ À TA DÉCISION (détail dans outils/RAPPORT-AUDITS-v8.06.md)
+- SEO-01 (politique noindex des fiches : décision d’éditeur), VIS-01 (champ de recherche dans tous les en-têtes : changement de
+  charte), UX-04 (Atelier 3D au menu, Progression dans un nouvel onglet : tes choix), PERF-01 / PERF-02 / ARCH-O01 (performance :
+  chantier à part, avec mesures avant/après), SEO-02 (index de sitemaps : fichier actuel sous les limites, resoumission Search
+  Console nécessaire), TECH-01 (suppression de 60 pages de redirection : lot avec liste de suppressions), TECH-03 (plan seulement),
+  PWA-01 (pt-BR partout, captures d’écran du manifeste), RED-04 (deux compteurs qui mesurent des choses différentes), Turnstile.
+
+CONTRÔLES
+- outils/tests/v806-audit.test.cjs (nouveau) : reproduction de chaque anomalie corrigée avec son attendu indépendant.
+- Suites existantes : voir LISEZ-MOI-v8.06.txt (résultats) ; cadre du calculateur réinstantané (outils/calculateur-cadre.json)
+  pour les libellés courts de VIS-03 et la ligne d’aide.
+- Captures Chromium avant/après et mesures : dossier de contrôle livré à part (hors dépôt).

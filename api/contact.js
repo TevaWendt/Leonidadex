@@ -14,7 +14,10 @@ const SENDER={name:'Leonidakit',email:PUBLIC_ADDRESS};
 const TOPICS=['Erreur dans une fiche','Suggestion de contenu','Problème de calcul ou d’affichage','Demande concernant un visuel','Réponse de Léo à corriger','Question sur le site','Question sur mes données','Presse ou partenariat'];
 const LIMITS={details:[10,5000],page:1000,source:1000,email:254,body:20000};
 const MIN_DELAY_MS=3000,MAX_AGE_MS=24*3600*1000,WINDOW_MS=10*60*1000,MAX_PER_WINDOW=5,SEND_TIMEOUT_MS=8000;
-const ORIGINS=[/^https:\/\/(?:www\.)?leonidakit\.com$/,/^https:\/\/[a-z0-9-]+\.vercel\.app$/,/^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/];
+/* v8.06 (audit SEC-01) : origines admises : le site, les origines de LK_ORIGINES (Vercel, séparées par des virgules), localhost hors
+   production ; plus de joker « *.vercel.app » ; l'en-tête Origin est exigé (un navigateur l'envoie toujours avec le formulaire). */
+const ORIGINS=[/^https:\/\/(?:www\.)?leonidakit\.com$/];
+function originOk(origin,env){if(!origin)return false;if(ORIGINS.some(re=>re.test(origin)))return true;const extra=String(env.LK_ORIGINES||'').split(',').map(x=>x.trim()).filter(Boolean);if(extra.includes(origin))return true;return env.VERCEL_ENV!=='production'&&/^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/.test(origin);}
 const hits=new Map();
 
 const clean=(v,max)=>typeof v==='string'?v.replace(/\r\n?/g,'\n').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g,'').trim().slice(0,max):'';
@@ -75,7 +78,7 @@ function createHandler(options={}){
  const env=options.env||process.env,fetchImpl=options.fetch||globalThis.fetch,clock=options.now||(()=>Date.now());
  return async function handler(req,res){
   if(req.method!=='POST')return reply(res,405,{ok:false,code:'method',message:'Seul l’envoi du formulaire est accepté ici.'},{Allow:'POST'});
-  const origin=req.headers?.origin;if(origin&&!ORIGINS.some(re=>re.test(origin)))return reply(res,403,{ok:false,code:'origin',message:'Envoi refusé depuis cette adresse.'});
+  const origin=req.headers?.origin;if(!originOk(origin,env))return reply(res,403,{ok:false,code:'origin',message:'Envoi refusé depuis cette adresse.'});
   if(!/application\/json/i.test(String(req.headers?.['content-type']||'')))return reply(res,415,{ok:false,code:'format',message:'Le message n’a pas pu être lu.'});
   if(Number(req.headers?.['content-length']||0)>LIMITS.body)return reply(res,413,{ok:false,code:'size',message:'Le message est trop long.'});
   let body;try{body=await readBody(req);}catch{body=null;}
@@ -92,4 +95,4 @@ function createHandler(options={}){
 
 module.exports=createHandler();
 module.exports.createHandler=createHandler;
-module.exports._test={validate,limited,reference,composeEmail,TOPICS,PUBLIC_ADDRESS,reset:()=>hits.clear()};
+module.exports._test={validate,limited,reference,composeEmail,originOk,TOPICS,PUBLIC_ADDRESS,reset:()=>hits.clear()};

@@ -8,9 +8,10 @@
      recalcule. S'il est déjà là (Tuto, pages qui le chargent), rien ne change. */
   let E = window.LKCalcEngine || null;
   let loadingEngine = null;
+  let engineFailed = false;
   function ensureEngine() {
     if (E) return Promise.resolve();
-    if (!loadingEngine) loadingEngine = (window.LK && window.LK.lazyScript ? window.LK.lazyScript('calculateurs-engine.js') : Promise.reject(new Error('lazy'))).then(function () { E = window.LKCalcEngine || null; preview(); }).catch(function () { loadingEngine = null; });
+    if (!loadingEngine) loadingEngine = (window.LK && window.LK.lazyScript ? window.LK.lazyScript('calculateurs-engine.js') : Promise.reject(new Error('lazy'))).then(function () { E = window.LKCalcEngine || null; preview(); }).catch(function () { loadingEngine = null; engineFailed = true; preview(); });
     return loadingEngine;
   }
   const output = document.getElementById('lk-mini-answer');
@@ -20,6 +21,32 @@
   const format = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 2 });
   let announceTimer;
 
+  /* v8.06 (audit UX-02 / CALC-002) : avant l'arrivée du moteur, le parseur de repli lisait « 200 000 » (espace de milliers
+     posé par echoes()) comme un nombre invalide : les trois exemples étaient marqués aria-invalid et l'aperçu disait « Remplis les
+     trois cases ». Le repli accepte maintenant les mêmes écritures que E.parseLocalizedNumber dans la langue de la page
+     (français : espace des milliers, virgule ou point décimal ; anglais : virgule des milliers, point décimal ; allemand,
+     espagnol, italien, portugais : point des milliers, virgule décimale, « 1.5 » décimal hors allemand). Le moteur reste la
+     référence dès qu'il est chargé. */
+  function parseFallback(value) {
+    const text = String(value).trim();
+    if (!text) return null;
+    const sep = /[ \u00a0\u202f]/g;
+    if (pageLang === 'de') {
+      if (!/^\d+(?:[. \u00a0\u202f]\d{3})*(?:,\d+)?$/.test(text)) return null;
+      return Number(text.replace(/[. \u00a0\u202f]/g, '').replace(',', '.'));
+    }
+    if (pageLang === 'es' || pageLang === 'it' || pageLang === 'pt') {
+      if (/^\d+\.\d{1,2}$/.test(text)) return Number(text);
+      if (!/^\d+(?:[. \u00a0\u202f]\d{3})*(?:,\d+)?$/.test(text)) return null;
+      return Number(text.replace(/[. \u00a0\u202f]/g, '').replace(',', '.'));
+    }
+    if (pageLang !== 'fr') {
+      if (!/^\d+(?:[, \u00a0\u202f]\d{3})*(?:\.\d+)?$/.test(text)) return null;
+      return Number(text.replace(/[, \u00a0\u202f]/g, ''));
+    }
+    if (!/^\d+(?:[ \u00a0\u202f]\d{3})*(?:[,.]\d+)?$/.test(text)) return null;
+    return Number(text.replace(sep, '').replace(',', '.'));
+  }
   function parse(value) {
     let n;
     if (E && E.parseLocalizedNumber) {
@@ -27,19 +54,21 @@
       if (!parsed.valid) return null;
       n = parsed.value;
     } else {
-      const text = String(value).trim();
-      if (!/^\d+(?:[,.]\d+)?$/.test(text)) return null;
-      n = Number(text.replace(',', '.'));
+      n = parseFallback(value);
+      if (n === null) return null;
     }
     return Number.isFinite(n) && n >= 0 && n <= 1e12 ? n : null;
   }
+  /* v8.06 : une case n'est annoncée invalide (aria-invalid) qu'après un geste du visiteur ou au moment de l'envoi : les exemples
+     du chargement ne sont jamais « invalides » pour un lecteur d'écran. */
+  let touched = false;
   function inputs(showErrors) {
     const values = {};
     let invalid;
     keys.forEach(key => {
       const field = form.elements.namedItem(key);
       const value = parse(field.value);
-      field.setAttribute('aria-invalid', value === null ? 'true' : 'false');
+      if (value === null && !(touched || showErrors)) field.removeAttribute('aria-invalid'); else field.setAttribute('aria-invalid', value === null ? 'true' : 'false');
       if (value === null && !invalid) invalid = field;
       values[key] = value;
     });
@@ -75,7 +104,8 @@
     const values = inputs(false);
     output.replaceChildren();
     if (!values) { output.textContent = 'Remplis les trois cases pour voir ta réponse.'; return; }
-    if (!E || !E.goalContinuous) { output.textContent = loadingEngine ? 'Un instant…' : 'Ouvre le calculateur complet pour voir ta réponse.'; return; }
+    /* v8.06 : tant que le moteur n'est pas là, un texte vrai (il arrive en tâche de fond, voir plus bas) plutôt qu'une consigne fausse */
+    if (!E || !E.goalContinuous) { output.textContent = loadingEngine || !engineFailed ? 'Un instant…' : 'Ouvre le calculateur complet pour voir ta réponse.'; return; }
     const result = E.goalContinuous(Object.assign({ dailyMinutes: 60, reserve: 0 }, values));
     if (!result.valid) { output.textContent = result.reason; return; }
     const main = document.createElement('div');
@@ -88,7 +118,16 @@
     output.append(main, detail);
   }
   form.addEventListener('focusin', () => { ensureEngine(); }, { once: true });
-  form.addEventListener('input', () => { ensureEngine(); clearTimeout(announceTimer); announceTimer = setTimeout(preview, 180); });
+  form.addEventListener('input', () => { touched = true; ensureEngine(); clearTimeout(announceTimer); announceTimer = setTimeout(preview, 180); });
+  /* v8.06 (audit UX-02) : la réponse de l'exemple s'affiche sans geste : le moteur est chargé en tâche de fond une fois la page
+     chargée (requestIdleCallback, repli 1,5 s), jamais avant le premier affichage ; pas de préchargement si le visiteur a demandé
+     d'économiser les données (Save-Data). Un geste dans le formulaire le charge tout de suite, comme avant. */
+  function preloadEngine() {
+    if (E || (navigator.connection && navigator.connection.saveData)) return;
+    const idle = typeof window.requestIdleCallback === 'function' ? cb => window.requestIdleCallback(cb, { timeout: 2500 }) : cb => setTimeout(cb, 1500);
+    idle(() => { ensureEngine(); });
+  }
+  if (document.readyState === 'complete') preloadEngine(); else window.addEventListener('load', preloadEngine, { once: true });
   form.addEventListener('submit', event => {
     event.preventDefault();
     clearTimeout(announceTimer);

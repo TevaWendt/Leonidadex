@@ -130,7 +130,10 @@
   }
 
   /* v8.02 (lot 1) : argent à avoir en poche pour lancer une activité (minCash), sans le dépenser ; null quand la donnée manque.
-     Lu par Mon objectif, Mon temps de jeu, la rotation et le business plan : sans minCash, rien ne change. */
+     Lu par Mon objectif, Mon temps de jeu, la rotation et le business plan : sans minCash, rien ne change.
+     Contrat (v8.06, audit CALC-003), le même dans goal, goalMixed, inverse, sessionPlan et missionPlan : minCash se compare à
+     l’argent détenu au moment où l’activité est lancée, AVANT de payer ses frais et son achat de départ (l’achat se fait pour
+     commencer, l’argent est donc encore en poche à cet instant) ; l’argent gardé de côté compte, puisqu’il est détenu. */
   function minCashOf(entry, label) { return !entry || entry.minCash === null || entry.minCash === undefined ? null : money(entry.minCash, 'l’argent à avoir pour lancer ' + label); }
   function holdText(name, minCash, held) { return 'Pour lancer ' + name + ', il faut avoir ' + dollars(minCash.toLocaleString('fr-FR'), ' ') + ' en poche (cet argent n’est pas dépensé) : il te manque encore ' + dollars(Math.max(1, Math.ceil(minCash - held - 1e-9)).toLocaleString('fr-FR'), ' ') + '.'; }
 
@@ -201,7 +204,13 @@
         var a = activities[index];
         var startingCash = subtract(cash, reserve);
         if (startingCash < (p.activities[index].cost || 0) && !equal(startingCash, p.activities[index].cost || 0)) return fail(shape, 'Pas assez d’argent pour avancer les coûts de « ' + a.name + ' » avant sa récompense, sans toucher à ta réserve.');
-        if (a.minCash !== null && cash < a.minCash - 1e-9) return fail(shape, holdText('« ' + a.name + ' »', a.minCash, cash)); /* v8.02 (lot 1) : argent à avoir en poche avant de la lancer */
+        /* v8.02 (lot 1) : argent à avoir en poche avant de la lancer. v8.06 (audit CALC-003) : même contrat que goal, inverse,
+           sessionPlan et missionPlan : l’argent détenu au moment du lancement, AVANT de payer les frais et l’achat de départ de
+           cette activité (la rotation paie tous les achats de départ dès le début : au premier lancement, l’argent détenu
+           avant son propre achat est cash + investment). Une rotation d’une seule activité a ainsi la même admissibilité que le
+           calcul seul. */
+        var held = cash + (counts[index] === 0 ? a.investment : 0);
+        if (a.minCash !== null && held < a.minCash - 1e-9) return fail(shape, holdText('« ' + a.name + ' »', a.minCash, held));
         var wait = Math.max(0, ready[index] - elapsed);
         var activeDuration = a.activeMinutes - (a.prepOnce && sessionCounts[index] ? a.prep : 0);
         if (elapsed + wait + activeDuration > daily + Number.EPSILON * daily * 4) {

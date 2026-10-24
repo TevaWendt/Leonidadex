@@ -1,0 +1,63 @@
+LEONIDAKIT v8.06 : corrections des deux audits du 23 octobre 2026 (calculateur, menu mobile, bouton Léo, Contact, liens, textes, serveur)
+
+À appliquer sur la v8.05 (dépôt GitHub TevaWendt/Leonidadex, commit 2a49067, déjà en ligne) : décompresse les 12 parties de
+l'archive « modifs » (Leonidakit-v8.06-modifs-01 à -12, indépendantes, aucun fichier en double entre elles, dans n'importe quel
+ordre) à la racine du dossier du site, en remplaçant les fichiers, puis dans GitHub Desktop : « Commit to main » et « Push origin ».
+Aucun fichier à supprimer. Rien n'a été poussé. Dans Vercel, trois variables à vérifier ou poser (voir plus bas).
+Pourquoi 26 930 fichiers : la barre de langue de chaque page change (la langue courante devient un vrai lien, SEO-06) et les
+empreintes ?v= des feuilles et scripts corrigés changent sur toutes les pages ; chaque fichier de l'archive diffère vraiment de la
+v8.05 (comparaison par contenu, pas par date).
+
+CE QUI CHANGE POUR LE VISITEUR
+  - Calculateur, « Mon objectif » : avec des dépenses par partie proches du gain, le nombre de parties était faux (211 au lieu de
+    900 ; un objectif « atteint » alors que chaque partie coûtait autant qu'elle rapportait). Le calcul converge et refuse un gain
+    net nul ou négatif. Les trois cartes « Avec quelle activité » donnent le même temps que « Ma réponse ». Les deux listes du
+    mode Simple ont des libellés courts, lisibles au téléphone, avec une ligne d'aide dessous.
+  - Accueil : la réponse de l'exemple (8 h) s'affiche sans rien toucher ; plus de « Remplis les trois cases » sur des cases remplies.
+  - Téléphone : le menu « Explorer » défile jusqu'à Mentions et GTA Online (8 liens étaient hors d'atteinte) ; le bouton Léo
+    reste toujours dans le coin bas droit (il ne couvre plus un texte ou un champ) ; le sommaire du Tuto reste visible en barre
+    collante (« Chapitre 12 sur 16 ») ; les liens de la sélection multi-lieux de la carte sont une liste, un lieu par ligne.
+  - Contact : un message avec beaucoup d'emoji ne bloque plus le compteur, le lien de messagerie ni le brouillon ; le motif du
+    brouillon est retrouvé dans les cinq langues traduites.
+  - Fiches par élément : « Ouvrir la carte interactive » sous la mini-carte ouvre bien la sélection des lieux (258 pages).
+  - Vêtements et style, Personnalisations : renvoi vers les sommaires « une page par élément » (sept sommaires enfin reliés).
+  - Collectibles : la page ne dit plus « Aucune collection documentée » alors qu'elle confirme la collection de Wyman.
+  - Textes : accueils IT/ES/PT (« e-mail en français »), À propos (plus d'« emplacements publicitaires réservés »), coquille
+    portugaise, « GTA VI » dans quatre titres de page, virgule des Radios, champ de recherche visible plus tôt, contrastes et
+    noms accessibles des liens de sources.
+  - Adresses courtes : leonidakit.com/calculateurs, /carte, /tuto… (et /en/…) mènent à la page au lieu d'une 404.
+
+SERVEUR (Vercel)
+  - /api/ia et /api/contact exigent l'en-tête Origin et n'acceptent plus « *.vercel.app » : une prévisualisation Vercel ne peut plus
+    appeler l'IA ni le formulaire sauf si son adresse est écrite dans la variable LK_ORIGINES (séparées par des virgules).
+  - Variables à poser dans Vercel (Settings → Environment Variables) : LK_IA_SEL (une valeur aléatoire quelconque, 32 caractères) ;
+    CRON_SECRET (s'il n'existe pas déjà : sans lui, la tâche IndexNow du matin est refusée en production depuis cette version, et le
+    journal Vercel le dit). Après la mise en ligne, un appel « etat » de l'IA renvoie base:true si Upstash est bien relié.
+  - Base des compteurs (Upstash) en panne : l'IA ne répond pas sur un compteur local (il ne serait plus commun) ; la page garde sa
+    réponse locale. Un e-mail (Brevo, vers CONTACT_TO) part une seule fois par jour quand le plafond IA du jour est atteint.
+
+FICHIERS
+  Sources : outils/sources (app.js, style.css, leo-loader.js, calculator-entry.js, calculateurs.js, calculateurs-scenario.js,
+  calculateurs-engine.js, contact.js, carte.js, carte-page.css, radios.css, tuto.js, tuto.css, classement.css, compagnon.css,
+  acquisitions.css), générateurs (gen-pages-elements.cjs, gen-pages-elements-b.cjs, gen-acquisitions.cjs, gen-collectibles.cjs,
+  gen-tuto.cjs, gen-recherches.cjs, catalogues.cjs, couverture-pages.cjs, langues.cjs, sync-site.cjs), données (actus.json,
+  informations-editorial.json, leo-knowledge.json, mémoires de traduction dont v806-audit.json), api/ia.js, api/contact.js,
+  api/indexnow.js, vercel.json, index.html, armes.html, calculateurs.html, collectibles.html, README.md, puis tout ce que la
+  régénération a changé (pages des six langues, scripts et feuilles servis, sitemaps). Détail : outils/CHANGEMENTS-v8.06.txt ;
+  registre identifiant par identifiant : outils/RAPPORT-AUDITS-v8.06.md.
+
+VÉRIFIÉ (détail : outils/RAPPORT-AUDITS-v8.06.md ; captures et mesures dans le dossier de contrôle, hors dépôt)
+  - node outils/verifier.js : aucune erreur, 4 097 284 références vérifiées dans 26 731 pages ; 0 texte sans traduction dans les
+    cinq langues ; index de Léo vérifié (gen-leo --check).
+  - Tests : 102 fichiers (le nouveau outils/tests/v806-audit.test.cjs rejoue chaque anomalie corrigée avec un attendu calculé à
+    part) : 1 265 tests de la suite courante + 1 (cadre du calculateur, réinstantané) + 52 (langues) + 21 (v8.06), tous « ok »
+    (deux attentes adaptées à la correction : langues.test.cjs pour le lien de langue courante, visuel-lot2 pour le texte des
+    Collectibles). Commande complète dans README (acorn et 4 Go de tas nécessaires).
+  - Chromium (Playwright) avant/après sur la v8.05 et la v8.06 : menu mobile atteignable jusqu'au dernier lien à 360×640, 390×664,
+    390×844 et 412×915 avec le bandeau de langue (il était coupé aux quatre tailles) ; bouton Léo au même coin sur 10 pages,
+    téléphone et bureau ; réponse de l'exemple de l'accueil affichée sans geste ; options du mode Simple lisibles en entier à
+    360 px ; panneau multi-lieux en trois lignes ; sommaire du Tuto collant « Chapitre 3 sur 16 » après défilement.
+  - Référencement : 0 lien cassé ; descriptions de plus de 160 signes sur les pages indexables : 751 → 126 ; noindex et sitemap :
+    même nombre de pages indexables (17 089) ; aucune directive changée.
+  - Non vérifié d'ici : la configuration Vercel (Upstash, CRON_SECRET, LK_IA_SEL) et les redirections 308 en production
+    (à contrôler après mise en ligne : https://www.leonidakit.com/calculateurs doit mener au calculateur).

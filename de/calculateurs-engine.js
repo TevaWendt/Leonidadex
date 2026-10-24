@@ -166,7 +166,8 @@
         var a = activities[index];
         var startingCash = subtract(cash, reserve);
         if (startingCash < (p.activities[index].cost || 0) && !equal(startingCash, p.activities[index].cost || 0)) return fail(shape, 'Nicht genug Geld, um die Kosten von „' + a.name + '“ vor der Belohnung vorzustrecken, ohne deine Reserve anzutasten.');
-        if (a.minCash !== null && cash < a.minCash - 1e-9) return fail(shape, holdText('„' + a.name + '“', a.minCash, cash));
+        var held = cash + (counts[index] === 0 ? a.investment : 0);
+        if (a.minCash !== null && held < a.minCash - 1e-9) return fail(shape, holdText('„' + a.name + '“', a.minCash, held));
         var wait = Math.max(0, ready[index] - elapsed);
         var activeDuration = a.activeMinutes - (a.prepOnce && sessionCounts[index] ? a.prep : 0);
         if (elapsed + wait + activeDuration > daily + Number.EPSILON * daily * 4) {

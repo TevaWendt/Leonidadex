@@ -37,7 +37,7 @@ module.exports = function run(H) {
 
   /* ---------- briques communes aux quatre pages ---------- */
   /* sources : {id: {url, title, publisher, publishedAt, consultedAt, statut}} ; liste numérotée en bas de page */
-  const srcRef = (SRC, id) => { const s = SRC[id]; if (!s) throw Error('Source inconnue : ' + id); return '<a class="rc-ref" href="#src-' + esc(id) + '" aria-label="' + esc('Source : ' + s.title) + '">' + esc(s.short || 'source') + '</a>'; };
+  const srcRef = (SRC, id) => { const s = SRC[id]; if (!s) throw Error('Source inconnue : ' + id); return '<a class="rc-ref" href="#src-' + esc(id) + '" title="' + esc('Source : ' + s.title) + '">' + esc(s.short || 'source') +/* v8.06 (audit A11Y-01) : le titre de la source est une description (title) ; le nom accessible reste le texte visible */ '</a>'; };
   const srcList = (SRC, ids) => '<ol class="ed-srcs rc-srcs">' + ids.map(id => { const s = SRC[id]; if (!s) throw Error('Source inconnue : ' + id);
     return '<li id="src-' + esc(id) + '" class="lk-reveal">' + S.pip(s.statut || 'officiel', true) + '<a class="ed-src-link" href="' + esc(s.url) + '" target="_blank" rel="noopener nofollow">' + esc(s.title) + '</a><span class="ed-src-meta">' + esc(s.publisher) + (s.publishedAt ? ', publié le ' + esc(frDate(s.publishedAt)) : '') + ', consulté le ' + esc(frDate(s.consultedAt)) + '</span>' + (s.claim ? '<p>' + gta(s.claim) + '</p>' : '') + '</li>'; }).join('') + '</ol>';
   const faqBlock = list => '<div class="faq">' + list.map(x => '<details class="lk-reveal"><summary>' + gta(x.q) + '</summary><div class="ans">' + gta(x.a) + (x.href ? ' <a href="' + esc(x.href) + '">' + esc(x.label) + '</a>' : '') + '</div></details>').join('') + '</div>';

@@ -431,7 +431,10 @@ function langBar(file, code, root = ROOT) {
     const lb = l.libelles || {};
     const note = !has && l.code !== code ? ' <small>' + escText((lb.accueil || 'home page')) + '</small>' : '';
     const current = l.code === code;
-    return '<li><a ' + (current ? 'aria-current="true" ' : 'href="' + escAttr(href) + '" ') + 'hreflang="' + l.code + '" lang="' + l.code + '" data-lk-lang="' + l.code + '"'
+    /* v8.06 (audit SEO-06) : la langue courante est un vrai lien vers la page elle-même (aria-current="page") : un <a> sans href
+       n'était ni atteignable au clavier ni « crawlable » (Lighthouse SEO plafonné à 92) */
+    const self = (l.code === cfg.source ? toRoot + file : toRoot + l.dossier + '/' + file).replace(/(^|\/)index\.html$/, '$1') || './';
+    return '<li><a ' + (current ? 'href="' + escAttr(self) + '" aria-current="page" ' : 'href="' + escAttr(href) + '" ') + 'hreflang="' + l.code + '" lang="' + l.code + '" data-lk-lang="' + l.code + '"'
       + (has && !current ? ' data-lk-equiv="1" data-offre="' + escAttr(lb.offre || '') + '" data-aller="' + escAttr(lb.aller || '') + '" data-rester="' + escAttr(lb.rester || '') + '"' : '') + '>'
       + escText(l.nom) + note + '</a></li>';
   }).join('');

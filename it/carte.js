@@ -312,7 +312,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
         ouvertId = null;
         panelIn.innerHTML = '<p class="mp-cat">' + esc(titre) + '</p><h3>' + pts.length + (lkPluriel(pts.length)?' luoghi sulla mappa' : ' luogo sulla mappa') + '</h3>' +
           '<p class="mp-d">Ogni luogo apre la sua scheda e centra la mappa su di esso.</p>' +
-          pts.map(function(p){ return '<a class="mp-link" href="#lieu=' + p.id + '">' + esc(p.n) + '</a>'; }).join('');
+          '<ul class="mp-places">' + pts.map(function(p){ return '<li><a class="mp-link mp-place" href="#lieu=' + p.id + '">' + esc(p.n) + '</a></li>'; }).join('') + '</ul>';
         panel.classList.add('open'); panel.inert = false;
         const cx = pts.reduce((a, p) => a + p.x, 0) / pts.length, cy = pts.reduce((a, p) => a + p.y, 0) / pts.length;
         const spread = Math.max.apply(null, pts.map(p => Math.hypot(p.x - cx, p.y - cy))) || 1;

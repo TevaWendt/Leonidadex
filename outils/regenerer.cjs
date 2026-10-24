@@ -9,6 +9,9 @@ const NODE_OPTS=['--max-old-space-size=4096'];
 /* v8.04 : gen.js (fiches des véhicules avec carte, légende et configuration) et sync-site.cjs (et lore-gen.js, qui l'appelle),
    qui traduit maintenant 26 664 pages, épuisent un tas de 4 Go : 6 Go pour ces trois étapes (machine de 8 Go, rien d'autre ne
    doit tourner pendant la régénération). */
-const optsFor=file=>/^(gen|sync-site|lore-gen)\./.test(file)?['--max-old-space-size=6144']:NODE_OPTS;
+/* v8.06 : LK_TAS (Mo) remplace les 6 144 Mo des trois grosses étapes quand la machine a moins de mémoire (exemple : LK_TAS=5000 sur
+   un atelier limité à 6 Go par processus ; V8 ramasse plus souvent, c'est un peu plus long). */
+const BIG=Number(process.env.LK_TAS)>0?Math.round(Number(process.env.LK_TAS)):6144;
+const optsFor=file=>/^(gen|sync-site|lore-gen)\./.test(file)?['--max-old-space-size='+BIG]:NODE_OPTS;
 for(const file of steps)execFileSync(process.execPath,[...optsFor(file),path.join(__dirname,file)],{cwd:root,stdio:'inherit'});
 execFileSync(process.execPath,[...NODE_OPTS,path.join(__dirname,'gen-leo.cjs'),'--check'],{cwd:root,stdio:'inherit'});

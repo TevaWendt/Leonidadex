@@ -30,9 +30,13 @@ function parseSitemap(xml) {
   }
   return out;
 }
+/* v8.06 (audit ARCH-R03) : en production, CRON_SECRET est exigé (Vercel l'envoie en Authorization: Bearer à chaque exécution planifiée
+   quand la variable existe) ; sans secret, la seule chaîne « vercel-cron » de l'User-Agent n'est pas une autorisation : refus,
+   et une ligne dans le journal pour le dire. Hors production (prévisualisation, test local), l'ancien repli reste permis. */
 function allowed(req, env) {
   const auth = String(req.headers?.authorization || ''), ua = String(req.headers?.['user-agent'] || '');
   if (env.CRON_SECRET) return auth === 'Bearer ' + env.CRON_SECRET;
+  if (env.VERCEL_ENV === 'production') { console.error('indexnow: CRON_SECRET absent en production : appel refusé (définir la variable dans Vercel)'); return false; }
   return /^vercel-cron\//.test(ua);
 }
 function createHandler(options = {}) {

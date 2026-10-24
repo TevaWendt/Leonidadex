@@ -127,11 +127,27 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
 
   /* menu mobile, présent sur toutes les pages */
   const burger = el('burger'), nav = el('nav');
-  if(burger && nav) burger.addEventListener('click', function(){
-    const open = nav.classList.toggle('open');
-    burger.setAttribute('aria-expanded', open);
-    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
-  });
+  /* v8.06 (audit NAV-01) : hauteur disponible sous la barre pour le menu ouvert (l’en-tête est collant : le menu défile
+     lui-même, voir style.css --lk-nav-max). Mesurée à l’ouverture, puis au redimensionnement et au défilement tant qu’il
+     est ouvert (la barre descend un peu quand le bandeau de langue est visible) ; retirée à la fermeture. */
+  let navTick = 0;
+  function navRoom(){
+    if(!nav || !nav.classList.contains('open')){ nav && nav.style.removeProperty('--lk-nav-max'); return; }
+    const top = nav.getBoundingClientRect().top, room = Math.floor(window.innerHeight - top - 18);
+    if(room > 120) nav.style.setProperty('--lk-nav-max', room + 'px'); else nav.style.removeProperty('--lk-nav-max');
+  }
+  function navRoomSoon(){ if(navTick) return; navTick = requestAnimationFrame(function(){ navTick = 0; navRoom(); }); }
+  if(burger && nav){
+    burger.addEventListener('click', function(){
+      const open = nav.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open);
+      burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+      navRoom();
+    });
+    window.addEventListener('resize', navRoomSoon);
+    window.addEventListener('scroll', navRoomSoon, { passive: true });
+    nav.addEventListener('toggle', navRoomSoon, true); /* ouverture du panneau « Explorer » (details) */
+  }
 
   const moreMenu=document.querySelector('.nav-more');
   document.addEventListener('click',e=>{if(moreMenu?.open&&!moreMenu.contains(e.target))moreMenu.open=false;});
@@ -208,7 +224,7 @@ const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)')
   document.addEventListener('keydown',function(e){
     const editing = e.target.closest('input,textarea,select,[contenteditable="true"]');
     if(e.key==='/' && !editing && !document.getElementById('vq')){const q=document.getElementById('q');if(q){e.preventDefault();q.focus();}}
-    if(e.key==='Escape' && nav?.classList.contains('open')){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.setAttribute('aria-label','Ouvrir le menu');burger.focus();}
+    if(e.key==='Escape' && nav?.classList.contains('open')){nav.classList.remove('open');nav.style.removeProperty('--lk-nav-max');burger.setAttribute('aria-expanded','false');burger.setAttribute('aria-label','Ouvrir le menu');burger.focus();}
   });
 
   /* apparitions au défilement, sur toutes les pages : v7.54, service commun LKMotion (common.js), un seul observateur.

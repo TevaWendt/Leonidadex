@@ -138,7 +138,7 @@
 .cp-story-k{display:flex;align-items:center;gap:10px;margin:0;}
 .cp-story-ico{display:grid;place-items:center;width:44px;height:44px;border:2px solid var(--ink);border-radius:12px;background:var(--amber);}
 .cp-story-ico .cp-ico{width:24px;height:24px;}
-.cp-story-n{font:900 1.6rem/1 'Archivo',sans-serif;letter-spacing:-.04em;color:var(--rule);transition:color var(--c-standard,300ms);}
+.cp-story-n{font:900 1.6rem/1 'Archivo',sans-serif;letter-spacing:-.04em;color:#8A867D;transition:color var(--c-standard,300ms);}
 .cp-story-i.is-on .cp-story-n{color:var(--coral);}
 .cp-story-t{margin:0;font:900 clamp(1.35rem,1.1rem + 1vw,1.9rem)/1.1 'Archivo',sans-serif;letter-spacing:-.03em;}
 .cp-story-d{margin:0;font-size:1.02rem;color:var(--ink-soft);}

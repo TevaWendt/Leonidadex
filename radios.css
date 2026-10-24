@@ -44,7 +44,8 @@
 .radios-poste:not(.radios-poste--js) .radios-panneau+.radios-panneau{margin-top:28px;padding-top:24px;border-top:2px dashed var(--rule);}
 .radios-panneau:focus-visible{outline:3px solid var(--coral);outline-offset:4px;border-radius:6px;}
 .radios-panneau-h h3{font-size:var(--fs-h3);line-height:1.2;margin:0 0 4px;}
-.radios-panneau-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px;color:var(--ink-soft);font-size:.92rem;margin:0 0 6px;}
+.radios-panneau-meta{display:block;color:var(--ink-soft);font-size:.92rem;line-height:1.7;margin:0 0 6px;}
+.radios-panneau-meta .ed-status{vertical-align:middle;margin-left:4px;}
 .radios-panneau-txt{max-width:var(--measure);margin:0 0 8px;}
 .radios-panneau-liens{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 16px;}
 .radios-panneau-liens a,.radios-morceau-liens a{color:var(--coral-text);font-weight:700;text-decoration:underline;text-underline-offset:3px;}

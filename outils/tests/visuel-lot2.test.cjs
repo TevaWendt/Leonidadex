@@ -86,7 +86,7 @@ test('CONT-01 : « Méthode et sources » de Collectibles est généré au forma
   }
   assert.ok(srcs.some(li => /rockstargames\.com/.test(li.querySelector('a').href)), 'Rockstar d’abord');
   assert.ok(sec.querySelector('time#col-review-date[datetime="2026-10-01"]'), 'date de revue');
-  assert.match(sec.querySelector('#col-review-summary').textContent, /Aucune collection suffisamment documentée/, 'résumé mis à jour par le générateur');
+  assert.match(sec.querySelector('#col-review-summary').textContent, /Aucune (?:collection suffisamment documentée|fiche individuelle n’a pu être publiée)/, 'résumé mis à jour par le générateur'); /* v8.06 (audit CONTENT-001) : avec une collection confirmée dans le hub, le résumé parle de fiches individuelles */
   assert.match(sec.querySelector('.ed-callout').textContent, /Ce qu’on ne fait pas\./);
   assert.ok(sec.querySelector('.ed-callout a[href="tuto.html#sources"]') && sec.querySelector('.ed-callout a[href="contact.html"]'));
   /* rien d’inventé : aucun objet, aucune quantité, aucun emplacement */

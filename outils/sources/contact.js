@@ -21,10 +21,13 @@ const values=()=>({topic:F.topic.value,page:F.page.value.trim(),details:F.detail
 const topicLabel=t=>{for(const o of F.topic.options)if(o.value===t)return o.textContent;return t;};
 const compose=v=>['Objet : '+topicLabel(v.topic),'Page : '+(v.page||'À préciser'),'','Description et correction proposée :',v.details,'','Source : '+(v.source||'À préciser')].concat(v.email?['','Adresse pour répondre : '+v.email]:[]).join('\n');
 /* lien de messagerie : objet + corps, coupé proprement si l’adresse devient trop longue pour les messageries */
+/* v8.06 (audit ARCH-01) : la coupure se fait sur des points de code entiers (Array.from), jamais au milieu d’une paire de
+   substitution UTF-16 (emoji) : encodeURIComponent levait « URI malformed » et bloquait le compteur et le brouillon. */
 function mailtoHref(v){if(!ADDRESS)return '#ecrire';const subject='[Leonidakit] '+topicLabel(v.topic);let body=compose(v),href='mailto:'+ADDRESS+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
- if(href.length>MAX_MAILTO){const note='\n\n[…] Texte coupé : colle la suite depuis le bouton « Copier le texte » de la page.';let lo=0,hi=body.length;while(lo<hi){const mid=Math.ceil((lo+hi)/2),h='mailto:'+ADDRESS+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body.slice(0,mid)+note);if(h.length<=MAX_MAILTO)lo=mid;else hi=mid-1;}href='mailto:'+ADDRESS+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body.slice(0,lo)+note);}
+ if(href.length>MAX_MAILTO){const note='\n\n[…] Texte coupé : colle la suite depuis le bouton « Copier le texte » de la page.',cps=Array.from(body),cut=n=>cps.slice(0,n).join('');let lo=0,hi=cps.length;while(lo<hi){const mid=Math.ceil((lo+hi)/2),h='mailto:'+ADDRESS+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(cut(mid)+note);if(h.length<=MAX_MAILTO)lo=mid;else hi=mid-1;}href='mailto:'+ADDRESS+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(cut(lo)+note);}
  return href;}
-function refresh(){const v=values();if(count)count.textContent=new Intl.NumberFormat('fr-FR').format(F.details.value.length)+' sur 5 000 caractères';if(mailto)mailto.href=mailtoHref(v);}
+/* v8.06 (audit ARCH-01) : le lien de messagerie est construit à part : une erreur dans sa construction ne bloque ni le compteur ni le brouillon. */
+function refresh(){const v=values();if(count)count.textContent=new Intl.NumberFormat('fr-FR').format(F.details.value.length)+' sur 5 000 caractères';if(mailto){let h='#ecrire';try{h=mailtoHref(v);}catch{h='#ecrire';}mailto.href=h;}}
 /* ---------- erreurs de saisie (annoncées) ---------- */
 function setError(name,text){const input=F[name],err=$('err-'+name);if(!input)return;if(text){input.setAttribute('aria-invalid','true');if(err)err.textContent=text;}else{input.removeAttribute('aria-invalid');if(err)err.textContent='';}}
 function check(){const v=values(),errors={};
@@ -36,7 +39,7 @@ function check(){const v=values(),errors={};
 /* ---------- brouillon local ---------- */
 function saveDraft(){try{const v=values();if(!v.details&&!v.page&&!v.source&&!v.email){localStorage.removeItem(DRAFT);return;}localStorage.setItem(DRAFT,JSON.stringify({v:1,at:Date.now(),...v}));}catch{}}
 function clearDraft(){try{localStorage.removeItem(DRAFT);}catch{}}
-function restoreDraft(){try{const raw=localStorage.getItem(DRAFT);if(!raw||raw.length>20000)return false;const d=JSON.parse(raw);if(d.v!==1)return false;for(const k of Object.keys(F)){if(!F[k]||typeof d[k]!=='string')continue;if(k==='topic'){if([...F.topic.options].some(o=>o.textContent===d.topic))F.topic.value=d.topic;}else F[k].value=d[k];}return !!(d.details||d.page);}catch{return false;}}
+function restoreDraft(){try{const raw=localStorage.getItem(DRAFT);if(!raw||raw.length>20000)return false;const d=JSON.parse(raw);if(d.v!==1)return false;for(const k of Object.keys(F)){if(!F[k]||typeof d[k]!=='string')continue;if(k==='topic'){/* v8.06 (audit ARCH-02) : le brouillon garde la valeur stable de l’option (la valeur française attendue par l’envoi) : comparer la valeur, pas le libellé traduit ; un ancien brouillon qui portait un libellé est encore reconnu */const o=[...F.topic.options].find(o=>o.value===d.topic)||[...F.topic.options].find(o=>o.textContent===d.topic);if(o)F.topic.value=o.value;}else F[k].value=d[k];}return !!(d.details||d.page);}catch{return false;}}
 /* ---------- préremplissage par l’adresse ---------- */
 let prefilled=false;
 try{const h=location.hash.slice(1),p=new URLSearchParams(/(?:^|&)(?:motif|question|reponse|details|page|source)=/.test(h)?h:location.search);const pick=(k,max)=>{const v=p.get(k);return typeof v==='string'?v.replace(/[\u0000-\u0008\u000b-\u001f]/g,' ').slice(0,max):'';};

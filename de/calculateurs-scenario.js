@@ -186,8 +186,14 @@ function goalBase(s,source=[]){
   const a=compatible.find(a=>a.id===g.selected);if(!a){const excluded=all.find(a=>a.id===g.selected);return{valid:false,reason:excluded&&excluded.players>g.players?'Dieses Szenario braucht '+excluded.players+' Spieler; ihr seid '+g.players+'.':onceOnly(excluded)?'„'+excluded.name+'“ macht man nur einmal: Sie lässt sich nicht bis zu deinem Ziel wiederholen. Leg sie in den Businessplan, zu den Missionen, die man wiederholen kann.':excluded&&excluded.otherCharacter?'„'+excluded.name+'“ läuft '+otherReason(excluded,s)+' (Meine zusätzlichen Annahmen).':'Wähle eine Aktivität, die zu deiner Gruppe und den Käufen passt, die du besitzt.'};}
   return E.goal({...g,target:t,activity:a});};
  if(!up)return settle(run(0),plannedOf(g));
- let extra=0,r=run(0);for(let i=0;i<24&&r.valid;i+=1){const need=up*r.sessions;if(need===extra)break;extra=need;r=run(extra);}
- return r.valid?settle({...r,upkeepTotal:extra},plannedOf(g)+extra):r;
+ const r0=run(0);if(!r0.valid)return r0;if(!(r0.sessions>0))return settle(r0,plannedOf(g));
+ let lastReason=null;const fits=S=>{const r=run(up*S);if(!r.valid){lastReason=r.reason;return null;}return r.sessions<=S?r:null;};
+ const CAP=1e6;let lo=r0.sessions,hi=lo,rh=fits(hi);
+ while(!rh&&hi<CAP){lo=hi;hi=Math.min(CAP,hi*2);rh=fits(hi);}
+ if(!rh)return {valid:false,reason:lastReason||UPKEEP_EATS};
+ while(hi-lo>1){const mid=Math.floor((lo+hi)/2),rm=fits(mid);if(rm){hi=mid;rh=rm;}else lo=mid;}
+ const extra=up*rh.sessions;
+ return settle({...rh,upkeepTotal:extra},plannedOf(g)+extra);
 }
 function session(s,source=[]){
  if(!Number.isInteger(s.goal.players)||s.goal.players<1||s.goal.players>100)return{valid:false,reason:'Sag in „Meine Aktivitäten“, ob du allein oder mit anderen spielst.'};

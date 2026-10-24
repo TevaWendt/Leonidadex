@@ -152,3 +152,15 @@
 .t-pitfall summary::before{content:'!';display:inline-grid;place-items:center;width:22px;height:22px;margin-right:10px;border-radius:50%;background:var(--coral);color:#fff;font:900 .8rem/1 'Archivo',sans-serif;}
 .t-back{display:inline-flex;align-items:center;gap:6px;}
 @media(prefers-reduced-motion:reduce){.t-hero-fig,.t-aside-prog i,.t-steps li{transition:none;}.t-hero-fig,.t-hero:hover .t-hero-fig{transform:none;}.t-steps li:hover{transform:none;}}
+/* v8.06 (audit UX-05) : au téléphone (une colonne), le sommaire devient une barre collante repliée sous l'en-tête (tuto.js la replie
+   et la referme après le choix d'un chapitre) : « Sommaire du Tuto, chapitre N sur 16 » reste lisible sur les 86 000 px de la page. */
+.t-aside-now{display:none;}
+@media(max-width:900px){
+ .t-aside{position:sticky;top:calc(var(--lk-head-h,62px) + 6px);z-index:29;}
+ .t-aside details{padding:8px 12px 10px;}
+ .t-aside summary{min-height:40px;font-size:.98rem;}
+ .t-aside-now{display:inline-block;margin-left:auto;font:800 .66rem/1.3 var(--font-mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;}
+ .t-aside-hint{display:none;}
+ .t-aside details[open] nav{max-height:min(60vh,440px);overflow:auto;overscroll-behavior:contain;}
+}
+@media(max-height:520px){.t-aside{position:static;}}

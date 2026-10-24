@@ -28,8 +28,19 @@ const MODELS=/^claude-[a-z0-9.-]{3,60}$/;
 const LANGS={fr:'français',en:'anglais',es:'espagnol',it:'italien',de:'allemand',pt:'portugais du Brésil (avec « você »)'};
 const TOOLS=['goal','purchase','session','budget','order','roi','activities','compare','plan'];
 const LIMITS={body:24000,question:400,page:200,local:1600,passages:6,passage:900,history:4,historyItem:400,state:3000};
-const WINDOW_MS=10*60*1000,MAX_PER_WINDOW=60,TIMEOUT_MS=18000; /* v7.69 : anti-rafale à 60 par 10 minutes (les questions gratuites par 12 heures sont comptées à part) */
-const ORIGINS=[/^https:\/\/(?:www\.)?leonidakit\.com$/,/^https:\/\/[a-z0-9-]+\.vercel\.app$/,/^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/];
+const WINDOW_MS=10*60*1000,MAX_PER_WINDOW=60; /* v7.69 : anti-rafale à 60 par 10 minutes (les questions gratuites par 12 heures sont comptées à part) */
+/* v8.06 (audit ARCH-R02) : budget temporel partagé. La page abandonne à 15 s (lk-ia.js) : le serveur arrête l'appel amont avant
+   (13 s) et rend les compteurs ; chaque appel à la base des compteurs a son propre délai (2,5 s). Un appel amont abandonné par
+   le serveur est compté comme non facturé par le site (la facturation réelle dépend du fournisseur) ; un abandon de la page
+   seule ne prouve pas que le fournisseur a arrêté : le serveur, lui, va jusqu'au bout de son propre délai puis rend les
+   compteurs si la réponse n'est pas arrivée. */
+const TIMEOUT_MS=13000,KV_TIMEOUT_MS=2500;
+/* v8.06 (audit SEC-01) : origines admises : le site, puis les origines écrites dans LK_ORIGINES (Vercel, séparées par des
+   virgules : une prévisualisation précise, un domaine de test) ; localhost hors production seulement. Plus de joker
+   « *.vercel.app ». L'en-tête Origin est exigé : les navigateurs l'envoient toujours avec un POST fetch ; un appel sans en-tête
+   (script, outil en ligne de commande) est refusé (403). */
+const ORIGINS=[/^https:\/\/(?:www\.)?leonidakit\.com$/];
+function originOk(origin,env){if(!origin)return false;if(ORIGINS.some(re=>re.test(origin)))return true;const extra=String(env.LK_ORIGINES||'').split(',').map(x=>x.trim()).filter(Boolean);if(extra.includes(origin))return true;return env.VERCEL_ENV!=='production'&&/^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/.test(origin);}
 const hits=new Map(),freeMem=new Map();
 const FREE_DEFAULT=15,HOURS_DEFAULT=12,IP_FACTOR=5;
 /* v7.86 (avis demandé par Téva : « le coût de l'IA ») : budget global par jour, tous visiteurs confondus. Les 15 questions par
@@ -186,13 +197,16 @@ function settings(env){
  const n=(v,d,min,max)=>{const x=Number(v);return Number.isFinite(x)&&x>=min&&x<=max?x:d;};
  const url=env.KV_REST_API_URL||env.UPSTASH_REDIS_REST_URL,token=env.KV_REST_API_TOKEN||env.UPSTASH_REDIS_REST_TOKEN;
  const kv=url&&token&&/^https:\/\//.test(url)?{url:String(url).replace(/\/+$/,''),token:String(token)}:null;
- return {free:Math.round(n(env.LK_IA_GRATUIT,FREE_DEFAULT,0,1000)),windowS:Math.round(n(env.LK_IA_HEURES,HOURS_DEFAULT,1,168)*3600),kv,salt:String(env.LK_IA_SEL||env.ANTHROPIC_API_KEY||'leonidakit')};
+ return {free:Math.round(n(env.LK_IA_GRATUIT,FREE_DEFAULT,0,1000)),windowS:Math.round(n(env.LK_IA_HEURES,HOURS_DEFAULT,1,168)*3600),kv,salt:String(env.LK_IA_SEL||'leonidakit')/* v8.06 (audit SEC-02) : plus de repli sur la clé API ; définir LK_IA_SEL (valeur aléatoire) dans Vercel */};
 }
 const digest=(salt,v)=>crypto.createHash('sha256').update(salt+'|'+v).digest('hex').slice(0,32);
 async function kvRun(kv,fetchImpl,cmds){
- const r=await fetchImpl(kv.url+'/pipeline',{method:'POST',headers:{Authorization:'Bearer '+kv.token,'Content-Type':'application/json'},body:JSON.stringify(cmds)});
- if(!r.ok)throw Error('kv '+r.status);const j=await r.json();if(!Array.isArray(j))throw Error('kv');
- return j.map(x=>{if(x&&x.error)throw Error('kv '+x.error);return x?x.result:null;});
+ const controller=typeof AbortController==='function'?new AbortController():null,timer=controller?setTimeout(()=>controller.abort(),KV_TIMEOUT_MS):0;
+ try{
+  const r=await fetchImpl(kv.url+'/pipeline',{method:'POST',headers:{Authorization:'Bearer '+kv.token,'Content-Type':'application/json'},body:JSON.stringify(cmds),signal:controller?controller.signal:undefined});
+  if(!r.ok)throw Error('kv '+r.status);const j=await r.json();if(!Array.isArray(j))throw Error('kv');
+  return j.map(x=>{if(x&&x.error)throw Error('kv '+x.error);return x?x.result:null;});
+ }finally{if(timer)clearTimeout(timer);}
 }
 /* compteur gratuit : un essai consomme une question (sauf lecture seule) ; au-delà de la limite, rien n'est retenu */
 function keysOf(st,who,ip){const ki='lkia:q:i:'+digest(st.salt,'ip:'+ip);return {ka:who.appareil?'lkia:q:a:'+digest(st.salt,'app:'+who.appareil):ki,ki,capA:st.free,capI:who.appareil?st.free*IP_FACTOR:st.free};}
@@ -205,8 +219,8 @@ async function freeUse(st,who,ip,fetchImpl,now,take){
    const na=Number(r[1]),ni=ka===ki?na:Number(r[4]),reset=Number(r[2])>0?now+Number(r[2]):null;
    if(na>capA||ni>capI){await kvRun(st.kv,fetchImpl,ka===ki?[['DECR',ka]]:[['DECR',ka],['DECR',ki]]).catch(()=>{});return {ok:false,restant:0,reset};}
    return {ok:true,restant:Math.max(0,Math.min(st.free,capA)-na),reset,undo:()=>kvRun(st.kv,fetchImpl,ka===ki?[['DECR',ka]]:[['DECR',ka],['DECR',ki]]).catch(()=>{})};
-  }catch(e){console.error('ia: base des compteurs indisponible');}}
- /* sans base : mémoire vive de cette instance */
+  }catch(e){console.error('ia: base des compteurs indisponible');if(take)return {ok:false,restant:0,reset:null,indisponible:true};/* v8.06 (audit ARCH-R01) : base configurée mais en panne : aucune question payante n'est servie sur un compteur local (il ne serait plus commun à toutes les instances) ; la page garde son repli local */}}
+ /* sans base configurée : mémoire vive de cette instance (compteur propre à chaque instance : à n'utiliser qu'en test ; v8.06 : signalé dans « etat » par base:false) */
  for(const [k,v] of freeMem)if(v.until<=now)freeMem.delete(k);
  const a=freeMem.get(ka)||{n:0,until:now+st.windowS*1000},i=ka===ki?a:(freeMem.get(ki)||{n:0,until:now+st.windowS*1000});
  if(!take)return {ok:a.n<capA,restant:Math.max(0,st.free-Math.min(st.free,a.n)),reset:a.n?a.until:null};
@@ -233,8 +247,8 @@ async function dayUse(st,env,fetchImpl,now,take){
    const r=await kvRun(st.kv,fetchImpl,[['INCR',kq],['EXPIRE',kq,String(DAY_TTL)],['GET',kc]]);
    if(Number(r[0])>lim.calls||(Number(r[2])||0)>=lim.micro){await kvRun(st.kv,fetchImpl,[['DECR',kq]]).catch(()=>{});return {ok:false,reset};}
    return {ok:true,reset,undo:()=>kvRun(st.kv,fetchImpl,[['DECR',kq]]).catch(()=>{}),spend:m=>m>0?kvRun(st.kv,fetchImpl,[['INCRBY',kc,String(m)],['EXPIRE',kc,String(DAY_TTL)]]).catch(()=>{}):Promise.resolve()};
-  }catch(e){console.error('ia: base des compteurs indisponible (budget du jour)');}}
- /* sans base : mémoire vive de cette instance */
+  }catch(e){console.error('ia: base des compteurs indisponible (budget du jour)');if(take)return {ok:false,reset,indisponible:true};/* v8.06 (audit ARCH-R01) : plafond du jour non vérifiable : pas d'appel facturable */}}
+ /* sans base configurée : mémoire vive de cette instance (plafond propre à chaque instance : à n'utiliser qu'en test) */
  for(const k of dayMem.keys())if(k!==d)dayMem.delete(k);
  const m=dayMem.get(d)||{q:0,c:0};dayMem.set(d,m);
  if(!take)return {ok:m.q<lim.calls&&m.c<lim.micro,reset};
@@ -242,11 +256,25 @@ async function dayUse(st,env,fetchImpl,now,take){
  m.q++;return {ok:true,reset,undo:()=>{m.q=Math.max(0,m.q-1);},spend:x=>{if(x>0)m.c+=x;return Promise.resolve();}};
 }
 
+/* v8.06 (audit SEC-01) : un e-mail (Brevo, mêmes variables que le formulaire de Contact : BREVO_API_KEY, CONTACT_TO) la première fois que
+   le plafond du jour est atteint, une seule fois par jour (clé SET NX dans la base ; sans base, une fois par instance). Jamais
+   bloquant : toute erreur est ignorée. */
+const alerteMem=new Set();
+async function alertePlafond(st,env,fetchImpl,now){
+ if(!env.BREVO_API_KEY||typeof fetchImpl!=='function')return;const to=String(env.CONTACT_TO||'').trim();if(!/^[^\s<>@,;"]+@[^\s<>@,;"]+\.[^\s<>@,;"]{2,}$/.test(to))return;
+ const d=dayKey(now),k='lkia:j:'+d+':alerte';
+ if(st.kv){const r=await kvRun(st.kv,fetchImpl,[['SET',k,'1','EX',String(DAY_TTL),'NX']]);if(r[0]!=='OK')return;}else{if(alerteMem.has(d))return;alerteMem.add(d);}
+ const lim=daySettings(env),text='Leonidakit : le plafond du jour de l\'IA est atteint ('+d+', heure de Paris).\nAppels par jour : '+lim.calls+' (LK_IA_PLAFOND_JOUR), budget : '+(lim.micro/1e6)+' $ (LK_IA_BUDGET_JOUR).\nLe site est repassé en mode local (Léo local, lecture locale du calculateur) jusqu\'à minuit. Rien à faire si c\'est voulu ; sinon, relever le plafond dans Vercel.';
+ const controller=typeof AbortController==='function'?new AbortController():null,timer=controller?setTimeout(()=>controller.abort(),5000):0;
+ try{await fetchImpl('https://api.brevo.com/v3/smtp/email',{method:'POST',headers:{'api-key':env.BREVO_API_KEY,'content-type':'application/json',accept:'application/json'},body:JSON.stringify({sender:{name:'Leonidakit',email:'contact@leonidakit.com'},to:[{email:to}],subject:'[Leonidakit] Plafond IA du jour atteint ('+d+')',textContent:text,tags:['ia-plafond']}),signal:controller?controller.signal:undefined});}
+ finally{if(timer)clearTimeout(timer);}
+}
+
 function createHandler(options={}){
  const env=options.env||process.env,fetchImpl=options.fetch||globalThis.fetch,clock=options.now||(()=>Date.now());
  return async function handler(req,res){
   if(req.method!=='POST')return reply(res,405,{ok:false,code:'method'},{Allow:'POST'});
-  const origin=req.headers?.origin;if(origin&&!ORIGINS.some(re=>re.test(origin)))return reply(res,403,{ok:false,code:'origin'});
+  const origin=req.headers?.origin;if(!originOk(origin,env))return reply(res,403,{ok:false,code:'origin'});
   if(!/application\/json/i.test(String(req.headers?.['content-type']||'')))return reply(res,415,{ok:false,code:'format'});
   if(Number(req.headers?.['content-length']||0)>LIMITS.body)return reply(res,413,{ok:false,code:'size'});
   if(!env.ANTHROPIC_API_KEY||typeof fetchImpl!=='function')return reply(res,503,{ok:false,code:'off'});
@@ -257,13 +285,16 @@ function createHandler(options={}){
   const model=MODELS.test(String(env.LK_IA_MODELE||''))?env.LK_IA_MODELE:MODEL_DEFAULT;
   /* v7.69 : état de l'accès (questions gratuites restantes, heure du renouvellement), sans rien consommer */
   if(d.mode==='etat'){const f=await freeUse(st,who,ip,fetchImpl,now,false),g=await dayUse(st,env,fetchImpl,now,false);
-   return reply(res,200,{ok:true,mode:'etat',modele:model,gratuit:st.free,heures:st.windowS/3600,restant:f.restant,reset:f.reset,...(g.ok?{}:{plafond:g.reset})});}
+   return reply(res,200,{ok:true,mode:'etat',modele:model,gratuit:st.free,heures:st.windowS/3600,restant:f.restant,reset:f.reset,base:!!st.kv,...(g.ok?{}:{plafond:g.reset})});}
   if(limited(ip,now))return reply(res,429,{ok:false,code:'rate'});
   const access=await freeUse(st,who,ip,fetchImpl,now,true);
+  /* v8.06 (audit ARCH-R01) : compteurs injoignables : 503 « compteur », la page garde sa réponse locale pour cette question */
+  if(!access.ok&&access.indisponible)return reply(res,503,{ok:false,code:'compteur'});
   if(!access.ok)return reply(res,402,{ok:false,code:'quota',gratuit:st.free,heures:st.windowS/3600,restant:0,reset:access.reset});
   /* v7.86 : budget global du jour atteint : la question du visiteur n'est pas comptée, la page passe en mode local jusqu'à minuit */
   const day=await dayUse(st,env,fetchImpl,now,true);
-  if(!day.ok){if(access.undo)await access.undo();return reply(res,402,{ok:false,code:'plafond',gratuit:st.free,heures:st.windowS/3600,restant:Math.min(st.free,access.restant+1),reset:access.reset,plafond:day.reset});}
+  if(!day.ok&&day.indisponible){if(access.undo)await access.undo();return reply(res,503,{ok:false,code:'compteur'});}
+  if(!day.ok){if(access.undo)await access.undo();alertePlafond(st,env,fetchImpl,now).catch(()=>{});return reply(res,402,{ok:false,code:'plafond',gratuit:st.free,heures:st.windowS/3600,restant:Math.min(st.free,access.restant+1),reset:access.reset,plafond:day.reset});}
   const r=await callClaude(d,env,fetchImpl);
   if(!r.ok){if(access.undo)await access.undo();if(day.undo)await day.undo();console.error('ia: réponse refusée par le service ('+r.status+(r.why?' — '+r.why:'')+')');return reply(res,502,{ok:false,code:'service'});}
   if(day.spend)await day.spend(coutMicro(r.model,r.usage));
@@ -281,4 +312,4 @@ function createHandler(options={}){
 
 module.exports=createHandler();
 module.exports.createHandler=createHandler;
-module.exports._test={validate,limited,cases,safeLink,shape,userMessage,SYSTEM_CALC,SYSTEM_LEO,SCHEMA_CALC,SCHEMA_LEO,modelOptions,MODEL_DEFAULT,settings,digest,tarifModele,coutMicro,dayKey,nextMidnight,daySettings,DAY_CALLS_DEFAULT,DAY_USD_DEFAULT,reset:()=>{hits.clear();freeMem.clear();dayMem.clear();}};
+module.exports._test={validate,limited,cases,safeLink,shape,userMessage,originOk,alertePlafond,SYSTEM_CALC,SYSTEM_LEO,SCHEMA_CALC,SCHEMA_LEO,modelOptions,MODEL_DEFAULT,settings,digest,tarifModele,coutMicro,dayKey,nextMidnight,daySettings,DAY_CALLS_DEFAULT,DAY_USD_DEFAULT,reset:()=>{hits.clear();freeMem.clear();dayMem.clear();}};

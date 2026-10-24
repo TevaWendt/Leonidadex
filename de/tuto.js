@@ -36,8 +36,8 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) current = e.target.id; });
       links.forEach(function (a) { var on = a.getAttribute('href') === '#' + current; a.classList.toggle('is-current', on); if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
-      var idx = links.findIndex(function (a) { return a.getAttribute('href') === '#' + current; }); var bar = document.querySelector('[data-t-prog]'), txt = document.querySelector('[data-t-prog-txt]');
-      if (idx >= 0) { if (bar) bar.style.width = Math.round((idx + 1) / links.length * 100) + '%'; if (txt) txt.textContent = 'Kapitel ' + (idx + 1) + ' von ' + links.length; }
+      var idx = links.findIndex(function (a) { return a.getAttribute('href') === '#' + current; }); var bar = document.querySelector('[data-t-prog]'), txts = document.querySelectorAll('[data-t-prog-txt]');
+      if (idx >= 0) { if (bar) bar.style.width = Math.round((idx + 1) / links.length * 100) + '%'; txts.forEach(function (txt) { txt.textContent = 'Kapitel ' + (idx + 1) + ' von ' + links.length; }); }
     }, { rootMargin: '-30% 0px -60% 0px' });
     chapters.forEach(function (c) { io.observe(c); });
   }
@@ -48,4 +48,9 @@
     var sum = document.getElementById('sommaire'); if (sum && window.matchMedia('(max-width: 900px)').matches) sum.open = false;
   }
   window.addEventListener('hashchange', reveal); reveal();
+  var sumMobile = document.getElementById('sommaire'), narrowQ = window.matchMedia('(max-width: 900px)');
+  if (sumMobile) {
+    if (narrowQ.matches) sumMobile.open = false;
+    sumMobile.addEventListener('click', function (e) { if (narrowQ.matches && e.target.closest('nav a[href^="#"]')) setTimeout(function () { sumMobile.open = false; }, 0); });
+  }
 }());

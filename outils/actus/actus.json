@@ -2,7 +2,7 @@
  "_note": "v7.87 : section « Actualités et vidéos » rendue par outils/gen-actus.cjs : actus.html (frise datée de tout ce que Rockstar a publié sur GTA VI, flux actus.xml dans chaque langue), videos.html et videos/<id>.html (les vidéos officielles), editions.html (les deux éditions, les seize contenus de l’Ultimate, les bonus, la version en boîte). Les révélations de chaque événement viennent des dossiers des fiches du monde (outils/monde-dossiers.json, chrono) ; les morceaux et leurs minutages de outils/radios/radios.json ; les véhicules et les armes vus dans chaque vidéo de vehicules-data.js et armes-data.js (champ src) ; les photogrammes minutés de outils/medias-officiels.json. Rien n’est tiré des fuites ; chaque événement a sa source officielle.",
  "actus": {
   "label": "Actualités",
-  "title": "Tout ce que Rockstar a annoncé sur GTA 6, date par date",
+  "title": "Tout ce que Rockstar a annoncé sur GTA VI, date par date",
   "seoTitle": "Actualités GTA 6 : la chronologie officielle, date par date",
   "lede": "Chaque annonce officielle de Rockstar sur GTA VI, de la confirmation du développement, en 2022, à la bande-annonce de lancement, et les dossiers de presse qui les complètent, avec ce qu’ils ont montré et leur source.",
   "desc": "Actualités de GTA 6 : chaque annonce officielle de Rockstar depuis 2022, jusqu’à la bande-annonce de lancement, avec ce qu’elle a montré et sa source.",
@@ -683,7 +683,7 @@
  ],
  "videos": {
   "label": "Vidéos officielles",
-  "title": "Les vidéos officielles de GTA 6, moment par moment",
+  "title": "Les vidéos officielles de GTA VI, moment par moment",
   "seoTitle": "GTA VI trailers : les vidéos officielles, moment par moment",
   "lede": "Les quatre vidéos publiées par Rockstar, à regarder ici, avec ce qu’on y voit : les moments relevés, la musique, les véhicules, les armes et les lieux.",
   "desc": "Les trailers de GTA 6, An Extended Look (Netflix, puis YouTube) et la bande-annonce de lancement : chaque vidéo officielle, ses moments, sa musique.",
@@ -982,7 +982,7 @@
  },
  "editions": {
   "label": "Éditions",
-  "title": "Les éditions de GTA 6",
+  "title": "Les éditions de GTA VI",
   "seoTitle": "GTA VI précommande : prix, édition Ultimate et contenu",
   "lede": "Ce que contient chaque édition, les seize contenus de l’Ultimate, les bonus de précommande et la version en boîte, d’après l’assistance de Rockstar.",
   "desc": "Précommander GTA 6 : le prix des éditions Standard et Ultimate, les seize contenus de l’Ultimate, le Pack Vintage Vice City, GTA+ et la boîte sans disque.",
@@ -1847,7 +1847,7 @@
  },
  "prix": {
   "label": "Prix et collector",
-  "title": "Le prix de GTA 6, et le coffret collector",
+  "title": "Le prix de GTA VI, et le coffret collector",
   "seoTitle": "Prix de GTA 6 : Standard, Ultimate et coffret collector Vice City",
   "desc": "Prix de GTA 6 : 79,99 € l’Édition Standard, 99,99 € l’Ultimate. Le coffret collector Vice City, ses onze objets en photos, son prix et sa livraison.",
   "lede": "Ce que coûtent le jeu, le coffret collector « The Goodtime State » et les manettes en édition limitée, d’après les boutiques officielles, avec le statut de chaque prix.",

@@ -44,8 +44,9 @@
       entries.forEach(function (e) { if (e.isIntersecting) current = e.target.id; });
       links.forEach(function (a) { var on = a.getAttribute('href') === '#' + current; a.classList.toggle('is-current', on); if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
       /* v7.70 : la barre et le texte de progression du sommaire suivent le chapitre lu */
-      var idx = links.findIndex(function (a) { return a.getAttribute('href') === '#' + current; }); var bar = document.querySelector('[data-t-prog]'), txt = document.querySelector('[data-t-prog-txt]');
-      if (idx >= 0) { if (bar) bar.style.width = Math.round((idx + 1) / links.length * 100) + '%'; if (txt) txt.textContent = 'Chapitre ' + (idx + 1) + ' sur ' + links.length; }
+      var idx = links.findIndex(function (a) { return a.getAttribute('href') === '#' + current; }); var bar = document.querySelector('[data-t-prog]'), txts = document.querySelectorAll('[data-t-prog-txt]');
+      /* v8.06 (audit UX-05) : le texte du chapitre courant est aussi dans le résumé du sommaire (barre collante au téléphone) */
+      if (idx >= 0) { if (bar) bar.style.width = Math.round((idx + 1) / links.length * 100) + '%'; txts.forEach(function (txt) { txt.textContent = 'Chapitre ' + (idx + 1) + ' sur ' + links.length; }); }
     }, { rootMargin: '-30% 0px -60% 0px' });
     chapters.forEach(function (c) { io.observe(c); });
   }
@@ -57,4 +58,11 @@
     var sum = document.getElementById('sommaire'); if (sum && window.matchMedia('(max-width: 900px)').matches) sum.open = false;
   }
   window.addEventListener('hashchange', reveal); reveal();
+  /* v8.06 (audit UX-05) : au téléphone (une seule colonne), le sommaire est une barre collante repliée sous l'en-tête : « Sommaire du
+     Tuto, chapitre N sur 16 » ; on l'ouvre d'un toucher pour changer de chapitre, il se referme après le choix. Sur grand écran, rien ne change. */
+  var sumMobile = document.getElementById('sommaire'), narrowQ = window.matchMedia('(max-width: 900px)');
+  if (sumMobile) {
+    if (narrowQ.matches) sumMobile.open = false;
+    sumMobile.addEventListener('click', function (e) { if (narrowQ.matches && e.target.closest('nav a[href^="#"]')) setTimeout(function () { sumMobile.open = false; }, 0); });
+  }
 }());

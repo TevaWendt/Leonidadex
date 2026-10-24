@@ -41,7 +41,11 @@ const nb = n => new Intl.NumberFormat('fr-FR').format(n);
    noindex » ; elles seront remplies et indexées quand Rockstar publiera) : le seuil d’informations décide de nouveau (« seuil »,
    le seuil du prompt : un lieu avec deux informations réelles est indexable). */
 const INDEXER_TOUT = false;
-const elem = (famille, o) => ({ famille, id: String(o.id), nom: o.nom || o.id, slug: o.slug || slug(o.nom || o.id), page: o.page || null, cible: o.cible || null, exclusion: o.exclusion || null, indexable: INDEXER_TOUT ? !o.exclusion : !!o.indexable, seuil: !!o.indexable, strict: o.strict === undefined ? !!o.indexable : !!o.strict, faits: o.faits || 0, visuel: !!o.visuel, note: o.note || '', doublonDe: o.doublonDe || null, suffixe: o.suffixe || '' });
+/* v8.06 (audit SEO-002) : pour une page qui existe déjà, l’indexabilité rapportée est celle que la page émet vraiment (balise robots
+   écrite par son générateur : gen.js, gen-armes.cjs…), pas une constante de la famille ; « seuil » garde l’estimation éditoriale,
+   « indexeEffectif » dit ce que la page publie (null : pas de page). Le diagnostic ne touche jamais aux pages. */
+const robotsIndex = f => { if (!f || !exists(f)) return null; const m = read(f).match(/<meta name="robots" content="([^"]*)"/); return m ? !/noindex/.test(m[1]) : true; };
+const elem = (famille, o) => { const eff = o.page ? robotsIndex(o.page) : null; return ({ famille, id: String(o.id), nom: o.nom || o.id, slug: o.slug || slug(o.nom || o.id), page: o.page || null, cible: o.cible || null, exclusion: o.exclusion || null, indexable: INDEXER_TOUT ? !o.exclusion : eff === null ? !!o.indexable : eff, seuil: !!o.indexable, indexeEffectif: eff, strict: o.strict === undefined ? !!o.indexable : !!o.strict, faits: o.faits || 0, visuel: !!o.visuel, note: o.note || '', doublonDe: o.doublonDe || null, suffixe: o.suffixe || '' }); };
 
 /* ---------- sources ---------- */
 const V = loadWindow('vehicules-data.js').LK_VEHICULES;
