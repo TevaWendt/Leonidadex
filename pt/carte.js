@@ -28,6 +28,17 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   const progRs  = document.getElementById('map-prog-reset');
   const shell   = document.querySelector('.map-shell');
   const W = 5200, H = 6000;
+  let SZ = null;
+  function stageSize(){
+    if(SZ) return SZ;
+    const r = stage.getBoundingClientRect(), s = { width:r.width, height:r.height };
+    if(s.width > 0 && s.height > 0) SZ = s;
+    return s;
+  }
+  if('ResizeObserver' in window) new ResizeObserver(function(){ SZ = null; }).observe(stage);
+  window.addEventListener('resize', function(){ SZ = null; });
+  const TOUCH = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  const LBL_Z2 = TOUCH ? 1.6 : 1.1;
   const METRES_PAR_UNITE = 3.04;
   const VITESSES = [
     { id:'pied',    nom:'A pé',     v: 2.0,  ico:'walk' },
@@ -233,7 +244,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   Object.keys(CATS).forEach(k => visible[k] = true);
   let visStatut = { officiel:true, vu:true, spec:true };
   let visSource = { SITE:true, T1:true, T2:true, EL:true, SHOT:true, COMM:true, GTADB:true, COLLECTIBLES:true };
-  const ZOOM_NIVEAU = [0, 0.42, 0.6];
+  const ZOOM_NIVEAU = TOUCH ? [0, 0.42, 0.9] : [0, 0.42, 0.6];
   let expanded = {};
   function niveauVisible(p){
     if(!p.z) return true;
@@ -258,7 +269,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if(zoomLbl) zoomLbl.textContent = Math.round(scale * 100) + '%';
     layer.style.setProperty('--inv', (1 / scale));
     layer.classList.toggle('lbl-z1', scale < 0.55);
-    layer.classList.toggle('lbl-z2', scale < 1.1);
+    layer.classList.toggle('lbl-z2', scale < LBL_Z2);
     drawLine();
     updateScaleBar();
     syncHash();
@@ -373,7 +384,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     return true;
   }
   function clamp(){
-    const r = stage.getBoundingClientRect();
+    const r = stageSize();
     const w = W * scale, h = H * scale;
     const mx = Math.max(0, (w - r.width) / 2) + r.width * 0.35;
     const my = Math.max(0, (h - r.height) / 2) + r.height * 0.35;
@@ -387,56 +398,70 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     ty = (r.height - H * scale) / 2;
     applyTransform();
   }
-  function zoomAt(cx, cy, factor){
+  function zoomAt(cx, cy, factor, defer){
     const before = scale;
     scale = Math.min(maxS, Math.max(minS, scale * factor));
     if(scale === before) return;
     const k = scale / before;
     tx = cx - (cx - tx) * k;
     ty = cy - (cy - ty) * k;
+    if(defer){ applySoon(); return; }
     clamp(); applyTransform();
   }
+  let frameReq = 0;
+  function applySoon(){
+    if(frameReq) return;
+    frameReq = requestAnimationFrame(function(){ frameReq = 0; clamp(); applyTransform(); });
+  }
+  function mkFor(p){
+    let el = MK[p.id];
+    if(el) return el;
+    el = document.createElement('button');
+    el.type = 'button';
+    const kids = enfants(p.id).length;
+    el.className = 'mk mk--' + p.c + ' st-' + p.s + ' z' + (p.z||0)
+                 + (pointFound(p) ? ' is-found' : '') + (kids ? ' has-kids' : '')
+                 + (rulerPts.some(r => r.id === p.id) ? ' is-picked' : '');
+    el.style.left = p.x + 'px';
+    el.style.top  = p.y + 'px';
+    el.dataset.id = p.id;
+    el.dataset.cat = p.c;
+    el.dataset.st = p.s;
+    if(!kids) el.setAttribute('aria-label', p.n);
+    const reel = / \(nom (réel|supposé)\)$/.test(p.n);
+    if(reel) el.classList.add('lbl-reel');
+    el.innerHTML = '<span class="mk-dot">' + (kids ? '<i>' + kids + '</i>' : '') + '</span>'
+                 + '<span class="mk-lbl">' + esc(reel ? p.n.replace(/ \(nom (réel|supposé)\)$/, '') : p.n) + '</span>';
+    MK[p.id] = el;
+    return el;
+  }
+  layer.addEventListener('click', function(ev){
+    const el = ev.target.closest('.mk');
+    if(!el || !layer.contains(el)) return;
+    ev.stopPropagation();
+    const p = byId(el.dataset.id);
+    if(!p) return;
+    if(rulerOn){
+      addRulerPoint({ id:p.id, n:p.n, x:p.x, y:p.y, lieu:p.n });
+      return;
+    }
+    openPanel(p);
+  });
   function buildMarkers(){
     layer.innerHTML = '';
     montes = new Map();
-    POINTS.forEach(function(p){
-      const el = document.createElement('button');
-      el.type = 'button';
-      const kids = enfants(p.id).length;
-      el.className = 'mk mk--' + p.c + ' st-' + p.s + ' z' + (p.z||0)
-                   + (pointFound(p) ? ' is-found' : '') + (kids ? ' has-kids' : '');
-      el.style.left = p.x + 'px';
-      el.style.top  = p.y + 'px';
-      el.dataset.id = p.id;
-      MK[p.id] = el;
-      el.dataset.cat = p.c;
-      el.dataset.st = p.s;
-      if(!kids) el.setAttribute('aria-label', p.n);
-      const reel = / \(nom (réel|supposé)\)$/.test(p.n);
-      if(reel) el.classList.add('lbl-reel');
-      el.innerHTML = '<span class="mk-dot">' + (kids ? '<i>' + kids + '</i>' : '') + '</span>'
-                   + '<span class="mk-lbl">' + esc(reel ? p.n.replace(/ \(nom (réel|supposé)\)$/, '') : p.n) + '</span>';
-      el.addEventListener('click', function(ev){
-        ev.stopPropagation();
-        if(rulerOn){
-          addRulerPoint({ id:p.id, n:p.n, x:p.x, y:p.y, lieu:p.n });
-          return;
-        }
-        openPanel(p);
-      });
-    });
     refreshVisibility();
     refreshProgress();
   }
   const SEUIL_GROUPE = 2;
-  const CASE_PX = 34;
+  const CASE_PX = TOUCH ? 44 : 34;
   let montes = new Map();
   let ouvertId = null;
   function passeFiltres(p){
     return visible[p.c] && visStatut[p.s] && visSource[p.src] && niveauVisible(p);
   }
   function refreshVisibility(){
-    const r = stage.getBoundingClientRect();
+    const r = stageSize();
     const marge = 0.6;
     const x0 = (-tx - r.width  * marge) / scale, x1 = (-tx + r.width  * (1 + marge)) / scale;
     const y0 = (-ty - r.height * marge) / scale, y1 = (-ty + r.height * (1 + marge)) / scale;
@@ -473,8 +498,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     const frag = document.createDocumentFragment();
     seuls.forEach(function(p){
       if(montes.has(p.id)) return;
-      const el = MK[p.id];
-      if(el){ frag.appendChild(el); montes.set(p.id, el); }
+      const el = mkFor(p);
+      frag.appendChild(el); montes.set(p.id, el);
     });
     layer.appendChild(frag);
     layer.querySelectorAll('.cl').forEach(el => el.remove());
@@ -512,7 +537,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     return 2;
   }
   function trierEtiquettes(seuls){
-    const lblZ1 = scale < 0.55, lblZ2 = scale < 1.1;
+    const lblZ1 = scale < 0.55, lblZ2 = scale < LBL_Z2;
     const cand = [];
     seuls.forEach(function(p){
       const el = MK[p.id];
@@ -821,10 +846,37 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   });
   let dragging = false, lastX = 0, lastY = 0, moved = 0, captured = false;
   const pointers = new Map();
-  let pinchDist = 0;
+  let pinchDist = 0, downRect = null;
+  let movingTimer = 0;
+  const layerInputs = Array.from(document.querySelectorAll('.map-layer'));
+  const layersDefault = () => layerInputs.every(i => i.checked === i.defaultChecked);
+  function movingOn(e){
+    if(!e || e.pointerType !== 'touch' || !stage.classList.contains('lite-ready') || !layersDefault()) return;
+    clearTimeout(movingTimer);
+    if(!stage.classList.contains('is-moving')) stage.classList.add('is-moving');
+  }
+  function movingOffSoon(){
+    clearTimeout(movingTimer);
+    movingTimer = setTimeout(function(){ stage.classList.remove('is-moving'); }, 220);
+  }
+  if(TOUCH){
+    stage.classList.add('is-touch');
+    const world0 = document.getElementById('map-world'), bg = world0 && world0.querySelector('.map-bg');
+    const lang = ((document.documentElement.lang || 'fr').slice(0, 2).toLowerCase());
+    const v = stage.dataset.fondV;
+    if(bg && v && /^(fr|en|es|it|de|pt)$/.test(lang)){
+      const img = document.createElement('img');
+      img.className = 'map-bg-lite'; img.alt = ''; img.decoding = 'async'; img.draggable = false;
+      img.setAttribute('aria-hidden', 'true'); img.width = 2080; img.height = 2400;
+      img.addEventListener('load', function(){ stage.classList.add('lite-ready'); });
+      img.src = '/img/carte/fond-mobile-' + lang + '.webp?v=' + encodeURIComponent(v);
+      world0.insertBefore(img, bg);
+    }
+  }
   stage.addEventListener('pointerdown', function(e){
     if(stage.classList.contains('drawing') || e.target.closest('.map-zoom,.map-mini,.map-help,.map-help-box,.map-coord'))return;
     pointers.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    downRect = stage.getBoundingClientRect();
     if(pointers.size === 1){
       dragging = true; moved = 0; captured = false;
       lastX = e.clientX; lastY = e.clientY;
@@ -841,10 +893,11 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       const a = Array.from(pointers.values());
       const d = Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y);
       if(pinchDist > 0){
-        const r = stage.getBoundingClientRect();
+        const r = downRect || stage.getBoundingClientRect();
         const mx = (a[0].x + a[1].x) / 2 - r.left;
         const my = (a[0].y + a[1].y) / 2 - r.top;
-        zoomAt(mx, my, d / pinchDist);
+        movingOn(e);
+        zoomAt(mx, my, d / pinchDist, true);
       }
       pinchDist = d;
       return;
@@ -860,7 +913,8 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if(!captured) return;
     tx += dx; ty += dy;
     lastX = e.clientX; lastY = e.clientY;
-    clamp(); applyTransform();
+    movingOn(e);
+    applySoon();
   });
   function endPointer(e){
     pointers.delete(e.pointerId);
@@ -868,17 +922,24 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     if(pointers.size === 0){
       dragging = false; captured = false;
       stage.classList.remove('grabbing');
+      if(stage.classList.contains('is-moving')) movingOffSoon();
     }
   }
   stage.addEventListener('pointerup', endPointer);
   stage.addEventListener('pointercancel', endPointer);
   stage.addEventListener('pointerleave', endPointer);
+  let coordReq = 0, coordEv = null;
   stage.addEventListener('pointermove', function(e){
-    if(!coordBx) return;
-    const r = stage.getBoundingClientRect();
-    const x = Math.round((e.clientX - r.left - tx) / scale);
-    const y = Math.round((e.clientY - r.top  - ty) / scale);
-    coordBx.textContent = x + ', ' + y;
+    if(!coordBx || e.pointerType === 'touch') return;
+    coordEv = e;
+    if(coordReq) return;
+    coordReq = requestAnimationFrame(function(){
+      coordReq = 0;
+      const r = stage.getBoundingClientRect();
+      const x = Math.round((coordEv.clientX - r.left - tx) / scale);
+      const y = Math.round((coordEv.clientY - r.top  - ty) / scale);
+      coordBx.textContent = x + ', ' + y;
+    });
   });
   stage.addEventListener('wheel', function(e){
     e.preventDefault();
@@ -924,7 +985,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
       const on = shell.classList.toggle('is-full');
       document.body.classList.toggle('map-full-on', on);
       fullBt.setAttribute('aria-label', on ? 'Sair da tela cheia' : 'Tela cheia');
-      setTimeout(function(){ clamp(); applyTransform(); }, 60);
+      setTimeout(function(){ SZ = null; clamp(); applyTransform(); }, 60);
     });
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && shell.classList.contains('is-full')) fullBt.click();
@@ -967,33 +1028,33 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
     function node(p, depth){
       const kids = enfants(p.id);
       const st = pointStatus(p);
-      let h = '<li class="tr-item tr-d' + depth + (kids.length ? ' has-kids' : '') + '">' +
+      return '<li class="tr-item tr-d' + depth + (kids.length ? ' has-kids' : '') + '" data-id="' + p.id + '" data-d="' + depth + '">' +
               '<div class="tr-row">' +
-              (kids.length ? '<button type="button" class="tr-tog" aria-label="Expandir">›</button>' : '<span class="tr-sp"></span>') +
+              (kids.length ? '<button type="button" class="tr-tog" aria-label="Expandir" aria-expanded="false">›</button>' : '<span class="tr-sp"></span>') +
               '<button type="button" class="tr-go" data-goto="' + p.id + '">' +
               '<span class="tr-dot" style="background:' + CATS[p.c].col + '"></span>' +
               '<span class="tr-n">' + esc(p.n) + '</span>' +
               '<em class="tr-st tr-st--' + p.s + '">' + st.court + '</em>' +
-              '</button></div>';
-      if(kids.length){
-        h += '<ul class="tr-kids" hidden>' + kids.map(k => node(k, depth + 1)).join('') + '</ul>';
-      }
-      return h + '</li>';
+              '</button></div>' +
+              (kids.length ? '<ul class="tr-kids" hidden></ul>' : '') + '</li>';
     }
     tree.innerHTML = '<ul class="tr-root">' + racines.map(p => node(p, 0)).join('') + '</ul>';
-    tree.querySelectorAll('.tr-tog').forEach(function(b){
-      b.addEventListener('click', function(){
-        const ul = b.closest('.tr-item').querySelector(':scope > .tr-kids');
+    tree.addEventListener('click', function(e){
+      const tog = e.target.closest('.tr-tog');
+      if(tog && tree.contains(tog)){
+        const li = tog.closest('.tr-item'), ul = li && li.querySelector(':scope > .tr-kids');
         if(!ul) return;
+        if(!ul.dataset.ready){ ul.innerHTML = enfants(li.dataset.id).map(k => node(k, Number(li.dataset.d) + 1)).join(''); ul.dataset.ready = '1'; }
         ul.hidden = !ul.hidden;
-        b.classList.toggle('open', !ul.hidden);
-      });
-    });
-    tree.querySelectorAll('.tr-go').forEach(function(b){
-      b.addEventListener('click', function(){
-        const t = byId(b.dataset.goto);
+        tog.classList.toggle('open', !ul.hidden);
+        tog.setAttribute('aria-expanded', String(!ul.hidden));
+        return;
+      }
+      const go = e.target.closest('.tr-go');
+      if(go && tree.contains(go)){
+        const t = byId(go.dataset.goto);
         if(t) goTo(t, Math.max(0.5, ZOOM_NIVEAU[t.z || 0] + 0.15));
-      });
+      }
     });
   }
   buildTree();
@@ -1373,7 +1434,7 @@ var lkPluriel=function(n){return ((typeof document!=='undefined'&&document.docum
   const miniBox = document.getElementById('map-mini-box');
   if(mini && miniBox){
     function majMini(){
-      const r = stage.getBoundingClientRect();
+      const r = stageSize();
       const mw = mini.clientWidth, mh = mini.clientHeight;
       const vx = (-tx / scale) / W, vy = (-ty / scale) / H;
       const vw = (r.width / scale) / W, vh = (r.height / scale) / H;

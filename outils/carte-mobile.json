@@ -1,0 +1,56 @@
+{
+ "_note": "Écrit par outils/carte-mobile.cjs (v8.07) : empreinte du fond léger de chaque langue et de son image. À refaire quand le fond de carte.html ou ses traductions changent.",
+ "largeur": 2080,
+ "hauteur": 2400,
+ "version": "e20eae17a6d6",
+ "langues": [
+  {
+   "code": "fr",
+   "page": "carte.html",
+   "fond": "03d82dc1dc2757f3",
+   "image": "9cafce1590d94480",
+   "fichier": "img/carte/fond-mobile-fr.webp",
+   "octets": 278388
+  },
+  {
+   "code": "en",
+   "page": "en/carte.html",
+   "fond": "e65250665db7175d",
+   "image": "1ac8fc901a41d4e2",
+   "fichier": "img/carte/fond-mobile-en.webp",
+   "octets": 277452
+  },
+  {
+   "code": "es",
+   "page": "es/carte.html",
+   "fond": "0283eef77fb526e1",
+   "image": "5db30766fc73c6ce",
+   "fichier": "img/carte/fond-mobile-es.webp",
+   "octets": 280754
+  },
+  {
+   "code": "it",
+   "page": "it/carte.html",
+   "fond": "7ffda907fc95b95d",
+   "image": "711b1ecb636d5638",
+   "fichier": "img/carte/fond-mobile-it.webp",
+   "octets": 279176
+  },
+  {
+   "code": "de",
+   "page": "de/carte.html",
+   "fond": "9b43eaa2b552f702",
+   "image": "5aa6c8fdb223d109",
+   "fichier": "img/carte/fond-mobile-de.webp",
+   "octets": 278428
+  },
+  {
+   "code": "pt",
+   "page": "pt/carte.html",
+   "fond": "491f863e888b1df9",
+   "image": "a3dad914a6f60a55",
+   "fichier": "img/carte/fond-mobile-pt.webp",
+   "octets": 281370
+  }
+ ]
+}

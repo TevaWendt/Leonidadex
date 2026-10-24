@@ -1,0 +1,34 @@
+LEONIDAKIT v8.07 : carte mobile (carte allégée au doigt, carte complète à la souris)
+
+À appliquer sur la v8.06 (dépôt GitHub TevaWendt/Leonidadex, commit 262de61e, déjà en ligne) : décompresse l'archive
+Leonidakit-v8.07-modifs à la racine du dossier du site, en remplaçant les fichiers, puis dans GitHub Desktop : « Commit to main »
+et « Push origin ». Aucun fichier à supprimer. Rien à régler dans Vercel.
+
+CE QUI CHANGE POUR LE VISITEUR
+  - Téléphone et tablette (écran tactile) : la carte suit le doigt. Pendant un glisser ou un pincer, le fond dessiné est remplacé
+    par une image du même fond, dans la langue de la page (un peu floue pendant le geste, surtout très zoomé) ; il revient net dès
+    que le doigt s'arrête. Moins de détails d'emblée : pastilles regroupées plus largement (plus faciles à toucher), bâtiments de
+    la communauté à partir de 90 % de zoom (au lieu de 60 %), leurs noms à partir de 160 % (au lieu de 110 %). Fond sans ombre de
+    côte ni vagues.
+  - Ordinateur (souris) : rien ne change, tous les détails comme avant.
+  - Partout : la page de la carte s'ouvre plus vite (la liste « Tous les lieux » et les marqueurs sont écrits au moment où on en
+    a besoin : 2 842 éléments dans la page au lieu de 25 666).
+
+MESURES (téléphone simulé 390 × 844, processeur ralenti ×4, médiane de 3 passages, pages française et anglaise)
+  pincer pour zoomer   environ 15 → 39 à 44 images par seconde
+  glisser              environ 27 → 49 à 50 images par seconde
+  blocage au chargement   environ 1 000 → 550 ms (mesure bruyante : 380 à 840 ms selon le passage)
+
+FICHIERS
+  Sources : outils/sources/carte.js, outils/sources/carte-page.css, outils/sync-site.cjs ; nouveau script outils/carte-mobile.cjs
+  (à lancer à la main quand le fond de la carte change, voir README) et outils/carte-mobile.json ; nouvelles images
+  img/carte/fond-mobile-{fr,en,es,it,de,pt}.webp (environ 270 Kio chacune, téléchargées seulement au doigt) ; puis ce que la
+  synchronisation a changé : carte.html, carte.js et carte-page.css servis, les cinq traductions de carte.html et carte.js,
+  a-propos.html et ses traductions (nombre de tests), sitemap.xml, outils/sitemap-dates.json, outils/leo-index-manifest.json.
+  Détail et mesures complètes : outils/CHANGEMENTS-v8.07.txt. Test : outils/tests/carte-mobile-v807.test.cjs.
+
+VÉRIFIÉ
+  Tests : 1 276 de la suite courante + 51 (langues), tous « ok » (après mise à jour du manifeste de Léo) ; node outils/verifier.js :
+  aucune erreur ; 0 texte sans traduction. Chromium : à la souris, aucune image mobile demandée, carte identique ; au doigt, l'image
+  se superpose au fond vectoriel sans décalage.
+  Non vérifié d'ici : un vrai téléphone (la mesure simule un téléphone moyen dans Chromium) et Safari sur iPhone.

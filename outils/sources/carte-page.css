@@ -715,3 +715,13 @@ body.map-full-on{overflow:hidden;}
 
 /* v8.04 (chiffres du site) : ce que compte « lieux référencés », sous les chiffres de la carte (phrase posée par sync-site.cjs) */
 .vhero .vstats-note{margin-top:14px;max-width:56ch;font-size:.86rem;line-height:1.5;color:var(--ink-soft);}
+
+/* v8.07 (carte mobile, Téva 24/10/2026) : au doigt (classe is-touch posée par carte.js sur un écran tactile), le fond garde ses
+   tracés mais perd l’ombre floue de la côte et le motif de vagues, qui étaient recalculés à chaque zoom ; pendant un glisser ou
+   un pincer (is-moving), une image légère du même fond (img/carte/fond-mobile-<langue>.webp, outils/carte-mobile.cjs) remplace
+   le vectoriel, qui revient net à l’arrêt. La souris garde la carte complète. */
+.map-bg-lite{position:absolute;top:0;left:0;width:100%;height:100%;display:none;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+.map-stage.lite-ready .map-bg-lite{display:block;}
+.map-stage.lite-ready.is-moving .map-bg{display:none;} /* hors du rendu (visibility:hidden laissait le navigateur parcourir les 1 583 tracés à chaque image : 22 images/s au lieu de 41 au pincer) */
+.map-stage.is-touch .map-bg g[filter]{filter:none;}
+.map-stage.is-touch .map-bg>rect[fill="url(#waves)"]{display:none;}

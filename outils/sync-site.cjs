@@ -35,7 +35,9 @@ const shipped=['photos','img','presse'].flatMap(d=>fs.existsSync(d)?walk(d):[]).
 // Le manifeste chargé par toutes les pages ne liste pas les photos de la carte : elles ne servent qu'à carte.html et carte-gtadb.js est déjà filtré ci-dessous.
 /* v7.76 : ni les illustrations des catalogues (img/illus/, montrées par les pages elles-mêmes, jamais cherchées par un script). */
 /* v7.88 : ni les images de partage (img/partage/, lues par les réseaux sociaux, jamais par une page), ni le kit presse (presse/). */
-const assets=shipped.filter(p=>!p.startsWith('/photos/')&&!p.startsWith('/img/illus/')&&!p.startsWith('/img/partage/')&&!p.startsWith('/presse/'));
+/* v8.07 : ni les fonds de carte au doigt (img/carte/, demandés par carte.js sur écran tactile seulement, jamais cherchés dans la liste) :
+   la liste est chargée par toutes les pages, son empreinte ?v= changerait sur les 26 000 pages à chaque nouvelle image. */
+const assets=shipped.filter(p=>!p.startsWith('/photos/')&&!p.startsWith('/img/illus/')&&!p.startsWith('/img/partage/')&&!p.startsWith('/img/carte/')&&!p.startsWith('/presse/'));
 fs.writeFileSync('assets-manifest.js','/* Generated from the files actually shipped. */\nwindow.LK_ASSETS = '+JSON.stringify(assets)+';\n');
 const assetSet=new Set(shipped);
 const available=(file,u)=>{try{const url=new URL(u,'https://www.leonidakit.com/'+file);return url.origin!=='https://www.leonidakit.com'||url.protocol==='data:'||assetSet.has(url.pathname);}catch{return false;}};
